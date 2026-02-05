@@ -2,747 +2,1149 @@
 <html lang="zh-CN">
 <head>
   <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>筑梦电子｜贵宾服务站</title>
-  <meta name="description" content="筑梦电子贵宾服务站｜多业务引流｜展品展示｜一键联系" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>筑梦电子 · VIP服务站 · 7x24h服务</title>
+  <meta name="description" content="筑梦电子 · VIP服务站 · 7x24h服务｜业务分类引流｜展品展示｜一键联系" />
+
+  <!--
+    ✅ 你后期要上传素材的话，按这个放文件就行（无需改代码）：
+    /assets/
+      wechat-qr.png              （微信二维码）
+      photo-01.jpg ... photo-06.jpg  （6张展品图片）
+      video-01.mp4 ... video-03.mp4  （3个展品视频）
+      profile.jpg               （自我介绍模块左侧图片，可选）
+  -->
 
   <style>
     :root{
-      --bg0:#070a14;
-      --bg1:#0b1130;
-      --bg2:#121a3c;
-      --txt: rgba(255,255,255,.92);
-      --muted: rgba(255,255,255,.70);
-      --rose: #ff2f8a;
-      --rose2:#ff6fb0;
-      --blue: #4aa3ff;
-      --shadow: 0 18px 70px rgba(0,0,0,.45);
+      --bg0:#070a16;
+      --bg1:#0b1030;
+      --bg2:#161031;
+
+      --rose:#ff2f86;
+      --rose2:#ff5aa9;
+
+      --blue0:#7fe7ff;
+      --blue1:#2f7bff;
+      --blue2:#1f4cff;
+
+      --card: rgba(255,255,255,.06);
+      --card2: rgba(255,255,255,.085);
+      --line: rgba(255,255,255,.10);
+
+      --text: rgba(255,255,255,.90);
+      --muted: rgba(255,255,255,.68);
+      --muted2: rgba(255,255,255,.58);
+
       --radius: 22px;
-      --radius2: 16px;
-      --max: 1120px;
+      --radius2: 18px;
 
-      --svcHead: rgba(0,0,0,.38);
-      --svcBody: rgba(255,255,255,.06);
-      --svcLine: rgba(255,255,255,.12);
+      --shadow: 0 18px 55px rgba(0,0,0,.55);
+      --shadow2: 0 10px 26px rgba(0,0,0,.42);
+
+      --max: 1180px;
     }
+
     *{box-sizing:border-box}
-    html,body{margin:0; padding:0; background:var(--bg0); color:var(--txt); font-family:ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "PingFang SC","Microsoft YaHei", Arial;}
-    a{color:inherit; text-decoration:none}
-    code{color:rgba(255,255,255,.84)}
-    .bg{
-      min-height:100vh;
-      background:
-        radial-gradient(1100px 700px at 10% 10%, rgba(74,163,255,.28), transparent 55%),
-        radial-gradient(900px 600px at 90% 20%, rgba(255,47,138,.20), transparent 60%),
-        radial-gradient(900px 650px at 50% 110%, rgba(139,208,255,.14), transparent 60%),
-        linear-gradient(180deg, var(--bg1), var(--bg2) 60%, #070a14);
+    html,body{height:100%}
+    body{
+      margin:0;
+      color:var(--text);
+      background: radial-gradient(1200px 900px at 10% 10%, rgba(47,123,255,.28), transparent 55%),
+                  radial-gradient(900px 700px at 95% 15%, rgba(255,47,134,.22), transparent 55%),
+                  radial-gradient(1100px 900px at 65% 110%, rgba(255,47,134,.16), transparent 55%),
+                  linear-gradient(180deg, var(--bg0), var(--bg1) 55%, var(--bg2));
+      font-family: ui-sans-serif, system-ui, -apple-system, "PingFang SC","Microsoft YaHei", Segoe UI, Roboto, Helvetica, Arial;
+      overflow-x:hidden;
     }
-    .wrap{max-width:var(--max); margin:0 auto; padding:22px 16px 60px;}
-    .nav{
-      position:sticky; top:0; z-index:20;
-      padding:14px 0;
-      backdrop-filter: blur(10px);
-      background: linear-gradient(180deg, rgba(7,10,20,.65), rgba(7,10,20,.15));
-      border-bottom: 1px solid rgba(255,255,255,.06);
-    }
-    .nav-inner{max-width:var(--max); margin:0 auto; padding:0 16px; display:flex; gap:10px; align-items:center; justify-content:space-between; flex-wrap:wrap;}
-    .brand{display:flex; align-items:center; gap:10px; font-weight:800; letter-spacing:.3px;}
-    .dot{width:10px; height:10px; border-radius:999px; background: linear-gradient(135deg, var(--rose), var(--blue)); box-shadow: 0 0 18px rgba(255,47,138,.35);}
-    .nav-links{display:flex; gap:10px; flex-wrap:wrap;}
-    .chip{
-      padding:10px 12px; border-radius:999px;
-      border:1px solid rgba(255,255,255,.10);
-      background: rgba(255,255,255,.04);
-      color: rgba(255,255,255,.72);
-      font-weight:600;
-      transition: transform .12s ease, background .12s ease, border-color .12s ease;
-    }
-    .chip:hover{transform: translateY(-1px); background: rgba(255,255,255,.07); border-color: rgba(255,47,138,.35); color: var(--txt);}
 
-    /* Hero */
-    .hero{
-      margin-top:28px;
-      padding:34px 26px 30px;
-      border-radius: var(--radius);
-      background: linear-gradient(180deg, rgba(255,255,255,.05), rgba(255,255,255,.02));
-      border: 1px solid rgba(255,255,255,.10);
-      box-shadow: var(--shadow);
-      position:relative;
-      overflow:hidden;
-      text-align:center;
-    }
-    .hero:before{
+    /* 玫瑰主题暗纹背景（纯代码生成，不需要你上传壁纸） */
+    body::before{
       content:"";
-      position:absolute; inset:-2px;
-      background:
-        radial-gradient(680px 280px at 20% 10%, rgba(74,163,255,.35), transparent 60%),
-        radial-gradient(620px 280px at 80% 30%, rgba(255,47,138,.28), transparent 65%);
-      filter: blur(6px);
-      opacity:.9;
+      position:fixed;
+      inset:-40px;
+      z-index:-2;
+      background-image:
+        radial-gradient(1200px 900px at 20% 30%, rgba(255,47,134,.18), transparent 60%),
+        radial-gradient(900px 700px at 80% 35%, rgba(127,231,255,.10), transparent 62%),
+        radial-gradient(900px 900px at 50% 110%, rgba(255,47,134,.16), transparent 62%),
+        url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='720' height='720' viewBox='0 0 720 720'%3E%3Cg fill='none' stroke='%23ff2f86' stroke-opacity='0.11' stroke-width='2'%3E%3Cpath d='M360 120c70 0 130 55 130 125 0 55-35 92-74 110 54 2 108 35 108 106 0 74-62 129-164 129s-164-55-164-129c0-71 54-104 108-106-39-18-74-55-74-110 0-70 60-125 130-125z'/%3E%3Cpath d='M360 150c-45 0-88 35-88 85 0 47 40 78 88 78s88-31 88-78c0-50-43-85-88-85z'/%3E%3Cpath d='M360 340c-88 0-140 46-140 112 0 64 55 108 140 108s140-44 140-108c0-66-52-112-140-112z'/%3E%3Cpath d='M235 520c35 30 79 48 125 48s90-18 125-48'/%3E%3Cpath d='M240 220c20 35 63 55 120 55s100-20 120-55'/%3E%3Cpath d='M290 380c18 22 42 32 70 32s52-10 70-32'/%3E%3C/g%3E%3C/svg%3E");
+      background-size: auto, auto, auto, 520px 520px;
+      background-repeat: no-repeat, no-repeat, no-repeat, repeat;
+      background-position: 0 0, 100% 0, 50% 120%, 0 0;
+      filter: saturate(1.12);
+      opacity:1;
       pointer-events:none;
     }
-    .hero-inner{position:relative; display:grid; grid-template-columns: 1fr; gap:14px; justify-items:center;}
-    .kicker{
-      display:inline-flex; gap:10px; align-items:center;
-      padding:10px 14px; width:fit-content;
-      border-radius:999px;
-      background: rgba(0,0,0,.20);
-      border:1px solid rgba(255,255,255,.10);
-      color: rgba(255,255,255,.78);
-      font-weight:900;
-      letter-spacing:.6px;
+
+    /* 轻遮罩：让壁纸/暗纹不抢字 */
+    body::after{
+      content:"";
+      position:fixed;
+      inset:0;
+      z-index:-1;
+      background: radial-gradient(1200px 900px at 50% 15%, rgba(0,0,0,.18), rgba(0,0,0,.50) 70%),
+                  linear-gradient(180deg, rgba(0,0,0,.18), rgba(0,0,0,.56));
+      pointer-events:none;
     }
 
-    /* ✅ 更强“科技+超立体+发光”的主标题 */
-    .title{
-      margin:0;
-      font-size: clamp(46px, 6.3vw, 78px);
-      font-weight: 1000;
-      letter-spacing: 10px;
-      line-height: 1.05;
-      color: transparent;
-      background: linear-gradient(180deg, #f4feff, #bfe8ff 26%, #58b8ff 58%, #2b48ff 100%);
-      -webkit-background-clip:text;
-      background-clip:text;
-
-      /* 立体“挤压”叠影（更明显） */
-      text-shadow:
-        0 1px 0 rgba(255,255,255,.10),
-        0 2px 0 rgba(20,35,80,.25),
-        0 3px 0 rgba(18,30,70,.30),
-        0 4px 0 rgba(15,25,60,.35),
-        0 5px 0 rgba(12,20,52,.38),
-        0 6px 0 rgba(10,18,46,.42),
-        0 10px 30px rgba(0,0,0,.60),
-
-        /* 外发光（蓝+玫瑰红） */
-        0 0 18px rgba(74,163,255,.35),
-        0 0 42px rgba(74,163,255,.22),
-        0 0 55px rgba(255,47,138,.18);
-      filter: drop-shadow(0 18px 50px rgba(0,0,0,.55));
+    a{color:inherit}
+    .wrap{max-width:var(--max); margin:0 auto; padding:0 18px;}
+    .topbar{
+      position:sticky; top:0; z-index:50;
+      backdrop-filter: blur(12px);
+      background: rgba(10,12,26,.55);
+      border-bottom:1px solid rgba(255,255,255,.07);
     }
-    .sub{
-      margin: 6px 0 0;
-      color: rgba(255,255,255,.84);
-      line-height: 1.8;
-      font-size: 18px;
-      max-width: 980px;
-      letter-spacing:.8px;
+    .topbarInner{
+      height:66px; display:flex; align-items:center; justify-content:space-between;
+      gap:14px;
     }
-    .spacer{height:10px;}
-
-    .cta-row{display:flex; gap:12px; flex-wrap:wrap; margin-top:10px; justify-content:center;}
-    .btn{
-      display:inline-flex; align-items:center; justify-content:center;
-      padding:12px 16px;
-      border-radius: 14px;
-      border:1px solid rgba(255,255,255,.12);
-      background: rgba(255,255,255,.06);
-      font-weight: 900;
-      color: var(--txt);
-      transition: transform .12s ease, background .12s ease, border-color .12s ease;
-    }
-    .btn:hover{transform: translateY(-1px); background: rgba(255,255,255,.10); border-color: rgba(255,47,138,.35);}
-    .btn.primary{
-      border-color: transparent;
-      background: linear-gradient(135deg, rgba(255,47,138,.98), rgba(255,111,176,.78));
-      box-shadow: 0 12px 40px rgba(255,47,138,.20);
-    }
-
-    /* Sections */
-    .section{margin-top:22px;}
-    .h2{
-      margin:0 0 12px;
-      font-size: 18px;
-      letter-spacing:.2px;
+    .brand{
       display:flex; align-items:center; gap:10px;
-    }
-    .h2:before{
-      content:"";
-      width:10px; height:10px; border-radius:999px;
-      background: linear-gradient(135deg, var(--rose), var(--rose2));
-      box-shadow: 0 0 18px rgba(255,47,138,.35);
-    }
-    .card{
-      border: 1px solid rgba(255,255,255,.10);
-      background: rgba(0,0,0,.18);
-      border-radius: var(--radius);
-      box-shadow: var(--shadow);
-      overflow:hidden;
-    }
-    .pad{padding:18px;}
-
-    /* Intro module */
-    .intro{display:grid; grid-template-columns: 1.05fr 1.95fr; gap:16px; align-items:stretch;}
-    @media (max-width:900px){ .intro{grid-template-columns:1fr;} }
-    .intro-img{
-      min-height: 240px;
-      border-radius: var(--radius2);
-      border: 1px solid rgba(255,255,255,.12);
-      background:
-        radial-gradient(360px 220px at 30% 30%, rgba(74,163,255,.22), transparent 70%),
-        radial-gradient(360px 220px at 70% 70%, rgba(255,47,138,.18), transparent 70%),
-        rgba(255,255,255,.04);
-      overflow:hidden;
-      position:relative;
-    }
-    .intro-img img{width:100%; height:100%; object-fit:cover; display:block; opacity:.95;}
-    .intro-text .muted{color:var(--muted); line-height:1.9; margin:0; font-size:16px;}
-
-    /* ✅ 服务介绍的要点列表（保留文字结构） */
-    .points{margin:10px 0 0; padding-left: 18px; color: rgba(255,255,255,.82); line-height:1.85;}
-    .points li{margin:6px 0;}
-
-    /* 业务分类 */
-    .svc-grid{display:grid; grid-template-columns: repeat(3, 1fr); gap:14px;}
-    @media (max-width:980px){ .svc-grid{grid-template-columns:repeat(2,1fr);} }
-    @media (max-width:600px){ .svc-grid{grid-template-columns:1fr;} }
-
-    .svc-card{
-      border:1px solid var(--svcLine);
-      border-radius: var(--radius2);
-      overflow:hidden;
-      box-shadow: 0 18px 60px rgba(0,0,0,.25);
-      background: rgba(255,255,255,.02);
-      transition: transform .12s ease, border-color .12s ease;
-    }
-    .svc-card:hover{transform: translateY(-2px); border-color: rgba(255,47,138,.35);}
-    .svc-head{
-      padding:14px 14px 12px;
-      background:
-        radial-gradient(260px 120px at 15% 20%, rgba(74,163,255,.22), transparent 65%),
-        radial-gradient(260px 120px at 85% 40%, rgba(255,47,138,.18), transparent 70%),
-        var(--svcHead);
-      border-bottom: 1px solid rgba(255,255,255,.10);
-      position:relative;
-    }
-    .svc-head:after{
-      content:"";
-      position:absolute; left:0; right:0; bottom:0;
-      height:2px;
-      background: linear-gradient(90deg, rgba(255,47,138,.0), rgba(255,47,138,.75), rgba(74,163,255,.55), rgba(255,47,138,.0));
-      opacity:.8;
-    }
-    .svc-title{margin:0; font-weight: 950; letter-spacing:.2px; display:flex; align-items:center; justify-content:space-between; gap:10px;}
-    .svc-pill{
-      padding:7px 10px; border-radius:999px;
-      border:1px solid rgba(255,255,255,.14);
-      background: rgba(0,0,0,.18);
-      color: rgba(255,255,255,.78);
-      font-size:12px;
+      font-weight:900; letter-spacing:.5px;
       white-space:nowrap;
     }
-    .svc-body{padding:14px; background: var(--svcBody);}
-    .svc-body p{margin:0; color: rgba(255,255,255,.80); line-height:1.7; font-size:14px;}
-    .svc-subtags{margin-top:10px; display:flex; gap:10px; flex-wrap:wrap;}
-    .svc-subtags span{
-      padding:8px 10px;
-      border-radius:999px;
-      border:1px solid rgba(255,47,138,.22);
-      background: rgba(255,47,138,.08);
-      color: rgba(255,255,255,.86);
-      font-weight:900;
-      font-size:12px;
+    .brandDot{
+      width:10px;height:10px;border-radius:50%;
+      background: radial-gradient(circle at 30% 30%, rgba(255,255,255,.9), rgba(255,255,255,.05) 40%),
+                  radial-gradient(circle at 50% 50%, rgba(255,47,134,.95), rgba(255,47,134,.10) 65%);
+      box-shadow:
+        0 0 14px rgba(255,47,134,.45),
+        0 0 30px rgba(255,47,134,.18);
     }
-
-    /* 展品：只留媒体本体 */
-    .gallery{display:grid; grid-template-columns: repeat(3, 1fr); gap:12px;}
-    @media (max-width:980px){ .gallery{grid-template-columns:repeat(2,1fr);} }
-    @media (max-width:620px){ .gallery{grid-template-columns:1fr;} }
-    .g-item{
+    .brandText{
+      display:flex; gap:8px; align-items:baseline;
+      font-size:15px;
+      color:rgba(255,255,255,.92);
+    }
+    .brandText b{font-weight:900}
+    .brandText span{color:rgba(255,255,255,.72); font-weight:800}
+    .nav{
+      display:flex; gap:10px; align-items:center;
+      flex-wrap:wrap;
+      justify-content:flex-end;
+    }
+    .nav a{
+      text-decoration:none;
+      padding:10px 14px;
       border:1px solid rgba(255,255,255,.10);
-      background: rgba(0,0,0,.18);
-      border-radius: var(--radius2);
-      overflow:hidden;
-      cursor:pointer;
-      transition: transform .12s ease, border-color .12s ease;
+      background: rgba(255,255,255,.04);
+      border-radius:999px;
+      font-weight:800;
+      color:rgba(255,255,255,.78);
+      transition:.18s ease;
     }
-    .g-item:hover{transform: translateY(-2px); border-color: rgba(255,47,138,.35);}
-    .g-media{width:100%; aspect-ratio: 16/10; object-fit:cover; display:block; background: rgba(255,255,255,.04);}
+    .nav a:hover{
+      transform: translateY(-1px);
+      border-color: rgba(255,47,134,.35);
+      box-shadow: 0 0 0 3px rgba(255,47,134,.12);
+      color:rgba(255,255,255,.92);
+    }
 
-    .videos{margin-top:12px; display:grid; grid-template-columns: repeat(3, 1fr); gap:12px;}
-    @media (max-width:980px){ .videos{grid-template-columns:repeat(2,1fr);} }
-    @media (max-width:620px){ .videos{grid-template-columns:1fr;} }
-    video{width:100%; border-radius: var(--radius2); border:1px solid rgba(255,255,255,.12); background: rgba(0,0,0,.25);}
+    /* HERO */
+    .hero{
+      padding:34px 0 18px;
+    }
+    .heroCard{
+      position:relative;
+      border-radius: 28px;
+      border:1px solid rgba(255,255,255,.10);
+      background:
+        radial-gradient(1100px 520px at 10% 20%, rgba(47,123,255,.26), transparent 60%),
+        radial-gradient(900px 520px at 95% 35%, rgba(255,47,134,.22), transparent 58%),
+        linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.03));
+      box-shadow: var(--shadow);
+      overflow:hidden;
+      padding:30px 26px 22px;
+    }
 
-    /* 联系方式：只留三个大图标，均匀排列 */
-    .contact-icons{
+    .heroBadge{
+      display:inline-flex; align-items:center; justify-content:center;
+      padding:10px 16px;
+      border-radius:999px;
+      border:1px solid rgba(255,255,255,.13);
+      background: rgba(255,255,255,.05);
+      color: rgba(255,255,255,.90);
+      font-weight:900;
+      letter-spacing:.6px;
+      font-size:15px;
+      position:relative;
+    }
+    /* 3D + 发光：徽章文字 */
+    .heroBadgeText{
+      position:relative;
+      color:transparent;
+      background: linear-gradient(180deg, rgba(255,255,255,.95), rgba(210,240,255,.92) 35%, rgba(140,220,255,.90));
+      -webkit-background-clip:text;
+      background-clip:text;
+      text-shadow:
+        0 0 16px rgba(127,231,255,.40),
+        0 0 34px rgba(47,123,255,.24);
+      filter: drop-shadow(0 0 18px rgba(47,123,255,.22));
+    }
+    .heroBadgeText::before{
+      content:attr(data-text);
+      position:absolute; inset:0;
+      transform: translate(1px, 2px);
+      color: rgba(7,10,22,.92);
+      text-shadow:
+        1px 1px 0 rgba(0,0,0,.35),
+        2px 2px 0 rgba(0,0,0,.28),
+        3px 3px 0 rgba(0,0,0,.22);
+      z-index:-1;
+    }
+
+    .heroTitle{
+      margin:14px 0 8px;
+      font-weight:1000;
+      letter-spacing: 6px;
+      line-height: 1.06;
+      font-size: clamp(34px, 6.2vw, 74px);
+      text-align:center;
+      position:relative;
+      color:transparent;
+      background: linear-gradient(180deg, rgba(210,250,255,.98), rgba(127,231,255,.92) 25%, rgba(47,123,255,.96) 60%, rgba(31,76,255,.96));
+      -webkit-background-clip:text;
+      background-clip:text;
+      -webkit-text-stroke: 1px rgba(255,255,255,.10);
+      text-shadow:
+        /* 立体“厚度” */
+        1px 1px 0 rgba(10,18,44,.85),
+        2px 2px 0 rgba(10,18,44,.78),
+        3px 3px 0 rgba(10,18,44,.72),
+        4px 4px 0 rgba(10,18,44,.66),
+        5px 5px 0 rgba(10,18,44,.60),
+        6px 6px 0 rgba(10,18,44,.55),
+        7px 7px 0 rgba(10,18,44,.48),
+        8px 8px 0 rgba(10,18,44,.42),
+        /* 发光 */
+        0 0 14px rgba(127,231,255,.44),
+        0 0 34px rgba(47,123,255,.32),
+        0 0 72px rgba(31,76,255,.18);
+      filter: drop-shadow(0 0 18px rgba(47,123,255,.25));
+      animation: glowPulse 3.2s ease-in-out infinite;
+    }
+    .heroTitle::before{
+      content: attr(data-text);
+      position:absolute; left:0; right:0; top:0;
+      transform: translate(10px, 12px);
+      color: rgba(6,10,20,.95);
+      text-shadow:
+        0 0 2px rgba(0,0,0,.55),
+        0 14px 32px rgba(0,0,0,.55);
+      z-index:-1;
+    }
+    @keyframes glowPulse{
+      0%,100%{ filter: drop-shadow(0 0 16px rgba(47,123,255,.24)); }
+      50%{ filter: drop-shadow(0 0 24px rgba(127,231,255,.28)); }
+    }
+
+    .heroSubRow{
+      display:flex; justify-content:center; margin:10px 0 14px;
+    }
+    .sloganGrid{
+      margin: 8px auto 16px;
+      max-width: 980px;
+      display:grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap:12px;
+    }
+    @media (max-width: 980px){
+      .sloganGrid{grid-template-columns: repeat(2, 1fr);}
+    }
+    @media (max-width: 520px){
+      .sloganGrid{grid-template-columns: 1fr;}
+    }
+    .sloganChip{
+      border-radius: 16px;
+      border:1px solid rgba(255,255,255,.12);
+      background: rgba(255,255,255,.04);
+      box-shadow: 0 0 0 1px rgba(255,47,134,.08) inset;
+      padding:14px 14px;
+      text-align:center;
+      position:relative;
+      overflow:hidden;
+    }
+    .sloganChip::after{
+      content:"";
+      position:absolute; inset:-1px;
+      background: radial-gradient(420px 160px at 50% 10%, rgba(255,47,134,.16), transparent 55%),
+                  radial-gradient(420px 160px at 50% 120%, rgba(47,123,255,.14), transparent 55%);
+      pointer-events:none;
+    }
+    .sloganText{
+      position:relative;
+      z-index:1;
+      font-weight:950;
+      letter-spacing:1px;
+      font-size: 18px;
+      color:transparent;
+      background: linear-gradient(180deg, rgba(235,252,255,.98), rgba(130,225,255,.92) 35%, rgba(47,123,255,.96));
+      -webkit-background-clip:text;
+      background-clip:text;
+      text-shadow:
+        1px 1px 0 rgba(8,14,34,.78),
+        2px 2px 0 rgba(8,14,34,.60),
+        0 0 16px rgba(127,231,255,.34),
+        0 0 28px rgba(47,123,255,.24);
+    }
+
+    .heroActions{
+      display:flex; gap:10px; justify-content:center; flex-wrap:wrap;
+      margin-top: 10px;
+    }
+    .btn{
+      border:none;
+      cursor:pointer;
+      text-decoration:none;
+      padding:12px 16px;
+      border-radius: 999px;
+      font-weight:900;
+      letter-spacing:.5px;
+      transition:.18s ease;
+      display:inline-flex; align-items:center; gap:10px;
+      user-select:none;
+    }
+    .btnPrimary{
+      color:#fff;
+      background: linear-gradient(135deg, rgba(255,47,134,.92), rgba(255,90,169,.92));
+      box-shadow:
+        0 14px 32px rgba(255,47,134,.24),
+        0 0 0 1px rgba(255,255,255,.10) inset;
+    }
+    .btnPrimary:hover{ transform: translateY(-1px); box-shadow: 0 18px 44px rgba(255,47,134,.28), 0 0 0 1px rgba(255,255,255,.14) inset; }
+    .btnGhost{
+      color:rgba(255,255,255,.88);
+      background: rgba(255,255,255,.05);
+      border:1px solid rgba(255,255,255,.12);
+    }
+    .btnGhost:hover{ transform: translateY(-1px); border-color: rgba(255,47,134,.32); box-shadow: 0 0 0 3px rgba(255,47,134,.10); }
+
+    /* SECTIONS */
+    .section{
+      padding: 18px 0 0;
+    }
+    .sectionTitleRow{
+      display:flex; align-items:center; gap:10px;
+      margin: 20px 0 14px;
+    }
+    .pin{
+      width:8px;height:8px;border-radius:50%;
+      background: radial-gradient(circle at 30% 30%, rgba(255,255,255,.92), rgba(255,255,255,.10) 45%),
+                  radial-gradient(circle at 50% 50%, rgba(255,47,134,.95), rgba(255,47,134,.08) 70%);
+      box-shadow: 0 0 14px rgba(255,47,134,.32);
+      flex:0 0 auto;
+    }
+    .sectionTitle{
+      margin:0;
+      font-size: 18px;
+      font-weight: 950;
+      color: rgba(255,255,255,.88);
+      letter-spacing: .8px;
+    }
+    .card{
+      border-radius: var(--radius);
+      border:1px solid rgba(255,255,255,.10);
+      background: rgba(255,255,255,.04);
+      box-shadow: var(--shadow2);
+      overflow:hidden;
+    }
+
+    /* About */
+    .aboutGrid{
+      display:grid;
+      grid-template-columns: 1.1fr 1.9fr;
+      gap:16px;
+      padding:18px;
+    }
+    @media (max-width: 900px){
+      .aboutGrid{grid-template-columns: 1fr; }
+    }
+    .aboutMedia{
+      border-radius: var(--radius2);
+      border:1px solid rgba(255,255,255,.10);
+      background: radial-gradient(520px 320px at 30% 20%, rgba(47,123,255,.18), transparent 60%),
+                  radial-gradient(520px 320px at 85% 80%, rgba(255,47,134,.16), transparent 60%),
+                  rgba(255,255,255,.03);
+      min-height: 210px;
+      display:flex; align-items:center; justify-content:center;
+      overflow:hidden;
+      position:relative;
+    }
+    .aboutMedia img{
+      width:100%; height:100%;
+      object-fit:cover;
+      display:block;
+      opacity:.92;
+    }
+    .aboutMedia .placeholder{
+      color: rgba(255,255,255,.62);
+      font-weight:850;
+      letter-spacing:.5px;
+      text-align:center;
+      padding:14px;
+    }
+    .aboutText{
+      padding: 4px 6px 8px;
+    }
+    .aboutLead{
+      margin:0 0 10px;
+      color: rgba(255,255,255,.84);
+      line-height: 1.9;
+      font-weight: 800;
+    }
+    .aboutPara{
+      margin:0 0 12px;
+      color: rgba(255,255,255,.72);
+      line-height: 1.9;
+      font-weight: 700;
+    }
+    .bulletList{
+      margin:0;
+      padding-left: 18px;
+      color: rgba(255,255,255,.76);
+      line-height: 1.9;
+      font-weight: 750;
+    }
+    .aboutActions{
+      margin-top: 12px;
+      display:flex; gap:10px; flex-wrap:wrap;
+    }
+
+    /* Services */
+    .svcGrid{
       display:grid;
       grid-template-columns: repeat(3, 1fr);
       gap:14px;
-      align-items:stretch;
     }
-    @media (max-width:700px){ .contact-icons{grid-template-columns:1fr;} }
+    @media (max-width: 980px){
+      .svcGrid{grid-template-columns: repeat(2, 1fr);}
+    }
+    @media (max-width: 560px){
+      .svcGrid{grid-template-columns: 1fr;}
+    }
+    .svcCard{
+      border-radius: var(--radius);
+      border:1px solid rgba(255,255,255,.10);
+      background: rgba(255,255,255,.04);
+      overflow:hidden;
+      position:relative;
+      box-shadow: var(--shadow2);
+    }
+    .svcHeader{
+      padding:12px 14px;
+      font-weight: 950;
+      letter-spacing:.6px;
+      color: rgba(255,255,255,.92);
+      background:
+        radial-gradient(520px 160px at 20% 10%, rgba(255,47,134,.18), transparent 55%),
+        radial-gradient(520px 160px at 85% 70%, rgba(47,123,255,.14), transparent 55%),
+        rgba(0,0,0,.22);
+      border-bottom:1px solid rgba(255,255,255,.08);
+    }
+    .svcBody{
+      padding:12px 14px 14px;
+      color: rgba(255,255,255,.70);
+      line-height:1.85;
+      font-weight: 750;
+      background: rgba(255,255,255,.035);
+      min-height: 112px;
+    }
+    .tags{
+      margin-top:10px;
+      display:flex; flex-wrap:wrap; gap:8px;
+    }
+    .tag{
+      font-size:12px;
+      font-weight:900;
+      letter-spacing:.4px;
+      padding:7px 10px;
+      border-radius:999px;
+      border:1px solid rgba(255,255,255,.10);
+      background: rgba(255,255,255,.04);
+      color: rgba(255,255,255,.82);
+    }
 
-    .bigIconBtn{
+    /* Gallery */
+    .galleryWrap{
+      padding: 18px;
+    }
+    .mediaGrid{
+      display:grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap:12px;
+    }
+    @media (max-width: 980px){
+      .mediaGrid{grid-template-columns: repeat(2, 1fr);}
+    }
+    @media (max-width: 560px){
+      .mediaGrid{grid-template-columns: 1fr;}
+    }
+    .mediaTile{
+      border-radius: 18px;
+      border:1px solid rgba(255,255,255,.10);
+      background: rgba(255,255,255,.03);
+      overflow:hidden;
+      position:relative;
+      min-height: 160px;
+      cursor:pointer;
+      transition: .18s ease;
+      box-shadow: 0 12px 30px rgba(0,0,0,.40);
+    }
+    .mediaTile:hover{
+      transform: translateY(-2px);
+      border-color: rgba(255,47,134,.28);
+      box-shadow: 0 18px 46px rgba(0,0,0,.52), 0 0 0 3px rgba(255,47,134,.10);
+    }
+    .mediaTile img, .mediaTile video{
+      width:100%; height:100%;
+      display:block;
+      object-fit:cover;
+      background: rgba(255,255,255,.02);
+    }
+    .hint{
+      margin-top: 10px;
+      color: rgba(255,255,255,.62);
+      font-weight: 750;
+      line-height:1.8;
+      font-size: 13px;
+    }
+
+    /* Contact */
+    .contactCard{
+      padding: 18px;
+    }
+    .contactRow{
       display:flex;
       align-items:center;
       justify-content:center;
+      flex-wrap:wrap;
       gap:12px;
-      padding:22px 16px;
+      padding: 10px 0 6px;
+    }
+    .iconBtn{
       border-radius: 18px;
-      border:1px solid rgba(255,47,138,.25);
-      background: rgba(255,47,138,.08);
+      border:1px solid rgba(255,255,255,.12);
+      background: rgba(255,255,255,.05);
+      color: rgba(255,255,255,.90);
+      padding: 12px 14px;
+      display:flex;
+      align-items:center;
+      gap:10px;
       cursor:pointer;
-      transition: transform .12s ease, background .12s ease, border-color .12s ease;
-      box-shadow: 0 18px 60px rgba(0,0,0,.25);
-      position:relative;
-      overflow:hidden;
+      text-decoration:none;
+      font-weight: 950;
+      letter-spacing:.4px;
+      transition:.18s ease;
+      min-width: 140px;
+      justify-content:center;
     }
-    .bigIconBtn:hover{transform: translateY(-2px); border-color: rgba(255,47,138,.45); background: rgba(255,47,138,.12);}
-    .bigIconBtn:before{
-      content:"";
-      position:absolute; inset:-2px;
-      background:
-        radial-gradient(240px 120px at 20% 30%, rgba(74,163,255,.18), transparent 65%),
-        radial-gradient(240px 120px at 80% 60%, rgba(255,47,138,.18), transparent 65%);
-      filter: blur(10px);
-      opacity:.9;
-      pointer-events:none;
+    .iconBtn:hover{
+      transform: translateY(-2px);
+      border-color: rgba(255,47,134,.34);
+      box-shadow: 0 0 0 3px rgba(255,47,134,.11);
     }
-    .bigIcon{width:34px; height:34px; display:block; filter: drop-shadow(0 0 18px rgba(255,47,138,.25)); position:relative;}
+    .ico{
+      width:22px; height:22px; display:inline-flex; align-items:center; justify-content:center;
+      border-radius: 8px;
+      background: rgba(255,255,255,.08);
+      border:1px solid rgba(255,255,255,.10);
+      box-shadow: 0 0 14px rgba(255,47,134,.10);
+      font-size: 12px;
+      font-weight: 1000;
+    }
+    .contactNote{
+      margin: 10px auto 0;
+      text-align:center;
+      color: rgba(255,255,255,.64);
+      font-weight: 760;
+      line-height: 1.8;
+      font-size: 13px;
+      max-width: 860px;
+    }
+    footer{
+      padding: 18px 0 26px;
+      color: rgba(255,255,255,.45);
+      text-align:center;
+      font-weight: 700;
+      font-size: 12px;
+    }
 
-    .foot{margin-top:16px; color: rgba(255,255,255,.45); font-size:12px;}
-
-    /* Modal + Toast */
-    .modal{position:fixed; inset:0; display:none; background: rgba(0,0,0,.62); backdrop-filter: blur(6px); z-index:50; padding:24px;}
-    .modal.show{display:flex; align-items:center; justify-content:center;}
-    .modal-card{
-      width:min(780px, 100%);
+    /* Modal */
+    .modalMask{
+      position:fixed; inset:0;
+      background: rgba(0,0,0,.62);
+      display:none;
+      align-items:center;
+      justify-content:center;
+      z-index: 1000;
+      padding: 18px;
+    }
+    .modalMask.show{display:flex;}
+    .modal{
+      width:min(980px, 96vw);
       border-radius: 22px;
-      border:1px solid rgba(255,255,255,.14);
-      background: rgba(10,14,30,.92);
-      box-shadow: 0 22px 90px rgba(0,0,0,.55);
+      border:1px solid rgba(255,255,255,.12);
+      background:
+        radial-gradient(800px 420px at 20% 10%, rgba(47,123,255,.20), transparent 60%),
+        radial-gradient(800px 420px at 90% 80%, rgba(255,47,134,.18), transparent 60%),
+        rgba(10,12,26,.88);
+      box-shadow: var(--shadow);
       overflow:hidden;
-      position:relative;
     }
-    .modal-top{display:flex; justify-content:space-between; align-items:center; padding:14px 16px; border-bottom:1px solid rgba(255,255,255,.10);}
-    .modal-top .mt{font-weight:950;}
-    .close{
-      border:1px solid rgba(255,255,255,.14);
-      background: rgba(255,255,255,.06);
-      color: var(--txt);
-      border-radius: 12px;
-      padding:10px 12px;
+    .modalHead{
+      padding: 12px 14px;
+      border-bottom:1px solid rgba(255,255,255,.10);
+      display:flex; align-items:center; justify-content:space-between;
+      gap:10px;
+    }
+    .modalTitle{
+      font-weight: 950;
+      letter-spacing:.6px;
+      color: rgba(255,255,255,.92);
+    }
+    .modalClose{
+      border:none;
       cursor:pointer;
-      font-weight:900;
-      user-select:none;
+      padding: 8px 12px;
+      border-radius: 999px;
+      background: rgba(255,255,255,.06);
+      border:1px solid rgba(255,255,255,.12);
+      color: rgba(255,255,255,.86);
+      font-weight: 900;
     }
-    .modal-body{padding:16px;}
+    .modalBody{ padding: 14px; }
 
     .wechatBox{
       display:grid;
-      grid-template-columns: 1.1fr .9fr;
-      gap:14px;
+      grid-template-columns: 1.6fr 1fr;
+      gap: 14px;
       align-items:stretch;
     }
-    @media (max-width:760px){ .wechatBox{grid-template-columns:1fr;} }
-    .wechatId{
-      border:1px solid rgba(255,255,255,.12);
-      border-radius: 16px;
-      background: rgba(255,255,255,.05);
-      padding:16px;
+    @media (max-width: 820px){
+      .wechatBox{grid-template-columns: 1fr;}
     }
-    .wechatId .big{font-size:22px; font-weight:980; letter-spacing:1px;}
-    .wechatActions{display:flex; gap:10px; flex-wrap:wrap; margin-top:12px;}
-    .qrBox{
+    .wechatInfo{
+      border-radius: 18px;
+      border:1px solid rgba(255,255,255,.10);
+      background: rgba(255,255,255,.04);
+      padding: 14px;
+      min-height: 200px;
+    }
+    .wechatInfo .big{
+      font-size: 18px;
+      font-weight: 1000;
+      letter-spacing:.6px;
+      margin-bottom: 8px;
+      color: rgba(255,255,255,.92);
+    }
+    .wechatInfo .sub{
+      color: rgba(255,255,255,.70);
+      font-weight: 760;
+      line-height: 1.85;
+      font-size: 13px;
+    }
+    .wechatActions{
+      margin-top: 12px;
+      display:flex; gap:10px; flex-wrap:wrap;
+    }
+    .miniBtn{
+      border:none;
+      cursor:pointer;
+      text-decoration:none;
+      padding:10px 12px;
+      border-radius: 999px;
+      font-weight: 950;
+      letter-spacing:.4px;
+      transition:.18s ease;
+      color: rgba(255,255,255,.90);
+      background: rgba(255,255,255,.06);
       border:1px solid rgba(255,255,255,.12);
-      border-radius: 16px;
-      background: rgba(255,255,255,.05);
-      padding:16px;
+    }
+    .miniBtn:hover{ transform: translateY(-1px); border-color: rgba(255,47,134,.30); box-shadow: 0 0 0 3px rgba(255,47,134,.10); }
+    .miniBtn.primary{
+      background: linear-gradient(135deg, rgba(255,47,134,.92), rgba(255,90,169,.92));
+      border: none;
+      box-shadow: 0 14px 32px rgba(255,47,134,.22);
+    }
+    .miniBtn.primary:hover{ box-shadow: 0 18px 44px rgba(255,47,134,.26); }
+    .qrPane{
+      border-radius: 18px;
+      border:1px solid rgba(255,255,255,.10);
+      background: rgba(255,255,255,.03);
+      padding: 14px;
       display:flex;
       flex-direction:column;
       gap:12px;
       align-items:center;
       justify-content:center;
-      min-height: 220px;
     }
-    .qrBox img{max-width:100%; border-radius: 12px; border:1px solid rgba(255,255,255,.12);}
+    .qrPane img{
+      width: 100%;
+      max-width: 280px;
+      border-radius: 16px;
+      border:1px solid rgba(255,255,255,.10);
+      background: rgba(255,255,255,.02);
+      display:block;
+    }
+
+    /* Toast */
     .toast{
-      position: fixed; left: 50%; bottom: 24px; transform: translateX(-50%);
-      background: rgba(0,0,0,.75); color: #fff; padding: 10px 14px;
-      border-radius: 10px; font-size: 14px; z-index: 99999;
-      max-width: 90vw; text-align: center; line-height: 1.4;
+      position:fixed;
+      left:50%;
+      bottom:22px;
+      transform: translateX(-50%);
+      background: rgba(10,12,26,.88);
+      border:1px solid rgba(255,255,255,.12);
+      color: rgba(255,255,255,.90);
+      padding: 10px 12px;
+      border-radius: 999px;
+      font-weight: 850;
+      letter-spacing:.4px;
+      z-index: 1100;
       display:none;
+      box-shadow: 0 14px 34px rgba(0,0,0,.50);
+      max-width: min(860px, 92vw);
+      text-align:center;
     }
+    .toast.show{display:block;}
   </style>
 </head>
 
-<body class="bg">
-  <div class="nav">
-    <div class="nav-inner">
-      <div class="brand"><span class="dot"></span>筑梦电子 · 贵宾服务站</div>
-      <div class="nav-links">
-        <a class="chip" href="#intro">服务介绍</a>
-        <a class="chip" href="#services">业务分类</a>
-        <a class="chip" href="#showcase">展品展示</a>
-        <a class="chip" href="#contact">联系方式</a>
+<body>
+  <header class="topbar">
+    <div class="wrap">
+      <div class="topbarInner">
+        <div class="brand">
+          <span class="brandDot" aria-hidden="true"></span>
+          <div class="brandText">
+            <b>筑梦电子</b>
+            <span>· VIP服务站 · 7x24h服务</span>
+          </div>
+        </div>
+        <nav class="nav" aria-label="站点导航">
+          <a href="#about">自我介绍</a>
+          <a href="#services">业务分类</a>
+          <a href="#gallery">展品展示</a>
+          <a href="#contact">联系方式</a>
+        </nav>
       </div>
     </div>
-  </div>
+  </header>
 
-  <div class="wrap">
-    <section class="hero" id="top">
-      <div class="hero-inner">
-        <div class="kicker">因为专注 · 所以专业 · 十年老店</div>
-        <h1 class="title">欢迎贵宾来到筑梦电子</h1>
-        <div class="spacer"></div>
-        <p class="sub">新店拼价格 · 老店拼质量 · 同价拼服务 · 骗子无成本</p>
-
-        <div class="cta-row">
-          <a class="btn primary" href="#contact">立即联系</a>
-          <a class="btn" href="#showcase">查看展品</a>
-          <a class="btn" href="#services">查看业务</a>
-        </div>
-      </div>
-    </section>
-
-    <!-- ✅ 图2要求：红点标题改为“服务介绍”，其它内容保留；取消文字下方3个玫瑰红按钮/徽章 -->
-    <section class="section" id="intro">
-      <div class="h2">服务介绍</div>
-      <div class="card pad">
-        <div class="intro">
-          <div class="intro-img">
-            <img src="assets/profile.jpg" alt="自我介绍配图" onerror="this.style.display='none'">
+  <main>
+    <!-- HERO -->
+    <section class="hero">
+      <div class="wrap">
+        <div class="heroCard">
+          <div class="heroSubRow">
+            <div class="heroBadge">
+              <span class="heroBadgeText" data-text="因为专注 · 所以专业 · 十年老店">因为专注 · 所以专业 · 十年老店</span>
+            </div>
           </div>
-          <div class="intro-text">
-            <p class="muted">
-              把这里改成你的自我介绍文案。例如：我专注于电子产品与多类数字化服务，提供从咨询到交付的一站式支持，同时在 AI 技术方向提供教学/代做/工具教程等服务。
-            </p>
-            <ul class="points">
-              <li>服务特点：快速响应｜流程清晰｜按需定制</li>
-              <li>交付形式：文字方案｜文件/脚本｜远程协助｜成品交付</li>
-              <li>合作方式：先沟通需求 → 明确范围 → 交付与售后</li>
-            </ul>
-            <!-- ✅ 你要取消的“玫瑰红等三个按钮/徽章”已移除 -->
+
+          <h1 class="heroTitle" data-text="欢迎贵宾来到筑梦电子">欢迎贵宾来到筑梦电子</h1>
+
+          <div class="sloganGrid" aria-label="服务宣言">
+            <div class="sloganChip"><div class="sloganText">新店拼价格</div></div>
+            <div class="sloganChip"><div class="sloganText">老店拼质量</div></div>
+            <div class="sloganChip"><div class="sloganText">同价拼服务</div></div>
+            <div class="sloganChip"><div class="sloganText">骗子无成本</div></div>
+          </div>
+
+          <div class="heroActions">
+            <a class="btn btnPrimary" href="#contact">立即联系</a>
+            <a class="btn btnGhost" href="#gallery">查看展品</a>
+            <a class="btn btnGhost" href="#services">查看业务</a>
           </div>
         </div>
       </div>
     </section>
 
+    <!-- ABOUT -->
+    <section class="section" id="about">
+      <div class="wrap">
+        <div class="sectionTitleRow">
+          <span class="pin" aria-hidden="true"></span>
+          <h2 class="sectionTitle">服务介绍</h2>
+        </div>
+
+        <div class="card">
+          <div class="aboutGrid">
+            <div class="aboutMedia" aria-label="自我介绍图片区域">
+              <img src="assets/profile.jpg" alt="自我介绍图片" onerror="this.remove(); this.parentElement.insertAdjacentHTML('beforeend','<div class=&quot;placeholder&quot;>可选：上传图片到<br><code>assets/profile.jpg</code></div>')" />
+            </div>
+
+            <div class="aboutText">
+              <!-- ✅ 按你的要求：不出现“我”，且从“专注”开始，并补充填充 -->
+              <p class="aboutLead">专注于电子产品与多类数字化服务，提供从咨询到交付的一站式支持，同时覆盖 AI 技术方向的教学、代做与工具教程等内容。</p>
+              <p class="aboutPara">支持按需求定制方案，范围明确后快速推进；支持远程协助与成品交付；沟通清晰、流程透明，适合需要省心落地与长期协作的用户。</p>
+              <p class="aboutPara">无论是账号内容、网络服务、工具搭建，还是展品展示与引流页面的持续优化，都可以按目标分阶段完成，优先解决“最关键的那一步”。</p>
+
+              <ul class="bulletList">
+                <li>服务特点：快速响应｜流程清晰｜按需定制</li>
+                <li>交付形式：文字方案｜文件/脚本｜远程协助｜成品交付</li>
+                <li>合作方式：先沟通需求 → 明确范围 → 交付与售后</li>
+              </ul>
+
+              <div class="aboutActions">
+                <a class="btn btnGhost" href="#services">筑梦引流页</a>
+                <a class="btn btnGhost" href="#gallery">展品图/视频展示</a>
+                <a class="btn btnPrimary" href="#contact">一键联系</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SERVICES -->
     <section class="section" id="services">
-      <div class="h2">涉及业务分类</div>
-      <div class="card pad">
-        <div class="svc-grid">
+      <div class="wrap">
+        <div class="sectionTitleRow">
+          <span class="pin" aria-hidden="true"></span>
+          <h2 class="sectionTitle">涉及业务分类</h2>
+        </div>
 
-          <div class="svc-card">
-            <div class="svc-head">
-              <div class="svc-title">电子产品 <span class="svc-pill">产品/选购/供给</span></div>
-            </div>
-            <div class="svc-body">
-              <p>（待补充）这里写电子产品相关服务介绍：你后期把具体内容填进来即可。</p>
-            </div>
+        <div class="svcGrid">
+          <div class="svcCard">
+            <div class="svcHeader">电子产品</div>
+            <div class="svcBody">（待补充）这里写电子产品相关服务介绍：建议写清服务范围、交付方式与注意事项。</div>
           </div>
 
-          <div class="svc-card">
-            <div class="svc-head">
-              <div class="svc-title">金融业务 <span class="svc-pill">咨询/办理</span></div>
-            </div>
-            <div class="svc-body">
-              <p>（待补充）这里写金融业务服务介绍：建议写清服务范围与规则，保持合规与清晰。</p>
-            </div>
+          <div class="svcCard">
+            <div class="svcHeader">金融业务</div>
+            <div class="svcBody">（待补充）这里写金融业务服务介绍：建议写清咨询范围与规则，保持合作与沟通清晰。</div>
           </div>
 
-          <div class="svc-card">
-            <div class="svc-head">
-              <div class="svc-title">AI技术 <span class="svc-pill">教学/代做/教程</span></div>
-            </div>
-            <div class="svc-body">
-              <p>（待补充）这里写 AI 技术方向的总体介绍：你后期补充内容即可。</p>
-              <div class="svc-subtags">
-                <span>AI收徒</span>
-                <span>AI代做</span>
-                <span>AI工具免费教程</span>
+          <div class="svcCard">
+            <div class="svcHeader">AI技术</div>
+            <div class="svcBody">
+              （待补充）这里写 AI 技术方向的总体介绍：建议写清可教/可做/可提供的工具路线与产出形式。
+              <div class="tags" aria-label="AI技术子类目">
+                <span class="tag">AI收徒</span>
+                <span class="tag">AI代做</span>
+                <span class="tag">AI工具白嫖教程</span>
               </div>
             </div>
           </div>
 
-          <div class="svc-card">
-            <div class="svc-head">
-              <div class="svc-title">网络服务 <span class="svc-pill">工具/搭建</span></div>
-            </div>
-            <div class="svc-body">
-              <p>（待补充）这里写网络服务介绍：例如网站/域名/邮箱/基础部署/远程协助等。</p>
-            </div>
+          <div class="svcCard">
+            <div class="svcHeader">网络服务</div>
+            <div class="svcBody">（待补充）这里写网络服务介绍：例如网站/域名/工具搭建、排障、优化、自动化等。</div>
           </div>
 
-          <div class="svc-card">
-            <div class="svc-head">
-              <div class="svc-title">游戏服务 <span class="svc-pill">代练/咨询</span></div>
-            </div>
-            <div class="svc-body">
-              <p>（待补充）这里写游戏服务介绍：你后期补充具体范围、交付方式、周期等。</p>
-            </div>
+          <div class="svcCard">
+            <div class="svcHeader">游戏服务</div>
+            <div class="svcBody">（待补充）这里写游戏服务介绍：建议写清具体项目、交付方式与周期。</div>
           </div>
 
-          <div class="svc-card">
-            <div class="svc-head">
-              <div class="svc-title">懒人特殊服务 <span class="svc-pill">按需定制</span></div>
-            </div>
-            <div class="svc-body">
-              <p>（待补充）这里写你的“按需定制服务”介绍（建议保持合法合规、明确边界）。</p>
-            </div>
+          <div class="svcCard">
+            <div class="svcHeader">懒人特殊服务</div>
+            <div class="svcBody">（待补充）这里写“懒人特殊服务”介绍：建议写清可提供的范围、边界与交付形式。</div>
           </div>
-
         </div>
       </div>
     </section>
 
-    <section class="section" id="showcase">
-      <div class="h2">展品展示</div>
-
-      <div class="card pad">
-        <div class="gallery">
-          <div class="g-item" data-type="img" data-src="assets/gallery/01.jpg">
-            <img class="g-media" src="assets/gallery/01.jpg" alt="" onerror="this.style.opacity='.25'">
-          </div>
-          <div class="g-item" data-type="img" data-src="assets/gallery/02.jpg">
-            <img class="g-media" src="assets/gallery/02.jpg" alt="" onerror="this.style.opacity='.25'">
-          </div>
-          <div class="g-item" data-type="img" data-src="assets/gallery/03.jpg">
-            <img class="g-media" src="assets/gallery/03.jpg" alt="" onerror="this.style.opacity='.25'">
-          </div>
-          <div class="g-item" data-type="img" data-src="assets/gallery/04.jpg">
-            <img class="g-media" src="assets/gallery/04.jpg" alt="" onerror="this.style.opacity='.25'">
-          </div>
-          <div class="g-item" data-type="img" data-src="assets/gallery/05.jpg">
-            <img class="g-media" src="assets/gallery/05.jpg" alt="" onerror="this.style.opacity='.25'">
-          </div>
-          <div class="g-item" data-type="img" data-src="assets/gallery/06.jpg">
-            <img class="g-media" src="assets/gallery/06.jpg" alt="" onerror="this.style.opacity='.25'">
-          </div>
+    <!-- GALLERY -->
+    <section class="section" id="gallery">
+      <div class="wrap">
+        <div class="sectionTitleRow">
+          <span class="pin" aria-hidden="true"></span>
+          <h2 class="sectionTitle">展品展示</h2>
         </div>
 
-        <!-- ✅ 默认静音，用户点播放后自动有声音 -->
-        <div class="videos">
-          <video class="v" controls playsinline muted preload="metadata" src="assets/videos/01.mp4"></video>
-          <video class="v" controls playsinline muted preload="metadata" src="assets/videos/02.mp4"></video>
-          <video class="v" controls playsinline muted preload="metadata" src="assets/videos/03.mp4"></video>
+        <div class="card galleryWrap">
+          <div class="mediaGrid" id="photoGrid" aria-label="6张展品图片">
+            <div class="mediaTile" data-type="img" data-src="assets/photo-01.jpg"><img src="assets/photo-01.jpg" alt="展品图片" onerror="this.style.display='none'; this.parentElement.insertAdjacentHTML('beforeend','<div class=&quot;hint&quot; style=&quot;padding:14px&quot;>上传图片到<br><code>assets/photo-01.jpg</code></div>')"></div>
+            <div class="mediaTile" data-type="img" data-src="assets/photo-02.jpg"><img src="assets/photo-02.jpg" alt="展品图片" onerror="this.style.display='none'; this.parentElement.insertAdjacentHTML('beforeend','<div class=&quot;hint&quot; style=&quot;padding:14px&quot;>上传图片到<br><code>assets/photo-02.jpg</code></div>')"></div>
+            <div class="mediaTile" data-type="img" data-src="assets/photo-03.jpg"><img src="assets/photo-03.jpg" alt="展品图片" onerror="this.style.display='none'; this.parentElement.insertAdjacentHTML('beforeend','<div class=&quot;hint&quot; style=&quot;padding:14px&quot;>上传图片到<br><code>assets/photo-03.jpg</code></div>')"></div>
+            <div class="mediaTile" data-type="img" data-src="assets/photo-04.jpg"><img src="assets/photo-04.jpg" alt="展品图片" onerror="this.style.display='none'; this.parentElement.insertAdjacentHTML('beforeend','<div class=&quot;hint&quot; style=&quot;padding:14px&quot;>上传图片到<br><code>assets/photo-04.jpg</code></div>')"></div>
+            <div class="mediaTile" data-type="img" data-src="assets/photo-05.jpg"><img src="assets/photo-05.jpg" alt="展品图片" onerror="this.style.display='none'; this.parentElement.insertAdjacentHTML('beforeend','<div class=&quot;hint&quot; style=&quot;padding:14px&quot;>上传图片到<br><code>assets/photo-05.jpg</code></div>')"></div>
+            <div class="mediaTile" data-type="img" data-src="assets/photo-06.jpg"><img src="assets/photo-06.jpg" alt="展品图片" onerror="this.style.display='none'; this.parentElement.insertAdjacentHTML('beforeend','<div class=&quot;hint&quot; style=&quot;padding:14px&quot;>上传图片到<br><code>assets/photo-06.jpg</code></div>')"></div>
+          </div>
+
+          <div class="sectionTitleRow" style="margin-top:18px">
+            <span class="pin" aria-hidden="true"></span>
+            <h2 class="sectionTitle" style="font-size:16px">3个视频</h2>
+          </div>
+
+          <div class="mediaGrid" id="videoGrid" aria-label="3个展品视频">
+            <!-- ✅ 按你的要求：界面默认静音；点击打开弹窗后播放带声音 -->
+            <div class="mediaTile" data-type="video" data-src="assets/video-01.mp4">
+              <video src="assets/video-01.mp4" muted playsinline preload="metadata"></video>
+            </div>
+            <div class="mediaTile" data-type="video" data-src="assets/video-02.mp4">
+              <video src="assets/video-02.mp4" muted playsinline preload="metadata"></video>
+            </div>
+            <div class="mediaTile" data-type="video" data-src="assets/video-03.mp4">
+              <video src="assets/video-03.mp4" muted playsinline preload="metadata"></video>
+            </div>
+          </div>
+
+          <div class="hint">提示：把图片/视频文件按上方路径上传到仓库 <code>/assets/</code> 目录，页面会自动显示。</div>
         </div>
       </div>
     </section>
 
+    <!-- CONTACT -->
     <section class="section" id="contact">
-      <div class="h2">联系方式</div>
+      <div class="wrap">
+        <div class="sectionTitleRow">
+          <span class="pin" aria-hidden="true"></span>
+          <h2 class="sectionTitle">联系方式</h2>
+        </div>
 
-      <div class="card pad">
-        <div class="contact-icons">
-          <!-- 微信：方案A（复制微信号 + 打开添加朋友页）+ 二维码保存按钮 -->
-          <button class="bigIconBtn" id="btnWechat" type="button" aria-label="微信">
-            <span class="bigIcon" aria-hidden="true">
-              <svg viewBox="0 0 24 24" fill="none">
-                <path d="M8.6 4.8c3.6 0 6.5 2.5 6.5 5.6S12.2 16 8.6 16c-.5 0-1-.1-1.5-.2L4.8 17l.8-2.1c-1.1-1-1.8-2.3-1.8-3.9 0-3.1 2.9-5.6 6.5-5.6Z" stroke="white" opacity=".95"/>
-                <path d="M15.4 10.2c2.6 0 4.8 1.8 4.8 4.1 0 1.2-.5 2.2-1.4 3l.6 1.6-1.8-.9c-.4.1-.8.1-1.2.1-2.6 0-4.8-1.8-4.8-4.1s2.2-3.8 4.8-3.8Z" stroke="white" opacity=".95"/>
-                <circle cx="7.2" cy="10.1" r="1" fill="white" opacity=".95"/>
-                <circle cx="10.2" cy="10.1" r="1" fill="white" opacity=".95"/>
-                <circle cx="14.4" cy="14.2" r="1" fill="white" opacity=".95"/>
-                <circle cx="17.1" cy="14.2" r="1" fill="white" opacity=".95"/>
-              </svg>
-            </span>
-          </button>
+        <div class="card contactCard">
+          <div class="contactRow" aria-label="联系入口">
+            <button class="iconBtn" id="btnWechat" type="button">
+              <span class="ico">W</span> 微信
+            </button>
 
-          <!-- Telegram：直接跳聊天 -->
-          <a class="bigIconBtn" href="https://t.me/guoxingbiao" target="_blank" rel="noopener" aria-label="Telegram">
-            <span class="bigIcon" aria-hidden="true">
-              <svg viewBox="0 0 24 24" fill="none">
-                <path d="M21 4.9 3.6 11.6c-1 .4-1 1.8.1 2.1l4.3 1.3 1.7 5.1c.3.9 1.5 1.1 2.1.4l2.5-2.7 4.6 3.4c.8.6 1.9.1 2.1-.9L22 6.2c.2-1-.7-1.7-1.6-1.3Z" stroke="white" opacity=".95"/>
-                <path d="M8 14.8 18.7 7.7" stroke="white" opacity=".95"/>
-              </svg>
-            </span>
-          </a>
+            <a class="iconBtn" href="https://t.me/guoxingbiao" target="_blank" rel="noopener">
+              <span class="ico">TG</span> Telegram
+            </a>
 
-          <!-- Gmail：打开写信页，自动填收件人 -->
-          <a class="bigIconBtn"
-             href="https://mail.google.com/mail/?view=cm&fs=1&to=guoxingbiao521@gmail.com&su=%E7%AD%91%E6%A2%A6%E7%94%B5%E5%AD%90%E5%92%A8%E8%AF%A2"
-             target="_blank" rel="noopener" aria-label="Gmail">
-            <span class="bigIcon" aria-hidden="true">
-              <svg viewBox="0 0 24 24" fill="none">
-                <path d="M4 7.5 12 13l8-5.5" stroke="white" opacity=".95"/>
-                <path d="M5 8.2V18c0 .6.4 1 1 1h12c.6 0 1-.4 1-1V8.2" stroke="white" opacity=".95"/>
-                <path d="M6.2 7h11.6c.6 0 1 .4 1 1v.2L12 13 5.2 8.2V8c0-.6.4-1 1-1Z" stroke="white" opacity=".95"/>
-              </svg>
-            </span>
-          </a>
+            <!-- ✅ 无需用户输入邮箱：点击直接新建邮件（to 已填） -->
+            <a class="iconBtn" href="mailto:guoxingbiao521@gmail.com" target="_blank" rel="noopener">
+              <span class="ico">@</span> Gmail
+            </a>
+
+            <a class="iconBtn" href="https://v.douyin.com/hTxqO_qDO6M/" target="_blank" rel="noopener">
+              <span class="ico">DY</span> 抖音
+            </a>
+
+            <a class="iconBtn" href="https://v.kuaishou.com/KArQ2jnp" target="_blank" rel="noopener">
+              <span class="ico">KS</span> 快手
+            </a>
+
+            <a class="iconBtn" href="https://xhslink.com/m/8My2Kr680Fb" target="_blank" rel="noopener">
+              <span class="ico">XHS</span> 小红书
+            </a>
+          </div>
+
+          <div class="contactNote">
+            点击微信：自动复制微信号并尝试打开“添加朋友”页（若在微信内打开页面，请右上角「…」→「在浏览器打开」再试）。<br/>
+            微信号：<b>LG-202412</b> ｜ Telegram：<b>@guoxingbiao</b> ｜ 邮箱：<b>guoxingbiao521@gmail.com</b>
+          </div>
         </div>
       </div>
     </section>
 
-    <div class="foot">© <span id="year"></span> 筑梦电子 · roselg.xyz</div>
-  </div>
+    <footer>
+      © <span id="year"></span> 筑梦电子 · VIP服务站 · 7x24h服务 · roselg.xyz
+    </footer>
+  </main>
 
-  <div class="toast" id="toast"></div>
-
-  <!-- 弹窗（图片放大 & 微信） -->
-  <div class="modal" id="modal">
-    <div class="modal-card">
-      <div class="modal-top">
-        <div class="mt" id="modalTitle">内容</div>
-        <button class="close" id="modalClose" type="button">关闭</button>
+  <!-- MODAL -->
+  <div class="modalMask" id="modalMask" role="dialog" aria-modal="true" aria-label="弹窗">
+    <div class="modal" role="document">
+      <div class="modalHead">
+        <div class="modalTitle" id="modalTitle">窗口</div>
+        <button class="modalClose" id="modalClose" type="button">关闭</button>
       </div>
-      <div class="modal-body" id="modalBody"></div>
+      <div class="modalBody" id="modalBody"></div>
     </div>
   </div>
 
-  <script>
-    document.getElementById('year').textContent = new Date().getFullYear();
+  <div class="toast" id="toast">提示</div>
 
-    // Toast
-    const toastEl = document.getElementById('toast');
+  <script>
+    // ====== 基础配置（你的账号信息） ======
+    const WECHAT_ID = "LG-202412";
+    const WECHAT_QR = "assets/wechat-qr.png";
+
+    // ====== 工具函数 ======
+    const $ = (s)=>document.querySelector(s);
+    const toastEl = $("#toast");
+    let toastTimer = null;
+
     function toast(msg){
       toastEl.textContent = msg;
-      toastEl.style.display = 'block';
-      clearTimeout(window.__t);
-      window.__t = setTimeout(()=>toastEl.style.display='none', 2600);
+      toastEl.classList.add("show");
+      clearTimeout(toastTimer);
+      toastTimer = setTimeout(()=>toastEl.classList.remove("show"), 2200);
     }
 
-    // 平滑滚动
-    document.querySelectorAll('a[href^="#"]').forEach(a=>{
-      a.addEventListener('click', (e)=>{
-        const id = a.getAttribute('href');
-        if(!id || id === '#') return;
-        const el = document.querySelector(id);
-        if(!el) return;
-        e.preventDefault();
-        el.scrollIntoView({behavior:'smooth', block:'start'});
-      });
-    });
-
-    // Modal
-    const modal = document.getElementById('modal');
-    const modalTitle = document.getElementById('modalTitle');
-    const modalBody = document.getElementById('modalBody');
-    const closeBtn = document.getElementById('modalClose');
+    const mask = $("#modalMask");
+    const modalTitle = $("#modalTitle");
+    const modalBody = $("#modalBody");
+    const modalClose = $("#modalClose");
 
     function openModal(title, html){
-      modalTitle.textContent = title || '内容';
-      modalBody.innerHTML = html || '';
-      modal.classList.add('show');
-      document.body.style.overflow = 'hidden';
+      modalTitle.textContent = title;
+      modalBody.innerHTML = html;
+      mask.classList.add("show");
     }
     function closeModal(){
-      modal.classList.remove('show');
-      modalBody.innerHTML = '';
-      document.body.style.overflow = '';
+      // 关闭时停止弹窗内视频
+      const v = modalBody.querySelector("video");
+      if(v){ try{ v.pause(); v.src = ""; }catch(e){} }
+      mask.classList.remove("show");
+      modalBody.innerHTML = "";
     }
-    closeBtn.addEventListener('click', closeModal);
-    modal.addEventListener('click', (e)=>{ if(e.target === modal) closeModal(); });
-    document.addEventListener('keydown', (e)=>{ if(e.key === 'Escape') closeModal(); });
+    modalClose.addEventListener("click", closeModal);
+    mask.addEventListener("click", (e)=>{ if(e.target === mask) closeModal(); });
 
-    // 图片点击放大
-    document.querySelectorAll('.g-item').forEach(item=>{
-      item.addEventListener('click', ()=>{
-        const src = item.dataset.src;
-        openModal('展品', `<img src="${src}" style="width:100%;border-radius:16px;border:1px solid rgba(255,255,255,.12);background:rgba(0,0,0,.25)" alt="">`);
-      });
-    });
+    function isWeChatInApp(){
+      return /MicroMessenger/i.test(navigator.userAgent);
+    }
+    function isMobile(){
+      return /Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
+    }
 
-    // ✅ 视频：默认静音；用户点播放后自动开声音
-    document.querySelectorAll('video.v').forEach(v=>{
-      v.muted = true;
-      v.addEventListener('play', ()=>{
-        // 用户手势触发播放时，允许解除静音
-        v.muted = false;
-        v.volume = 1;
-      });
-      v.addEventListener('pause', ()=>{
-        // 回到页面展示状态：继续静音（你要“界面静音”）
-        v.muted = true;
-      });
-      v.addEventListener('ended', ()=>{
-        v.muted = true;
-      });
-    });
-
-    // ✅ 微信：方案A + 二维码保存按钮
-    const WECHAT_ID = "LG-202412";
-    const QR_PATH = "assets/wechat-qr.png";
-
-    async function copyText(text){
+    // 同步复制（尽量不丢点击手势）
+    function copyTextSync(text){
       try{
-        await navigator.clipboard.writeText(text);
-        return true;
-      }catch(e){
         const ta = document.createElement("textarea");
         ta.value = text;
+        ta.setAttribute("readonly", "");
         ta.style.position = "fixed";
         ta.style.left = "-9999px";
+        ta.style.top = "-9999px";
         document.body.appendChild(ta);
         ta.select();
-        try{
-          document.execCommand("copy");
-          document.body.removeChild(ta);
-          return true;
-        }catch(err){
-          document.body.removeChild(ta);
-          return false;
-        }
+        const ok = document.execCommand("copy");
+        document.body.removeChild(ta);
+        return ok;
+      }catch(e){
+        return false;
       }
     }
-
-    function openWeChatAdd(){
-      // 打开微信“添加朋友”页（不同系统/版本可能存在兼容差异，但这是最常用入口）
-      window.location.href = "weixin://dl/add";
+    // 异步兜底
+    function copyTextAsync(text){
+      if(!navigator.clipboard) return;
+      navigator.clipboard.writeText(text).catch(()=>{});
     }
 
+    // 保存二维码（下载 + iOS兜底打开）
     function tryDownloadQr(){
-      // 先尝试 download（部分 iOS 可能不支持，会自动 fallback 到打开新标签）
-      const a = document.createElement('a');
-      a.href = QR_PATH;
-      a.download = 'wechat-qr.png';
+      const a = document.createElement("a");
+      a.href = WECHAT_QR;
+      a.download = "wechat-qr.png";
       document.body.appendChild(a);
       a.click();
       a.remove();
-
-      // fallback：打开图片，用户长按保存
-      setTimeout(()=>{ window.open(QR_PATH, '_blank'); }, 250);
+      setTimeout(()=>{ window.open(WECHAT_QR, "_blank"); }, 250);
     }
 
-    document.getElementById('btnWechat').addEventListener('click', async ()=>{
-      // 先复制一次（更省步骤）
-      const ok = await copyText(WECHAT_ID);
-      toast(ok ? `已复制微信号：${WECHAT_ID}` : `请手动复制微信号：${WECHAT_ID}`);
+    // ✅ 复制微信号 → 打开“添加朋友”页（失败再打开微信首页）
+    function openWeChatAddFriendWithFallback(){
+      if(!isMobile()){
+        toast("请在手机上使用此功能");
+        return;
+      }
+      // 1) 尝试打开“添加朋友”
+      window.location.href = "weixin://dl/add";
+      // 2) 兜底：打开微信首页
+      setTimeout(()=>{ window.location.href = "weixin://"; }, 800);
+      // 3) 再兜底提示
+      setTimeout(()=>{ toast("若未自动打开微信：已复制微信号，可直接在微信搜索粘贴添加"); }, 1500);
+    }
 
-      openModal('微信加好友', `
+    // ====== 微信按钮：方案A（弹窗二维码 + 保存二维码按钮） ======
+    $("#btnWechat").addEventListener("click", ()=>{
+      const ok = copyTextSync(WECHAT_ID);
+      copyTextAsync(WECHAT_ID);
+      toast(ok ? `已复制微信号：${WECHAT_ID}` : `已尝试复制：${WECHAT_ID}（若失败请手动复制）`);
+
+      openModal("微信加好友", `
         <div class="wechatBox">
-          <div class="wechatId">
+          <div class="wechatInfo">
             <div class="big">微信号：${WECHAT_ID}</div>
+            <div class="sub">
+              已自动复制微信号。可直接在微信搜索粘贴添加。<br/>
+              也可点击下方按钮尝试打开“添加朋友”页。<br/><br/>
+              <b>提示：</b>若在微信内置浏览器打开本网页，微信会拦截跳转；请右上角「…」→「在浏览器打开」再试。
+            </div>
             <div class="wechatActions">
-              <button class="close" id="goAddFriend" type="button">打开添加朋友</button>
-              <button class="close" id="copyWechatId" type="button">复制微信号</button>
+              <button class="miniBtn primary" id="goAddFriend" type="button">打开添加朋友</button>
+              <button class="miniBtn" id="goWeChatHome" type="button">打开微信</button>
+              <button class="miniBtn" id="copyWechat" type="button">复制微信号</button>
             </div>
           </div>
-          <div class="qrBox">
-            <img src="${QR_PATH}" alt="微信二维码"
-              onerror="this.outerHTML='<div style=&quot;color:rgba(255,255,255,.65);text-align:center;line-height:1.7&quot;>请上传二维码到<br><code>assets/wechat-qr.png</code></div>'">
-            <button class="close" id="saveQr" type="button">保存二维码</button>
+
+          <div class="qrPane">
+            <img src="${WECHAT_QR}" alt="微信二维码"
+              onerror="this.outerHTML='<div class=&quot;sub&quot; style=&quot;color:rgba(255,255,255,.70);text-align:center;line-height:1.9&quot;>请上传二维码到<br><code>assets/wechat-qr.png</code></div>'">
+            <button class="miniBtn" id="saveQr" type="button">保存二维码</button>
           </div>
         </div>
       `);
 
       setTimeout(()=>{
-        const go = document.getElementById('goAddFriend');
-        const cp = document.getElementById('copyWechatId');
-        const sv = document.getElementById('saveQr');
+        const goAdd = $("#goAddFriend");
+        const goHome = $("#goWeChatHome");
+        const cp = $("#copyWechat");
+        const sv = $("#saveQr");
 
-        if(go) go.addEventListener('click', ()=>{
-          const isMobile = /Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
-          if(!isMobile){
-            toast('请在手机打开此网站以跳转微信');
+        if(cp) cp.addEventListener("click", ()=>{
+          const ok2 = copyTextSync(WECHAT_ID);
+          copyTextAsync(WECHAT_ID);
+          toast(ok2 ? "已复制微信号" : "已尝试复制（若失败请手动复制）");
+        });
+
+        if(sv) sv.addEventListener("click", tryDownloadQr);
+
+        if(goAdd) goAdd.addEventListener("click", ()=>{
+          if(isWeChatInApp()){
+            toast("你正在微信内打开：右上角「…」→「在浏览器打开」后再点“打开添加朋友”");
             return;
           }
-          openWeChatAdd();
+          openWeChatAddFriendWithFallback();
         });
 
-        if(cp) cp.addEventListener('click', async ()=>{
-          const ok2 = await copyText(WECHAT_ID);
-          toast(ok2 ? '已复制微信号' : '复制失败，请手动复制');
-        });
-
-        if(sv) sv.addEventListener('click', ()=>{
-          tryDownloadQr();
+        if(goHome) goHome.addEventListener("click", ()=>{
+          if(!isMobile()){
+            toast("请在手机上使用此功能");
+            return;
+          }
+          if(isWeChatInApp()){
+            toast("你正在微信内打开：右上角「…」→「在浏览器打开」后再点“打开微信”");
+            return;
+          }
+          window.location.href = "weixin://";
         });
       }, 0);
+
+      // ✅ 非微信内置浏览器：自动尝试跳一次（你要的“一点就跳”）
+      if(!isWeChatInApp()){
+        openWeChatAddFriendWithFallback();
+      }
     });
+
+    // ====== 展品：点击放大（图片/视频） ======
+    function openMedia(type, src){
+      if(type === "img"){
+        openModal("查看图片", `
+          <div style="display:flex;justify-content:center">
+            <img src="${src}" alt="图片预览" style="max-width:100%;max-height:74vh;border-radius:18px;border:1px solid rgba(255,255,255,.10);background:rgba(255,255,255,.02)">
+          </div>
+        `);
+        return;
+      }
+
+      // video：弹窗播放带声音（不 muted）
+      openModal("查看视频", `
+        <div style="display:flex;justify-content:center">
+          <video src="${src}" controls autoplay playsinline style="max-width:100%;max-height:74vh;border-radius:18px;border:1px solid rgba(255,255,255,.10);background:rgba(255,255,255,.02)"></video>
+        </div>
+        <div class="hint" style="text-align:center;margin-top:10px">提示：列表预览默认静音，打开弹窗播放为有声。</div>
+      `);
+    }
+
+    document.querySelectorAll(".mediaTile").forEach(tile=>{
+      tile.addEventListener("click", ()=>{
+        const type = tile.getAttribute("data-type");
+        const src = tile.getAttribute("data-src");
+        openMedia(type, src);
+      });
+    });
+
+    // ====== 页脚年份 ======
+    $("#year").textContent = new Date().getFullYear();
   </script>
 </body>
 </html>
