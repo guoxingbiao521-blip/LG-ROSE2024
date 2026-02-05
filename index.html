@@ -12,7 +12,7 @@
       --bg1:#0b1130;
       --bg2:#121a3c;
       --txt: rgba(255,255,255,.92);
-      --muted: rgba(255,255,255,.68);
+      --muted: rgba(255,255,255,.70);
       --rose: #ff2f8a;
       --rose2:#ff6fb0;
       --blue: #4aa3ff;
@@ -53,7 +53,7 @@
       padding:10px 12px; border-radius:999px;
       border:1px solid rgba(255,255,255,.10);
       background: rgba(255,255,255,.04);
-      color: var(--muted);
+      color: rgba(255,255,255,.72);
       font-weight:600;
       transition: transform .12s ease, background .12s ease, border-color .12s ease;
     }
@@ -69,7 +69,7 @@
       box-shadow: var(--shadow);
       position:relative;
       overflow:hidden;
-      text-align:center; /* ✅居中 */
+      text-align:center;
     }
     .hero:before{
       content:"";
@@ -93,29 +93,37 @@
       letter-spacing:.6px;
     }
 
-    /* ✅更“科技立体发光”的主标题 */
+    /* ✅ 更强“科技+超立体+发光”的主标题 */
     .title{
       margin:0;
-      font-size: clamp(44px, 6vw, 74px);  /* 更大 */
-      font-weight: 980;
-      letter-spacing: 6px;               /* 字间距更大 */
+      font-size: clamp(46px, 6.3vw, 78px);
+      font-weight: 1000;
+      letter-spacing: 10px;
       line-height: 1.05;
       color: transparent;
-      background: linear-gradient(180deg, #effbff, #b7e2ff 26%, #53b3ff 60%, #2a4cff);
+      background: linear-gradient(180deg, #f4feff, #bfe8ff 26%, #58b8ff 58%, #2b48ff 100%);
       -webkit-background-clip:text;
       background-clip:text;
-      text-shadow:
-        0 2px 0 rgba(255,255,255,.10),
-        0 6px 0 rgba(0,0,0,.18),
-        0 14px 40px rgba(0,0,0,.60),
-        0 0 38px rgba(74,163,255,.35),
-        0 0 64px rgba(255,47,138,.18);
-      filter: drop-shadow(0 18px 40px rgba(0,0,0,.45));
-    }
 
+      /* 立体“挤压”叠影（更明显） */
+      text-shadow:
+        0 1px 0 rgba(255,255,255,.10),
+        0 2px 0 rgba(20,35,80,.25),
+        0 3px 0 rgba(18,30,70,.30),
+        0 4px 0 rgba(15,25,60,.35),
+        0 5px 0 rgba(12,20,52,.38),
+        0 6px 0 rgba(10,18,46,.42),
+        0 10px 30px rgba(0,0,0,.60),
+
+        /* 外发光（蓝+玫瑰红） */
+        0 0 18px rgba(74,163,255,.35),
+        0 0 42px rgba(74,163,255,.22),
+        0 0 55px rgba(255,47,138,.18);
+      filter: drop-shadow(0 18px 50px rgba(0,0,0,.55));
+    }
     .sub{
       margin: 6px 0 0;
-      color: rgba(255,255,255,.82);
+      color: rgba(255,255,255,.84);
       line-height: 1.8;
       font-size: 18px;
       max-width: 980px;
@@ -180,16 +188,10 @@
     }
     .intro-img img{width:100%; height:100%; object-fit:cover; display:block; opacity:.95;}
     .intro-text .muted{color:var(--muted); line-height:1.9; margin:0; font-size:16px;}
-    .badge-row{display:flex; gap:10px; flex-wrap:wrap; margin-top:12px;}
-    .badge{
-      padding:9px 12px;
-      border-radius:999px;
-      border:1px solid rgba(255,47,138,.25);
-      background: rgba(255,47,138,.08);
-      color: rgba(255,255,255,.88);
-      font-weight:900;
-      font-size:13px;
-    }
+
+    /* ✅ 服务介绍的要点列表（保留文字结构） */
+    .points{margin:10px 0 0; padding-left: 18px; color: rgba(255,255,255,.82); line-height:1.85;}
+    .points li{margin:6px 0;}
 
     /* 业务分类 */
     .svc-grid{display:grid; grid-template-columns: repeat(3, 1fr); gap:14px;}
@@ -243,7 +245,7 @@
       font-size:12px;
     }
 
-    /* ✅ 展品：删除所有标题/提示，只保留媒体本体 */
+    /* 展品：只留媒体本体 */
     .gallery{display:grid; grid-template-columns: repeat(3, 1fr); gap:12px;}
     @media (max-width:980px){ .gallery{grid-template-columns:repeat(2,1fr);} }
     @media (max-width:620px){ .gallery{grid-template-columns:1fr;} }
@@ -263,7 +265,7 @@
     @media (max-width:620px){ .videos{grid-template-columns:1fr;} }
     video{width:100%; border-radius: var(--radius2); border:1px solid rgba(255,255,255,.12); background: rgba(0,0,0,.25);}
 
-    /* ✅ 联系方式：删除所有文字，只留三个大图标，均匀排列 */
+    /* 联系方式：只留三个大图标，均匀排列 */
     .contact-icons{
       display:grid;
       grid-template-columns: repeat(3, 1fr);
@@ -298,15 +300,11 @@
       opacity:.9;
       pointer-events:none;
     }
-    .bigIcon{
-      width:34px; height:34px; display:block;
-      filter: drop-shadow(0 0 18px rgba(255,47,138,.25));
-      position:relative;
-    }
+    .bigIcon{width:34px; height:34px; display:block; filter: drop-shadow(0 0 18px rgba(255,47,138,.25)); position:relative;}
 
     .foot{margin-top:16px; color: rgba(255,255,255,.45); font-size:12px;}
 
-    /* Modal */
+    /* Modal + Toast */
     .modal{position:fixed; inset:0; display:none; background: rgba(0,0,0,.62); backdrop-filter: blur(6px); z-index:50; padding:24px;}
     .modal.show{display:flex; align-items:center; justify-content:center;}
     .modal-card{
@@ -328,11 +326,13 @@
       padding:10px 12px;
       cursor:pointer;
       font-weight:900;
+      user-select:none;
     }
     .modal-body{padding:16px;}
+
     .wechatBox{
       display:grid;
-      grid-template-columns: 1fr 1fr;
+      grid-template-columns: 1.1fr .9fr;
       gap:14px;
       align-items:stretch;
     }
@@ -343,12 +343,7 @@
       background: rgba(255,255,255,.05);
       padding:16px;
     }
-    .wechatId .big{
-      font-size:22px;
-      font-weight:980;
-      letter-spacing:1px;
-    }
-    .wechatId .small{margin-top:6px; color:rgba(255,255,255,.65); font-size:13px;}
+    .wechatId .big{font-size:22px; font-weight:980; letter-spacing:1px;}
     .wechatActions{display:flex; gap:10px; flex-wrap:wrap; margin-top:12px;}
     .qrBox{
       border:1px solid rgba(255,255,255,.12);
@@ -356,11 +351,20 @@
       background: rgba(255,255,255,.05);
       padding:16px;
       display:flex;
+      flex-direction:column;
+      gap:12px;
       align-items:center;
       justify-content:center;
-      min-height: 180px;
+      min-height: 220px;
     }
     .qrBox img{max-width:100%; border-radius: 12px; border:1px solid rgba(255,255,255,.12);}
+    .toast{
+      position: fixed; left: 50%; bottom: 24px; transform: translateX(-50%);
+      background: rgba(0,0,0,.75); color: #fff; padding: 10px 14px;
+      border-radius: 10px; font-size: 14px; z-index: 99999;
+      max-width: 90vw; text-align: center; line-height: 1.4;
+      display:none;
+    }
   </style>
 </head>
 
@@ -369,7 +373,7 @@
     <div class="nav-inner">
       <div class="brand"><span class="dot"></span>筑梦电子 · 贵宾服务站</div>
       <div class="nav-links">
-        <a class="chip" href="#intro">自我介绍</a>
+        <a class="chip" href="#intro">服务介绍</a>
         <a class="chip" href="#services">业务分类</a>
         <a class="chip" href="#showcase">展品展示</a>
         <a class="chip" href="#contact">联系方式</a>
@@ -393,8 +397,9 @@
       </div>
     </section>
 
-    <!-- ✅ 删除“图文自我介绍”标题：模块保留 -->
+    <!-- ✅ 图2要求：红点标题改为“服务介绍”，其它内容保留；取消文字下方3个玫瑰红按钮/徽章 -->
     <section class="section" id="intro">
+      <div class="h2">服务介绍</div>
       <div class="card pad">
         <div class="intro">
           <div class="intro-img">
@@ -402,13 +407,14 @@
           </div>
           <div class="intro-text">
             <p class="muted">
-              （把这里改成你的自我介绍文案）例如：我专注于电子产品与多类数字化服务，提供从咨询到交付的一站式支持，同时在 AI 技术方向提供教学/代做/工具教程等服务。
+              把这里改成你的自我介绍文案。例如：我专注于电子产品与多类数字化服务，提供从咨询到交付的一站式支持，同时在 AI 技术方向提供教学/代做/工具教程等服务。
             </p>
-            <div class="badge-row">
-              <span class="badge">玫瑰红引流页</span>
-              <span class="badge">展品图/视频展示</span>
-              <span class="badge">一键联系</span>
-            </div>
+            <ul class="points">
+              <li>服务特点：快速响应｜流程清晰｜按需定制</li>
+              <li>交付形式：文字方案｜文件/脚本｜远程协助｜成品交付</li>
+              <li>合作方式：先沟通需求 → 明确范围 → 交付与售后</li>
+            </ul>
+            <!-- ✅ 你要取消的“玫瑰红等三个按钮/徽章”已移除 -->
           </div>
         </div>
       </div>
@@ -486,33 +492,32 @@
       <div class="h2">展品展示</div>
 
       <div class="card pad">
-        <!-- ✅ 6张照片：只留图片 -->
         <div class="gallery">
           <div class="g-item" data-type="img" data-src="assets/gallery/01.jpg">
-            <img class="g-media" src="assets/gallery/01.jpg" alt="展品照片01" onerror="this.style.opacity='.25'">
+            <img class="g-media" src="assets/gallery/01.jpg" alt="" onerror="this.style.opacity='.25'">
           </div>
           <div class="g-item" data-type="img" data-src="assets/gallery/02.jpg">
-            <img class="g-media" src="assets/gallery/02.jpg" alt="展品照片02" onerror="this.style.opacity='.25'">
+            <img class="g-media" src="assets/gallery/02.jpg" alt="" onerror="this.style.opacity='.25'">
           </div>
           <div class="g-item" data-type="img" data-src="assets/gallery/03.jpg">
-            <img class="g-media" src="assets/gallery/03.jpg" alt="展品照片03" onerror="this.style.opacity='.25'">
+            <img class="g-media" src="assets/gallery/03.jpg" alt="" onerror="this.style.opacity='.25'">
           </div>
           <div class="g-item" data-type="img" data-src="assets/gallery/04.jpg">
-            <img class="g-media" src="assets/gallery/04.jpg" alt="展品照片04" onerror="this.style.opacity='.25'">
+            <img class="g-media" src="assets/gallery/04.jpg" alt="" onerror="this.style.opacity='.25'">
           </div>
           <div class="g-item" data-type="img" data-src="assets/gallery/05.jpg">
-            <img class="g-media" src="assets/gallery/05.jpg" alt="展品照片05" onerror="this.style.opacity='.25'">
+            <img class="g-media" src="assets/gallery/05.jpg" alt="" onerror="this.style.opacity='.25'">
           </div>
           <div class="g-item" data-type="img" data-src="assets/gallery/06.jpg">
-            <img class="g-media" src="assets/gallery/06.jpg" alt="展品照片06" onerror="this.style.opacity='.25'">
+            <img class="g-media" src="assets/gallery/06.jpg" alt="" onerror="this.style.opacity='.25'">
           </div>
         </div>
 
-        <!-- ✅ 3个视频：只留视频 -->
+        <!-- ✅ 默认静音，用户点播放后自动有声音 -->
         <div class="videos">
-          <video controls preload="metadata" src="assets/videos/01.mp4"></video>
-          <video controls preload="metadata" src="assets/videos/02.mp4"></video>
-          <video controls preload="metadata" src="assets/videos/03.mp4"></video>
+          <video class="v" controls playsinline muted preload="metadata" src="assets/videos/01.mp4"></video>
+          <video class="v" controls playsinline muted preload="metadata" src="assets/videos/02.mp4"></video>
+          <video class="v" controls playsinline muted preload="metadata" src="assets/videos/03.mp4"></video>
         </div>
       </div>
     </section>
@@ -522,8 +527,8 @@
 
       <div class="card pad">
         <div class="contact-icons">
-          <!-- 微信：打开极简弹窗（引导加好友） -->
-          <button class="bigIconBtn" id="btnWechat" type="button" data-wechat-id="LG-202412" aria-label="微信">
+          <!-- 微信：方案A（复制微信号 + 打开添加朋友页）+ 二维码保存按钮 -->
+          <button class="bigIconBtn" id="btnWechat" type="button" aria-label="微信">
             <span class="bigIcon" aria-hidden="true">
               <svg viewBox="0 0 24 24" fill="none">
                 <path d="M8.6 4.8c3.6 0 6.5 2.5 6.5 5.6S12.2 16 8.6 16c-.5 0-1-.1-1.5-.2L4.8 17l.8-2.1c-1.1-1-1.8-2.3-1.8-3.9 0-3.1 2.9-5.6 6.5-5.6Z" stroke="white" opacity=".95"/>
@@ -546,7 +551,7 @@
             </span>
           </a>
 
-          <!-- ✅ Gmail：直接打开 Gmail 写邮件页面，并自动填好收件人 -->
+          <!-- Gmail：打开写信页，自动填收件人 -->
           <a class="bigIconBtn"
              href="https://mail.google.com/mail/?view=cm&fs=1&to=guoxingbiao521@gmail.com&su=%E7%AD%91%E6%A2%A6%E7%94%B5%E5%AD%90%E5%92%A8%E8%AF%A2"
              target="_blank" rel="noopener" aria-label="Gmail">
@@ -565,7 +570,9 @@
     <div class="foot">© <span id="year"></span> 筑梦电子 · roselg.xyz</div>
   </div>
 
-  <!-- ✅ 图片放大 & 微信引导弹窗 -->
+  <div class="toast" id="toast"></div>
+
+  <!-- 弹窗（图片放大 & 微信） -->
   <div class="modal" id="modal">
     <div class="modal-card">
       <div class="modal-top">
@@ -579,6 +586,15 @@
   <script>
     document.getElementById('year').textContent = new Date().getFullYear();
 
+    // Toast
+    const toastEl = document.getElementById('toast');
+    function toast(msg){
+      toastEl.textContent = msg;
+      toastEl.style.display = 'block';
+      clearTimeout(window.__t);
+      window.__t = setTimeout(()=>toastEl.style.display='none', 2600);
+    }
+
     // 平滑滚动
     document.querySelectorAll('a[href^="#"]').forEach(a=>{
       a.addEventListener('click', (e)=>{
@@ -591,6 +607,7 @@
       });
     });
 
+    // Modal
     const modal = document.getElementById('modal');
     const modalTitle = document.getElementById('modalTitle');
     const modalBody = document.getElementById('modalBody');
@@ -611,7 +628,7 @@
     modal.addEventListener('click', (e)=>{ if(e.target === modal) closeModal(); });
     document.addEventListener('keydown', (e)=>{ if(e.key === 'Escape') closeModal(); });
 
-    // 图片点击放大（无标题文字）
+    // 图片点击放大
     document.querySelectorAll('.g-item').forEach(item=>{
       item.addEventListener('click', ()=>{
         const src = item.dataset.src;
@@ -619,38 +636,110 @@
       });
     });
 
-    // 微信：极简引导（更符合你截图“删文字”）
-    document.getElementById('btnWechat').addEventListener('click', () => {
-      const wechatId = (document.getElementById('btnWechat').dataset.wechatId || '').trim();
+    // ✅ 视频：默认静音；用户点播放后自动开声音
+    document.querySelectorAll('video.v').forEach(v=>{
+      v.muted = true;
+      v.addEventListener('play', ()=>{
+        // 用户手势触发播放时，允许解除静音
+        v.muted = false;
+        v.volume = 1;
+      });
+      v.addEventListener('pause', ()=>{
+        // 回到页面展示状态：继续静音（你要“界面静音”）
+        v.muted = true;
+      });
+      v.addEventListener('ended', ()=>{
+        v.muted = true;
+      });
+    });
 
-      openModal('微信', `
+    // ✅ 微信：方案A + 二维码保存按钮
+    const WECHAT_ID = "LG-202412";
+    const QR_PATH = "assets/wechat-qr.png";
+
+    async function copyText(text){
+      try{
+        await navigator.clipboard.writeText(text);
+        return true;
+      }catch(e){
+        const ta = document.createElement("textarea");
+        ta.value = text;
+        ta.style.position = "fixed";
+        ta.style.left = "-9999px";
+        document.body.appendChild(ta);
+        ta.select();
+        try{
+          document.execCommand("copy");
+          document.body.removeChild(ta);
+          return true;
+        }catch(err){
+          document.body.removeChild(ta);
+          return false;
+        }
+      }
+    }
+
+    function openWeChatAdd(){
+      // 打开微信“添加朋友”页（不同系统/版本可能存在兼容差异，但这是最常用入口）
+      window.location.href = "weixin://dl/add";
+    }
+
+    function tryDownloadQr(){
+      // 先尝试 download（部分 iOS 可能不支持，会自动 fallback 到打开新标签）
+      const a = document.createElement('a');
+      a.href = QR_PATH;
+      a.download = 'wechat-qr.png';
+      document.body.appendChild(a);
+      a.click();
+      a.remove();
+
+      // fallback：打开图片，用户长按保存
+      setTimeout(()=>{ window.open(QR_PATH, '_blank'); }, 250);
+    }
+
+    document.getElementById('btnWechat').addEventListener('click', async ()=>{
+      // 先复制一次（更省步骤）
+      const ok = await copyText(WECHAT_ID);
+      toast(ok ? `已复制微信号：${WECHAT_ID}` : `请手动复制微信号：${WECHAT_ID}`);
+
+      openModal('微信加好友', `
         <div class="wechatBox">
           <div class="wechatId">
-            <div class="big">微信号：${wechatId}</div>
+            <div class="big">微信号：${WECHAT_ID}</div>
             <div class="wechatActions">
-              <button class="close" id="openWeChatApp" type="button">打开微信</button>
+              <button class="close" id="goAddFriend" type="button">打开添加朋友</button>
               <button class="close" id="copyWechatId" type="button">复制微信号</button>
             </div>
           </div>
           <div class="qrBox">
-            <img src="assets/wechat-qr.png" alt="微信二维码"
-              onerror="this.outerHTML='<div style=&quot;color:rgba(255,255,255,.65);text-align:center;line-height:1.7&quot;>（可选）上传二维码到<br><code>assets/wechat-qr.png</code></div>'">
+            <img src="${QR_PATH}" alt="微信二维码"
+              onerror="this.outerHTML='<div style=&quot;color:rgba(255,255,255,.65);text-align:center;line-height:1.7&quot;>请上传二维码到<br><code>assets/wechat-qr.png</code></div>'">
+            <button class="close" id="saveQr" type="button">保存二维码</button>
           </div>
         </div>
       `);
 
-      setTimeout(() => {
-        const openBtn = document.getElementById('openWeChatApp');
-        const copyBtn = document.getElementById('copyWechatId');
+      setTimeout(()=>{
+        const go = document.getElementById('goAddFriend');
+        const cp = document.getElementById('copyWechatId');
+        const sv = document.getElementById('saveQr');
 
-        if (openBtn) openBtn.addEventListener('click', () => window.location.href = 'weixin://');
-        if (copyBtn) copyBtn.addEventListener('click', async () => {
-          try {
-            await navigator.clipboard.writeText(wechatId);
-            copyBtn.textContent = '已复制';
-          } catch {
-            copyBtn.textContent = '复制失败';
+        if(go) go.addEventListener('click', ()=>{
+          const isMobile = /Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
+          if(!isMobile){
+            toast('请在手机打开此网站以跳转微信');
+            return;
           }
+          openWeChatAdd();
+        });
+
+        if(cp) cp.addEventListener('click', async ()=>{
+          const ok2 = await copyText(WECHAT_ID);
+          toast(ok2 ? '已复制微信号' : '复制失败，请手动复制');
+        });
+
+        if(sv) sv.addEventListener('click', ()=>{
+          tryDownloadQr();
         });
       }, 0);
     });
