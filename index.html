@@ -4,21 +4,132 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>roselg.xyz</title>
+  <meta name="description" content="Guo 的个人主页｜作品与合作联系" />
   <style>
-    body{font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial;max-width:860px;margin:64px auto;padding:0 18px;line-height:1.7}
-    .card{border:1px solid #eee;border-radius:18px;padding:26px}
-    .links a{margin-right:14px}
+    :root{
+      --bg1:#0b1020; --bg2:#141a33; --card:rgba(255,255,255,.06);
+      --line:rgba(255,255,255,.12); --txt:rgba(255,255,255,.92);
+      --muted:rgba(255,255,255,.68); --shadow: 0 18px 60px rgba(0,0,0,.35);
+      --radius:22px;
+    }
+    *{box-sizing:border-box}
+    body{
+      margin:0; color:var(--txt);
+      font-family: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "PingFang SC","Microsoft YaHei", Arial;
+      background:
+        radial-gradient(900px 500px at 10% 10%, rgba(86,120,255,.35), transparent 60%),
+        radial-gradient(900px 500px at 90% 20%, rgba(255,120,180,.28), transparent 60%),
+        radial-gradient(900px 600px at 50% 100%, rgba(120,255,220,.18), transparent 60%),
+        linear-gradient(180deg, var(--bg1), var(--bg2));
+      min-height:100vh;
+      display:flex; align-items:center; justify-content:center;
+      padding:40px 16px;
+    }
+    .wrap{width:min(980px, 100%)}
+    .card{
+      background:var(--card);
+      border:1px solid var(--line);
+      border-radius:var(--radius);
+      box-shadow:var(--shadow);
+      backdrop-filter: blur(10px);
+      padding:28px;
+      overflow:hidden;
+    }
+    .top{
+      display:flex; gap:22px; align-items:flex-start; justify-content:space-between; flex-wrap:wrap;
+    }
+    .title h1{margin:0; font-size:42px; letter-spacing:.2px}
+    .title p{margin:10px 0 0; color:var(--muted); font-size:16px; line-height:1.7}
+    .pill{
+      display:inline-flex; gap:8px; align-items:center;
+      padding:8px 12px; border-radius:999px;
+      border:1px solid var(--line); background:rgba(0,0,0,.18);
+      color:var(--muted); font-size:13px;
+    }
+    .grid{
+      display:grid; grid-template-columns: 1.2fr .8fr; gap:18px; margin-top:22px;
+    }
+    @media (max-width:860px){ .grid{grid-template-columns:1fr} .title h1{font-size:34px} }
+    .box{
+      border:1px solid var(--line);
+      background:rgba(0,0,0,.14);
+      border-radius:18px;
+      padding:18px;
+    }
+    .box h2{margin:0 0 10px; font-size:16px}
+    .tags{display:flex; flex-wrap:wrap; gap:10px}
+    .tag{
+      padding:8px 12px; border-radius:999px;
+      border:1px solid var(--line); background:rgba(255,255,255,.05);
+      color:var(--muted); font-size:13px;
+    }
+    a{color:inherit; text-decoration:none}
+    .btns{display:flex; gap:12px; flex-wrap:wrap; margin-top:14px}
+    .btn{
+      display:inline-flex; align-items:center; justify-content:center;
+      padding:12px 14px; border-radius:14px;
+      border:1px solid var(--line); background:rgba(255,255,255,.06);
+      transition: transform .12s ease, background .12s ease;
+      font-weight:600;
+    }
+    .btn:hover{transform: translateY(-1px); background:rgba(255,255,255,.10)}
+    .btn.primary{
+      background:linear-gradient(135deg, rgba(86,120,255,.9), rgba(255,120,180,.75));
+      border-color:transparent;
+    }
+    .links{display:flex; gap:14px; flex-wrap:wrap; margin-top:10px}
+    .link{
+      color:var(--muted);
+      border-bottom:1px dashed rgba(255,255,255,.25);
+      padding-bottom:2px;
+    }
+    .footer{margin-top:16px; color:rgba(255,255,255,.5); font-size:12px}
   </style>
 </head>
 <body>
-  <div class="card">
-    <h1>你好，我是 Guo</h1>
-    <p>这里是我的个人主页（0 成本：GitHub + Cloudflare Pages）。</p>
-    <p>合作邮箱：<a href="mailto:guo@roselg.xyz">guo@roselg.xyz</a></p>
-    <div class="links">
-      <a href="#">小红书</a>
-      <a href="#">B站</a>
-      <a href="#">抖音</a>
+  <div class="wrap">
+    <div class="card">
+      <div class="top">
+        <div class="title">
+          <div class="pill">🌐 roselg.xyz · 个人主页</div>
+          <h1>你好，我是 Guo</h1>
+          <p>这里是我的个人主页（0 成本：GitHub + Cloudflare Pages）。你可以在这里找到我的作品、合作方式和联系方式。</p>
+          <div class="btns">
+            <a class="btn primary" href="mailto:guo@roselg.xyz">合作联系：guo@roselg.xyz</a>
+            <a class="btn" href="#works">查看作品</a>
+          </div>
+          <div class="links">
+            <a class="link" href="#" target="_blank" rel="noopener">小红书</a>
+            <a class="link" href="#" target="_blank" rel="noopener">B站</a>
+            <a class="link" href="#" target="_blank" rel="noopener">抖音</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="grid">
+        <div class="box" id="works">
+          <h2>精选作品</h2>
+          <div class="tags">
+            <a class="tag" href="#" target="_blank" rel="noopener">作品 01｜短视频案例</a>
+            <a class="tag" href="#" target="_blank" rel="noopener">作品 02｜AI 提示词工程</a>
+            <a class="tag" href="#" target="_blank" rel="noopener">作品 03｜视觉/封面设计</a>
+            <a class="tag" href="#" target="_blank" rel="noopener">作品 04｜项目说明页</a>
+          </div>
+          <div class="footer">把上面的链接替换成你的真实作品链接即可。</div>
+        </div>
+
+        <div class="box">
+          <h2>我能提供</h2>
+          <div class="tags">
+            <span class="tag">AI 绘图/提示词</span>
+            <span class="tag">短视频策划</span>
+            <span class="tag">账号内容包装</span>
+            <span class="tag">封面/视觉设计</span>
+            <span class="tag">网站名片页</span>
+          </div>
+          <div class="footer">想做“作品集 + 预约表单 + 自动邮件回复”，也能继续升级。</div>
+        </div>
+      </div>
     </div>
   </div>
 </body>
