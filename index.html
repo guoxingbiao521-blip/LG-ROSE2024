@@ -3,134 +3,658 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>roselg.xyz</title>
-  <meta name="description" content="Guo 的个人主页｜作品与合作联系" />
+  <title>筑梦电子｜服务与展品</title>
+  <meta name="description" content="欢迎贵宾来到筑梦电子｜电子产品｜金融业务｜AI技术｜网络服务｜游戏服务｜懒人特殊服务｜展品展示｜联系方式" />
+
   <style>
     :root{
-      --bg1:#0b1020; --bg2:#141a33; --card:rgba(255,255,255,.06);
-      --line:rgba(255,255,255,.12); --txt:rgba(255,255,255,.92);
-      --muted:rgba(255,255,255,.68); --shadow: 0 18px 60px rgba(0,0,0,.35);
-      --radius:22px;
+      --bg0:#070a14;
+      --bg1:#0b1130;
+      --bg2:#121a3c;
+      --txt: rgba(255,255,255,.92);
+      --muted: rgba(255,255,255,.68);
+      --rose: #ff2f8a;
+      --rose2:#ff6fb0;
+      --blue: #4aa3ff;
+      --shadow: 0 18px 70px rgba(0,0,0,.45);
+      --radius: 22px;
+      --radius2: 16px;
+      --max: 1120px;
+
+      /* 你要的“深色标题/浅色内容” */
+      --svcHead: rgba(0,0,0,.38);
+      --svcBody: rgba(255,255,255,.06);
+      --svcLine: rgba(255,255,255,.12);
     }
     *{box-sizing:border-box}
-    body{
-      margin:0; color:var(--txt);
-      font-family: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "PingFang SC","Microsoft YaHei", Arial;
-      background:
-        radial-gradient(900px 500px at 10% 10%, rgba(86,120,255,.35), transparent 60%),
-        radial-gradient(900px 500px at 90% 20%, rgba(255,120,180,.28), transparent 60%),
-        radial-gradient(900px 600px at 50% 100%, rgba(120,255,220,.18), transparent 60%),
-        linear-gradient(180deg, var(--bg1), var(--bg2));
+    html,body{margin:0; padding:0; background:var(--bg0); color:var(--txt); font-family:ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "PingFang SC","Microsoft YaHei", Arial;}
+    a{color:inherit; text-decoration:none}
+    code{color:rgba(255,255,255,.84)}
+    .bg{
       min-height:100vh;
-      display:flex; align-items:center; justify-content:center;
-      padding:40px 16px;
+      background:
+        radial-gradient(1100px 700px at 10% 10%, rgba(74,163,255,.28), transparent 55%),
+        radial-gradient(900px 600px at 90% 20%, rgba(255,47,138,.20), transparent 60%),
+        radial-gradient(900px 650px at 50% 110%, rgba(139,208,255,.14), transparent 60%),
+        linear-gradient(180deg, var(--bg1), var(--bg2) 60%, #070a14);
     }
-    .wrap{width:min(980px, 100%)}
-    .card{
-      background:var(--card);
-      border:1px solid var(--line);
-      border-radius:var(--radius);
-      box-shadow:var(--shadow);
+    .wrap{max-width:var(--max); margin:0 auto; padding:22px 16px 60px;}
+    .nav{
+      position:sticky; top:0; z-index:20;
+      padding:14px 0;
       backdrop-filter: blur(10px);
+      background: linear-gradient(180deg, rgba(7,10,20,.65), rgba(7,10,20,.15));
+      border-bottom: 1px solid rgba(255,255,255,.06);
+    }
+    .nav-inner{max-width:var(--max); margin:0 auto; padding:0 16px; display:flex; gap:10px; align-items:center; justify-content:space-between; flex-wrap:wrap;}
+    .brand{display:flex; align-items:center; gap:10px; font-weight:800; letter-spacing:.3px;}
+    .dot{width:10px; height:10px; border-radius:999px; background: linear-gradient(135deg, var(--rose), var(--blue)); box-shadow: 0 0 18px rgba(255,47,138,.35);}
+    .nav-links{display:flex; gap:10px; flex-wrap:wrap;}
+    .chip{
+      padding:10px 12px; border-radius:999px;
+      border:1px solid rgba(255,255,255,.10);
+      background: rgba(255,255,255,.04);
+      color: var(--muted);
+      font-weight:600;
+      transition: transform .12s ease, background .12s ease, border-color .12s ease;
+    }
+    .chip:hover{transform: translateY(-1px); background: rgba(255,255,255,.07); border-color: rgba(255,47,138,.35); color: var(--txt);}
+
+    /* Hero */
+    .hero{
+      margin-top:28px;
       padding:28px;
+      border-radius: var(--radius);
+      background: linear-gradient(180deg, rgba(255,255,255,.05), rgba(255,255,255,.02));
+      border: 1px solid rgba(255,255,255,.10);
+      box-shadow: var(--shadow);
+      position:relative;
       overflow:hidden;
     }
-    .top{
-      display:flex; gap:22px; align-items:flex-start; justify-content:space-between; flex-wrap:wrap;
+    .hero:before{
+      content:"";
+      position:absolute; inset:-2px;
+      background:
+        radial-gradient(600px 260px at 15% 10%, rgba(74,163,255,.35), transparent 60%),
+        radial-gradient(520px 260px at 85% 30%, rgba(255,47,138,.26), transparent 65%);
+      filter: blur(6px);
+      opacity:.9;
+      pointer-events:none;
     }
-    .title h1{margin:0; font-size:42px; letter-spacing:.2px}
-    .title p{margin:10px 0 0; color:var(--muted); font-size:16px; line-height:1.7}
-    .pill{
-      display:inline-flex; gap:8px; align-items:center;
-      padding:8px 12px; border-radius:999px;
-      border:1px solid var(--line); background:rgba(0,0,0,.18);
-      color:var(--muted); font-size:13px;
+    .hero-inner{position:relative; display:grid; grid-template-columns: 1fr; gap:14px;}
+    .kicker{
+      display:inline-flex; gap:10px; align-items:center;
+      padding:10px 12px; width:fit-content;
+      border-radius:999px;
+      background: rgba(0,0,0,.18);
+      border:1px solid rgba(255,255,255,.10);
+      color: var(--muted);
+      font-weight:700;
     }
-    .grid{
-      display:grid; grid-template-columns: 1.2fr .8fr; gap:18px; margin-top:22px;
+
+    /* 3D Tech Title (blue) */
+    .title{
+      margin:0;
+      font-size: clamp(34px, 4.8vw, 56px);
+      font-weight: 950;
+      letter-spacing: .6px;
+      line-height: 1.05;
+      color: transparent;
+      background: linear-gradient(180deg, #e8f6ff, #a8dcff 28%, #4aa3ff 70%, #1b4cff);
+      -webkit-background-clip:text;
+      background-clip:text;
+      text-shadow:
+        0 1px 0 rgba(255,255,255,.18),
+        0 2px 0 rgba(0,0,0,.18),
+        0 6px 18px rgba(0,0,0,.55),
+        0 0 32px rgba(74,163,255,.28);
+      filter: drop-shadow(0 10px 30px rgba(0,0,0,.35));
     }
-    @media (max-width:860px){ .grid{grid-template-columns:1fr} .title h1{font-size:34px} }
-    .box{
-      border:1px solid var(--line);
-      background:rgba(0,0,0,.14);
-      border-radius:18px;
-      padding:18px;
-    }
-    .box h2{margin:0 0 10px; font-size:16px}
-    .tags{display:flex; flex-wrap:wrap; gap:10px}
-    .tag{
-      padding:8px 12px; border-radius:999px;
-      border:1px solid var(--line); background:rgba(255,255,255,.05);
-      color:var(--muted); font-size:13px;
-    }
-    a{color:inherit; text-decoration:none}
-    .btns{display:flex; gap:12px; flex-wrap:wrap; margin-top:14px}
+    .sub{margin: 6px 0 0; color: rgba(255,255,255,.78); line-height: 1.7; font-size: 16px; max-width: 980px;}
+    .spacer{height:14px;} /* 大字下面留空隙 */
+
+    .cta-row{display:flex; gap:12px; flex-wrap:wrap; margin-top:10px;}
     .btn{
       display:inline-flex; align-items:center; justify-content:center;
-      padding:12px 14px; border-radius:14px;
-      border:1px solid var(--line); background:rgba(255,255,255,.06);
-      transition: transform .12s ease, background .12s ease;
-      font-weight:600;
+      padding:12px 14px;
+      border-radius: 14px;
+      border:1px solid rgba(255,255,255,.12);
+      background: rgba(255,255,255,.06);
+      font-weight: 800;
+      color: var(--txt);
+      transition: transform .12s ease, background .12s ease, border-color .12s ease;
     }
-    .btn:hover{transform: translateY(-1px); background:rgba(255,255,255,.10)}
+    .btn:hover{transform: translateY(-1px); background: rgba(255,255,255,.10); border-color: rgba(255,47,138,.35);}
     .btn.primary{
-      background:linear-gradient(135deg, rgba(86,120,255,.9), rgba(255,120,180,.75));
-      border-color:transparent;
+      border-color: transparent;
+      background: linear-gradient(135deg, rgba(255,47,138,.95), rgba(255,111,176,.75));
+      box-shadow: 0 12px 40px rgba(255,47,138,.20);
     }
-    .links{display:flex; gap:14px; flex-wrap:wrap; margin-top:10px}
-    .link{
-      color:var(--muted);
-      border-bottom:1px dashed rgba(255,255,255,.25);
-      padding-bottom:2px;
+
+    /* Sections */
+    .section{margin-top:22px;}
+    .h2{
+      margin:0 0 12px;
+      font-size: 18px;
+      letter-spacing:.2px;
+      display:flex; align-items:center; gap:10px;
     }
-    .footer{margin-top:16px; color:rgba(255,255,255,.5); font-size:12px}
+    .h2:before{
+      content:"";
+      width:10px; height:10px; border-radius:999px;
+      background: linear-gradient(135deg, var(--rose), var(--rose2));
+      box-shadow: 0 0 18px rgba(255,47,138,.35);
+    }
+    .card{
+      border: 1px solid rgba(255,255,255,.10);
+      background: rgba(0,0,0,.18);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      overflow:hidden;
+    }
+    .pad{padding:18px;}
+
+    /* Intro module (image + text) */
+    .intro{display:grid; grid-template-columns: 1.05fr 1.95fr; gap:16px; align-items:stretch;}
+    @media (max-width:900px){ .intro{grid-template-columns:1fr;} }
+    .intro-img{
+      min-height: 240px;
+      border-radius: var(--radius2);
+      border: 1px solid rgba(255,255,255,.12);
+      background:
+        radial-gradient(360px 220px at 30% 30%, rgba(74,163,255,.22), transparent 70%),
+        radial-gradient(360px 220px at 70% 70%, rgba(255,47,138,.18), transparent 70%),
+        rgba(255,255,255,.04);
+      overflow:hidden;
+      position:relative;
+    }
+    .intro-img img{width:100%; height:100%; object-fit:cover; display:block; opacity:.95;}
+    .intro-text .muted{color:var(--muted); line-height:1.75; margin:0;}
+    .intro-text .bullets{margin:12px 0 0; padding-left: 18px; color: rgba(255,255,255,.82); line-height:1.8;}
+    .badge-row{display:flex; gap:10px; flex-wrap:wrap; margin-top:12px;}
+    .badge{
+      padding:9px 12px;
+      border-radius:999px;
+      border:1px solid rgba(255,47,138,.25);
+      background: rgba(255,47,138,.08);
+      color: rgba(255,255,255,.88);
+      font-weight:800;
+      font-size:13px;
+    }
+
+    /* ✅ 业务分类：深色标题 + 浅色内容（按你要求的模板） */
+    .svc-grid{display:grid; grid-template-columns: repeat(3, 1fr); gap:14px;}
+    @media (max-width:980px){ .svc-grid{grid-template-columns:repeat(2,1fr);} }
+    @media (max-width:600px){ .svc-grid{grid-template-columns:1fr;} }
+
+    .svc-card{
+      border:1px solid var(--svcLine);
+      border-radius: var(--radius2);
+      overflow:hidden;
+      box-shadow: 0 18px 60px rgba(0,0,0,.25);
+      background: rgba(255,255,255,.02);
+      transition: transform .12s ease, border-color .12s ease;
+    }
+    .svc-card:hover{
+      transform: translateY(-2px);
+      border-color: rgba(255,47,138,.35);
+    }
+    .svc-head{
+      padding:14px 14px 12px;
+      background:
+        radial-gradient(260px 120px at 15% 20%, rgba(74,163,255,.22), transparent 65%),
+        radial-gradient(260px 120px at 85% 40%, rgba(255,47,138,.18), transparent 70%),
+        var(--svcHead);
+      border-bottom: 1px solid rgba(255,255,255,.10);
+      position:relative;
+    }
+    .svc-head:after{
+      content:"";
+      position:absolute; left:0; right:0; bottom:0;
+      height:2px;
+      background: linear-gradient(90deg, rgba(255,47,138,.0), rgba(255,47,138,.75), rgba(74,163,255,.55), rgba(255,47,138,.0));
+      opacity:.8;
+    }
+    .svc-title{
+      margin:0;
+      font-weight: 950;
+      letter-spacing:.2px;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:10px;
+    }
+    .svc-pill{
+      padding:7px 10px;
+      border-radius:999px;
+      border:1px solid rgba(255,255,255,.14);
+      background: rgba(0,0,0,.18);
+      color: rgba(255,255,255,.78);
+      font-size:12px;
+      white-space:nowrap;
+    }
+    .svc-body{
+      padding:14px;
+      background: var(--svcBody);
+    }
+    .svc-body p{
+      margin:0;
+      color: rgba(255,255,255,.80);
+      line-height:1.7;
+      font-size:14px;
+    }
+    .svc-subtags{
+      margin-top:10px;
+      display:flex;
+      gap:10px;
+      flex-wrap:wrap;
+    }
+    .svc-subtags span{
+      padding:8px 10px;
+      border-radius:999px;
+      border:1px solid rgba(255,47,138,.22);
+      background: rgba(255,47,138,.08);
+      color: rgba(255,255,255,.86);
+      font-weight:800;
+      font-size:12px;
+    }
+
+    /* Gallery */
+    .gallery{display:grid; grid-template-columns: repeat(3, 1fr); gap:12px;}
+    @media (max-width:980px){ .gallery{grid-template-columns:repeat(2,1fr);} }
+    @media (max-width:620px){ .gallery{grid-template-columns:1fr;} }
+    .g-item{
+      border:1px solid rgba(255,255,255,.10);
+      background: rgba(0,0,0,.18);
+      border-radius: var(--radius2);
+      overflow:hidden;
+      cursor:pointer;
+      transition: transform .12s ease, border-color .12s ease;
+    }
+    .g-item:hover{transform: translateY(-2px); border-color: rgba(255,47,138,.35);}
+    .g-media{width:100%; aspect-ratio: 16/10; object-fit:cover; display:block; background: rgba(255,255,255,.04);}
+    .g-cap{padding:10px 12px; display:flex; align-items:center; justify-content:space-between; gap:10px;}
+    .g-cap .t{font-weight:900;}
+    .g-cap .s{color:var(--muted); font-size:12px;}
+
+    .videos{margin-top:14px; display:grid; grid-template-columns: repeat(3, 1fr); gap:12px;}
+    @media (max-width:980px){ .videos{grid-template-columns:repeat(2,1fr);} }
+    @media (max-width:620px){ .videos{grid-template-columns:1fr;} }
+    video{width:100%; border-radius: var(--radius2); border:1px solid rgba(255,255,255,.12); background: rgba(0,0,0,.25);}
+
+    /* Contact */
+    .contact{display:grid; grid-template-columns: 1.4fr .6fr; gap:14px; align-items:stretch;}
+    @media (max-width:900px){ .contact{grid-template-columns:1fr;} }
+    .contact .note{color:var(--muted); line-height:1.8; margin:0;}
+    .contact-actions{display:flex; gap:12px; flex-wrap:wrap; justify-content:flex-end; align-items:center;}
+    @media (max-width:900px){ .contact-actions{justify-content:flex-start;} }
+
+    .iconbtn{
+      display:inline-flex; align-items:center; gap:10px;
+      padding:12px 14px;
+      border-radius: 16px;
+      border:1px solid rgba(255,47,138,.25);
+      background: rgba(255,47,138,.08);
+      font-weight:900;
+      transition: transform .12s ease, background .12s ease, border-color .12s ease;
+      cursor:pointer;
+    }
+    .iconbtn:hover{transform: translateY(-1px); border-color: rgba(255,47,138,.45); background: rgba(255,47,138,.12);}
+    .icon{width:18px; height:18px; display:inline-block; filter: drop-shadow(0 0 10px rgba(255,47,138,.22));}
+    .foot{margin-top:16px; color: rgba(255,255,255,.45); font-size:12px;}
+
+    /* Modal */
+    .modal{position:fixed; inset:0; display:none; background: rgba(0,0,0,.62); backdrop-filter: blur(6px); z-index:50; padding:24px;}
+    .modal.show{display:flex; align-items:center; justify-content:center;}
+    .modal-card{
+      width:min(860px, 100%);
+      border-radius: 22px;
+      border:1px solid rgba(255,255,255,.14);
+      background: rgba(10,14,30,.92);
+      box-shadow: 0 22px 90px rgba(0,0,0,.55);
+      overflow:hidden;
+      position:relative;
+    }
+    .modal-top{display:flex; justify-content:space-between; align-items:center; padding:14px 16px; border-bottom:1px solid rgba(255,255,255,.10);}
+    .modal-top .mt{font-weight:950;}
+    .close{
+      border:1px solid rgba(255,255,255,.14);
+      background: rgba(255,255,255,.06);
+      color: var(--txt);
+      border-radius: 12px;
+      padding:8px 10px;
+      cursor:pointer;
+      font-weight:900;
+    }
+    .modal-body{padding:16px;}
+    .modal-body img{width:100%; border-radius: 16px; border:1px solid rgba(255,255,255,.12); background: rgba(0,0,0,.25);}
+    .hint{margin:12px 0 0; color: var(--muted); line-height:1.7;}
+    .row{display:flex; gap:10px; flex-wrap:wrap; margin-top:12px; align-items:center;}
   </style>
 </head>
-<body>
-  <div class="wrap">
-    <div class="card">
-      <div class="top">
-        <div class="title">
-          <div class="pill">🌐 roselg.xyz · 个人主页</div>
-          <h1>你好，我是 Guo</h1>
-          <p>这里是我的个人主页（0 成本：GitHub + Cloudflare Pages）。你可以在这里找到我的作品、合作方式和联系方式。</p>
-          <div class="btns">
-            <a class="btn primary" href="mailto:guo@roselg.xyz">合作联系：guo@roselg.xyz</a>
-            <a class="btn" href="#works">查看作品</a>
-          </div>
-          <div class="links">
-            <a class="link" href="#" target="_blank" rel="noopener">小红书</a>
-            <a class="link" href="#" target="_blank" rel="noopener">B站</a>
-            <a class="link" href="#" target="_blank" rel="noopener">抖音</a>
-          </div>
-        </div>
-      </div>
 
-      <div class="grid">
-        <div class="box" id="works">
-          <h2>精选作品</h2>
-          <div class="tags">
-            <a class="tag" href="#" target="_blank" rel="noopener">作品 01｜短视频案例</a>
-            <a class="tag" href="#" target="_blank" rel="noopener">作品 02｜AI 提示词工程</a>
-            <a class="tag" href="#" target="_blank" rel="noopener">作品 03｜视觉/封面设计</a>
-            <a class="tag" href="#" target="_blank" rel="noopener">作品 04｜项目说明页</a>
-          </div>
-          <div class="footer">把上面的链接替换成你的真实作品链接即可。</div>
-        </div>
-
-        <div class="box">
-          <h2>我能提供</h2>
-          <div class="tags">
-            <span class="tag">AI 绘图/提示词</span>
-            <span class="tag">短视频策划</span>
-            <span class="tag">账号内容包装</span>
-            <span class="tag">封面/视觉设计</span>
-            <span class="tag">网站名片页</span>
-          </div>
-          <div class="footer">想做“作品集 + 预约表单 + 自动邮件回复”，也能继续升级。</div>
-        </div>
+<body class="bg">
+  <div class="nav">
+    <div class="nav-inner">
+      <div class="brand"><span class="dot"></span>筑梦电子 · 引流服务站</div>
+      <div class="nav-links">
+        <a class="chip" href="#intro">自我介绍</a>
+        <a class="chip" href="#services">业务分类</a>
+        <a class="chip" href="#showcase">展品展示</a>
+        <a class="chip" href="#contact">联系方式</a>
       </div>
     </div>
   </div>
+
+  <div class="wrap">
+    <section class="hero" id="top">
+      <div class="hero-inner">
+        <div class="kicker">✨ 玫瑰红主题 · 蓝色科技立体标题</div>
+        <h1 class="title">欢迎贵宾来到筑梦电子</h1>
+        <div class="spacer"></div>
+        <p class="sub">这里是筑梦电子的服务与展品展示页：支持多业务分类引流、展示图/视频展品、并可一键联系。</p>
+        <div class="cta-row">
+          <a class="btn primary" href="#contact">立即联系</a>
+          <a class="btn" href="#showcase">查看展品</a>
+          <a class="btn" href="#services">查看业务</a>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="intro">
+      <div class="h2">图文自我介绍</div>
+      <div class="card pad">
+        <div class="intro">
+          <div class="intro-img">
+            <img src="assets/profile.jpg" alt="自我介绍配图" onerror="this.style.display='none'">
+          </div>
+          <div class="intro-text">
+            <p class="muted">
+              （把这里改成你的自我介绍文案）例如：我专注于电子产品与多类数字化服务，提供从咨询到交付的一站式支持，同时在 AI 技术方向提供教学/代做/工具教程等服务。
+            </p>
+            <ul class="bullets">
+              <li>服务特点：快速响应｜流程清晰｜按需定制</li>
+              <li>交付形式：文字方案｜文件/脚本｜远程协助｜成品交付</li>
+              <li>合作方式：先沟通需求 → 明确范围 → 交付与售后</li>
+            </ul>
+            <div class="badge-row">
+              <span class="badge">玫瑰红引流页</span>
+              <span class="badge">展品图/视频展示</span>
+              <span class="badge">一键联系</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ✅ 业务分类（已按你要求做成：深色标题条 + 浅色介绍区） -->
+    <section class="section" id="services">
+      <div class="h2">涉及业务分类</div>
+      <div class="card pad">
+        <div class="svc-grid">
+
+          <div class="svc-card">
+            <div class="svc-head">
+              <div class="svc-title">电子产品 <span class="svc-pill">产品/选购/供给</span></div>
+            </div>
+            <div class="svc-body">
+              <p>（待补充）这里写电子产品相关服务介绍：你后期把具体内容填进来即可。</p>
+            </div>
+          </div>
+
+          <div class="svc-card">
+            <div class="svc-head">
+              <div class="svc-title">金融业务 <span class="svc-pill">咨询/办理</span></div>
+            </div>
+            <div class="svc-body">
+              <p>（待补充）这里写金融业务服务介绍：建议写清服务范围与规则，保持合规与清晰。</p>
+            </div>
+          </div>
+
+          <div class="svc-card">
+            <div class="svc-head">
+              <div class="svc-title">AI技术 <span class="svc-pill">教学/代做/教程</span></div>
+            </div>
+            <div class="svc-body">
+              <p>（待补充）这里写 AI 技术方向的总体介绍：你后期补充内容即可。</p>
+              <div class="svc-subtags">
+                <span>AI收徒</span>
+                <span>AI代做</span>
+                <span>AI工具免费教程</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="svc-card">
+            <div class="svc-head">
+              <div class="svc-title">网络服务 <span class="svc-pill">工具/搭建</span></div>
+            </div>
+            <div class="svc-body">
+              <p>（待补充）这里写网络服务介绍：例如网站/域名/邮箱/基础部署/远程协助等。</p>
+            </div>
+          </div>
+
+          <div class="svc-card">
+            <div class="svc-head">
+              <div class="svc-title">游戏服务 <span class="svc-pill">代练/咨询</span></div>
+            </div>
+            <div class="svc-body">
+              <p>（待补充）这里写游戏服务介绍：你后期补充具体范围、交付方式、周期等。</p>
+            </div>
+          </div>
+
+          <div class="svc-card">
+            <div class="svc-head">
+              <div class="svc-title">懒人特殊服务 <span class="svc-pill">按需定制</span></div>
+            </div>
+            <div class="svc-body">
+              <p>（待补充）这里写你的“按需定制服务”介绍（建议保持合法合规、明确边界）。</p>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="showcase">
+      <div class="h2">展品展示</div>
+
+      <div class="card pad">
+        <div class="h2" style="margin-top:0">6张照片</div>
+        <div class="gallery">
+          <div class="g-item" data-type="img" data-src="assets/gallery/01.jpg" data-title="展品照片 01">
+            <img class="g-media" src="assets/gallery/01.jpg" alt="展品照片01" onerror="this.style.opacity='.25'">
+            <div class="g-cap"><span class="t">展品照片 01</span><span class="s">点击放大</span></div>
+          </div>
+          <div class="g-item" data-type="img" data-src="assets/gallery/02.jpg" data-title="展品照片 02">
+            <img class="g-media" src="assets/gallery/02.jpg" alt="展品照片02" onerror="this.style.opacity='.25'">
+            <div class="g-cap"><span class="t">展品照片 02</span><span class="s">点击放大</span></div>
+          </div>
+          <div class="g-item" data-type="img" data-src="assets/gallery/03.jpg" data-title="展品照片 03">
+            <img class="g-media" src="assets/gallery/03.jpg" alt="展品照片03" onerror="this.style.opacity='.25'">
+            <div class="g-cap"><span class="t">展品照片 03</span><span class="s">点击放大</span></div>
+          </div>
+          <div class="g-item" data-type="img" data-src="assets/gallery/04.jpg" data-title="展品照片 04">
+            <img class="g-media" src="assets/gallery/04.jpg" alt="展品照片04" onerror="this.style.opacity='.25'">
+            <div class="g-cap"><span class="t">展品照片 04</span><span class="s">点击放大</span></div>
+          </div>
+          <div class="g-item" data-type="img" data-src="assets/gallery/05.jpg" data-title="展品照片 05">
+            <img class="g-media" src="assets/gallery/05.jpg" alt="展品照片05" onerror="this.style.opacity='.25'">
+            <div class="g-cap"><span class="t">展品照片 05</span><span class="s">点击放大</span></div>
+          </div>
+          <div class="g-item" data-type="img" data-src="assets/gallery/06.jpg" data-title="展品照片 06">
+            <img class="g-media" src="assets/gallery/06.jpg" alt="展品照片06" onerror="this.style.opacity='.25'">
+            <div class="g-cap"><span class="t">展品照片 06</span><span class="s">点击放大</span></div>
+          </div>
+        </div>
+
+        <div class="h2" style="margin-top:16px">3个视频</div>
+        <div class="videos">
+          <div>
+            <video controls preload="metadata" src="assets/videos/01.mp4"></video>
+            <div class="g-cap"><span class="t">展品视频 01</span><span class="s">可直接播放</span></div>
+          </div>
+          <div>
+            <video controls preload="metadata" src="assets/videos/02.mp4"></video>
+            <div class="g-cap"><span class="t">展品视频 02</span><span class="s">可直接播放</span></div>
+          </div>
+          <div>
+            <video controls preload="metadata" src="assets/videos/03.mp4"></video>
+            <div class="g-cap"><span class="t">展品视频 03</span><span class="s">可直接播放</span></div>
+          </div>
+        </div>
+
+        <div class="foot">提示：你后期创建文件夹并上传素材后，这里会自动显示。</div>
+      </div>
+    </section>
+
+    <section class="section" id="contact">
+      <div class="h2">联系方式</div>
+      <div class="card pad">
+        <div class="contact">
+          <div>
+            <p class="note">
+              点击右侧图标即可联系：微信（引导加好友）、Telegram（打开聊天）、Gmail（邮件联系）。
+              <br>建议加微信备注：<b>筑梦电子</b>（方便我快速通过）。
+            </p>
+            <div class="foot">微信二维码可选：后续上传到 <code>assets/wechat-qr.png</code>（作为打不开微信时的兜底）。</div>
+          </div>
+
+          <div class="contact-actions">
+            <button class="iconbtn" id="btnWechat" type="button" data-wechat-id="LG-202412" title="微信加好友">
+              <span class="icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none">
+                  <path d="M8.6 4.8c3.6 0 6.5 2.5 6.5 5.6S12.2 16 8.6 16c-.5 0-1-.1-1.5-.2L4.8 17l.8-2.1c-1.1-1-1.8-2.3-1.8-3.9 0-3.1 2.9-5.6 6.5-5.6Z" stroke="white" opacity=".9"/>
+                  <path d="M15.4 10.2c2.6 0 4.8 1.8 4.8 4.1 0 1.2-.5 2.2-1.4 3l.6 1.6-1.8-.9c-.4.1-.8.1-1.2.1-2.6 0-4.8-1.8-4.8-4.1s2.2-3.8 4.8-3.8Z" stroke="white" opacity=".9"/>
+                  <circle cx="7.2" cy="10.1" r="1" fill="white" opacity=".9"/>
+                  <circle cx="10.2" cy="10.1" r="1" fill="white" opacity=".9"/>
+                  <circle cx="14.4" cy="14.2" r="1" fill="white" opacity=".9"/>
+                  <circle cx="17.1" cy="14.2" r="1" fill="white" opacity=".9"/>
+                </svg>
+              </span>
+              微信
+            </button>
+
+            <a class="iconbtn" href="https://t.me/guoxingbiao" target="_blank" rel="noopener" title="Telegram">
+              <span class="icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none">
+                  <path d="M21 4.9 3.6 11.6c-1 .4-1 1.8.1 2.1l4.3 1.3 1.7 5.1c.3.9 1.5 1.1 2.1.4l2.5-2.7 4.6 3.4c.8.6 1.9.1 2.1-.9L22 6.2c.2-1-.7-1.7-1.6-1.3Z" stroke="white" opacity=".9"/>
+                  <path d="M8 14.8 18.7 7.7" stroke="white" opacity=".9"/>
+                </svg>
+              </span>
+              Telegram
+            </a>
+
+            <a class="iconbtn" href="mailto:guoxingbiao521@gmail.com" title="Gmail">
+              <span class="icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none">
+                  <path d="M4 7.5 12 13l8-5.5" stroke="white" opacity=".9"/>
+                  <path d="M5 8.2V18c0 .6.4 1 1 1h12c.6 0 1-.4 1-1V8.2" stroke="white" opacity=".9"/>
+                  <path d="M6.2 7h11.6c.6 0 1 .4 1 1v.2L12 13 5.2 8.2V8c0-.6.4-1 1-1Z" stroke="white" opacity=".9"/>
+                </svg>
+              </span>
+              Gmail
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <div class="foot">© <span id="year"></span> 筑梦电子 · roselg.xyz</div>
+  </div>
+
+  <div class="modal" id="modal">
+    <div class="modal-card">
+      <div class="modal-top">
+        <div class="mt" id="modalTitle">内容预览</div>
+        <button class="close" id="modalClose" type="button">关闭</button>
+      </div>
+      <div class="modal-body" id="modalBody"></div>
+    </div>
+  </div>
+
+  <script>
+    document.getElementById('year').textContent = new Date().getFullYear();
+
+    document.querySelectorAll('a[href^="#"]').forEach(a=>{
+      a.addEventListener('click', (e)=>{
+        const id = a.getAttribute('href');
+        if(!id || id === '#') return;
+        const el = document.querySelector(id);
+        if(!el) return;
+        e.preventDefault();
+        el.scrollIntoView({behavior:'smooth', block:'start'});
+      });
+    });
+
+    const modal = document.getElementById('modal');
+    const modalTitle = document.getElementById('modalTitle');
+    const modalBody = document.getElementById('modalBody');
+    const closeBtn = document.getElementById('modalClose');
+
+    function openModal(title, html){
+      modalTitle.textContent = title || '内容预览';
+      modalBody.innerHTML = html || '';
+      modal.classList.add('show');
+      document.body.style.overflow = 'hidden';
+    }
+    function closeModal(){
+      modal.classList.remove('show');
+      modalBody.innerHTML = '';
+      document.body.style.overflow = '';
+    }
+    closeBtn.addEventListener('click', closeModal);
+    modal.addEventListener('click', (e)=>{ if(e.target === modal) closeModal(); });
+    document.addEventListener('keydown', (e)=>{ if(e.key === 'Escape') closeModal(); });
+
+    document.querySelectorAll('.g-item').forEach(item=>{
+      item.addEventListener('click', ()=>{
+        const src = item.dataset.src;
+        const title = item.dataset.title || '展品预览';
+        openModal(title, `<img src="${src}" alt="${title}">`);
+      });
+    });
+
+    document.getElementById('btnWechat').addEventListener('click', () => {
+      const btn = document.getElementById('btnWechat');
+      const wechatId = (btn.dataset.wechatId || '').trim();
+      const noteText = '筑梦电子';
+
+      openModal('微信加好友', `
+        <div class="hint">
+          建议备注：<b>${noteText}</b>（方便我快速通过）<br>
+          方式一：复制微信号到微信搜索添加：<b>${wechatId}</b><br>
+          方式二：（可选）上传二维码到 <code>assets/wechat-qr.png</code> 后可扫码添加
+        </div>
+        <div class="row">
+          <button class="close" id="openWeChatApp" type="button">打开微信</button>
+          <button class="close" id="copyWechatId" type="button">复制微信号：${wechatId}</button>
+          <button class="close" id="copyNote" type="button">复制备注：${noteText}</button>
+        </div>
+        <div style="margin-top:12px;">
+          <img src="assets/wechat-qr.png" alt="微信加好友二维码"
+               onerror="this.outerHTML='<div class=hint>（可选）未找到二维码：你后续上传到 <code>assets/wechat-qr.png</code> 即可显示</div>'">
+        </div>
+        <div class="hint" style="margin-top:10px;">
+          如果浏览器拦截了唤起微信，请直接复制微信号添加：<b>${wechatId}</b>
+        </div>
+      `);
+
+      setTimeout(() => {
+        const openBtn = document.getElementById('openWeChatApp');
+        const copyIdBtn = document.getElementById('copyWechatId');
+        const copyNoteBtn = document.getElementById('copyNote');
+
+        if (openBtn) openBtn.addEventListener('click', () => window.location.href = 'weixin://');
+
+        async function copyText(text, el, okLabel) {
+          try { await navigator.clipboard.writeText(text); el.textContent = okLabel; }
+          catch { el.textContent = '复制失败，请手动复制：' + text; }
+        }
+        if (copyIdBtn) copyIdBtn.addEventListener('click', () => copyText(wechatId, copyIdBtn, '已复制微信号：' + wechatId));
+        if (copyNoteBtn) copyNoteBtn.addEventListener('click', () => copyText(noteText, copyNoteBtn, '已复制备注：' + noteText));
+      }, 0);
+    });
+  </script>
 </body>
 </html>
