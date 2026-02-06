@@ -435,13 +435,15 @@
       background: linear-gradient(180deg, transparent, rgba(0,0,0,.25));
       pointer-events:none;
     }
-    .imgbox{ ... }
-.imgbox::after{ ... }
-
-/* ✅把下面这段粘在这里 */
-.about-img{ ... }
-.imgbox.img-missing{ ... }
-.imgbox.img-missing::before{ ... }
+    /* ✅ 方案1：介绍模块用背景图 */
+.imgbox-about{
+  background:
+    linear-gradient(180deg, rgba(0,0,0,.12), rgba(0,0,0,.32)),
+    url("assets/about.jpg");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
 
     .intro-text{
       border-radius: var(--radius2);
@@ -917,9 +919,7 @@
       <div class="section-card">
         <div class="h"><span class="dot"></span>服务介绍</div>
 
-       <div class="imgbox">
-  <img src="assets/about.jpg" alt="介绍图" class="about-img">
-</div>
+      <div class="imgbox imgbox-about" title="服务介绍配图"></div>
 
 
           <div class="intro-text">
