@@ -183,59 +183,107 @@
 
     /* ✅ 主标题：字距更大 + 更长于四卖点 + 强3D + 金属边框 + 天空蓝白渐变 */
    /* 主标题：更硬朗金属边 + 更厚3D挤压 + 天空蓝/白云渐变 + 强冷光 */
+/* 真·3D挤出：正面(渐变金属) + 侧面(厚度) + 高光 */
+/* 真·3D挤出：正面(渐变金属) + 侧面(厚度) + 高光 */
+/* 真·3D挤出：正面(渐变金属) + 侧面(厚度) + 高光 */
+/* 真·3D挤出：正面(渐变金属) + 侧面(厚度) + 高光 */
 .hero-title{
+  position: relative;
+  display: inline-block;          /* 让伪元素宽度=文字宽度，侧面不会错位 */
   margin: 8px auto 16px;
-  text-align:center;
+  text-align: center;
 
   font-weight: 1000;
-  letter-spacing: 14px;           /* 字间距更大（你可按需调 10~18） */
+  letter-spacing: 16px;           /* 字间距更大（可调 12~20） */
   line-height: 1.06;
-  font-size: clamp(40px, 5.4vw, 78px);
+  font-size: clamp(42px, 5.6vw, 82px);
 
-  /* 蓝白“天空感”渐变填充 */
+  padding: 0 .08em;               /* 防止描边/发光被裁切 */
+
+  /* 天空蓝白渐变（更“白云+天蓝”） */
   background: linear-gradient(
     180deg,
     #ffffff 0%,
-    #eefbff 16%,
-    #bfeaff 36%,
-    #68c6ff 58%,
-    #2b8bff 82%,
-    #165dff 100%
+    #f7feff 12%,
+    #dcf6ff 30%,
+    #aee9ff 52%,
+    #63c9ff 72%,
+    #2aa7ff 90%,
+    #1a8dff 100%
   );
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;
 
-  /* 金属描边（更亮更硬） */
-  -webkit-text-stroke: 2.6px rgba(230,250,255,.92);
+  /* 金属边更硬朗 */
+  -webkit-text-stroke: 3px rgba(245,255,255,.92);
 
-  /* 3D“厚度”+ 硬阴影 + 冷光 */
+  /* 正面冷光（科技发光） */
   text-shadow:
-    /* 顶部高光/硬边 */
-    -1px -1px 0 rgba(255,255,255,.20),
-     0px -2px 0 rgba(255,255,255,.14),
-
-    /* 深色硬边（像金属边框） */
-     1px  1px 0 rgba(0,0,0,.85),
-     2px  2px 0 rgba(0,0,0,.82),
-
-    /* 3D 挤压厚度（越多越“厚”） */
-     3px  3px 0 rgba(2,7,18,.88),
-     4px  4px 0 rgba(2,7,18,.84),
-     5px  5px 0 rgba(2,7,18,.80),
-     6px  6px 0 rgba(2,7,18,.76),
-     7px  7px 0 rgba(2,7,18,.72),
-     8px  8px 0 rgba(2,7,18,.68),
-
-    /* 真实落地阴影 */
-     0px 18px 26px rgba(0,0,0,.62),
-
-    /* 冷光外发光（科技感） */
-     0 0 10px rgba(62,166,255,.75),
-     0 0 22px rgba(135,215,255,.50),
-     0 0 46px rgba(62,166,255,.32),
-     0 0 70px rgba(143,244,255,.18);
+    0 0 10px rgba(120,220,255,.88),
+    0 0 22px rgba(90,200,255,.55),
+    0 0 48px rgba(60,166,255,.30);
 }
+
+/* 侧面厚度：真正“3D立体”的关键层 */
+.hero-title::before{
+  content: attr(data-text);
+  position: absolute;
+  left: 0;
+  top: 0;
+  z-index: -2;
+
+  /* 侧面颜色：深金属蓝（像字的“侧壁”） */
+  color: #071a2f;
+
+  /* 侧面也有一点硬边 */
+  -webkit-text-stroke: 3px rgba(0,0,0,.35);
+
+  /* 挤出方向与厚度：这里就是“立体厚度” */
+  transform: translate(12px, 12px) skewX(-10deg);
+
+  /* 多层叠加制造“侧面层层台阶” */
+  text-shadow:
+    1px 1px 0 rgba(3,10,20,.92),
+    2px 2px 0 rgba(3,10,20,.88),
+    3px 3px 0 rgba(3,10,20,.84),
+    4px 4px 0 rgba(3,10,20,.80),
+    5px 5px 0 rgba(3,10,20,.76),
+    6px 6px 0 rgba(3,10,20,.72),
+    7px 7px 0 rgba(3,10,20,.68),
+    8px 8px 0 rgba(3,10,20,.64),
+    9px 9px 0 rgba(3,10,20,.60),
+    10px 10px 0 rgba(3,10,20,.56),
+    0 22px 28px rgba(0,0,0,.62);
+  opacity: .98;
+}
+
+/* 正面金属高光（让字更“硬”、更像金属反光） */
+.hero-title::after{
+  content: attr(data-text);
+  position: absolute;
+  left: 0;
+  top: 0;
+  z-index: 2;
+  pointer-events: none;
+
+  /* 只加高光，不改变主渐变 */
+  color: transparent;
+  background: linear-gradient(
+    90deg,
+    rgba(255,255,255,.65) 0%,
+    rgba(255,255,255,.18) 28%,
+    rgba(255,255,255,0) 60%
+  );
+  -webkit-background-clip: text;
+  background-clip: text;
+
+  /* 高光略微偏移，像金属反射 */
+  transform: translate(-2px,-2px);
+  mix-blend-mode: screen;
+  opacity: .55;
+}
+
 
 
     .hero-sub{
