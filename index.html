@@ -69,22 +69,25 @@
       padding: 22px 0 76px;
     }
 
-    header{
-      position:sticky;
-      top:10px;
-      z-index:50;
-      margin: 10px auto 22px;
-      backdrop-filter: blur(14px);
-      -webkit-backdrop-filter: blur(14px);
-      background: linear-gradient(180deg, rgba(10,14,40,.62), rgba(10,14,40,.28));
-      border: 1px solid var(--line);
-      border-radius: 999px;
-      box-shadow: var(--shadow);
-      display:flex;
-      align-items:center;
-      justify-content:space-between;
-      padding: 10px 12px;
-    }
+   header{
+  /* ✅ 不吸顶：删除 sticky 行为 */
+  position: relative;   /* 也可以用 static，但 relative 更稳（不影响样式） */
+  top: auto;
+
+  /* ✅ 下面这些保持你原来的样式 */
+  z-index:50;
+  margin: 10px auto 22px;
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  background: linear-gradient(180deg, rgba(10,14,40,.62), rgba(10,14,40,.28));
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  box-shadow: var(--shadow);
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  padding: 10px 12px;
+}
 
     .brand{
       display:flex;
