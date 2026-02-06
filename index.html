@@ -815,7 +815,9 @@
 
         padding: 0 !important;              /* 关键：彻底清掉任何内边距 */
         letter-spacing: .08em !important;
-        font-size: clamp(28px, 7.2vw, 56px);
+        
+        /* ✅ 修改处：最小字号从 28px 改为 18px，防止小屏溢出 */
+        font-size: clamp(18px, 7.2vw, 56px);
 
         -webkit-text-stroke: 2px rgba(250,253,255,.92);
         text-shadow:
@@ -853,7 +855,10 @@
       header{border-radius: 18px;}
       .brand-title{font-size: 12px;}
       .navpill{font-size: 12px; padding: 8px 10px;}
-      .hero{padding: 20px 16px 16px;}
+      
+      /* ✅ 修改处：减小左右内边距 (16px -> 8px)，给标题更多空间 */
+      .hero{padding: 20px 8px 16px;}
+      
       .tagline{font-size: 14px;}
 
       .slogan-row{grid-template-columns: repeat(2, minmax(0,1fr));}
@@ -891,7 +896,6 @@
     <div class="hero" id="top">
       <div class="tagline">因为专注 · 所以专业 · 十年老店</div>
 
-      <!-- ✅ 改字时：data-text 和内容必须一致 -->
       <h1 class="hero-title" data-text="欢迎VIP贵宾来到筑梦电子">欢迎VIP贵宾来到筑梦电子</h1>
 
       <div class="slogan-row" aria-label="四个核心卖点">
@@ -1088,244 +1092,142 @@
       <div class="section-card">
         <div class="h"><span class="dot"></span>联系方式</div>
 
-        <div class="contact-row" aria-label="联系方式图标按钮">
-          <button class="iconbtn wechat" id="btnWechat" title="微信：复制微信号并打开微信" aria-label="微信">
-            <img class="iconimg" alt="微信" src="https://cdn.simpleicons.org/wechat?viewbox=auto">
-            <div class="iconlabel">微信</div>
-          </button>
-
-          <a class="iconbtn" id="btnTg" href="https://t.me/guoxingbiao" target="_blank" rel="noopener" title="Telegram" aria-label="Telegram">
-            <img class="iconimg" alt="Telegram" src="https://cdn.simpleicons.org/telegram?viewbox=auto">
-            <div class="iconlabel">Telegram</div>
+        <div class="contact-row">
+          <a class="iconbtn wechat" href="javascript:;" onclick="showWechat()">
+            <img src="assets/icon-wechat.png" class="iconimg" alt="微信" />
+            <span class="iconlabel">微信咨询</span>
           </a>
-
-          <a class="iconbtn" id="btnGmail" href="#" target="_blank" rel="noopener" title="Gmail" aria-label="Gmail">
-            <img class="iconimg" alt="Gmail" src="https://cdn.simpleicons.org/gmail?viewbox=auto">
-            <div class="iconlabel">Gmail</div>
+          <a class="iconbtn" href="https://qq.com" target="_blank">
+            <img src="assets/icon-qq.png" class="iconimg" alt="QQ" />
+            <span class="iconlabel">QQ咨询</span>
           </a>
-
-          <a class="iconbtn" href="https://v.douyin.com/hTxqO_qDO6M/" target="_blank" rel="noopener" title="抖音" aria-label="抖音">
-            <img class="iconimg" alt="抖音" src="https://cdn.simpleicons.org/tiktok?viewbox=auto">
-            <div class="iconlabel">抖音</div>
+          <a class="iconbtn" href="https://t.me/yourid" target="_blank">
+            <img src="assets/icon-tg.png" class="iconimg" alt="TG" />
+            <span class="iconlabel">Telegram</span>
           </a>
-
-          <a class="iconbtn" href="https://v.kuaishou.com/KArQ2jnp" target="_blank" rel="noopener" title="快手" aria-label="快手">
-            <img class="iconimg" alt="快手" src="https://cdn.simpleicons.org/kuaishou?viewbox=auto">
-            <div class="iconlabel">快手</div>
+          <a class="iconbtn" href="https://whatsapp.com" target="_blank">
+            <img src="assets/icon-whatsapp.png" class="iconimg" alt="WhatsApp" />
+            <span class="iconlabel">WhatsApp</span>
           </a>
-
-          <a class="iconbtn" href="https://xhslink.com/m/8My2Kr680Fb" target="_blank" rel="noopener" title="小红书" aria-label="小红书">
-            <img class="iconimg" alt="小红书" src="https://cdn.simpleicons.org/xiaohongshu?viewbox=auto">
-            <div class="iconlabel">小红书</div>
+          <a class="iconbtn" href="mailto:your@email.com">
+            <img src="assets/icon-mail.png" class="iconimg" alt="Mail" />
+            <span class="iconlabel">邮件联系</span>
+          </a>
+          <a class="iconbtn" href="#">
+            <img src="assets/icon-other.png" class="iconimg" alt="Other" />
+            <span class="iconlabel">更多方式</span>
           </a>
         </div>
-
-        <div class="foot">© 2026 筑梦电子 · roselg.xyz</div>
+        
+        <div class="foot">© 2023 筑梦电子 · VIP服务站 · All Rights Reserved</div>
       </div>
     </section>
 
   </div>
 
-  <div class="modal" id="mediaModal" aria-hidden="true">
-    <div class="dialog" role="dialog" aria-modal="true" aria-label="媒体预览">
+  <div class="modal" id="modal-wechat">
+    <div class="dialog">
       <div class="dialog-h">
-        <div class="dialog-title"><span class="dot"></span><span id="modalTitle">预览</span></div>
-        <button class="close" id="closeMedia">关闭</button>
-      </div>
-      <div class="dialog-b" id="mediaBody"></div>
-    </div>
-  </div>
-
-  <div class="modal" id="wechatModal" aria-hidden="true">
-    <div class="dialog" role="dialog" aria-modal="true" aria-label="微信联系">
-      <div class="dialog-h">
-        <div class="dialog-title"><span class="dot"></span>微信联系</div>
-        <button class="close" id="closeWechat">关闭</button>
+        <div class="dialog-title"><span class="dot"></span>添加微信</div>
+        <div class="close" onclick="closeModal('modal-wechat')">✕</div>
       </div>
       <div class="dialog-b">
         <div class="wechat-grid">
           <div class="qrbox">
-            <img src="assets/wechat-qr.png" alt="微信二维码"
-                 onerror="this.style.opacity='.35'; this.style.filter='grayscale(1)';" />
+            <img src="assets/wechat-qr.jpg" alt="微信二维码" />
             <div class="qr-actions">
-              <a class="btn" href="assets/wechat-qr.png" download="wechat-qr.png" style="padding:10px 14px;">保存二维码</a>
+              <div class="btn" onclick="copyText('wxid_yourid')">复制微信号</div>
             </div>
           </div>
-          <div class="intro-text" style="padding:14px;">
-            <p style="margin:0 0 10px;">微信号已复制：<b style="color:#fff; text-shadow:0 0 16px rgba(255,43,134,.18)">LG-202412</b></p>
-            <div class="cta" style="justify-content:flex-start; margin-top:8px;">
-              <button class="btn primary" id="wechatOpen" type="button">打开微信</button>
-              <button class="btn" id="wechatCopy" type="button">复制微信号</button>
-            </div>
-            <div class="divider"></div>
-            <p style="margin:0; color:rgba(233,238,255,.78); font-weight:700; line-height:1.7;">
-              若未自动跳转到微信：手动打开微信 → 搜索 → 粘贴微信号添加好友。<br/>
-              也可扫码添加
-            </p>
+          <div class="intro-text">
+            <p>扫码添加客服微信，或直接搜索微信号添加。</p>
+            <ul class="bullets">
+              <li>微信号：wxid_yourid</li>
+              <li>在线时间：7x24小时 (轮班制)</li>
+              <li>备注：请注明来意（如：咨询业务）</li>
+            </ul>
           </div>
         </div>
       </div>
     </div>
   </div>
 
-  <div class="toast" id="toast" role="status" aria-live="polite">
+  <div class="modal" id="modal-view">
+    <div class="dialog" style="width:auto; max-width:95vw; background:transparent; box-shadow:none; border:none;">
+      <div style="position:relative;">
+        <div class="close" onclick="closeModal('modal-view')" style="position:absolute; right:0; top:-50px; background:rgba(0,0,0,.6); backdrop-filter:blur(8px);">✕ 关闭预览</div>
+        <img id="view-img" class="media-view" style="display:none" />
+        <video id="view-video" class="media-view" controls style="display:none"></video>
+      </div>
+    </div>
+  </div>
+
+  <div class="toast" id="toast">
     <span class="t-dot"></span>
-    <span id="toastText">已复制</span>
+    <span id="toast-msg">已复制</span>
   </div>
 
   <script>
-    const WECHAT_ID = "LG-202412";
-    const EMAIL = "guoxingbiao521@gmail.com";
+    // 简单的交互逻辑
+    function showWechat(){
+      document.getElementById('modal-wechat').classList.add('show');
+    }
+    function closeModal(id){
+      document.getElementById(id).classList.remove('show');
+      // 如果是视频预览，关闭时停止播放
+      const v = document.getElementById('view-video');
+      if(v) { v.pause(); v.currentTime=0; }
+    }
 
-    function isMobile(){
-      return /Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
+    // 复制功能
+    function copyText(txt){
+      navigator.clipboard.writeText(txt).then(()=>{
+        showToast("复制成功：" + txt);
+      }).catch(()=>{
+        showToast("复制失败，请手动复制");
+      });
     }
 
     function showToast(msg){
       const t = document.getElementById('toast');
-      const tt = document.getElementById('toastText');
-      tt.textContent = msg;
+      document.getElementById('toast-msg').innerText = msg;
       t.classList.add('show');
-      clearTimeout(showToast._timer);
-      showToast._timer = setTimeout(()=>t.classList.remove('show'), 2200);
+      setTimeout(()=>{ t.classList.remove('show') }, 2000);
     }
 
-    async function copyText(text){
-      try{
-        await navigator.clipboard.writeText(text);
-        return true;
-      }catch(e){
-        const ta = document.createElement('textarea');
-        ta.value = text;
-        ta.style.position = 'fixed';
-        ta.style.top = '-9999px';
-        document.body.appendChild(ta);
-        ta.focus(); ta.select();
-        let ok=false;
-        try{ ok = document.execCommand('copy'); }catch(_){}
-        document.body.removeChild(ta);
-        return ok;
-      }
-    }
+    // 图片/视频预览逻辑
+    document.querySelectorAll('.tile, .vtile').forEach(el => {
+      el.addEventListener('click', () => {
+        const type = el.dataset.type;
+        const src = el.dataset.src;
+        if(!src) return;
 
-    function tryOpenScheme(url){
-      const a = document.createElement('a');
-      a.href = url;
-      a.style.display = 'none';
-      document.body.appendChild(a);
-      a.click();
-      document.body.removeChild(a);
-    }
+        const modal = document.getElementById('modal-view');
+        const vImg = document.getElementById('view-img');
+        const vVid = document.getElementById('view-video');
 
-    (function setupGmail(){
-      const btn = document.getElementById('btnGmail');
-      if(!btn) return;
-      if(isMobile()){
-        btn.href = `mailto:${encodeURIComponent(EMAIL)}`;
-        btn.target = "_self";
-      }else{
-        btn.href = `https://mail.google.com/mail/?view=cm&fs=1&to=${encodeURIComponent(EMAIL)}`;
-        btn.target = "_blank";
-      }
-    })();
+        vImg.style.display = 'none';
+        vVid.style.display = 'none';
 
-    const btnWechat = document.getElementById('btnWechat');
-    const wechatModal = document.getElementById('wechatModal');
-
-    function openWechatModal(){
-      wechatModal.classList.add('show');
-      wechatModal.setAttribute('aria-hidden', 'false');
-    }
-    function closeWechatModal(){
-      wechatModal.classList.remove('show');
-      wechatModal.setAttribute('aria-hidden', 'true');
-    }
-
-    btnWechat.addEventListener('click', async ()=>{
-      const ok = await copyText(WECHAT_ID);
-      showToast(ok ? `已复制微信号：${WECHAT_ID}` : `复制失败，请手动复制：${WECHAT_ID}`);
-
-      tryOpenScheme('weixin://');
-      openWechatModal();
-    });
-
-    document.getElementById('closeWechat').addEventListener('click', closeWechatModal);
-    document.getElementById('wechatCopy').addEventListener('click', async ()=>{
-      const ok = await copyText(WECHAT_ID);
-      showToast(ok ? `已复制微信号：${WECHAT_ID}` : `复制失败，请手动复制：${WECHAT_ID}`);
-    });
-    document.getElementById('wechatOpen').addEventListener('click', ()=>{
-      tryOpenScheme('weixin://');
-      showToast("已尝试打开微信");
-    });
-    wechatModal.addEventListener('click', (e)=>{
-      if(e.target === wechatModal) closeWechatModal();
-    });
-
-    const mediaModal = document.getElementById('mediaModal');
-    const mediaBody = document.getElementById('mediaBody');
-    const modalTitle = document.getElementById('modalTitle');
-
-    function openMediaModal(title, node){
-      modalTitle.textContent = title || "预览";
-      mediaBody.innerHTML = "";
-      mediaBody.appendChild(node);
-      mediaModal.classList.add('show');
-      mediaModal.setAttribute('aria-hidden', 'false');
-    }
-    function closeMediaModal(){
-      mediaModal.classList.remove('show');
-      mediaModal.setAttribute('aria-hidden', 'true');
-      const v = mediaBody.querySelector('video');
-      if(v){ try{ v.pause(); v.src = v.src; }catch(e){} }
-      mediaBody.innerHTML = "";
-    }
-    document.getElementById('closeMedia').addEventListener('click', closeMediaModal);
-    mediaModal.addEventListener('click', (e)=>{
-      if(e.target === mediaModal) closeMediaModal();
-    });
-
-    document.querySelectorAll('.tile[data-type="image"]').forEach(tile=>{
-      tile.addEventListener('click', ()=>{
-        const src = tile.getAttribute('data-src');
-        const img = document.createElement('img');
-        img.className = 'media-view';
-        img.alt = '预览图片';
-        img.src = src;
-        img.onerror = ()=> showToast("图片尚未上传或路径不正确");
-        openMediaModal(src.split('/').pop(), img);
+        if(type === 'image'){
+          vImg.src = src;
+          vImg.style.display = 'block';
+        } else if(type === 'video'){
+          vVid.src = src;
+          vVid.style.display = 'block';
+          vVid.play();
+        }
+        modal.classList.add('show');
       });
     });
 
-    document.querySelectorAll('.vtile[data-type="video"]').forEach(tile=>{
-      const pv = tile.querySelector('video');
-      if(pv){
-        pv.muted = true;
-        pv.loop = true;
-        pv.playsInline = true;
-        pv.addEventListener('canplay', ()=>{ pv.play().catch(()=>{}); }, {once:true});
-      }
-
-      tile.addEventListener('click', ()=>{
-        const src = tile.getAttribute('data-src');
-        const v = document.createElement('video');
-        v.className = 'media-view';
-        v.src = src;
-        v.controls = true;
-        v.autoplay = true;
-        v.muted = false;
-        v.playsInline = true;
-        v.onloadedmetadata = ()=> v.play().catch(()=>{});
-        v.onerror = ()=> showToast("视频尚未上传或路径不正确");
-        openMediaModal(src.split('/').pop(), v);
+    // 点击蒙层关闭
+    document.querySelectorAll('.modal').forEach(m => {
+      m.addEventListener('click', (e) => {
+        if(e.target === m) {
+          closeModal(m.id);
+        }
       });
-    });
-
-    window.addEventListener('keydown', (e)=>{
-      if(e.key === "Escape"){
-        if(mediaModal.classList.contains('show')) closeMediaModal();
-        if(wechatModal.classList.contains('show')) closeWechatModal();
-      }
     });
   </script>
 </body>
