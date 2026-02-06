@@ -17,6 +17,7 @@
 
       --rose:#ff2b86;
       --rose2:#ff5aa7;
+      --rose3:#b31262;
       --blue:#3ea6ff;
       --blue2:#87d7ff;
       --cyan:#8ff4ff;
@@ -32,28 +33,36 @@
       margin:0;
       font-family: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "PingFang SC", "Microsoft Yahei", "Noto Sans CJK SC", sans-serif;
       color:var(--text);
-      background: radial-gradient(1200px 700px at 15% 20%, rgba(62,166,255,.28), transparent 55%),
-                  radial-gradient(1000px 700px at 85% 25%, rgba(255,43,134,.22), transparent 55%),
-                  radial-gradient(900px 600px at 40% 90%, rgba(255,90,167,.18), transparent 60%),
-                  linear-gradient(180deg, var(--bg1), var(--bg0));
+
+      /* ✅ 背景：更明显玫瑰红氛围（去掉线稿图案） */
+      background:
+        radial-gradient(1200px 720px at 18% 18%, rgba(255,43,134,.40), transparent 62%),
+        radial-gradient(980px 680px at 82% 18%, rgba(255,90,167,.34), transparent 62%),
+        radial-gradient(1100px 760px at 55% 92%, rgba(179,18,98,.26), transparent 65%),
+        radial-gradient(900px 560px at 22% 78%, rgba(255,43,134,.22), transparent 66%),
+        radial-gradient(900px 560px at 86% 72%, rgba(62,166,255,.16), transparent 66%),
+        linear-gradient(180deg, var(--bg1), var(--bg0));
+
       min-height:100vh;
       overflow-x:hidden;
+      background-attachment: fixed;
     }
 
-    /* “玫瑰壁纸”感：SVG 玫瑰线稿 + 暗色蒙版（无需你上传图片） */
+    /* ✅ 用“玫瑰红光斑/雾化”替代原本 SVG 线稿玫瑰 */
     body::before{
       content:"";
       position:fixed;
-      inset:-20px;
+      inset:-30px;
       pointer-events:none;
       z-index:-1;
-      opacity:.78;
-      background-image:
-        url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220' viewBox='0 0 220 220'%3E%3Cdefs%3E%3CradialGradient id='g' cx='50%25' cy='50%25' r='65%25'%3E%3Cstop offset='0' stop-color='%23ff2b86' stop-opacity='.20'/%3E%3Cstop offset='1' stop-color='%233ea6ff' stop-opacity='.05'/%3E%3C/radialGradient%3E%3C/defs%3E%3Crect width='220' height='220' fill='none'/%3E%3Cg fill='none' stroke='%23ff2b86' stroke-opacity='.18' stroke-width='2'%3E%3Cpath d='M110 54c20 0 34 16 34 34 0 21-18 33-34 33-16 0-34-12-34-33 0-18 14-34 34-34z'/%3E%3Cpath d='M110 66c13 0 22 10 22 22 0 14-12 22-22 22s-22-8-22-22c0-12 9-22 22-22z'/%3E%3Cpath d='M110 88c6 0 10 4 10 10 0 6-6 10-10 10s-10-4-10-10c0-6 4-10 10-10z'/%3E%3Cpath d='M78 140c18-10 34-12 32-26-2-12-18-18-30-18-16 0-30 12-30 28 0 12 7 22 28 16z'/%3E%3Cpath d='M142 140c-18-10-34-12-32-26 2-12 18-18 30-18 16 0 30 12 30 28 0 12-7 22-28 16z'/%3E%3Cpath d='M110 121c0 18-7 28-16 38-6 7-8 14-8 22h48c0-8-2-15-8-22-9-10-16-20-16-38z'/%3E%3Cpath d='M88 182c10 8 22 10 22 10s12-2 22-10'/%3E%3C/g%3E%3Ccircle cx='110' cy='110' r='78' fill='url(%23g)'/%3E%3C/svg%3E");
-      background-repeat:repeat;
-      background-size: 260px 260px;
-      filter: blur(.2px);
-      mix-blend-mode: screen;
+      opacity:1;
+      background:
+        radial-gradient(420px 420px at 14% 22%, rgba(255,43,134,.22), transparent 65%),
+        radial-gradient(520px 520px at 28% 78%, rgba(255,90,167,.18), transparent 68%),
+        radial-gradient(460px 460px at 70% 30%, rgba(255,43,134,.16), transparent 68%),
+        radial-gradient(680px 680px at 86% 74%, rgba(179,18,98,.14), transparent 72%),
+        radial-gradient(820px 620px at 52% 58%, rgba(62,166,255,.10), transparent 72%);
+      filter: saturate(1.22) contrast(1.05);
     }
 
     .wrap{
@@ -161,7 +170,6 @@
       border-radius: 999px;
       border: 1px solid rgba(255,255,255,.14);
       background: rgba(10,14,40,.38);
-      /* 更明显、更亮、更大 */
       font-weight: 900;
       font-size: 16px;
       letter-spacing: 1.3px;
@@ -173,34 +181,58 @@
       box-shadow: 0 10px 30px rgba(0,0,0,.35);
     }
 
-    /* 主标题：天空蓝/白云渐变 + 金属描边 + 3D 厚度 + 强发光 */
+    /* ✅ 主标题：字距更大 + 更长于四卖点 + 强3D + 金属边框 + 天空蓝白渐变 */
     .hero-title{
+      display:inline-block;
+      width: min(1120px, 100%);      /* 让主标题视觉更长 */
       margin: 8px auto 16px;
       text-align:center;
       font-weight: 1000;
-      letter-spacing: 10px; /* 字间距更大 */
-      line-height: 1.06;
-      font-size: clamp(38px, 5.2vw, 74px);
-      background: linear-gradient(180deg, #ffffff 0%, #dff4ff 22%, #7fd0ff 52%, #2f86ff 86%);
+
+      letter-spacing: 0.30em;        /* 字间距更大（核心） */
+      padding-left: 0.30em;          /* 抵消字距导致的居中偏移 */
+      line-height: 1.05;
+
+      font-size: clamp(40px, 5.6vw, 82px);
+      white-space: nowrap;
+
+      /* 天空蓝 + 白云白渐变（更亮更清晰） */
+      background: linear-gradient(180deg,
+        #ffffff 0%,
+        #f1fbff 14%,
+        #cfefff 36%,
+        #7fe0ff 60%,
+        #2aa8ff 82%,
+        #1b6bff 100%);
       -webkit-background-clip:text;
       background-clip:text;
       color: transparent;
+      -webkit-text-fill-color: transparent;
 
-      /* “金属边框”感 */
-      -webkit-text-stroke: 2px rgba(210,240,255,.55);
+      /* 金属边框（更“金属描边”感） */
+      -webkit-text-stroke: 3px rgba(245,252,255,.86);
 
-      /* 3D 厚度堆叠 */
+      /* 强3D厚度：用深蓝灰堆叠，避免发黑成一坨 */
       text-shadow:
-        0 2px 0 rgba(4,10,24,.85),
-        0 4px 0 rgba(4,10,24,.78),
-        0 6px 0 rgba(4,10,24,.70),
-        0 8px 0 rgba(4,10,24,.60),
-        0 10px 12px rgba(0,0,0,.55),
+        /* 金属高光 */
+        0 1px 0 rgba(255,255,255,.28),
+        0 2px 0 rgba(255,255,255,.14),
 
-        /* 冷光边缘 */
-        0 0 14px rgba(62,166,255,.65),
-        0 0 34px rgba(135,215,255,.28),
-        0 0 26px rgba(255,43,134,.12);
+        /* 厚度层（带x偏移更立体） */
+        1px 2px 0 rgba(10, 30, 60, .72),
+        2px 4px 0 rgba(10, 30, 60, .64),
+        3px 6px 0 rgba(10, 30, 60, .56),
+        4px 8px 0 rgba(10, 30, 60, .48),
+        5px 10px 0 rgba(10, 30, 60, .40),
+        6px 12px 0 rgba(10, 30, 60, .34),
+
+        /* 发光：天空蓝霓虹 + 冷白光 */
+        0 0 10px rgba(255,255,255,.22),
+        0 0 18px rgba(127,224,255,.62),
+        0 0 34px rgba(42,168,255,.44),
+        0 0 68px rgba(27,107,255,.26);
+
+      filter: saturate(1.55) contrast(1.18);
     }
 
     .hero-sub{
@@ -213,16 +245,16 @@
       text-shadow: 0 0 14px rgba(62,166,255,.16);
     }
 
+    /* ✅ 让四卖点整体更短，确保主标题明显更长 */
     .slogan-row{
       display:grid;
       grid-template-columns: repeat(4, minmax(0, 1fr));
       gap: 12px;
       margin: 14px auto 18px;
-      width:min(980px, 100%);
+      width: min(880px, 100%); /* 原来980 → 880，主标题更“长” */
     }
     .slogan{
-      /* 让整体更短、更紧凑（短于主标题视觉） */
-      max-width: 240px;
+      max-width: 220px;
       margin:0 auto;
       border-radius: 999px;
       border: 1px solid rgba(255,255,255,.14);
@@ -232,7 +264,6 @@
       font-weight: 900;
       letter-spacing: 1px;
       color:#f3fbff;
-      /* 更亮更清晰 */
       text-shadow:
         0 0 14px rgba(62,166,255,.55),
         0 0 18px rgba(255,43,134,.18),
@@ -542,26 +573,35 @@
       opacity:.85;
     }
 
-    /* 联系方式：只要图标 */
+    /* ✅ 联系方式：6等分铺满 + 图标更大 + 带文字 + 更接近官方图标 */
     .contact-row{
-      display:flex;
-      gap: 12px;
-      justify-content:center;
-      flex-wrap:wrap;
+      width: 100%;
+      max-width: 1120px;
+      margin: 6px auto 2px;
+      display: grid;
+      grid-template-columns: repeat(6, minmax(0, 1fr));
+      gap: 14px;
+      align-items: stretch;
+      justify-items: stretch;
       padding: 6px 0 2px;
     }
     .iconbtn{
-      width: 62px;
-      height: 62px;
+      width: 100%;
+      min-height: 112px;
       border-radius: 18px;
       border:1px solid rgba(255,255,255,.14);
       background: rgba(255,255,255,.05);
-      display:grid;
-      place-items:center;
+      display:flex;
+      flex-direction: column;
+      align-items:center;
+      justify-content:center;
+      gap: 10px;
       cursor:pointer;
       transition: transform .15s ease, background .15s ease, border-color .15s ease, box-shadow .15s ease;
       box-shadow: 0 16px 44px rgba(0,0,0,.32);
       text-decoration:none;
+      padding: 14px 10px;
+      text-align:center;
     }
     .iconbtn:hover{
       transform: translateY(-2px);
@@ -569,13 +609,21 @@
       border-color: rgba(255,90,167,.26);
       box-shadow: 0 20px 56px rgba(0,0,0,.36);
     }
-    .iconbtn svg{
-      width: 26px;
-      height: 26px;
-      filter: drop-shadow(0 0 12px rgba(62,166,255,.16));
+    .iconbtn.wechat{ border-color: rgba(255,90,167,.22); }
+
+    .iconimg{
+      width: 40px;
+      height: 40px;
+      display:block;
+      filter: drop-shadow(0 10px 18px rgba(0,0,0,.35));
     }
-    .iconbtn.wechat{
-      border-color: rgba(255,90,167,.22);
+    .iconlabel{
+      font-weight: 1000;
+      font-size: 14px;
+      letter-spacing: .8px;
+      color: rgba(233,238,255,.92);
+      text-shadow: 0 0 12px rgba(255,43,134,.10), 0 0 14px rgba(62,166,255,.10);
+      line-height: 1;
     }
 
     /* footer */
@@ -714,7 +762,12 @@
       .media-grid{grid-template-columns: repeat(2, minmax(0,1fr));}
       .video-grid{grid-template-columns: 1fr;}
       .wechat-grid{grid-template-columns: 1fr;}
-      .hero-title{letter-spacing: 6px;}
+
+      /* 主标题小屏降字距防溢出 */
+      .hero-title{letter-spacing: 0.18em; padding-left: 0.18em; white-space: normal;}
+
+      /* 联系方式：平板改3列更满 */
+      .contact-row{grid-template-columns: repeat(3, minmax(0, 1fr));}
     }
     @media (max-width: 560px){
       header{border-radius: 18px;}
@@ -726,7 +779,12 @@
       .slogan{max-width: none;}
       .svc-grid{grid-template-columns: 1fr;}
       .media-grid{grid-template-columns: 1fr;}
-      .iconbtn{width: 58px; height: 58px; border-radius: 16px;}
+
+      /* 联系方式：手机2列 */
+      .contact-row{grid-template-columns: repeat(2, minmax(0, 1fr));}
+      .iconbtn{min-height: 104px;}
+      .iconimg{width: 38px; height: 38px;}
+      .iconlabel{font-size: 13px;}
     }
   </style>
 </head>
@@ -788,8 +846,6 @@
               <li>交付形式：文字方案｜文件/脚本｜远程协助｜成品交付</li>
               <li>合作方式：先沟通需求 → 明确范围 → 交付与售后</li>
             </ul>
-
-            <!-- ✅ 已按你要求：这里不再保留任何按钮 -->
           </div>
         </div>
       </div>
@@ -866,7 +922,6 @@
 
         <!-- 6 张照片 -->
         <div class="media-grid" aria-label="6张照片">
-          <!-- 每个 tile：如果图片没上传，会显示文件路径占位 -->
           <div class="tile" data-type="image" data-src="assets/photo-01.jpg">
             <img src="assets/photo-01.jpg" alt="photo-01" loading="lazy"
                  onerror="this.style.display='none'; this.parentElement.querySelector('.placeholder').style.display='flex';" />
@@ -911,7 +966,7 @@
           </div>
         </div>
 
-        <!-- 3 个视频（无标题；页面静音，点开弹窗后带声音） -->
+        <!-- 3 个视频 -->
         <div class="video-grid" aria-label="3个视频">
           <div class="vtile" data-type="video" data-src="assets/video-01.mp4">
             <video src="assets/video-01.mp4" muted playsinline preload="metadata"
@@ -949,69 +1004,49 @@
             </div>
           </div>
         </div>
-
-        <!-- ✅ 已按你要求：最底部提示文字已删除 -->
       </div>
     </section>
 
-    <!-- 联系方式（只要图标） -->
+    <!-- 联系方式 -->
     <section id="contact">
       <div class="section-card">
         <div class="h"><span class="dot"></span>联系方式</div>
 
         <div class="contact-row" aria-label="联系方式图标按钮">
-          <!-- 微信：点击复制 + 尝试打开微信主页（不再跳添加朋友页） -->
+          <!-- 微信 -->
           <button class="iconbtn wechat" id="btnWechat" title="微信：复制微信号并打开微信" aria-label="微信">
-            <!-- 方案2：内置 SVG（官方感） -->
-            <svg viewBox="0 0 24 24" fill="none">
-              <path d="M8.4 6.3c-3.2 0-5.8 2.2-5.8 4.9 0 1.6.9 3 2.3 3.9l-.6 2 2.3-1.2c.6.1 1.2.2 1.8.2 3.2 0 5.8-2.2 5.8-4.9S11.6 6.3 8.4 6.3Z" fill="rgba(233,238,255,.92)"/>
-              <path d="M15.7 9c-2.8 0-5.1 1.9-5.1 4.3 0 1.4.8 2.7 2.0 3.4l-.5 1.8 2.1-1.1c.5.1 1 .1 1.5.1 2.8 0 5.1-1.9 5.1-4.3S18.5 9 15.7 9Z" fill="rgba(233,238,255,.76)"/>
-              <circle cx="6.7" cy="10.6" r="1" fill="rgba(10,14,40,.85)"/>
-              <circle cx="10.2" cy="10.6" r="1" fill="rgba(10,14,40,.85)"/>
-              <circle cx="14.2" cy="13.1" r="1" fill="rgba(10,14,40,.85)"/>
-              <circle cx="17.3" cy="13.1" r="1" fill="rgba(10,14,40,.85)"/>
-            </svg>
+            <img class="iconimg" alt="微信" src="https://cdn.simpleicons.org/wechat?viewbox=auto">
+            <div class="iconlabel">微信</div>
           </button>
 
           <!-- Telegram -->
           <a class="iconbtn" id="btnTg" href="https://t.me/guoxingbiao" target="_blank" rel="noopener" title="Telegram" aria-label="Telegram">
-            <svg viewBox="0 0 24 24" fill="none">
-              <path d="M21 5.4 3.7 12.2c-.9.35-.86 1.66.08 1.95l4.3 1.33 1.7 5.3c.28.88 1.48 1.05 2 .28l2.5-3.6 4.4 3.2c.8.57 1.9.12 2.1-.86l2.9-13.2c.23-1.08-.81-1.98-1.69-1.63Z" fill="rgba(233,238,255,.92)"/>
-              <path d="M9.1 15.1 18.6 7.7c.3-.23.62.17.35.43l-7.8 7.4-.3 3.5c-.03.35-.48.4-.58.06l-1.15-4Z" fill="rgba(10,14,40,.55)"/>
-            </svg>
+            <img class="iconimg" alt="Telegram" src="https://cdn.simpleicons.org/telegram?viewbox=auto">
+            <div class="iconlabel">Telegram</div>
           </a>
 
-          <!-- Gmail：PC 打开网页版写信(预填收件人)；手机用 mailto -->
+          <!-- Gmail -->
           <a class="iconbtn" id="btnGmail" href="#" target="_blank" rel="noopener" title="Gmail" aria-label="Gmail">
-            <svg viewBox="0 0 24 24" fill="none">
-              <path d="M4.7 7.3A2.2 2.2 0 0 1 6.9 5h10.2a2.2 2.2 0 0 1 2.2 2.3v9.4a2.2 2.2 0 0 1-2.2 2.3H6.9a2.2 2.2 0 0 1-2.2-2.3V7.3Z" fill="rgba(233,238,255,.18)" stroke="rgba(233,238,255,.62)"/>
-              <path d="M6 7.7 12 12.1l6-4.4" stroke="rgba(233,238,255,.92)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-              <path d="M6.2 17.3V8" stroke="rgba(233,238,255,.50)" stroke-width="2" stroke-linecap="round"/>
-              <path d="M17.8 17.3V8" stroke="rgba(233,238,255,.50)" stroke-width="2" stroke-linecap="round"/>
-            </svg>
+            <img class="iconimg" alt="Gmail" src="https://cdn.simpleicons.org/gmail?viewbox=auto">
+            <div class="iconlabel">Gmail</div>
           </a>
 
-          <!-- 抖音 -->
+          <!-- 抖音（tiktok图标） -->
           <a class="iconbtn" href="https://v.douyin.com/hTxqO_qDO6M/" target="_blank" rel="noopener" title="抖音" aria-label="抖音">
-            <svg viewBox="0 0 24 24" fill="none">
-              <path d="M14 3c.4 2.2 1.8 3.8 4 4.2v3.1c-1.6-.1-3-.6-4-1.4V15a5 5 0 1 1-5.1-5c.4 0 .7 0 1 .1v3.3a2.2 2.2 0 1 0 1.9 2.2V3h2.2Z" fill="rgba(233,238,255,.92)"/>
-            </svg>
+            <img class="iconimg" alt="抖音" src="https://cdn.simpleicons.org/tiktok?viewbox=auto">
+            <div class="iconlabel">抖音</div>
           </a>
 
           <!-- 快手 -->
           <a class="iconbtn" href="https://v.kuaishou.com/KArQ2jnp" target="_blank" rel="noopener" title="快手" aria-label="快手">
-            <svg viewBox="0 0 24 24" fill="none">
-              <path d="M7 7a3 3 0 0 1 3-3h4a3 3 0 0 1 3 3v1h1a2 2 0 0 1 2 2v4a2 2 0 0 1-2 2h-1v1a3 3 0 0 1-3 3h-4a3 3 0 0 1-3-3v-1H6a2 2 0 0 1-2-2v-4a2 2 0 0 1 2-2h1V7Z" fill="rgba(233,238,255,.92)"/>
-              <path d="M11 10.2v3.6L14.2 12 11 10.2Z" fill="rgba(10,14,40,.70)"/>
-            </svg>
+            <img class="iconimg" alt="快手" src="https://cdn.simpleicons.org/kuaishou?viewbox=auto">
+            <div class="iconlabel">快手</div>
           </a>
 
           <!-- 小红书 -->
           <a class="iconbtn" href="https://xhslink.com/m/8My2Kr680Fb" target="_blank" rel="noopener" title="小红书" aria-label="小红书">
-            <svg viewBox="0 0 24 24" fill="none">
-              <path d="M7 5.5h10a2 2 0 0 1 2 2v11a1.8 1.8 0 0 1-1.8 1.8H7a2 2 0 0 1-2-2v-11a1.8 1.8 0 0 1 2-1.8Z" fill="rgba(233,238,255,.92)"/>
-              <path d="M9 9h6M9 12h6M9 15h5" stroke="rgba(10,14,40,.65)" stroke-width="2" stroke-linecap="round"/>
-            </svg>
+            <img class="iconimg" alt="小红书" src="https://cdn.simpleicons.org/xiaohongshu?viewbox=auto">
+            <div class="iconlabel">小红书</div>
           </a>
         </div>
 
@@ -1094,7 +1129,6 @@
         await navigator.clipboard.writeText(text);
         return true;
       }catch(e){
-        // fallback
         const ta = document.createElement('textarea');
         ta.value = text;
         ta.style.position = 'fixed';
@@ -1109,7 +1143,6 @@
     }
 
     function tryOpenScheme(url){
-      // 某些浏览器会拦截 scheme，这里做“尽力而为”
       const a = document.createElement('a');
       a.href = url;
       a.style.display = 'none';
@@ -1118,7 +1151,7 @@
       document.body.removeChild(a);
     }
 
-    // ===== Gmail：PC 走 Gmail 写信；手机走 mailto（更稳定，不乱跳）=====
+    // ===== Gmail：PC 走 Gmail 写信；手机走 mailto =====
     (function setupGmail(){
       const btn = document.getElementById('btnGmail');
       if(!btn) return;
@@ -1131,7 +1164,7 @@
       }
     })();
 
-    // ===== 微信：点击复制微信号 + 尝试打开微信主页（不再打开添加朋友页）=====
+    // ===== 微信：点击复制微信号 + 尝试打开微信主页 =====
     const btnWechat = document.getElementById('btnWechat');
     const wechatModal = document.getElementById('wechatModal');
 
@@ -1148,10 +1181,7 @@
       const ok = await copyText(WECHAT_ID);
       showToast(ok ? `已复制微信号：${WECHAT_ID}` : `复制失败，请手动复制：${WECHAT_ID}`);
 
-      // 先尝试拉起微信主页
       tryOpenScheme('weixin://');
-
-      // 同时弹出一个极简弹窗（含二维码 + 保存二维码按钮），便于引导
       openWechatModal();
     });
 
@@ -1183,7 +1213,6 @@
     function closeMediaModal(){
       mediaModal.classList.remove('show');
       mediaModal.setAttribute('aria-hidden', 'true');
-      // 关闭时停止视频播放
       const v = mediaBody.querySelector('video');
       if(v){ try{ v.pause(); v.src = v.src; }catch(e){} }
       mediaBody.innerHTML = "";
@@ -1193,7 +1222,6 @@
       if(e.target === mediaModal) closeMediaModal();
     });
 
-    // 图片 tiles
     document.querySelectorAll('.tile[data-type="image"]').forEach(tile=>{
       tile.addEventListener('click', ()=>{
         const src = tile.getAttribute('data-src');
@@ -1206,9 +1234,7 @@
       });
     });
 
-    // 视频 tiles：页面静音；弹窗播放有声音
     document.querySelectorAll('.vtile[data-type="video"]').forEach(tile=>{
-      // 页面里的预览视频：尽量自动播放静音循环（有的浏览器会阻止，没关系）
       const pv = tile.querySelector('video');
       if(pv){
         pv.muted = true;
@@ -1224,7 +1250,7 @@
         v.src = src;
         v.controls = true;
         v.autoplay = true;
-        v.muted = false;     // ✅ 弹窗里带声音
+        v.muted = false;
         v.playsInline = true;
         v.onloadedmetadata = ()=> v.play().catch(()=>{});
         v.onerror = ()=> showToast("视频尚未上传或路径不正确");
@@ -1232,7 +1258,6 @@
       });
     });
 
-    // ESC 关闭弹窗
     window.addEventListener('keydown', (e)=>{
       if(e.key === "Escape"){
         if(mediaModal.classList.contains('show')) closeMediaModal();
