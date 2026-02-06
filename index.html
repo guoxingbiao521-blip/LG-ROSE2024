@@ -817,63 +817,42 @@
       flex:0 0 auto;
     }
 
-    /* Responsive */
-   @media (max-width: 980px){
-  .intro-grid{grid-template-columns: 1fr;}
-  .imgbox{min-height: 210px;}
-  .svc-grid{grid-template-columns: repeat(2, minmax(0,1fr));}
-  .media-grid{grid-template-columns: repeat(2, minmax(0,1fr));}
-  .video-grid{grid-template-columns: 1fr;}
-  .wechat-grid{grid-template-columns: 1fr;}
-@media (max-width: 980px){
-  .hero-title{
-    --ls: 0.12em;
-    --outline: 2.5px;
-    --outline2: 6px;
-    --dx: 8px;
-    --dy: 9px;
-  }
-}
+  /* ========== Responsive ========== */
 
-@media (max-width: 560px){
-  .hero-title{
-    --ls: 0.06em;
-    --outline: 2px;
-    --outline2: 5px;
-    --dx: 6px;
-    --dy: 7px;
-    font-size: clamp(22px, 6.2vw, 40px); /* 手机强制缩小但不换行 */
-  }
-}
-/* ✅ 电脑端：方案B（横幅比例 + cover，减少裁切） */
-@media (min-width: 981px){
-  .intro-grid .imgbox{
-    aspect-ratio: 21 / 9;      /* 横幅比例：裁切会少很多 */
-    min-height: 260px;         /* 兜底高度 */
-    background-size: cover;    /* 保持你现在手机端那种“铺满”质感 */
-    background-position: center;
-  }
-}
-/* ✅ 电脑端：左图右文（两列布局） */
+/* ✅ 电脑端默认：服务介绍 左图右文（两列） */
 @media (min-width: 981px){
   .intro-grid{
     display: grid;
-    grid-template-columns: 420px 1fr;  /* 左侧图片宽度，可改 360/400/460 */
+    grid-template-columns: 420px 1fr; /* 左图宽度：可改 360/400/460 */
     gap: 18px;
     align-items: stretch;
   }
 
-  /* 左侧图片变回“竖向卡片”，不做横幅 */
+  /* 电脑端：左侧图片不做横幅比例，保持卡片感 */
   .intro-grid .imgbox{
-    min-height: 320px;          /* 左图高度，可改 280/360 */
-    aspect-ratio: auto;         /* 取消你之前横幅比例 */
+    min-height: 320px;      /* 可改 280/360 */
+    aspect-ratio: auto;     /* 取消横幅比例 */
     background-size: cover;
     background-position: center;
   }
 }
 
+/* ✅ 平板/手机：服务介绍 上图下文（单列） */
+@media (max-width: 980px){
+  .intro-grid{ grid-template-columns: 1fr; }
 
-  /* ✅ 不要改 white-space；只调变量 */
+  /* 手机端保持横幅质感 */
+  .intro-grid .imgbox{
+    aspect-ratio: 21 / 9;
+    min-height: 260px;
+    background-size: cover;
+    background-position: center;
+  }
+
+  /* 平板：联系方式 3 列 */
+  .contact-row{ grid-template-columns: repeat(3, minmax(0, 1fr)); }
+
+  /* ✅ 不要改 white-space；只调变量（平板） */
   .hero-title{
     --ls: .16em;
     --outline: 1.4px;
@@ -881,10 +860,9 @@
     --dx: 6px;
     --dy: 8px;
   }
-
-  .contact-row{grid-template-columns: repeat(3, minmax(0, 1fr));}
 }
 
+/* ✅ 手机更小：更紧凑 */
 @media (max-width: 560px){
   header{border-radius: 18px;}
   .brand-title{font-size: 12px;}
@@ -896,7 +874,7 @@
   .svc-grid{grid-template-columns: 1fr;}
   .media-grid{grid-template-columns: 1fr;}
 
-  /* ✅ 手机更紧凑：保证一行显示完整 */
+  /* ✅ 手机：保证一行显示完整 */
   .hero-title{
     --ls: .10em;
     --outline: 1.2px;
@@ -905,11 +883,13 @@
     --dy: 7px;
   }
 
+  /* 手机：联系方式 2 列 */
   .contact-row{grid-template-columns: repeat(2, minmax(0, 1fr));}
   .iconbtn{min-height: 104px;}
   .iconimg{width: 38px; height: 38px;}
   .iconlabel{font-size: 13px;}
 }
+
 
   </style>
 </head>
@@ -954,6 +934,7 @@
     <section id="intro">
       <div class="section-card">
         <div class="h"><span class="dot"></span>服务介绍</div>
+<div class="intro-grid">
 
       <div class="imgbox imgbox-about" title="服务介绍配图"></div>
 
@@ -961,7 +942,7 @@
           <div class="intro-text">
             <p>专注于电子产品与多类数字化服务，覆盖从咨询到交付的一站式支持，同时延展至 AI 技术方向的教学、代做与工具教程。</p>
             <p>支持按需求定制方案，范围明确后快速推进；支持远程协助与成品交付；沟通清晰、流程透明，适合需要省心落地与长期协作的客户。</p>
-            <p>无论是账号内容包装、网络服务、工具搭建，还是展品展示与引流页面的持续优化，都可按目标分阶段完成，优先解决“最关键的那一步”。</p>
+            <p>无论是账号内容包装、网络服务、工具搭建，还是视图展示与引流页面的持续优化，都可按目标分阶段完成，优先解决“最关键的那一步”。</p>
 
             <div class="divider"></div>
 
