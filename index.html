@@ -817,134 +817,75 @@
       flex:0 0 auto;
     }
 
- /* =========================
-   Responsive（请整段替换）
-   ========================= */
-
-/* ✅ 平板与以下（≤980px）：整体改为更适合窄屏 */
+ /* Responsive */
 @media (max-width: 980px){
-  .intro-grid{ grid-template-columns: 1fr; }
-  .imgbox{ min-height: 210px; }
+  .intro-grid{grid-template-columns: 1fr;}
+  .imgbox{min-height: 210px;}
 
-  .svc-grid{ grid-template-columns: repeat(2, minmax(0, 1fr)); }
-  .media-grid{ grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .svc-grid{grid-template-columns: repeat(2, minmax(0,1fr));}
+  .media-grid{grid-template-columns: repeat(2, minmax(0,1fr));}
+  .video-grid{grid-template-columns: 1fr;}
+  .wechat-grid{grid-template-columns: 1fr;}
 
-  /* ✅ 平板：视频仍然一行一个（避免挤） */
-  .video-grid{ grid-template-columns: 1fr; }
-
-  .wechat-grid{ grid-template-columns: 1fr; }
-  .contact-row{ grid-template-columns: repeat(3, minmax(0, 1fr)); }
-
-  /* ✅ 标题：仍保持一行不换行，但缩参数，防止发光糊成一坨 */
+  /* ✅ 手机/平板：主标题“最稳真居中”（不靠 transform，不靠 padding-left 补偿） */
   .hero-title{
-    --ls: .12em;
-    --outline: 1.2px;
-    --darkOutline: 3.2px;
-    --dx: 5px;
-    --dy: 7px;
+    display:block;
+    width:100%;
+    margin: 8px auto 16px;
+    text-align:center;
 
-    text-align: center;
-    width: 100%;
-    margin-left: auto;
-    margin-right: auto;
+    white-space: nowrap;
+    padding-left: 0 !important;          /* 关键：去掉字距补偿 */
+    letter-spacing: .08em !important;    /* 手机端字距小一点，视觉更居中 */
+    font-size: clamp(28px, 7.2vw, 56px); /* 小屏自动缩，尽量不溢出 */
+
+    -webkit-text-stroke: 2px rgba(250,253,255,.92);
+    text-shadow:
+      0 0 6px rgba(146,230,255,.40),
+      0 0 14px rgba(61,185,255,.28);
   }
+  /* ✅ 手机端：关掉 3D 挤出层（重影根源） */
+  .hero-title::before,
+  .hero-title::after{ content:none !important; }
+
+  /* 联系方式：平板3列 */
+  .contact-row{grid-template-columns: repeat(3, minmax(0, 1fr));}
 }
 
-/* ✅ 手机（≤560px）：更紧凑 + 保证不挤在一起 */
-@media (max-width: 560px){
-  header{ border-radius: 18px; }
-
-  .brand-title{ font-size: 12px; }
-  .navpill{ font-size: 12px; padding: 8px 10px; }
-
-  .hero{ padding: 20px 16px 16px; }
-  .tagline{ font-size: 14px; }
-
-  .slogan-row{ grid-template-columns: repeat(2, minmax(0, 1fr)); }
-  .svc-grid{ grid-template-columns: 1fr; }
-  .media-grid{ grid-template-columns: 1fr; }
-
-  /* ✅ 手机：视频必须一行一个 */
-  .video-grid{ grid-template-columns: 1fr; }
-
-  /* ✅ 手机：联系方式 2 列 */
-  .contact-row{ grid-template-columns: repeat(2, minmax(0, 1fr)); }
-  .iconbtn{ min-height: 104px; }
-  .iconimg{ width: 38px; height: 38px; }
-  .iconlabel{ font-size: 13px; }
-
-  /* ✅ 手机：主标题居中且更清晰（减轻发光） */
-  .hero-title{
-    --ls: .10em;
-    --outline: 1.1px;
-    --darkOutline: 3px;
-    --dx: 4px;
-    --dy: 6px;
-
-    text-align: center;
-    width: 100%;
-    margin-left: auto;
-    margin-right: auto;
-  }
-
-  /* ✅ 手机：服务介绍图保持“居中铺满”的观感 */
-  .intro-grid .imgbox{
-    background-position: center;
-    background-size: cover;
-  }
-}
-
-/* ✅ 电脑端（≥981px）：服务介绍改为 左图右文 两列布局 */
+/* ✅ 电脑端（≥981px）：服务介绍 左图右文 两列布局（保持你想要的） */
 @media (min-width: 981px){
   .intro-grid{
-    display: grid;
-    grid-template-columns: 420px 1fr; /* 左图宽度：可改 360/400/460 */
+    display:grid;
+    grid-template-columns: 420px 1fr;
     gap: 18px;
     align-items: stretch;
   }
-
   .intro-grid .imgbox{
     min-height: 320px;
     background-position: center;
     background-size: cover;
   }
 }
-/* ✅ 手机端主标题最终最稳：真居中 + 不重影（放到CSS最后） */
-@media (max-width: 980px){
-  .hero-title{
-    /* 真·几何居中（不吃 padding-left/字距补偿影响） */
-    position: relative;
-    left: 50%;
-    transform: translateX(-50%);
 
-    display: block;
-    width: max-content;         /* 让元素宽度=文字宽度，居中更稳 */
-    max-width: 100%;
-    margin: 8px 0 16px;         /* 不用 auto，避免某些机型计算怪 */
+@media (max-width: 560px){
+  header{border-radius: 18px;}
+  .brand-title{font-size: 12px;}
+  .navpill{font-size: 12px; padding: 8px 10px;}
+  .hero{padding: 20px 16px 16px;}
+  .tagline{font-size: 14px;}
 
-    text-align: center;
-    white-space: nowrap;
+  .slogan-row{grid-template-columns: repeat(2, minmax(0,1fr));}
+  .slogan{max-width: none;}
 
-    /* 关键：手机端不要用 padding-left 去“补字距” */
-    padding-left: 0 !important;
+  .svc-grid{grid-template-columns: 1fr;}
+  .media-grid{grid-template-columns: 1fr;}
 
-    /* 手机端字距要小一点，否则更容易看起来偏 */
-    letter-spacing: .08em !important;
-
-    /* 手机端：减少发光，保证结构清晰 */
-    -webkit-text-stroke: 2px rgba(250,253,255,.92);
-    text-shadow:
-      0 0 6px rgba(146,230,255,.40),
-      0 0 14px rgba(61,185,255,.28);
-  }
-
-  /* 手机端：彻底关掉3D挤出层（否则就是重影源头） */
-  .hero-title::before,
-  .hero-title::after{
-    content: none !important;
-  }
+  /* 联系方式：手机2列 */
+  .contact-row{grid-template-columns: repeat(2, minmax(0, 1fr));}
+  .iconbtn{min-height: 104px;}
+  .iconimg{width: 38px; height: 38px;}
+  .iconlabel{font-size: 13px;}
 }
-
 
 
 
