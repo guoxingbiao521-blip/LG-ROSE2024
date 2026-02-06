@@ -182,58 +182,113 @@
     }
 
     /* ✅ 主标题：字距更大 + 更长于四卖点 + 强3D + 金属边框 + 天空蓝白渐变 */
-    .hero-title{
-      display:inline-block;
-      width: min(1120px, 100%);      /* 让主标题视觉更长 */
-      margin: 8px auto 16px;
-      text-align:center;
-      font-weight: 1000;
+   /* ✅ 主标题：更“真3D挤出” + 金属硬边 + 天空蓝白渐变 + 强发光 */
+.hero-title{
+  position: relative;
+  display:inline-block;
+  width: min(1120px, 100%);
+  margin: 8px auto 16px;
+  text-align:center;
+  font-weight: 1000;
 
-      letter-spacing: 0.30em;        /* 字间距更大（核心） */
-      padding-left: 0.30em;          /* 抵消字距导致的居中偏移 */
-      line-height: 1.05;
+  letter-spacing: 0.30em;
+  padding-left: 0.30em;
+  line-height: 1.05;
 
-      font-size: clamp(40px, 5.6vw, 82px);
-      white-space: nowrap;
+  font-size: clamp(40px, 5.6vw, 82px);
+  white-space: nowrap;
 
-      /* 天空蓝 + 白云白渐变（更亮更清晰） */
-      background: linear-gradient(180deg,
-        #ffffff 0%,
-        #f1fbff 14%,
-        #cfefff 36%,
-        #7fe0ff 60%,
-        #2aa8ff 82%,
-        #1b6bff 100%);
-      -webkit-background-clip:text;
-      background-clip:text;
-      color: transparent;
-      -webkit-text-fill-color: transparent;
+  /* 正面“天空蓝+白云”渐变 */
+  background: linear-gradient(180deg,
+    #ffffff 0%,
+    #f4fdff 14%,
+    #d7f4ff 34%,
+    #92e6ff 56%,
+    #3db9ff 78%,
+    #1b6bff 100%);
+  -webkit-background-clip:text;
+  background-clip:text;
+  color: transparent;
+  -webkit-text-fill-color: transparent;
 
-      /* 金属边框（更“金属描边”感） */
-      -webkit-text-stroke: 3px rgba(245,252,255,.86);
+  /* 金属硬边（亮边） */
+  -webkit-text-stroke: 3px rgba(250,253,255,.92);
 
-      /* 强3D厚度：用深蓝灰堆叠，避免发黑成一坨 */
-      text-shadow:
-        /* 金属高光 */
-        0 1px 0 rgba(255,255,255,.28),
-        0 2px 0 rgba(255,255,255,.14),
+  /* 发光（主发光放在本体） */
+  text-shadow:
+    0 0 10px rgba(255,255,255,.22),
+    0 0 18px rgba(146,230,255,.60),
+    0 0 34px rgba(61,185,255,.46),
+    0 0 70px rgba(27,107,255,.28),
+    0 0 26px rgba(255,43,134,.10);
 
-        /* 厚度层（带x偏移更立体） */
-        1px 2px 0 rgba(10, 30, 60, .72),
-        2px 4px 0 rgba(10, 30, 60, .64),
-        3px 6px 0 rgba(10, 30, 60, .56),
-        4px 8px 0 rgba(10, 30, 60, .48),
-        5px 10px 0 rgba(10, 30, 60, .40),
-        6px 12px 0 rgba(10, 30, 60, .34),
+  filter: saturate(1.55) contrast(1.18);
+  text-rendering: geometricPrecision;
+}
 
-        /* 发光：天空蓝霓虹 + 冷白光 */
-        0 0 10px rgba(255,255,255,.22),
-        0 0 18px rgba(127,224,255,.62),
-        0 0 34px rgba(42,168,255,.44),
-        0 0 68px rgba(27,107,255,.26);
+/* ① 更厚的“3D挤出体”（主体厚度层） */
+.hero-title::before{
+  content: attr(data-text);
+  position:absolute;
+  inset:0;
+  z-index:-2;
+  pointer-events:none;
 
-      filter: saturate(1.55) contrast(1.18);
-    }
+  text-align: inherit;
+  font: inherit;
+  letter-spacing: inherit;
+  line-height: inherit;
+  padding-left: inherit;
+  white-space: inherit;
+
+  /* 挤出体颜色：深蓝金属灰（别用纯黑，避免一坨黑） */
+  color: rgba(10, 28, 55, .92);
+  -webkit-text-stroke: 0;
+
+  /* 厚度方向：向右下“挤出” */
+  transform: translate(9px, 11px);
+
+  /* 挤出体层次（多层阴影模拟真实厚度） */
+  text-shadow:
+    1px 1px 0 rgba(8, 22, 45, .88),
+    2px 2px 0 rgba(8, 22, 45, .82),
+    3px 3px 0 rgba(8, 22, 45, .76),
+    4px 4px 0 rgba(8, 22, 45, .70),
+    5px 5px 0 rgba(8, 22, 45, .64),
+    6px 6px 0 rgba(8, 22, 45, .58),
+    7px 7px 0 rgba(8, 22, 45, .52),
+    8px 8px 0 rgba(8, 22, 45, .46),
+    10px 12px 18px rgba(0,0,0,.55);
+}
+
+/* ② 外圈“金属暗边”+ 冷光边缘（让边更硬朗、更金属） */
+.hero-title::after{
+  content: attr(data-text);
+  position:absolute;
+  inset:0;
+  z-index:-1;
+  pointer-events:none;
+
+  text-align: inherit;
+  font: inherit;
+  letter-spacing: inherit;
+  line-height: inherit;
+  padding-left: inherit;
+  white-space: inherit;
+
+  /* 只画“更粗的暗色描边”来形成金属边厚度 */
+  color: transparent;
+  -webkit-text-fill-color: transparent;
+  -webkit-text-stroke: 7px rgba(12, 40, 85, .42);
+
+  /* 暗边轻微偏移，形成金属边的立体错层 */
+  transform: translate(2px, 2px);
+
+  /* 冷光描边 */
+  filter: drop-shadow(0 0 10px rgba(127,224,255,.25))
+          drop-shadow(0 0 18px rgba(42,168,255,.18));
+}
+
 
     .hero-sub{
       text-align:center;
