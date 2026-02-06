@@ -34,7 +34,6 @@
       font-family: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "PingFang SC", "Microsoft Yahei", "Noto Sans CJK SC", sans-serif;
       color:var(--text);
 
-      /* ✅ 背景：更明显玫瑰红氛围（去掉线稿图案） */
       background:
         radial-gradient(1200px 720px at 18% 18%, rgba(255,43,134,.40), transparent 62%),
         radial-gradient(980px 680px at 82% 18%, rgba(255,90,167,.34), transparent 62%),
@@ -48,7 +47,6 @@
       background-attachment: fixed;
     }
 
-    /* ✅ 用“玫瑰红光斑/雾化”替代原本 SVG 线稿玫瑰 */
     body::before{
       content:"";
       position:fixed;
@@ -105,7 +103,7 @@
     .brand-title{
       font-weight:800;
       letter-spacing:.8px;
-      color:rgba(233,238,255,.96); /* 统一整行颜色 */
+      color:rgba(233,238,255,.96);
       text-shadow: 0 0 12px rgba(62,166,255,.18), 0 0 18px rgba(255,43,134,.14);
       white-space:nowrap;
       font-size: 14px;
@@ -181,114 +179,128 @@
       box-shadow: 0 10px 30px rgba(0,0,0,.35);
     }
 
-    /* ✅ 主标题：字距更大 + 更长于四卖点 + 强3D + 金属边框 + 天空蓝白渐变 */
-   /* ✅ 主标题：更“真3D挤出” + 金属硬边 + 天空蓝白渐变 + 强发光 */
-.hero-title{
-  position: relative;
-  display:inline-block;
-  width: min(1120px, 100%);
-  margin: 8px auto 16px;
-  text-align:center;
-  font-weight: 1000;
+    /* ✅ 主标题：真3D挤出 + 金属硬边 + 天空蓝白渐变 + 强发光（并解决 VIP 不全/小屏换行） */
+    .hero-title{
+      /* 可调参数（桌面默认） */
+      --ls: 0.30em;      /* 字距 */
+      --ex: 9px;         /* 挤出X */
+      --ey: 11px;        /* 挤出Y */
+      --ex2: 2px;        /* 金属暗边偏移X */
+      --ey2: 2px;        /* 金属暗边偏移Y */
+      --outerStroke: 7px;/* 外圈暗边粗细 */
 
-  letter-spacing: 0.30em;
-  padding-left: 0.30em;
-  line-height: 1.05;
+      position: relative;
+      display:block;
+      width:100%;
+      max-width:100%;
+      margin: 8px auto 16px;
+      text-align:center;
+      font-weight: 1000;
 
-  font-size: clamp(40px, 5.6vw, 82px);
-  white-space: nowrap;
+      letter-spacing: var(--ls);
 
-  /* 正面“天空蓝+白云”渐变 */
-  background: linear-gradient(180deg,
-    #ffffff 0%,
-    #f4fdff 14%,
-    #d7f4ff 34%,
-    #92e6ff 56%,
-    #3db9ff 78%,
-    #1b6bff 100%);
-  -webkit-background-clip:text;
-  background-clip:text;
-  color: transparent;
-  -webkit-text-fill-color: transparent;
+      /* ✅ 给右侧/底部留空间，避免 3D/阴影被 .hero 的 overflow:hidden 裁掉 */
+      padding-left: var(--ls);                  /* 视觉居中补偿 */
+      padding-right: calc(var(--ls) + 0.22em);  /* 右侧额外空间（防裁切） */
+      padding-bottom: 0.28em;                   /* 底部额外空间（防裁切） */
+      line-height: 1.05;
 
-  /* 金属硬边（亮边） */
-  -webkit-text-stroke: 3px rgba(250,253,255,.92);
+      font-size: clamp(40px, 5.6vw, 82px);
+      white-space: nowrap;                      /* ✅ 全端强制一行 */
 
-  /* 发光（主发光放在本体） */
-  text-shadow:
-    0 0 10px rgba(255,255,255,.22),
-    0 0 18px rgba(146,230,255,.60),
-    0 0 34px rgba(61,185,255,.46),
-    0 0 70px rgba(27,107,255,.28),
-    0 0 26px rgba(255,43,134,.10);
+      /* 正面“天空蓝+白云”渐变 */
+      background: linear-gradient(180deg,
+        #ffffff 0%,
+        #f4fdff 14%,
+        #d7f4ff 34%,
+        #92e6ff 56%,
+        #3db9ff 78%,
+        #1b6bff 100%);
+      -webkit-background-clip:text;
+      background-clip:text;
+      color: transparent;
+      -webkit-text-fill-color: transparent;
 
-  filter: saturate(1.55) contrast(1.18);
-  text-rendering: geometricPrecision;
-}
+      /* 金属硬边（亮边） */
+      -webkit-text-stroke: 3px rgba(250,253,255,.92);
 
-/* ① 更厚的“3D挤出体”（主体厚度层） */
-.hero-title::before{
-  content: attr(data-text);
-  position:absolute;
-  inset:0;
-  z-index:-2;
-  pointer-events:none;
+      /* 发光（主发光放在本体） */
+      text-shadow:
+        0 0 10px rgba(255,255,255,.22),
+        0 0 18px rgba(146,230,255,.60),
+        0 0 34px rgba(61,185,255,.46),
+        0 0 70px rgba(27,107,255,.28),
+        0 0 26px rgba(255,43,134,.10);
 
-  text-align: inherit;
-  font: inherit;
-  letter-spacing: inherit;
-  line-height: inherit;
-  padding-left: inherit;
-  white-space: inherit;
+      filter: saturate(1.55) contrast(1.18);
+      text-rendering: geometricPrecision;
+    }
 
-  /* 挤出体颜色：深蓝金属灰（别用纯黑，避免一坨黑） */
-  color: rgba(10, 28, 55, .92);
-  -webkit-text-stroke: 0;
+    /* ① 更厚的“3D挤出体”（主体厚度层） */
+    .hero-title::before{
+      content: attr(data-text);
+      position:absolute;
+      inset:0;
+      z-index:-2;
+      pointer-events:none;
 
-  /* 厚度方向：向右下“挤出” */
-  transform: translate(9px, 11px);
+      text-align: inherit;
+      font: inherit;
+      letter-spacing: inherit;
+      line-height: inherit;
+      white-space: inherit;
 
-  /* 挤出体层次（多层阴影模拟真实厚度） */
-  text-shadow:
-    1px 1px 0 rgba(8, 22, 45, .88),
-    2px 2px 0 rgba(8, 22, 45, .82),
-    3px 3px 0 rgba(8, 22, 45, .76),
-    4px 4px 0 rgba(8, 22, 45, .70),
-    5px 5px 0 rgba(8, 22, 45, .64),
-    6px 6px 0 rgba(8, 22, 45, .58),
-    7px 7px 0 rgba(8, 22, 45, .52),
-    8px 8px 0 rgba(8, 22, 45, .46),
-    10px 12px 18px rgba(0,0,0,.55);
-}
+      /* 同步 padding，确保挤出层和本体对齐 */
+      padding-top: inherit;
+      padding-right: inherit;
+      padding-bottom: inherit;
+      padding-left: inherit;
 
-/* ② 外圈“金属暗边”+ 冷光边缘（让边更硬朗、更金属） */
-.hero-title::after{
-  content: attr(data-text);
-  position:absolute;
-  inset:0;
-  z-index:-1;
-  pointer-events:none;
+      color: rgba(10, 28, 55, .92);
+      -webkit-text-stroke: 0;
 
-  text-align: inherit;
-  font: inherit;
-  letter-spacing: inherit;
-  line-height: inherit;
-  padding-left: inherit;
-  white-space: inherit;
+      transform: translate(var(--ex), var(--ey));
 
-  /* 只画“更粗的暗色描边”来形成金属边厚度 */
-  color: transparent;
-  -webkit-text-fill-color: transparent;
-  -webkit-text-stroke: 7px rgba(12, 40, 85, .42);
+      text-shadow:
+        1px 1px 0 rgba(8, 22, 45, .88),
+        2px 2px 0 rgba(8, 22, 45, .82),
+        3px 3px 0 rgba(8, 22, 45, .76),
+        4px 4px 0 rgba(8, 22, 45, .70),
+        5px 5px 0 rgba(8, 22, 45, .64),
+        6px 6px 0 rgba(8, 22, 45, .58),
+        7px 7px 0 rgba(8, 22, 45, .52),
+        8px 8px 0 rgba(8, 22, 45, .46),
+        10px 12px 18px rgba(0,0,0,.55);
+    }
 
-  /* 暗边轻微偏移，形成金属边的立体错层 */
-  transform: translate(2px, 2px);
+    /* ② 外圈“金属暗边”+ 冷光边缘（更硬朗金属） */
+    .hero-title::after{
+      content: attr(data-text);
+      position:absolute;
+      inset:0;
+      z-index:-1;
+      pointer-events:none;
 
-  /* 冷光描边 */
-  filter: drop-shadow(0 0 10px rgba(127,224,255,.25))
-          drop-shadow(0 0 18px rgba(42,168,255,.18));
-}
+      text-align: inherit;
+      font: inherit;
+      letter-spacing: inherit;
+      line-height: inherit;
+      white-space: inherit;
 
+      padding-top: inherit;
+      padding-right: inherit;
+      padding-bottom: inherit;
+      padding-left: inherit;
+
+      color: transparent;
+      -webkit-text-fill-color: transparent;
+      -webkit-text-stroke: var(--outerStroke) rgba(12, 40, 85, .42);
+
+      transform: translate(var(--ex2), var(--ey2));
+
+      filter: drop-shadow(0 0 10px rgba(127,224,255,.25))
+              drop-shadow(0 0 18px rgba(42,168,255,.18));
+    }
 
     .hero-sub{
       text-align:center;
@@ -306,7 +318,7 @@
       grid-template-columns: repeat(4, minmax(0, 1fr));
       gap: 12px;
       margin: 14px auto 18px;
-      width: min(880px, 100%); /* 原来980 → 880，主标题更“长” */
+      width: min(880px, 100%);
     }
     .slogan{
       max-width: 220px;
@@ -628,7 +640,7 @@
       opacity:.85;
     }
 
-    /* ✅ 联系方式：6等分铺满 + 图标更大 + 带文字 + 更接近官方图标 */
+    /* 联系方式 */
     .contact-row{
       width: 100%;
       max-width: 1120px;
@@ -681,7 +693,6 @@
       line-height: 1;
     }
 
-    /* footer */
     .foot{
       text-align:center;
       color: rgba(233,238,255,.55);
@@ -818,12 +829,25 @@
       .video-grid{grid-template-columns: 1fr;}
       .wechat-grid{grid-template-columns: 1fr;}
 
-      /* 主标题小屏降字距防溢出 */
-      .hero-title{letter-spacing: 0.18em; padding-left: 0.18em; white-space: normal;}
+      /* ✅ 主标题：小屏仍强制一行；降低字距/字号/挤出，避免溢出与裁切 */
+      .hero-title{
+        --ls: 0.10em;
+        --ex: 6px;
+        --ey: 8px;
+        --ex2: 2px;
+        --ey2: 2px;
+        --outerStroke: 6px;
 
-      /* 联系方式：平板改3列更满 */
+        white-space: nowrap;
+        font-size: clamp(24px, 6.2vw, 44px);
+        padding-left: var(--ls);
+        padding-right: calc(var(--ls) + 0.18em);
+        padding-bottom: 0.26em;
+      }
+
       .contact-row{grid-template-columns: repeat(3, minmax(0, 1fr));}
     }
+
     @media (max-width: 560px){
       header{border-radius: 18px;}
       .brand-title{font-size: 12px;}
@@ -835,7 +859,22 @@
       .svc-grid{grid-template-columns: 1fr;}
       .media-grid{grid-template-columns: 1fr;}
 
-      /* 联系方式：手机2列 */
+      /* ✅ 手机：仍必须一行不换行（更小字距/字号 + 更薄挤出，保证 320px 也不爆） */
+      .hero-title{
+        --ls: 0.02em;
+        --ex: 4px;
+        --ey: 6px;
+        --ex2: 1px;
+        --ey2: 1px;
+        --outerStroke: 5px;
+
+        white-space: nowrap;
+        font-size: clamp(18px, 6.5vw, 34px);
+        padding-left: var(--ls);
+        padding-right: calc(var(--ls) + 0.14em);
+        padding-bottom: 0.24em;
+      }
+
       .contact-row{grid-template-columns: repeat(2, minmax(0, 1fr));}
       .iconbtn{min-height: 104px;}
       .iconimg{width: 38px; height: 38px;}
@@ -866,7 +905,6 @@
       <div class="tagline">因为专注 · 所以专业 · 十年老店</div>
 
       <h1 class="hero-title" data-text="欢迎VIP贵宾来到筑梦电子">欢迎VIP贵宾来到筑梦电子</h1>
-
 
       <div class="slogan-row" aria-label="四个核心卖点">
         <div class="slogan"><span>新店拼价格</span></div>
