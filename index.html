@@ -1093,20 +1093,30 @@
             <div class="iconlabel">Gmail</div>
           </a>
 
-          <a class="iconbtn" href="https://v.douyin.com/hTxqO_qDO6M/" target="_blank" rel="noopener" title="抖音" aria-label="抖音">
-            <img class="iconimg" alt="抖音" src="https://cdn.simpleicons.org/tiktok?viewbox=auto">
-            <div class="iconlabel">抖音</div>
-          </a>
+          <a class="iconbtn" id="btnDouyin"
+   href="#"
+   data-web="https://v.douyin.com/hTxqO_qDO6M/"
+   aria-label="抖音" title="抖音">
+  <img class="iconimg" alt="抖音" src="https://cdn.simpleicons.org/tiktok?viewbox=auto">
+  <div class="iconlabel">抖音</div>
+</a>
 
-          <a class="iconbtn" href="https://v.kuaishou.com/KArQ2jnp" target="_blank" rel="noopener" title="快手" aria-label="快手">
-            <img class="iconimg" alt="快手" src="https://cdn.simpleicons.org/kuaishou?viewbox=auto">
-            <div class="iconlabel">快手</div>
-          </a>
+<a class="iconbtn" id="btnKuaishou"
+   href="#"
+   data-web="https://v.kuaishou.com/KArQ2jnp"
+   aria-label="快手" title="快手">
+  <img class="iconimg" alt="快手" src="https://cdn.simpleicons.org/kuaishou?viewbox=auto">
+  <div class="iconlabel">快手</div>
+</a>
 
-          <a class="iconbtn" href="https://xhslink.com/m/8My2Kr680Fb" target="_blank" rel="noopener" title="小红书" aria-label="小红书">
-            <img class="iconimg" alt="小红书" src="https://cdn.simpleicons.org/xiaohongshu?viewbox=auto">
-            <div class="iconlabel">小红书</div>
-          </a>
+<a class="iconbtn" id="btnXhs"
+   href="#"
+   data-web="https://xhslink.com/m/8My2Kr680Fb"
+   aria-label="小红书" title="小红书">
+  <img class="iconimg" alt="小红书" src="https://cdn.simpleicons.org/xiaohongshu?viewbox=auto">
+  <div class="iconlabel">小红书</div>
+</a>
+
         </div>
 
         <div class="foot">© 2026 筑梦电子 · roselg.xyz</div>
@@ -1354,6 +1364,60 @@
       showToast("二维码未找到，请确认 assets/wechat-qr.jpg 路径/大小写正确");
     }
   });
+})();
+(function setupAppDeepLinks(){
+  function openWithFallback(schemeUrl, webUrl){
+    // 先尝试唤起 App
+    try{
+      const a = document.createElement('a');
+      a.href = schemeUrl;
+      a.style.display = 'none';
+      document.body.appendChild(a);
+      a.click();
+      a.remove();
+    }catch(e){}
+
+    // 如果没唤起，短延迟回落到网页
+    // iOS/安卓不同浏览器表现不同，700~1200ms通常更稳
+    setTimeout(()=>{
+      window.location.href = webUrl;
+    }, 900);
+  }
+
+  // 抖音
+  const btnDouyin = document.getElementById('btnDouyin');
+  if(btnDouyin){
+    btnDouyin.addEventListener('click', (e)=>{
+      e.preventDefault();
+      const web = btnDouyin.getAttribute('data-web');
+      // 抖音：更通用的唤起方式（不保证100%，但比纯网页强）
+      // iOS/安卓都能尝试
+      const scheme = `snssdk1128://`;
+      openWithFallback(scheme, web);
+    });
+  }
+
+  // 快手
+  const btnKuaishou = document.getElementById('btnKuaishou');
+  if(btnKuaishou){
+    btnKuaishou.addEventListener('click', (e)=>{
+      e.preventDefault();
+      const web = btnKuaishou.getAttribute('data-web');
+      const scheme = `kwai://`;
+      openWithFallback(scheme, web);
+    });
+  }
+
+  // 小红书
+  const btnXhs = document.getElementById('btnXhs');
+  if(btnXhs){
+    btnXhs.addEventListener('click', (e)=>{
+      e.preventDefault();
+      const web = btnXhs.getAttribute('data-web');
+      const scheme = `xhsdiscover://`;
+      openWithFallback(scheme, web);
+    });
+  }
 })();
 
   </script>
