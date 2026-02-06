@@ -182,58 +182,61 @@
     }
 
     /* ✅ 主标题：字距更大 + 更长于四卖点 + 强3D + 金属边框 + 天空蓝白渐变 */
-    .hero-title{
-      display:inline-block;
-      width: min(1120px, 100%);      /* 让主标题视觉更长 */
-      margin: 8px auto 16px;
-      text-align:center;
-      font-weight: 1000;
+   /* 主标题：更硬朗金属边 + 更厚3D挤压 + 天空蓝/白云渐变 + 强冷光 */
+.hero-title{
+  margin: 8px auto 16px;
+  text-align:center;
 
-      letter-spacing: 0.30em;        /* 字间距更大（核心） */
-      padding-left: 0.30em;          /* 抵消字距导致的居中偏移 */
-      line-height: 1.05;
+  font-weight: 1000;
+  letter-spacing: 14px;           /* 字间距更大（你可按需调 10~18） */
+  line-height: 1.06;
+  font-size: clamp(40px, 5.4vw, 78px);
 
-      font-size: clamp(40px, 5.6vw, 82px);
-      white-space: nowrap;
+  /* 蓝白“天空感”渐变填充 */
+  background: linear-gradient(
+    180deg,
+    #ffffff 0%,
+    #eefbff 16%,
+    #bfeaff 36%,
+    #68c6ff 58%,
+    #2b8bff 82%,
+    #165dff 100%
+  );
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
 
-      /* 天空蓝 + 白云白渐变（更亮更清晰） */
-      background: linear-gradient(180deg,
-        #ffffff 0%,
-        #f1fbff 14%,
-        #cfefff 36%,
-        #7fe0ff 60%,
-        #2aa8ff 82%,
-        #1b6bff 100%);
-      -webkit-background-clip:text;
-      background-clip:text;
-      color: transparent;
-      -webkit-text-fill-color: transparent;
+  /* 金属描边（更亮更硬） */
+  -webkit-text-stroke: 2.6px rgba(230,250,255,.92);
 
-      /* 金属边框（更“金属描边”感） */
-      -webkit-text-stroke: 3px rgba(245,252,255,.86);
+  /* 3D“厚度”+ 硬阴影 + 冷光 */
+  text-shadow:
+    /* 顶部高光/硬边 */
+    -1px -1px 0 rgba(255,255,255,.20),
+     0px -2px 0 rgba(255,255,255,.14),
 
-      /* 强3D厚度：用深蓝灰堆叠，避免发黑成一坨 */
-      text-shadow:
-        /* 金属高光 */
-        0 1px 0 rgba(255,255,255,.28),
-        0 2px 0 rgba(255,255,255,.14),
+    /* 深色硬边（像金属边框） */
+     1px  1px 0 rgba(0,0,0,.85),
+     2px  2px 0 rgba(0,0,0,.82),
 
-        /* 厚度层（带x偏移更立体） */
-        1px 2px 0 rgba(10, 30, 60, .72),
-        2px 4px 0 rgba(10, 30, 60, .64),
-        3px 6px 0 rgba(10, 30, 60, .56),
-        4px 8px 0 rgba(10, 30, 60, .48),
-        5px 10px 0 rgba(10, 30, 60, .40),
-        6px 12px 0 rgba(10, 30, 60, .34),
+    /* 3D 挤压厚度（越多越“厚”） */
+     3px  3px 0 rgba(2,7,18,.88),
+     4px  4px 0 rgba(2,7,18,.84),
+     5px  5px 0 rgba(2,7,18,.80),
+     6px  6px 0 rgba(2,7,18,.76),
+     7px  7px 0 rgba(2,7,18,.72),
+     8px  8px 0 rgba(2,7,18,.68),
 
-        /* 发光：天空蓝霓虹 + 冷白光 */
-        0 0 10px rgba(255,255,255,.22),
-        0 0 18px rgba(127,224,255,.62),
-        0 0 34px rgba(42,168,255,.44),
-        0 0 68px rgba(27,107,255,.26);
+    /* 真实落地阴影 */
+     0px 18px 26px rgba(0,0,0,.62),
 
-      filter: saturate(1.55) contrast(1.18);
-    }
+    /* 冷光外发光（科技感） */
+     0 0 10px rgba(62,166,255,.75),
+     0 0 22px rgba(135,215,255,.50),
+     0 0 46px rgba(62,166,255,.32),
+     0 0 70px rgba(143,244,255,.18);
+}
+
 
     .hero-sub{
       text-align:center;
