@@ -2,1149 +2,1243 @@
 <html lang="zh-CN">
 <head>
   <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>筑梦电子 · VIP服务站 · 7x24h服务</title>
-  <meta name="description" content="筑梦电子 · VIP服务站 · 7x24h服务｜业务分类引流｜展品展示｜一键联系" />
-
-  <!--
-    ✅ 你后期要上传素材的话，按这个放文件就行（无需改代码）：
-    /assets/
-      wechat-qr.png              （微信二维码）
-      photo-01.jpg ... photo-06.jpg  （6张展品图片）
-      video-01.mp4 ... video-03.mp4  （3个展品视频）
-      profile.jpg               （自我介绍模块左侧图片，可选）
-  -->
-
+  <meta name="description" content="筑梦电子 · VIP服务站 · 7x24h服务｜电子产品 / 金融业务 / AI技术 / 网络服务 / 游戏服务 / 懒人特殊服务" />
   <style>
     :root{
-      --bg0:#070a16;
+      --bg0:#070916;
       --bg1:#0b1030;
-      --bg2:#161031;
-
-      --rose:#ff2f86;
-      --rose2:#ff5aa9;
-
-      --blue0:#7fe7ff;
-      --blue1:#2f7bff;
-      --blue2:#1f4cff;
-
-      --card: rgba(255,255,255,.06);
-      --card2: rgba(255,255,255,.085);
+      --glass: rgba(255,255,255,.06);
+      --glass2: rgba(255,255,255,.08);
       --line: rgba(255,255,255,.10);
+      --text:#e9eeff;
+      --muted: rgba(233,238,255,.78);
 
-      --text: rgba(255,255,255,.90);
-      --muted: rgba(255,255,255,.68);
-      --muted2: rgba(255,255,255,.58);
+      --rose:#ff2b86;
+      --rose2:#ff5aa7;
+      --blue:#3ea6ff;
+      --blue2:#87d7ff;
+      --cyan:#8ff4ff;
 
+      --shadow: 0 18px 60px rgba(0,0,0,.55);
       --radius: 22px;
-      --radius2: 18px;
-
-      --shadow: 0 18px 55px rgba(0,0,0,.55);
-      --shadow2: 0 10px 26px rgba(0,0,0,.42);
-
-      --max: 1180px;
+      --radius2: 16px;
     }
 
     *{box-sizing:border-box}
-    html,body{height:100%}
+    html{scroll-behavior:smooth}
     body{
       margin:0;
+      font-family: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "PingFang SC", "Microsoft Yahei", "Noto Sans CJK SC", sans-serif;
       color:var(--text);
-      background: radial-gradient(1200px 900px at 10% 10%, rgba(47,123,255,.28), transparent 55%),
-                  radial-gradient(900px 700px at 95% 15%, rgba(255,47,134,.22), transparent 55%),
-                  radial-gradient(1100px 900px at 65% 110%, rgba(255,47,134,.16), transparent 55%),
-                  linear-gradient(180deg, var(--bg0), var(--bg1) 55%, var(--bg2));
-      font-family: ui-sans-serif, system-ui, -apple-system, "PingFang SC","Microsoft YaHei", Segoe UI, Roboto, Helvetica, Arial;
+      background: radial-gradient(1200px 700px at 15% 20%, rgba(62,166,255,.28), transparent 55%),
+                  radial-gradient(1000px 700px at 85% 25%, rgba(255,43,134,.22), transparent 55%),
+                  radial-gradient(900px 600px at 40% 90%, rgba(255,90,167,.18), transparent 60%),
+                  linear-gradient(180deg, var(--bg1), var(--bg0));
+      min-height:100vh;
       overflow-x:hidden;
     }
 
-    /* 玫瑰主题暗纹背景（纯代码生成，不需要你上传壁纸） */
+    /* “玫瑰壁纸”感：SVG 玫瑰线稿 + 暗色蒙版（无需你上传图片） */
     body::before{
       content:"";
       position:fixed;
-      inset:-40px;
-      z-index:-2;
-      background-image:
-        radial-gradient(1200px 900px at 20% 30%, rgba(255,47,134,.18), transparent 60%),
-        radial-gradient(900px 700px at 80% 35%, rgba(127,231,255,.10), transparent 62%),
-        radial-gradient(900px 900px at 50% 110%, rgba(255,47,134,.16), transparent 62%),
-        url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='720' height='720' viewBox='0 0 720 720'%3E%3Cg fill='none' stroke='%23ff2f86' stroke-opacity='0.11' stroke-width='2'%3E%3Cpath d='M360 120c70 0 130 55 130 125 0 55-35 92-74 110 54 2 108 35 108 106 0 74-62 129-164 129s-164-55-164-129c0-71 54-104 108-106-39-18-74-55-74-110 0-70 60-125 130-125z'/%3E%3Cpath d='M360 150c-45 0-88 35-88 85 0 47 40 78 88 78s88-31 88-78c0-50-43-85-88-85z'/%3E%3Cpath d='M360 340c-88 0-140 46-140 112 0 64 55 108 140 108s140-44 140-108c0-66-52-112-140-112z'/%3E%3Cpath d='M235 520c35 30 79 48 125 48s90-18 125-48'/%3E%3Cpath d='M240 220c20 35 63 55 120 55s100-20 120-55'/%3E%3Cpath d='M290 380c18 22 42 32 70 32s52-10 70-32'/%3E%3C/g%3E%3C/svg%3E");
-      background-size: auto, auto, auto, 520px 520px;
-      background-repeat: no-repeat, no-repeat, no-repeat, repeat;
-      background-position: 0 0, 100% 0, 50% 120%, 0 0;
-      filter: saturate(1.12);
-      opacity:1;
+      inset:-20px;
       pointer-events:none;
-    }
-
-    /* 轻遮罩：让壁纸/暗纹不抢字 */
-    body::after{
-      content:"";
-      position:fixed;
-      inset:0;
       z-index:-1;
-      background: radial-gradient(1200px 900px at 50% 15%, rgba(0,0,0,.18), rgba(0,0,0,.50) 70%),
-                  linear-gradient(180deg, rgba(0,0,0,.18), rgba(0,0,0,.56));
-      pointer-events:none;
+      opacity:.78;
+      background-image:
+        url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220' viewBox='0 0 220 220'%3E%3Cdefs%3E%3CradialGradient id='g' cx='50%25' cy='50%25' r='65%25'%3E%3Cstop offset='0' stop-color='%23ff2b86' stop-opacity='.20'/%3E%3Cstop offset='1' stop-color='%233ea6ff' stop-opacity='.05'/%3E%3C/radialGradient%3E%3C/defs%3E%3Crect width='220' height='220' fill='none'/%3E%3Cg fill='none' stroke='%23ff2b86' stroke-opacity='.18' stroke-width='2'%3E%3Cpath d='M110 54c20 0 34 16 34 34 0 21-18 33-34 33-16 0-34-12-34-33 0-18 14-34 34-34z'/%3E%3Cpath d='M110 66c13 0 22 10 22 22 0 14-12 22-22 22s-22-8-22-22c0-12 9-22 22-22z'/%3E%3Cpath d='M110 88c6 0 10 4 10 10 0 6-6 10-10 10s-10-4-10-10c0-6 4-10 10-10z'/%3E%3Cpath d='M78 140c18-10 34-12 32-26-2-12-18-18-30-18-16 0-30 12-30 28 0 12 7 22 28 16z'/%3E%3Cpath d='M142 140c-18-10-34-12-32-26 2-12 18-18 30-18 16 0 30 12 30 28 0 12-7 22-28 16z'/%3E%3Cpath d='M110 121c0 18-7 28-16 38-6 7-8 14-8 22h48c0-8-2-15-8-22-9-10-16-20-16-38z'/%3E%3Cpath d='M88 182c10 8 22 10 22 10s12-2 22-10'/%3E%3C/g%3E%3Ccircle cx='110' cy='110' r='78' fill='url(%23g)'/%3E%3C/svg%3E");
+      background-repeat:repeat;
+      background-size: 260px 260px;
+      filter: blur(.2px);
+      mix-blend-mode: screen;
     }
 
-    a{color:inherit}
-    .wrap{max-width:var(--max); margin:0 auto; padding:0 18px;}
-    .topbar{
-      position:sticky; top:0; z-index:50;
-      backdrop-filter: blur(12px);
-      background: rgba(10,12,26,.55);
-      border-bottom:1px solid rgba(255,255,255,.07);
+    .wrap{
+      width:min(1180px, calc(100% - 36px));
+      margin:0 auto;
+      padding: 22px 0 76px;
     }
-    .topbarInner{
-      height:66px; display:flex; align-items:center; justify-content:space-between;
-      gap:14px;
+
+    /* 顶部栏 */
+    header{
+      position:sticky;
+      top:10px;
+      z-index:50;
+      margin: 10px auto 22px;
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      background: linear-gradient(180deg, rgba(10,14,40,.62), rgba(10,14,40,.28));
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      box-shadow: var(--shadow);
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      padding: 10px 12px;
     }
+
     .brand{
-      display:flex; align-items:center; gap:10px;
-      font-weight:900; letter-spacing:.5px;
+      display:flex;
+      align-items:center;
+      gap:10px;
+      padding: 6px 10px;
+      border-radius:999px;
+    }
+    .dot{
+      width:8px;height:8px;border-radius:999px;
+      background: radial-gradient(circle at 30% 30%, #ffd2e7, var(--rose));
+      box-shadow: 0 0 14px rgba(255,43,134,.7);
+      flex:0 0 auto;
+    }
+    .brand-title{
+      font-weight:800;
+      letter-spacing:.8px;
+      color:rgba(233,238,255,.96); /* 统一整行颜色 */
+      text-shadow: 0 0 12px rgba(62,166,255,.18), 0 0 18px rgba(255,43,134,.14);
       white-space:nowrap;
+      font-size: 14px;
     }
-    .brandDot{
-      width:10px;height:10px;border-radius:50%;
-      background: radial-gradient(circle at 30% 30%, rgba(255,255,255,.9), rgba(255,255,255,.05) 40%),
-                  radial-gradient(circle at 50% 50%, rgba(255,47,134,.95), rgba(255,47,134,.10) 65%);
-      box-shadow:
-        0 0 14px rgba(255,47,134,.45),
-        0 0 30px rgba(255,47,134,.18);
-    }
-    .brandText{
-      display:flex; gap:8px; align-items:baseline;
-      font-size:15px;
-      color:rgba(255,255,255,.92);
-    }
-    .brandText b{font-weight:900}
-    .brandText span{color:rgba(255,255,255,.72); font-weight:800}
-    .nav{
-      display:flex; gap:10px; align-items:center;
+
+    nav{
+      display:flex;
+      gap:10px;
+      align-items:center;
+      padding-right: 6px;
       flex-wrap:wrap;
       justify-content:flex-end;
     }
-    .nav a{
+    .navpill{
       text-decoration:none;
-      padding:10px 14px;
+      color:rgba(233,238,255,.88);
+      font-weight:700;
+      font-size: 13px;
+      padding: 9px 12px;
+      border-radius: 999px;
       border:1px solid rgba(255,255,255,.10);
       background: rgba(255,255,255,.04);
-      border-radius:999px;
-      font-weight:800;
-      color:rgba(255,255,255,.78);
-      transition:.18s ease;
+      transition: transform .15s ease, background .15s ease, border-color .15s ease;
     }
-    .nav a:hover{
+    .navpill:hover{
       transform: translateY(-1px);
-      border-color: rgba(255,47,134,.35);
-      box-shadow: 0 0 0 3px rgba(255,47,134,.12);
-      color:rgba(255,255,255,.92);
+      background: rgba(255,255,255,.07);
+      border-color: rgba(255,255,255,.16);
     }
 
     /* HERO */
     .hero{
-      padding:34px 0 18px;
-    }
-    .heroCard{
-      position:relative;
-      border-radius: 28px;
-      border:1px solid rgba(255,255,255,.10);
-      background:
-        radial-gradient(1100px 520px at 10% 20%, rgba(47,123,255,.26), transparent 60%),
-        radial-gradient(900px 520px at 95% 35%, rgba(255,47,134,.22), transparent 58%),
-        linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.03));
-      box-shadow: var(--shadow);
-      overflow:hidden;
-      padding:30px 26px 22px;
-    }
-
-    .heroBadge{
-      display:inline-flex; align-items:center; justify-content:center;
-      padding:10px 16px;
-      border-radius:999px;
-      border:1px solid rgba(255,255,255,.13);
-      background: rgba(255,255,255,.05);
-      color: rgba(255,255,255,.90);
-      font-weight:900;
-      letter-spacing:.6px;
-      font-size:15px;
-      position:relative;
-    }
-    /* 3D + 发光：徽章文字 */
-    .heroBadgeText{
-      position:relative;
-      color:transparent;
-      background: linear-gradient(180deg, rgba(255,255,255,.95), rgba(210,240,255,.92) 35%, rgba(140,220,255,.90));
-      -webkit-background-clip:text;
-      background-clip:text;
-      text-shadow:
-        0 0 16px rgba(127,231,255,.40),
-        0 0 34px rgba(47,123,255,.24);
-      filter: drop-shadow(0 0 18px rgba(47,123,255,.22));
-    }
-    .heroBadgeText::before{
-      content:attr(data-text);
-      position:absolute; inset:0;
-      transform: translate(1px, 2px);
-      color: rgba(7,10,22,.92);
-      text-shadow:
-        1px 1px 0 rgba(0,0,0,.35),
-        2px 2px 0 rgba(0,0,0,.28),
-        3px 3px 0 rgba(0,0,0,.22);
-      z-index:-1;
-    }
-
-    .heroTitle{
-      margin:14px 0 8px;
-      font-weight:1000;
-      letter-spacing: 6px;
-      line-height: 1.06;
-      font-size: clamp(34px, 6.2vw, 74px);
-      text-align:center;
-      position:relative;
-      color:transparent;
-      background: linear-gradient(180deg, rgba(210,250,255,.98), rgba(127,231,255,.92) 25%, rgba(47,123,255,.96) 60%, rgba(31,76,255,.96));
-      -webkit-background-clip:text;
-      background-clip:text;
-      -webkit-text-stroke: 1px rgba(255,255,255,.10);
-      text-shadow:
-        /* 立体“厚度” */
-        1px 1px 0 rgba(10,18,44,.85),
-        2px 2px 0 rgba(10,18,44,.78),
-        3px 3px 0 rgba(10,18,44,.72),
-        4px 4px 0 rgba(10,18,44,.66),
-        5px 5px 0 rgba(10,18,44,.60),
-        6px 6px 0 rgba(10,18,44,.55),
-        7px 7px 0 rgba(10,18,44,.48),
-        8px 8px 0 rgba(10,18,44,.42),
-        /* 发光 */
-        0 0 14px rgba(127,231,255,.44),
-        0 0 34px rgba(47,123,255,.32),
-        0 0 72px rgba(31,76,255,.18);
-      filter: drop-shadow(0 0 18px rgba(47,123,255,.25));
-      animation: glowPulse 3.2s ease-in-out infinite;
-    }
-    .heroTitle::before{
-      content: attr(data-text);
-      position:absolute; left:0; right:0; top:0;
-      transform: translate(10px, 12px);
-      color: rgba(6,10,20,.95);
-      text-shadow:
-        0 0 2px rgba(0,0,0,.55),
-        0 14px 32px rgba(0,0,0,.55);
-      z-index:-1;
-    }
-    @keyframes glowPulse{
-      0%,100%{ filter: drop-shadow(0 0 16px rgba(47,123,255,.24)); }
-      50%{ filter: drop-shadow(0 0 24px rgba(127,231,255,.28)); }
-    }
-
-    .heroSubRow{
-      display:flex; justify-content:center; margin:10px 0 14px;
-    }
-    .sloganGrid{
-      margin: 8px auto 16px;
-      max-width: 980px;
-      display:grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap:12px;
-    }
-    @media (max-width: 980px){
-      .sloganGrid{grid-template-columns: repeat(2, 1fr);}
-    }
-    @media (max-width: 520px){
-      .sloganGrid{grid-template-columns: 1fr;}
-    }
-    .sloganChip{
-      border-radius: 16px;
-      border:1px solid rgba(255,255,255,.12);
-      background: rgba(255,255,255,.04);
-      box-shadow: 0 0 0 1px rgba(255,47,134,.08) inset;
-      padding:14px 14px;
-      text-align:center;
-      position:relative;
-      overflow:hidden;
-    }
-    .sloganChip::after{
-      content:"";
-      position:absolute; inset:-1px;
-      background: radial-gradient(420px 160px at 50% 10%, rgba(255,47,134,.16), transparent 55%),
-                  radial-gradient(420px 160px at 50% 120%, rgba(47,123,255,.14), transparent 55%);
-      pointer-events:none;
-    }
-    .sloganText{
-      position:relative;
-      z-index:1;
-      font-weight:950;
-      letter-spacing:1px;
-      font-size: 18px;
-      color:transparent;
-      background: linear-gradient(180deg, rgba(235,252,255,.98), rgba(130,225,255,.92) 35%, rgba(47,123,255,.96));
-      -webkit-background-clip:text;
-      background-clip:text;
-      text-shadow:
-        1px 1px 0 rgba(8,14,34,.78),
-        2px 2px 0 rgba(8,14,34,.60),
-        0 0 16px rgba(127,231,255,.34),
-        0 0 28px rgba(47,123,255,.24);
-    }
-
-    .heroActions{
-      display:flex; gap:10px; justify-content:center; flex-wrap:wrap;
-      margin-top: 10px;
-    }
-    .btn{
-      border:none;
-      cursor:pointer;
-      text-decoration:none;
-      padding:12px 16px;
-      border-radius: 999px;
-      font-weight:900;
-      letter-spacing:.5px;
-      transition:.18s ease;
-      display:inline-flex; align-items:center; gap:10px;
-      user-select:none;
-    }
-    .btnPrimary{
-      color:#fff;
-      background: linear-gradient(135deg, rgba(255,47,134,.92), rgba(255,90,169,.92));
-      box-shadow:
-        0 14px 32px rgba(255,47,134,.24),
-        0 0 0 1px rgba(255,255,255,.10) inset;
-    }
-    .btnPrimary:hover{ transform: translateY(-1px); box-shadow: 0 18px 44px rgba(255,47,134,.28), 0 0 0 1px rgba(255,255,255,.14) inset; }
-    .btnGhost{
-      color:rgba(255,255,255,.88);
-      background: rgba(255,255,255,.05);
-      border:1px solid rgba(255,255,255,.12);
-    }
-    .btnGhost:hover{ transform: translateY(-1px); border-color: rgba(255,47,134,.32); box-shadow: 0 0 0 3px rgba(255,47,134,.10); }
-
-    /* SECTIONS */
-    .section{
-      padding: 18px 0 0;
-    }
-    .sectionTitleRow{
-      display:flex; align-items:center; gap:10px;
-      margin: 20px 0 14px;
-    }
-    .pin{
-      width:8px;height:8px;border-radius:50%;
-      background: radial-gradient(circle at 30% 30%, rgba(255,255,255,.92), rgba(255,255,255,.10) 45%),
-                  radial-gradient(circle at 50% 50%, rgba(255,47,134,.95), rgba(255,47,134,.08) 70%);
-      box-shadow: 0 0 14px rgba(255,47,134,.32);
-      flex:0 0 auto;
-    }
-    .sectionTitle{
-      margin:0;
-      font-size: 18px;
-      font-weight: 950;
-      color: rgba(255,255,255,.88);
-      letter-spacing: .8px;
-    }
-    .card{
       border-radius: var(--radius);
       border:1px solid rgba(255,255,255,.10);
-      background: rgba(255,255,255,.04);
-      box-shadow: var(--shadow2);
+      background:
+        radial-gradient(900px 380px at 18% 20%, rgba(62,166,255,.26), transparent 60%),
+        radial-gradient(900px 380px at 85% 30%, rgba(255,43,134,.20), transparent 60%),
+        linear-gradient(180deg, rgba(255,255,255,.08), rgba(255,255,255,.03));
+      box-shadow: var(--shadow);
+      padding: 26px 26px 22px;
+      position:relative;
       overflow:hidden;
+    }
+    .hero::after{
+      content:"";
+      position:absolute;
+      inset:-2px;
+      pointer-events:none;
+      border-radius: calc(var(--radius) + 2px);
+      background:
+        radial-gradient(520px 220px at 24% 30%, rgba(62,166,255,.16), transparent 62%),
+        radial-gradient(520px 220px at 76% 34%, rgba(255,43,134,.14), transparent 62%);
+      filter: blur(12px);
+      opacity:.95;
+    }
+    .hero > *{position:relative; z-index:2;}
+
+    .tagline{
+      width:fit-content;
+      margin: 0 auto 14px;
+      padding: 9px 16px;
+      border-radius: 999px;
+      border: 1px solid rgba(255,255,255,.14);
+      background: rgba(10,14,40,.38);
+      /* 更明显、更亮、更大 */
+      font-weight: 900;
+      font-size: 16px;
+      letter-spacing: 1.3px;
+      color: #eaf6ff;
+      text-shadow:
+        0 0 12px rgba(62,166,255,.55),
+        0 0 24px rgba(143,244,255,.26),
+        0 0 18px rgba(255,43,134,.22);
+      box-shadow: 0 10px 30px rgba(0,0,0,.35);
     }
 
-    /* About */
-    .aboutGrid{
+    /* 主标题：天空蓝/白云渐变 + 金属描边 + 3D 厚度 + 强发光 */
+    .hero-title{
+      margin: 8px auto 16px;
+      text-align:center;
+      font-weight: 1000;
+      letter-spacing: 10px; /* 字间距更大 */
+      line-height: 1.06;
+      font-size: clamp(38px, 5.2vw, 74px);
+      background: linear-gradient(180deg, #ffffff 0%, #dff4ff 22%, #7fd0ff 52%, #2f86ff 86%);
+      -webkit-background-clip:text;
+      background-clip:text;
+      color: transparent;
+
+      /* “金属边框”感 */
+      -webkit-text-stroke: 2px rgba(210,240,255,.55);
+
+      /* 3D 厚度堆叠 */
+      text-shadow:
+        0 2px 0 rgba(4,10,24,.85),
+        0 4px 0 rgba(4,10,24,.78),
+        0 6px 0 rgba(4,10,24,.70),
+        0 8px 0 rgba(4,10,24,.60),
+        0 10px 12px rgba(0,0,0,.55),
+
+        /* 冷光边缘 */
+        0 0 14px rgba(62,166,255,.65),
+        0 0 34px rgba(135,215,255,.28),
+        0 0 26px rgba(255,43,134,.12);
+    }
+
+    .hero-sub{
+      text-align:center;
+      margin: 0 auto 16px;
+      color: rgba(233,238,255,.88);
+      font-weight: 700;
+      letter-spacing: .6px;
+      font-size: clamp(14px, 1.25vw, 18px);
+      text-shadow: 0 0 14px rgba(62,166,255,.16);
+    }
+
+    .slogan-row{
       display:grid;
-      grid-template-columns: 1.1fr 1.9fr;
-      gap:16px;
-      padding:18px;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 12px;
+      margin: 14px auto 18px;
+      width:min(980px, 100%);
     }
-    @media (max-width: 900px){
-      .aboutGrid{grid-template-columns: 1fr; }
+    .slogan{
+      /* 让整体更短、更紧凑（短于主标题视觉） */
+      max-width: 240px;
+      margin:0 auto;
+      border-radius: 999px;
+      border: 1px solid rgba(255,255,255,.14);
+      background: rgba(10,14,40,.34);
+      padding: 12px 14px;
+      text-align:center;
+      font-weight: 900;
+      letter-spacing: 1px;
+      color:#f3fbff;
+      /* 更亮更清晰 */
+      text-shadow:
+        0 0 14px rgba(62,166,255,.55),
+        0 0 18px rgba(255,43,134,.18),
+        0 3px 0 rgba(0,0,0,.30);
+      box-shadow: 0 14px 40px rgba(0,0,0,.32);
+      position:relative;
+      overflow:hidden;
     }
-    .aboutMedia{
-      border-radius: var(--radius2);
+    .slogan::before{
+      content:"";
+      position:absolute;
+      inset: -2px;
+      border-radius: 999px;
+      background: radial-gradient(140px 60px at 20% 30%, rgba(62,166,255,.22), transparent 65%),
+                  radial-gradient(140px 60px at 80% 50%, rgba(255,43,134,.16), transparent 65%);
+      filter: blur(10px);
+      opacity:.9;
+    }
+    .slogan span{position:relative; z-index:1; font-size: 16px}
+
+    .cta{
+      display:flex;
+      justify-content:center;
+      gap: 10px;
+      flex-wrap:wrap;
+      margin-top: 6px;
+    }
+    .btn{
+      border:1px solid rgba(255,255,255,.16);
+      background: rgba(255,255,255,.05);
+      color: rgba(233,238,255,.92);
+      font-weight: 900;
+      letter-spacing: .6px;
+      padding: 12px 16px;
+      border-radius: 999px;
+      cursor:pointer;
+      text-decoration:none;
+      display:inline-flex;
+      align-items:center;
+      gap: 10px;
+      transition: transform .15s ease, background .15s ease, border-color .15s ease, box-shadow .15s ease;
+      box-shadow: 0 16px 40px rgba(0,0,0,.28);
+    }
+    .btn:hover{
+      transform: translateY(-1px);
+      background: rgba(255,255,255,.08);
+      border-color: rgba(255,255,255,.22);
+    }
+    .btn.primary{
+      background: linear-gradient(135deg, rgba(255,43,134,.92), rgba(255,90,167,.70));
+      border-color: rgba(255,90,167,.45);
+      color: #fff;
+      box-shadow: 0 18px 44px rgba(255,43,134,.18);
+    }
+    .btn.primary:hover{
+      box-shadow: 0 22px 54px rgba(255,43,134,.26);
+    }
+
+    /* Sections */
+    section{margin-top: 26px;}
+    .section-card{
+      border-radius: var(--radius);
       border:1px solid rgba(255,255,255,.10);
-      background: radial-gradient(520px 320px at 30% 20%, rgba(47,123,255,.18), transparent 60%),
-                  radial-gradient(520px 320px at 85% 80%, rgba(255,47,134,.16), transparent 60%),
-                  rgba(255,255,255,.03);
-      min-height: 210px;
-      display:flex; align-items:center; justify-content:center;
+      background: linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.03));
+      box-shadow: var(--shadow);
+      padding: 22px;
+      position:relative;
+      overflow:hidden;
+    }
+    .section-card::after{
+      content:"";
+      position:absolute;
+      inset:-2px;
+      pointer-events:none;
+      background:
+        radial-gradient(520px 220px at 18% 35%, rgba(62,166,255,.12), transparent 62%),
+        radial-gradient(520px 220px at 80% 30%, rgba(255,43,134,.10), transparent 62%);
+      filter: blur(14px);
+      opacity:.9;
+    }
+    .section-card > *{position:relative; z-index:2;}
+
+    .h{
+      display:flex;
+      align-items:center;
+      gap: 10px;
+      font-weight: 1000;
+      font-size: 18px;
+      letter-spacing: 1.2px;
+      margin: 0 0 14px;
+      color: rgba(233,238,255,.96);
+      text-shadow: 0 0 10px rgba(62,166,255,.18);
+    }
+
+    /* 服务介绍 */
+    .intro-grid{
+      display:grid;
+      grid-template-columns: 380px 1fr;
+      gap: 18px;
+      align-items:stretch;
+    }
+    .imgbox{
+      border-radius: var(--radius2);
+      border: 1px solid rgba(255,255,255,.12);
+      background:
+        radial-gradient(220px 160px at 20% 25%, rgba(62,166,255,.16), transparent 60%),
+        radial-gradient(220px 160px at 80% 65%, rgba(255,43,134,.14), transparent 60%),
+        rgba(10,14,40,.26);
+      box-shadow: 0 18px 50px rgba(0,0,0,.35);
+      position:relative;
+      overflow:hidden;
+      min-height: 240px;
+    }
+    .imgbox::after{
+      content:"";
+      position:absolute;
+      inset:0;
+      background: linear-gradient(180deg, transparent, rgba(0,0,0,.25));
+      pointer-events:none;
+    }
+    .intro-text{
+      border-radius: var(--radius2);
+      border: 1px solid rgba(255,255,255,.12);
+      background: rgba(10,14,40,.22);
+      padding: 16px 16px 14px;
+    }
+    .intro-text p{
+      margin: 0 0 10px;
+      color: rgba(233,238,255,.90);
+      line-height: 1.8;
+      font-weight: 650;
+    }
+    .bullets{
+      margin: 10px 0 0;
+      padding-left: 18px;
+      color: rgba(233,238,255,.88);
+      line-height: 1.85;
+      font-weight: 700;
+    }
+    .bullets li{margin: 4px 0}
+    .divider{
+      height:1px;
+      background: rgba(255,255,255,.10);
+      margin: 10px 0 10px;
+    }
+
+    /* 业务分类 */
+    .svc-grid{
+      display:grid;
+      grid-template-columns: repeat(3, minmax(0,1fr));
+      gap: 14px;
+    }
+    .svc{
+      border-radius: var(--radius2);
+      border:1px solid rgba(255,255,255,.12);
+      overflow:hidden;
+      background: rgba(10,14,40,.20);
+      box-shadow: 0 16px 44px rgba(0,0,0,.32);
+    }
+    .svc-h{
+      padding: 12px 14px;
+      font-weight: 1000;
+      letter-spacing: 1px;
+      background: linear-gradient(135deg, rgba(10,14,40,.55), rgba(30,40,110,.20));
+      border-bottom: 1px solid rgba(255,255,255,.10);
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      gap:10px;
+    }
+    .svc-h .tag{
+      font-size: 12px;
+      font-weight: 1000;
+      padding: 6px 10px;
+      border-radius: 999px;
+      background: rgba(255,255,255,.05);
+      border: 1px solid rgba(255,255,255,.12);
+      color: rgba(233,238,255,.88);
+    }
+    .svc-b{
+      padding: 12px 14px 14px;
+      background: rgba(255,255,255,.04);
+      color: rgba(233,238,255,.86);
+      line-height: 1.75;
+      font-weight: 650;
+      min-height: 98px;
+    }
+    .mini-tags{
+      display:flex;
+      flex-wrap:wrap;
+      gap: 8px;
+      margin-top: 10px;
+    }
+    .mini-tags span{
+      font-size: 12px;
+      font-weight: 1000;
+      padding: 6px 10px;
+      border-radius: 999px;
+      border: 1px solid rgba(255,255,255,.12);
+      background: rgba(10,14,40,.28);
+      color: rgba(233,238,255,.90);
+      box-shadow: 0 0 18px rgba(62,166,255,.10);
+    }
+
+    /* 展示区 */
+    .media-grid{
+      display:grid;
+      grid-template-columns: repeat(3, minmax(0,1fr));
+      gap: 12px;
+    }
+    .tile{
+      border-radius: var(--radius2);
+      border:1px solid rgba(255,255,255,.12);
+      background: rgba(10,14,40,.22);
       overflow:hidden;
       position:relative;
+      min-height: 150px;
+      cursor:pointer;
+      box-shadow: 0 16px 44px rgba(0,0,0,.30);
+      transition: transform .15s ease, border-color .15s ease;
     }
-    .aboutMedia img{
-      width:100%; height:100%;
+    .tile:hover{
+      transform: translateY(-2px);
+      border-color: rgba(255,90,167,.28);
+    }
+    .tile img{
+      width:100%;
+      height:100%;
       object-fit:cover;
       display:block;
       opacity:.92;
+      filter: saturate(1.05) contrast(1.05);
     }
-    .aboutMedia .placeholder{
-      color: rgba(255,255,255,.62);
-      font-weight:850;
-      letter-spacing:.5px;
-      text-align:center;
-      padding:14px;
-    }
-    .aboutText{
-      padding: 4px 6px 8px;
-    }
-    .aboutLead{
-      margin:0 0 10px;
-      color: rgba(255,255,255,.84);
-      line-height: 1.9;
-      font-weight: 800;
-    }
-    .aboutPara{
-      margin:0 0 12px;
-      color: rgba(255,255,255,.72);
-      line-height: 1.9;
-      font-weight: 700;
-    }
-    .bulletList{
-      margin:0;
-      padding-left: 18px;
-      color: rgba(255,255,255,.76);
-      line-height: 1.9;
-      font-weight: 750;
-    }
-    .aboutActions{
-      margin-top: 12px;
-      display:flex; gap:10px; flex-wrap:wrap;
-    }
-
-    /* Services */
-    .svcGrid{
-      display:grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap:14px;
-    }
-    @media (max-width: 980px){
-      .svcGrid{grid-template-columns: repeat(2, 1fr);}
-    }
-    @media (max-width: 560px){
-      .svcGrid{grid-template-columns: 1fr;}
-    }
-    .svcCard{
-      border-radius: var(--radius);
-      border:1px solid rgba(255,255,255,.10);
-      background: rgba(255,255,255,.04);
-      overflow:hidden;
-      position:relative;
-      box-shadow: var(--shadow2);
-    }
-    .svcHeader{
-      padding:12px 14px;
-      font-weight: 950;
-      letter-spacing:.6px;
-      color: rgba(255,255,255,.92);
-      background:
-        radial-gradient(520px 160px at 20% 10%, rgba(255,47,134,.18), transparent 55%),
-        radial-gradient(520px 160px at 85% 70%, rgba(47,123,255,.14), transparent 55%),
-        rgba(0,0,0,.22);
-      border-bottom:1px solid rgba(255,255,255,.08);
-    }
-    .svcBody{
-      padding:12px 14px 14px;
-      color: rgba(255,255,255,.70);
-      line-height:1.85;
-      font-weight: 750;
-      background: rgba(255,255,255,.035);
-      min-height: 112px;
-    }
-    .tags{
-      margin-top:10px;
-      display:flex; flex-wrap:wrap; gap:8px;
-    }
-    .tag{
-      font-size:12px;
-      font-weight:900;
-      letter-spacing:.4px;
-      padding:7px 10px;
-      border-radius:999px;
-      border:1px solid rgba(255,255,255,.10);
-      background: rgba(255,255,255,.04);
-      color: rgba(255,255,255,.82);
-    }
-
-    /* Gallery */
-    .galleryWrap{
-      padding: 18px;
-    }
-    .mediaGrid{
-      display:grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap:12px;
-    }
-    @media (max-width: 980px){
-      .mediaGrid{grid-template-columns: repeat(2, 1fr);}
-    }
-    @media (max-width: 560px){
-      .mediaGrid{grid-template-columns: 1fr;}
-    }
-    .mediaTile{
-      border-radius: 18px;
-      border:1px solid rgba(255,255,255,.10);
-      background: rgba(255,255,255,.03);
-      overflow:hidden;
-      position:relative;
-      min-height: 160px;
-      cursor:pointer;
-      transition: .18s ease;
-      box-shadow: 0 12px 30px rgba(0,0,0,.40);
-    }
-    .mediaTile:hover{
-      transform: translateY(-2px);
-      border-color: rgba(255,47,134,.28);
-      box-shadow: 0 18px 46px rgba(0,0,0,.52), 0 0 0 3px rgba(255,47,134,.10);
-    }
-    .mediaTile img, .mediaTile video{
-      width:100%; height:100%;
-      display:block;
-      object-fit:cover;
-      background: rgba(255,255,255,.02);
-    }
-    .hint{
-      margin-top: 10px;
-      color: rgba(255,255,255,.62);
-      font-weight: 750;
-      line-height:1.8;
-      font-size: 13px;
-    }
-
-    /* Contact */
-    .contactCard{
-      padding: 18px;
-    }
-    .contactRow{
+    .tile .placeholder{
+      position:absolute;
+      inset:0;
       display:flex;
-      align-items:center;
-      justify-content:center;
-      flex-wrap:wrap;
-      gap:12px;
-      padding: 10px 0 6px;
+      flex-direction:column;
+      justify-content:flex-start;
+      align-items:flex-start;
+      padding: 14px;
+      gap: 6px;
+      color: rgba(233,238,255,.78);
+      font-weight: 900;
+      letter-spacing:.6px;
+      background:
+        radial-gradient(220px 160px at 20% 20%, rgba(62,166,255,.16), transparent 60%),
+        radial-gradient(220px 160px at 80% 70%, rgba(255,43,134,.12), transparent 60%),
+        rgba(10,14,40,.10);
     }
-    .iconBtn{
-      border-radius: 18px;
+    .tile .placeholder small{
+      font-weight: 800;
+      color: rgba(233,238,255,.66);
+      letter-spacing: .4px;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+    }
+
+    .video-grid{
+      display:grid;
+      grid-template-columns: repeat(3, minmax(0,1fr));
+      gap: 12px;
+      margin-top: 12px;
+    }
+    .vtile{
+      border-radius: var(--radius2);
       border:1px solid rgba(255,255,255,.12);
-      background: rgba(255,255,255,.05);
-      color: rgba(255,255,255,.90);
-      padding: 12px 14px;
+      background: rgba(10,14,40,.22);
+      overflow:hidden;
+      position:relative;
+      min-height: 170px;
+      cursor:pointer;
+      box-shadow: 0 16px 44px rgba(0,0,0,.30);
+      transition: transform .15s ease, border-color .15s ease;
+    }
+    .vtile:hover{
+      transform: translateY(-2px);
+      border-color: rgba(62,166,255,.30);
+    }
+    .vtile video{
+      width:100%;
+      height:100%;
+      object-fit:cover;
+      display:block;
+      filter: saturate(1.05) contrast(1.05);
+    }
+    .playbadge{
+      position:absolute;
+      left: 12px; bottom: 12px;
       display:flex;
       align-items:center;
       gap:10px;
-      cursor:pointer;
-      text-decoration:none;
-      font-weight: 950;
-      letter-spacing:.4px;
-      transition:.18s ease;
-      min-width: 140px;
-      justify-content:center;
-    }
-    .iconBtn:hover{
-      transform: translateY(-2px);
-      border-color: rgba(255,47,134,.34);
-      box-shadow: 0 0 0 3px rgba(255,47,134,.11);
-    }
-    .ico{
-      width:22px; height:22px; display:inline-flex; align-items:center; justify-content:center;
-      border-radius: 8px;
-      background: rgba(255,255,255,.08);
-      border:1px solid rgba(255,255,255,.10);
-      box-shadow: 0 0 14px rgba(255,47,134,.10);
-      font-size: 12px;
+      padding: 10px 12px;
+      border-radius: 999px;
+      background: rgba(10,14,40,.60);
+      border:1px solid rgba(255,255,255,.14);
+      box-shadow: 0 16px 44px rgba(0,0,0,.38);
+      color: rgba(233,238,255,.92);
       font-weight: 1000;
+      letter-spacing: .6px;
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
     }
-    .contactNote{
-      margin: 10px auto 0;
-      text-align:center;
-      color: rgba(255,255,255,.64);
-      font-weight: 760;
-      line-height: 1.8;
-      font-size: 13px;
-      max-width: 860px;
+    .playbadge svg{width:18px;height:18px;opacity:.95}
+    .playbadge small{
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+      font-weight: 900;
+      opacity:.85;
     }
-    footer{
-      padding: 18px 0 26px;
-      color: rgba(255,255,255,.45);
+
+    /* 联系方式：只要图标 */
+    .contact-row{
+      display:flex;
+      gap: 12px;
+      justify-content:center;
+      flex-wrap:wrap;
+      padding: 6px 0 2px;
+    }
+    .iconbtn{
+      width: 62px;
+      height: 62px;
+      border-radius: 18px;
+      border:1px solid rgba(255,255,255,.14);
+      background: rgba(255,255,255,.05);
+      display:grid;
+      place-items:center;
+      cursor:pointer;
+      transition: transform .15s ease, background .15s ease, border-color .15s ease, box-shadow .15s ease;
+      box-shadow: 0 16px 44px rgba(0,0,0,.32);
+      text-decoration:none;
+    }
+    .iconbtn:hover{
+      transform: translateY(-2px);
+      background: rgba(255,255,255,.08);
+      border-color: rgba(255,90,167,.26);
+      box-shadow: 0 20px 56px rgba(0,0,0,.36);
+    }
+    .iconbtn svg{
+      width: 26px;
+      height: 26px;
+      filter: drop-shadow(0 0 12px rgba(62,166,255,.16));
+    }
+    .iconbtn.wechat{
+      border-color: rgba(255,90,167,.22);
+    }
+
+    /* footer */
+    .foot{
       text-align:center;
+      color: rgba(233,238,255,.55);
       font-weight: 700;
-      font-size: 12px;
+      margin-top: 16px;
+      letter-spacing: .6px;
     }
 
     /* Modal */
-    .modalMask{
-      position:fixed; inset:0;
-      background: rgba(0,0,0,.62);
-      display:none;
-      align-items:center;
-      justify-content:center;
-      z-index: 1000;
-      padding: 18px;
-    }
-    .modalMask.show{display:flex;}
     .modal{
-      width:min(980px, 96vw);
-      border-radius: 22px;
-      border:1px solid rgba(255,255,255,.12);
-      background:
-        radial-gradient(800px 420px at 20% 10%, rgba(47,123,255,.20), transparent 60%),
-        radial-gradient(800px 420px at 90% 80%, rgba(255,47,134,.18), transparent 60%),
-        rgba(10,12,26,.88);
-      box-shadow: var(--shadow);
-      overflow:hidden;
-    }
-    .modalHead{
-      padding: 12px 14px;
-      border-bottom:1px solid rgba(255,255,255,.10);
-      display:flex; align-items:center; justify-content:space-between;
-      gap:10px;
-    }
-    .modalTitle{
-      font-weight: 950;
-      letter-spacing:.6px;
-      color: rgba(255,255,255,.92);
-    }
-    .modalClose{
-      border:none;
-      cursor:pointer;
-      padding: 8px 12px;
-      border-radius: 999px;
-      background: rgba(255,255,255,.06);
-      border:1px solid rgba(255,255,255,.12);
-      color: rgba(255,255,255,.86);
-      font-weight: 900;
-    }
-    .modalBody{ padding: 14px; }
-
-    .wechatBox{
-      display:grid;
-      grid-template-columns: 1.6fr 1fr;
-      gap: 14px;
-      align-items:stretch;
-    }
-    @media (max-width: 820px){
-      .wechatBox{grid-template-columns: 1fr;}
-    }
-    .wechatInfo{
-      border-radius: 18px;
-      border:1px solid rgba(255,255,255,.10);
-      background: rgba(255,255,255,.04);
-      padding: 14px;
-      min-height: 200px;
-    }
-    .wechatInfo .big{
-      font-size: 18px;
-      font-weight: 1000;
-      letter-spacing:.6px;
-      margin-bottom: 8px;
-      color: rgba(255,255,255,.92);
-    }
-    .wechatInfo .sub{
-      color: rgba(255,255,255,.70);
-      font-weight: 760;
-      line-height: 1.85;
-      font-size: 13px;
-    }
-    .wechatActions{
-      margin-top: 12px;
-      display:flex; gap:10px; flex-wrap:wrap;
-    }
-    .miniBtn{
-      border:none;
-      cursor:pointer;
-      text-decoration:none;
-      padding:10px 12px;
-      border-radius: 999px;
-      font-weight: 950;
-      letter-spacing:.4px;
-      transition:.18s ease;
-      color: rgba(255,255,255,.90);
-      background: rgba(255,255,255,.06);
-      border:1px solid rgba(255,255,255,.12);
-    }
-    .miniBtn:hover{ transform: translateY(-1px); border-color: rgba(255,47,134,.30); box-shadow: 0 0 0 3px rgba(255,47,134,.10); }
-    .miniBtn.primary{
-      background: linear-gradient(135deg, rgba(255,47,134,.92), rgba(255,90,169,.92));
-      border: none;
-      box-shadow: 0 14px 32px rgba(255,47,134,.22);
-    }
-    .miniBtn.primary:hover{ box-shadow: 0 18px 44px rgba(255,47,134,.26); }
-    .qrPane{
-      border-radius: 18px;
-      border:1px solid rgba(255,255,255,.10);
-      background: rgba(255,255,255,.03);
-      padding: 14px;
-      display:flex;
-      flex-direction:column;
-      gap:12px;
+      position:fixed;
+      inset:0;
+      display:none;
       align-items:center;
       justify-content:center;
+      z-index:200;
+      padding: 18px;
+      background: rgba(0,0,0,.55);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
     }
-    .qrPane img{
-      width: 100%;
-      max-width: 280px;
-      border-radius: 16px;
-      border:1px solid rgba(255,255,255,.10);
-      background: rgba(255,255,255,.02);
+    .modal.show{display:flex;}
+    .dialog{
+      width:min(980px, 100%);
+      border-radius: 22px;
+      border:1px solid rgba(255,255,255,.14);
+      background:
+        radial-gradient(800px 300px at 20% 20%, rgba(62,166,255,.18), transparent 65%),
+        radial-gradient(800px 300px at 80% 40%, rgba(255,43,134,.14), transparent 65%),
+        rgba(10,14,40,.70);
+      box-shadow: 0 28px 90px rgba(0,0,0,.65);
+      overflow:hidden;
+      position:relative;
+    }
+    .dialog-h{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      padding: 14px 14px 12px;
+      border-bottom: 1px solid rgba(255,255,255,.10);
+    }
+    .dialog-title{
+      display:flex;align-items:center;gap:10px;
+      font-weight: 1000;
+      letter-spacing: .8px;
+    }
+    .close{
+      border:1px solid rgba(255,255,255,.16);
+      background: rgba(255,255,255,.05);
+      color: rgba(233,238,255,.92);
+      font-weight: 1000;
+      border-radius: 12px;
+      padding: 8px 12px;
+      cursor:pointer;
+    }
+    .dialog-b{
+      padding: 14px;
+    }
+    .media-view{
+      width:100%;
       display:block;
+      border-radius: 16px;
+      border:1px solid rgba(255,255,255,.12);
+      background: rgba(0,0,0,.22);
+      max-height: 72vh;
+      object-fit: contain;
     }
 
-    /* Toast */
-    .toast{
-      position:fixed;
-      left:50%;
-      bottom:22px;
-      transform: translateX(-50%);
-      background: rgba(10,12,26,.88);
+    /* WeChat modal */
+    .wechat-grid{
+      display:grid;
+      grid-template-columns: 280px 1fr;
+      gap: 14px;
+      align-items:start;
+    }
+    .qrbox{
+      border-radius: 18px;
       border:1px solid rgba(255,255,255,.12);
-      color: rgba(255,255,255,.90);
-      padding: 10px 12px;
-      border-radius: 999px;
-      font-weight: 850;
-      letter-spacing:.4px;
-      z-index: 1100;
-      display:none;
-      box-shadow: 0 14px 34px rgba(0,0,0,.50);
-      max-width: min(860px, 92vw);
+      background: rgba(255,255,255,.04);
+      padding: 12px;
       text-align:center;
     }
-    .toast.show{display:block;}
+    .qrbox img{
+      width:100%;
+      height:auto;
+      border-radius: 14px;
+      border:1px solid rgba(255,255,255,.12);
+      background: rgba(0,0,0,.18);
+      display:block;
+    }
+    .qr-actions{
+      display:flex;
+      gap:10px;
+      justify-content:center;
+      flex-wrap:wrap;
+      margin-top: 10px;
+    }
+
+    .toast{
+      position:fixed;
+      left: 50%;
+      bottom: 18px;
+      transform: translateX(-50%);
+      z-index: 260;
+      background: rgba(10,14,40,.78);
+      border: 1px solid rgba(255,255,255,.14);
+      border-radius: 999px;
+      padding: 12px 14px;
+      display:none;
+      gap:10px;
+      align-items:center;
+      color: rgba(233,238,255,.92);
+      font-weight: 900;
+      letter-spacing:.4px;
+      box-shadow: 0 18px 60px rgba(0,0,0,.55);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      max-width: min(92vw, 900px);
+    }
+    .toast.show{display:flex;}
+    .toast .t-dot{
+      width:8px;height:8px;border-radius:999px;
+      background: radial-gradient(circle at 30% 30%, #ffd2e7, var(--rose));
+      box-shadow: 0 0 14px rgba(255,43,134,.7);
+      flex:0 0 auto;
+    }
+
+    /* Responsive */
+    @media (max-width: 980px){
+      .intro-grid{grid-template-columns: 1fr;}
+      .imgbox{min-height: 210px;}
+      .svc-grid{grid-template-columns: repeat(2, minmax(0,1fr));}
+      .media-grid{grid-template-columns: repeat(2, minmax(0,1fr));}
+      .video-grid{grid-template-columns: 1fr;}
+      .wechat-grid{grid-template-columns: 1fr;}
+      .hero-title{letter-spacing: 6px;}
+    }
+    @media (max-width: 560px){
+      header{border-radius: 18px;}
+      .brand-title{font-size: 12px;}
+      .navpill{font-size: 12px; padding: 8px 10px;}
+      .hero{padding: 20px 16px 16px;}
+      .tagline{font-size: 14px;}
+      .slogan-row{grid-template-columns: repeat(2, minmax(0,1fr));}
+      .slogan{max-width: none;}
+      .svc-grid{grid-template-columns: 1fr;}
+      .media-grid{grid-template-columns: 1fr;}
+      .iconbtn{width: 58px; height: 58px; border-radius: 16px;}
+    }
   </style>
 </head>
 
 <body>
-  <header class="topbar">
-    <div class="wrap">
-      <div class="topbarInner">
-        <div class="brand">
-          <span class="brandDot" aria-hidden="true"></span>
-          <div class="brandText">
-            <b>筑梦电子</b>
-            <span>· VIP服务站 · 7x24h服务</span>
-          </div>
-        </div>
-        <nav class="nav" aria-label="站点导航">
-          <a href="#about">自我介绍</a>
-          <a href="#services">业务分类</a>
-          <a href="#gallery">展品展示</a>
-          <a href="#contact">联系方式</a>
-        </nav>
+  <div class="wrap">
+
+    <header>
+      <div class="brand" title="筑梦电子 · VIP服务站 · 7x24h服务">
+        <span class="dot"></span>
+        <div class="brand-title">筑梦电子 · VIP服务站 · 7x24h服务</div>
+      </div>
+
+      <nav>
+        <a class="navpill" href="#intro">服务介绍</a>
+        <a class="navpill" href="#services">业务分类</a>
+        <a class="navpill" href="#gallery">视图展示</a>
+        <a class="navpill" href="#contact">联系方式</a>
+      </nav>
+    </header>
+
+    <!-- HERO -->
+    <div class="hero" id="top">
+      <div class="tagline">因为专注 · 所以专业 · 十年老店</div>
+
+      <h1 class="hero-title">欢迎贵宾来到筑梦电子</h1>
+
+      <div class="slogan-row" aria-label="四个核心卖点">
+        <div class="slogan"><span>新店拼价格</span></div>
+        <div class="slogan"><span>老店拼质量</span></div>
+        <div class="slogan"><span>同价拼服务</span></div>
+        <div class="slogan"><span>骗子无成本</span></div>
+      </div>
+
+      <div class="cta">
+        <a class="btn primary" href="#contact">立即联系</a>
+        <a class="btn" href="#gallery">查看展品</a>
+        <a class="btn" href="#services">查看业务</a>
       </div>
     </div>
-  </header>
 
-  <main>
-    <!-- HERO -->
-    <section class="hero">
-      <div class="wrap">
-        <div class="heroCard">
-          <div class="heroSubRow">
-            <div class="heroBadge">
-              <span class="heroBadgeText" data-text="因为专注 · 所以专业 · 十年老店">因为专注 · 所以专业 · 十年老店</span>
-            </div>
-          </div>
+    <!-- 服务介绍 -->
+    <section id="intro">
+      <div class="section-card">
+        <div class="h"><span class="dot"></span>服务介绍</div>
 
-          <h1 class="heroTitle" data-text="欢迎贵宾来到筑梦电子">欢迎贵宾来到筑梦电子</h1>
+        <div class="intro-grid">
+          <div class="imgbox" title="后期你可以把图片替换为 assets/about.jpg 并把这里改成背景图"></div>
 
-          <div class="sloganGrid" aria-label="服务宣言">
-            <div class="sloganChip"><div class="sloganText">新店拼价格</div></div>
-            <div class="sloganChip"><div class="sloganText">老店拼质量</div></div>
-            <div class="sloganChip"><div class="sloganText">同价拼服务</div></div>
-            <div class="sloganChip"><div class="sloganText">骗子无成本</div></div>
-          </div>
+          <div class="intro-text">
+            <p>专注于电子产品与多类数字化服务，覆盖从咨询到交付的一站式支持，同时延展至 AI 技术方向的教学、代做与工具教程。</p>
+            <p>支持按需求定制方案，范围明确后快速推进；支持远程协助与成品交付；沟通清晰、流程透明，适合需要省心落地与长期协作的客户。</p>
+            <p>无论是账号内容包装、网络服务、工具搭建，还是展品展示与引流页面的持续优化，都可按目标分阶段完成，优先解决“最关键的那一步”。</p>
 
-          <div class="heroActions">
-            <a class="btn btnPrimary" href="#contact">立即联系</a>
-            <a class="btn btnGhost" href="#gallery">查看展品</a>
-            <a class="btn btnGhost" href="#services">查看业务</a>
+            <div class="divider"></div>
+
+            <ul class="bullets">
+              <li>服务特点：快速响应｜流程清晰｜按需定制</li>
+              <li>交付形式：文字方案｜文件/脚本｜远程协助｜成品交付</li>
+              <li>合作方式：先沟通需求 → 明确范围 → 交付与售后</li>
+            </ul>
+
+            <!-- ✅ 已按你要求：这里不再保留任何按钮 -->
           </div>
         </div>
       </div>
     </section>
 
-    <!-- ABOUT -->
-    <section class="section" id="about">
-      <div class="wrap">
-        <div class="sectionTitleRow">
-          <span class="pin" aria-hidden="true"></span>
-          <h2 class="sectionTitle">服务介绍</h2>
-        </div>
+    <!-- 业务分类 -->
+    <section id="services">
+      <div class="section-card">
+        <div class="h"><span class="dot"></span>业务分类</div>
 
-        <div class="card">
-          <div class="aboutGrid">
-            <div class="aboutMedia" aria-label="自我介绍图片区域">
-              <img src="assets/profile.jpg" alt="自我介绍图片" onerror="this.remove(); this.parentElement.insertAdjacentHTML('beforeend','<div class=&quot;placeholder&quot;>可选：上传图片到<br><code>assets/profile.jpg</code></div>')" />
+        <div class="svc-grid">
+          <div class="svc">
+            <div class="svc-h">
+              <div>电子产品</div>
+              <span class="tag">产品/选购/供货</span>
             </div>
+            <div class="svc-b">（待补充）这里填写电子产品相关服务介绍：选购建议、渠道供货、配件周边等。</div>
+          </div>
 
-            <div class="aboutText">
-              <!-- ✅ 按你的要求：不出现“我”，且从“专注”开始，并补充填充 -->
-              <p class="aboutLead">专注于电子产品与多类数字化服务，提供从咨询到交付的一站式支持，同时覆盖 AI 技术方向的教学、代做与工具教程等内容。</p>
-              <p class="aboutPara">支持按需求定制方案，范围明确后快速推进；支持远程协助与成品交付；沟通清晰、流程透明，适合需要省心落地与长期协作的用户。</p>
-              <p class="aboutPara">无论是账号内容、网络服务、工具搭建，还是展品展示与引流页面的持续优化，都可以按目标分阶段完成，优先解决“最关键的那一步”。</p>
-
-              <ul class="bulletList">
-                <li>服务特点：快速响应｜流程清晰｜按需定制</li>
-                <li>交付形式：文字方案｜文件/脚本｜远程协助｜成品交付</li>
-                <li>合作方式：先沟通需求 → 明确范围 → 交付与售后</li>
-              </ul>
-
-              <div class="aboutActions">
-                <a class="btn btnGhost" href="#services">筑梦引流页</a>
-                <a class="btn btnGhost" href="#gallery">展品图/视频展示</a>
-                <a class="btn btnPrimary" href="#contact">一键联系</a>
-              </div>
+          <div class="svc">
+            <div class="svc-h">
+              <div>金融业务</div>
+              <span class="tag">咨询/办理</span>
             </div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- SERVICES -->
-    <section class="section" id="services">
-      <div class="wrap">
-        <div class="sectionTitleRow">
-          <span class="pin" aria-hidden="true"></span>
-          <h2 class="sectionTitle">涉及业务分类</h2>
-        </div>
-
-        <div class="svcGrid">
-          <div class="svcCard">
-            <div class="svcHeader">电子产品</div>
-            <div class="svcBody">（待补充）这里写电子产品相关服务介绍：建议写清服务范围、交付方式与注意事项。</div>
+            <div class="svc-b">（待补充）这里填写金融业务服务介绍：按需说明范围与规则，保持合规与清晰。</div>
           </div>
 
-          <div class="svcCard">
-            <div class="svcHeader">金融业务</div>
-            <div class="svcBody">（待补充）这里写金融业务服务介绍：建议写清咨询范围与规则，保持合作与沟通清晰。</div>
-          </div>
-
-          <div class="svcCard">
-            <div class="svcHeader">AI技术</div>
-            <div class="svcBody">
-              （待补充）这里写 AI 技术方向的总体介绍：建议写清可教/可做/可提供的工具路线与产出形式。
-              <div class="tags" aria-label="AI技术子类目">
-                <span class="tag">AI收徒</span>
-                <span class="tag">AI代做</span>
-                <span class="tag">AI工具白嫖教程</span>
+          <div class="svc">
+            <div class="svc-h">
+              <div>AI技术</div>
+              <span class="tag">教学/代做/教程</span>
+            </div>
+            <div class="svc-b">
+              （待补充）这里写 AI 技术方向的总体介绍：从入门到落地，兼顾效率与效果。
+              <div class="mini-tags" aria-label="AI子类目">
+                <span>AI收徒</span>
+                <span>AI代做</span>
+                <span>AI工具白嫖教程</span>
               </div>
             </div>
           </div>
 
-          <div class="svcCard">
-            <div class="svcHeader">网络服务</div>
-            <div class="svcBody">（待补充）这里写网络服务介绍：例如网站/域名/工具搭建、排障、优化、自动化等。</div>
+          <div class="svc">
+            <div class="svc-h">
+              <div>网络服务</div>
+              <span class="tag">工具/搭建</span>
+            </div>
+            <div class="svc-b">（待补充）这里写网络服务介绍：网站/域名/部署/线路/加速等。</div>
           </div>
 
-          <div class="svcCard">
-            <div class="svcHeader">游戏服务</div>
-            <div class="svcBody">（待补充）这里写游戏服务介绍：建议写清具体项目、交付方式与周期。</div>
+          <div class="svc">
+            <div class="svc-h">
+              <div>游戏服务</div>
+              <span class="tag">代练/咨询</span>
+            </div>
+            <div class="svc-b">（待补充）这里写游戏服务介绍：按需求沟通，支持方案与执行。</div>
           </div>
 
-          <div class="svcCard">
-            <div class="svcHeader">懒人特殊服务</div>
-            <div class="svcBody">（待补充）这里写“懒人特殊服务”介绍：建议写清可提供的范围、边界与交付形式。</div>
+          <div class="svc">
+            <div class="svc-h">
+              <div>懒人特殊服务</div>
+              <span class="tag">按需定制</span>
+            </div>
+            <div class="svc-b">（待补充）这里写你的“省心代办/懒人服务”介绍：明确边界、按步骤交付。</div>
           </div>
         </div>
       </div>
     </section>
 
-    <!-- GALLERY -->
-    <section class="section" id="gallery">
-      <div class="wrap">
-        <div class="sectionTitleRow">
-          <span class="pin" aria-hidden="true"></span>
-          <h2 class="sectionTitle">展品展示</h2>
+    <!-- 视图展示 -->
+    <section id="gallery">
+      <div class="section-card">
+        <div class="h"><span class="dot"></span>视图展示</div>
+
+        <!-- 6 张照片 -->
+        <div class="media-grid" aria-label="6张照片">
+          <!-- 每个 tile：如果图片没上传，会显示文件路径占位 -->
+          <div class="tile" data-type="image" data-src="assets/photo-01.jpg">
+            <img src="assets/photo-01.jpg" alt="photo-01" loading="lazy"
+                 onerror="this.style.display='none'; this.parentElement.querySelector('.placeholder').style.display='flex';" />
+            <div class="placeholder" style="display:none">
+              <div>上传图片到</div><small>assets/photo-01.jpg</small>
+            </div>
+          </div>
+          <div class="tile" data-type="image" data-src="assets/photo-02.jpg">
+            <img src="assets/photo-02.jpg" alt="photo-02" loading="lazy"
+                 onerror="this.style.display='none'; this.parentElement.querySelector('.placeholder').style.display='flex';" />
+            <div class="placeholder" style="display:none">
+              <div>上传图片到</div><small>assets/photo-02.jpg</small>
+            </div>
+          </div>
+          <div class="tile" data-type="image" data-src="assets/photo-03.jpg">
+            <img src="assets/photo-03.jpg" alt="photo-03" loading="lazy"
+                 onerror="this.style.display='none'; this.parentElement.querySelector('.placeholder').style.display='flex';" />
+            <div class="placeholder" style="display:none">
+              <div>上传图片到</div><small>assets/photo-03.jpg</small>
+            </div>
+          </div>
+          <div class="tile" data-type="image" data-src="assets/photo-04.jpg">
+            <img src="assets/photo-04.jpg" alt="photo-04" loading="lazy"
+                 onerror="this.style.display='none'; this.parentElement.querySelector('.placeholder').style.display='flex';" />
+            <div class="placeholder" style="display:none">
+              <div>上传图片到</div><small>assets/photo-04.jpg</small>
+            </div>
+          </div>
+          <div class="tile" data-type="image" data-src="assets/photo-05.jpg">
+            <img src="assets/photo-05.jpg" alt="photo-05" loading="lazy"
+                 onerror="this.style.display='none'; this.parentElement.querySelector('.placeholder').style.display='flex';" />
+            <div class="placeholder" style="display:none">
+              <div>上传图片到</div><small>assets/photo-05.jpg</small>
+            </div>
+          </div>
+          <div class="tile" data-type="image" data-src="assets/photo-06.jpg">
+            <img src="assets/photo-06.jpg" alt="photo-06" loading="lazy"
+                 onerror="this.style.display='none'; this.parentElement.querySelector('.placeholder').style.display='flex';" />
+            <div class="placeholder" style="display:none">
+              <div>上传图片到</div><small>assets/photo-06.jpg</small>
+            </div>
+          </div>
         </div>
 
-        <div class="card galleryWrap">
-          <div class="mediaGrid" id="photoGrid" aria-label="6张展品图片">
-            <div class="mediaTile" data-type="img" data-src="assets/photo-01.jpg"><img src="assets/photo-01.jpg" alt="展品图片" onerror="this.style.display='none'; this.parentElement.insertAdjacentHTML('beforeend','<div class=&quot;hint&quot; style=&quot;padding:14px&quot;>上传图片到<br><code>assets/photo-01.jpg</code></div>')"></div>
-            <div class="mediaTile" data-type="img" data-src="assets/photo-02.jpg"><img src="assets/photo-02.jpg" alt="展品图片" onerror="this.style.display='none'; this.parentElement.insertAdjacentHTML('beforeend','<div class=&quot;hint&quot; style=&quot;padding:14px&quot;>上传图片到<br><code>assets/photo-02.jpg</code></div>')"></div>
-            <div class="mediaTile" data-type="img" data-src="assets/photo-03.jpg"><img src="assets/photo-03.jpg" alt="展品图片" onerror="this.style.display='none'; this.parentElement.insertAdjacentHTML('beforeend','<div class=&quot;hint&quot; style=&quot;padding:14px&quot;>上传图片到<br><code>assets/photo-03.jpg</code></div>')"></div>
-            <div class="mediaTile" data-type="img" data-src="assets/photo-04.jpg"><img src="assets/photo-04.jpg" alt="展品图片" onerror="this.style.display='none'; this.parentElement.insertAdjacentHTML('beforeend','<div class=&quot;hint&quot; style=&quot;padding:14px&quot;>上传图片到<br><code>assets/photo-04.jpg</code></div>')"></div>
-            <div class="mediaTile" data-type="img" data-src="assets/photo-05.jpg"><img src="assets/photo-05.jpg" alt="展品图片" onerror="this.style.display='none'; this.parentElement.insertAdjacentHTML('beforeend','<div class=&quot;hint&quot; style=&quot;padding:14px&quot;>上传图片到<br><code>assets/photo-05.jpg</code></div>')"></div>
-            <div class="mediaTile" data-type="img" data-src="assets/photo-06.jpg"><img src="assets/photo-06.jpg" alt="展品图片" onerror="this.style.display='none'; this.parentElement.insertAdjacentHTML('beforeend','<div class=&quot;hint&quot; style=&quot;padding:14px&quot;>上传图片到<br><code>assets/photo-06.jpg</code></div>')"></div>
-          </div>
-
-          <div class="sectionTitleRow" style="margin-top:18px">
-            <span class="pin" aria-hidden="true"></span>
-            <h2 class="sectionTitle" style="font-size:16px">3个视频</h2>
-          </div>
-
-          <div class="mediaGrid" id="videoGrid" aria-label="3个展品视频">
-            <!-- ✅ 按你的要求：界面默认静音；点击打开弹窗后播放带声音 -->
-            <div class="mediaTile" data-type="video" data-src="assets/video-01.mp4">
-              <video src="assets/video-01.mp4" muted playsinline preload="metadata"></video>
+        <!-- 3 个视频（无标题；页面静音，点开弹窗后带声音） -->
+        <div class="video-grid" aria-label="3个视频">
+          <div class="vtile" data-type="video" data-src="assets/video-01.mp4">
+            <video src="assets/video-01.mp4" muted playsinline preload="metadata"
+                   onerror="this.style.display='none'; this.parentElement.querySelector('.placeholder').style.display='flex';"></video>
+            <div class="placeholder" style="display:none">
+              <div>上传视频到</div><small>assets/video-01.mp4</small>
             </div>
-            <div class="mediaTile" data-type="video" data-src="assets/video-02.mp4">
-              <video src="assets/video-02.mp4" muted playsinline preload="metadata"></video>
-            </div>
-            <div class="mediaTile" data-type="video" data-src="assets/video-03.mp4">
-              <video src="assets/video-03.mp4" muted playsinline preload="metadata"></video>
+            <div class="playbadge">
+              <svg viewBox="0 0 24 24" fill="none"><path d="M9.2 7.6v8.8L17 12 9.2 7.6Z" fill="currentColor"/><path d="M12 21.2a9.2 9.2 0 1 0 0-18.4 9.2 9.2 0 0 0 0 18.4Z" stroke="currentColor" opacity=".7"/></svg>
+              <small>video-01.mp4</small>
             </div>
           </div>
 
-          <div class="hint">提示：把图片/视频文件按上方路径上传到仓库 <code>/assets/</code> 目录，页面会自动显示。</div>
+          <div class="vtile" data-type="video" data-src="assets/video-02.mp4">
+            <video src="assets/video-02.mp4" muted playsinline preload="metadata"
+                   onerror="this.style.display='none'; this.parentElement.querySelector('.placeholder').style.display='flex';"></video>
+            <div class="placeholder" style="display:none">
+              <div>上传视频到</div><small>assets/video-02.mp4</small>
+            </div>
+            <div class="playbadge">
+              <svg viewBox="0 0 24 24" fill="none"><path d="M9.2 7.6v8.8L17 12 9.2 7.6Z" fill="currentColor"/><path d="M12 21.2a9.2 9.2 0 1 0 0-18.4 9.2 9.2 0 0 0 0 18.4Z" stroke="currentColor" opacity=".7"/></svg>
+              <small>video-02.mp4</small>
+            </div>
+          </div>
+
+          <div class="vtile" data-type="video" data-src="assets/video-03.mp4">
+            <video src="assets/video-03.mp4" muted playsinline preload="metadata"
+                   onerror="this.style.display='none'; this.parentElement.querySelector('.placeholder').style.display='flex';"></video>
+            <div class="placeholder" style="display:none">
+              <div>上传视频到</div><small>assets/video-03.mp4</small>
+            </div>
+            <div class="playbadge">
+              <svg viewBox="0 0 24 24" fill="none"><path d="M9.2 7.6v8.8L17 12 9.2 7.6Z" fill="currentColor"/><path d="M12 21.2a9.2 9.2 0 1 0 0-18.4 9.2 9.2 0 0 0 0 18.4Z" stroke="currentColor" opacity=".7"/></svg>
+              <small>video-03.mp4</small>
+            </div>
+          </div>
         </div>
+
+        <!-- ✅ 已按你要求：最底部提示文字已删除 -->
       </div>
     </section>
 
-    <!-- CONTACT -->
-    <section class="section" id="contact">
-      <div class="wrap">
-        <div class="sectionTitleRow">
-          <span class="pin" aria-hidden="true"></span>
-          <h2 class="sectionTitle">联系方式</h2>
+    <!-- 联系方式（只要图标） -->
+    <section id="contact">
+      <div class="section-card">
+        <div class="h"><span class="dot"></span>联系方式</div>
+
+        <div class="contact-row" aria-label="联系方式图标按钮">
+          <!-- 微信：点击复制 + 尝试打开微信主页（不再跳添加朋友页） -->
+          <button class="iconbtn wechat" id="btnWechat" title="微信：复制微信号并打开微信" aria-label="微信">
+            <!-- 方案2：内置 SVG（官方感） -->
+            <svg viewBox="0 0 24 24" fill="none">
+              <path d="M8.4 6.3c-3.2 0-5.8 2.2-5.8 4.9 0 1.6.9 3 2.3 3.9l-.6 2 2.3-1.2c.6.1 1.2.2 1.8.2 3.2 0 5.8-2.2 5.8-4.9S11.6 6.3 8.4 6.3Z" fill="rgba(233,238,255,.92)"/>
+              <path d="M15.7 9c-2.8 0-5.1 1.9-5.1 4.3 0 1.4.8 2.7 2.0 3.4l-.5 1.8 2.1-1.1c.5.1 1 .1 1.5.1 2.8 0 5.1-1.9 5.1-4.3S18.5 9 15.7 9Z" fill="rgba(233,238,255,.76)"/>
+              <circle cx="6.7" cy="10.6" r="1" fill="rgba(10,14,40,.85)"/>
+              <circle cx="10.2" cy="10.6" r="1" fill="rgba(10,14,40,.85)"/>
+              <circle cx="14.2" cy="13.1" r="1" fill="rgba(10,14,40,.85)"/>
+              <circle cx="17.3" cy="13.1" r="1" fill="rgba(10,14,40,.85)"/>
+            </svg>
+          </button>
+
+          <!-- Telegram -->
+          <a class="iconbtn" id="btnTg" href="https://t.me/guoxingbiao" target="_blank" rel="noopener" title="Telegram" aria-label="Telegram">
+            <svg viewBox="0 0 24 24" fill="none">
+              <path d="M21 5.4 3.7 12.2c-.9.35-.86 1.66.08 1.95l4.3 1.33 1.7 5.3c.28.88 1.48 1.05 2 .28l2.5-3.6 4.4 3.2c.8.57 1.9.12 2.1-.86l2.9-13.2c.23-1.08-.81-1.98-1.69-1.63Z" fill="rgba(233,238,255,.92)"/>
+              <path d="M9.1 15.1 18.6 7.7c.3-.23.62.17.35.43l-7.8 7.4-.3 3.5c-.03.35-.48.4-.58.06l-1.15-4Z" fill="rgba(10,14,40,.55)"/>
+            </svg>
+          </a>
+
+          <!-- Gmail：PC 打开网页版写信(预填收件人)；手机用 mailto -->
+          <a class="iconbtn" id="btnGmail" href="#" target="_blank" rel="noopener" title="Gmail" aria-label="Gmail">
+            <svg viewBox="0 0 24 24" fill="none">
+              <path d="M4.7 7.3A2.2 2.2 0 0 1 6.9 5h10.2a2.2 2.2 0 0 1 2.2 2.3v9.4a2.2 2.2 0 0 1-2.2 2.3H6.9a2.2 2.2 0 0 1-2.2-2.3V7.3Z" fill="rgba(233,238,255,.18)" stroke="rgba(233,238,255,.62)"/>
+              <path d="M6 7.7 12 12.1l6-4.4" stroke="rgba(233,238,255,.92)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+              <path d="M6.2 17.3V8" stroke="rgba(233,238,255,.50)" stroke-width="2" stroke-linecap="round"/>
+              <path d="M17.8 17.3V8" stroke="rgba(233,238,255,.50)" stroke-width="2" stroke-linecap="round"/>
+            </svg>
+          </a>
+
+          <!-- 抖音 -->
+          <a class="iconbtn" href="https://v.douyin.com/hTxqO_qDO6M/" target="_blank" rel="noopener" title="抖音" aria-label="抖音">
+            <svg viewBox="0 0 24 24" fill="none">
+              <path d="M14 3c.4 2.2 1.8 3.8 4 4.2v3.1c-1.6-.1-3-.6-4-1.4V15a5 5 0 1 1-5.1-5c.4 0 .7 0 1 .1v3.3a2.2 2.2 0 1 0 1.9 2.2V3h2.2Z" fill="rgba(233,238,255,.92)"/>
+            </svg>
+          </a>
+
+          <!-- 快手 -->
+          <a class="iconbtn" href="https://v.kuaishou.com/KArQ2jnp" target="_blank" rel="noopener" title="快手" aria-label="快手">
+            <svg viewBox="0 0 24 24" fill="none">
+              <path d="M7 7a3 3 0 0 1 3-3h4a3 3 0 0 1 3 3v1h1a2 2 0 0 1 2 2v4a2 2 0 0 1-2 2h-1v1a3 3 0 0 1-3 3h-4a3 3 0 0 1-3-3v-1H6a2 2 0 0 1-2-2v-4a2 2 0 0 1 2-2h1V7Z" fill="rgba(233,238,255,.92)"/>
+              <path d="M11 10.2v3.6L14.2 12 11 10.2Z" fill="rgba(10,14,40,.70)"/>
+            </svg>
+          </a>
+
+          <!-- 小红书 -->
+          <a class="iconbtn" href="https://xhslink.com/m/8My2Kr680Fb" target="_blank" rel="noopener" title="小红书" aria-label="小红书">
+            <svg viewBox="0 0 24 24" fill="none">
+              <path d="M7 5.5h10a2 2 0 0 1 2 2v11a1.8 1.8 0 0 1-1.8 1.8H7a2 2 0 0 1-2-2v-11a1.8 1.8 0 0 1 2-1.8Z" fill="rgba(233,238,255,.92)"/>
+              <path d="M9 9h6M9 12h6M9 15h5" stroke="rgba(10,14,40,.65)" stroke-width="2" stroke-linecap="round"/>
+            </svg>
+          </a>
         </div>
 
-        <div class="card contactCard">
-          <div class="contactRow" aria-label="联系入口">
-            <button class="iconBtn" id="btnWechat" type="button">
-              <span class="ico">W</span> 微信
-            </button>
-
-            <a class="iconBtn" href="https://t.me/guoxingbiao" target="_blank" rel="noopener">
-              <span class="ico">TG</span> Telegram
-            </a>
-
-            <!-- ✅ 无需用户输入邮箱：点击直接新建邮件（to 已填） -->
-            <a class="iconBtn" href="mailto:guoxingbiao521@gmail.com" target="_blank" rel="noopener">
-              <span class="ico">@</span> Gmail
-            </a>
-
-            <a class="iconBtn" href="https://v.douyin.com/hTxqO_qDO6M/" target="_blank" rel="noopener">
-              <span class="ico">DY</span> 抖音
-            </a>
-
-            <a class="iconBtn" href="https://v.kuaishou.com/KArQ2jnp" target="_blank" rel="noopener">
-              <span class="ico">KS</span> 快手
-            </a>
-
-            <a class="iconBtn" href="https://xhslink.com/m/8My2Kr680Fb" target="_blank" rel="noopener">
-              <span class="ico">XHS</span> 小红书
-            </a>
-          </div>
-
-          <div class="contactNote">
-            点击微信：自动复制微信号并尝试打开“添加朋友”页（若在微信内打开页面，请右上角「…」→「在浏览器打开」再试）。<br/>
-            微信号：<b>LG-202412</b> ｜ Telegram：<b>@guoxingbiao</b> ｜ 邮箱：<b>guoxingbiao521@gmail.com</b>
-          </div>
-        </div>
+        <div class="foot">© 2026 筑梦电子 · roselg.xyz</div>
       </div>
     </section>
 
-    <footer>
-      © <span id="year"></span> 筑梦电子 · VIP服务站 · 7x24h服务 · roselg.xyz
-    </footer>
-  </main>
+  </div>
 
-  <!-- MODAL -->
-  <div class="modalMask" id="modalMask" role="dialog" aria-modal="true" aria-label="弹窗">
-    <div class="modal" role="document">
-      <div class="modalHead">
-        <div class="modalTitle" id="modalTitle">窗口</div>
-        <button class="modalClose" id="modalClose" type="button">关闭</button>
+  <!-- 通用媒体弹窗（图片/视频） -->
+  <div class="modal" id="mediaModal" aria-hidden="true">
+    <div class="dialog" role="dialog" aria-modal="true" aria-label="媒体预览">
+      <div class="dialog-h">
+        <div class="dialog-title"><span class="dot"></span><span id="modalTitle">预览</span></div>
+        <button class="close" id="closeMedia">关闭</button>
       </div>
-      <div class="modalBody" id="modalBody"></div>
+      <div class="dialog-b" id="mediaBody"></div>
     </div>
   </div>
 
-  <div class="toast" id="toast">提示</div>
+  <!-- 微信弹窗（包含：保存二维码按钮） -->
+  <div class="modal" id="wechatModal" aria-hidden="true">
+    <div class="dialog" role="dialog" aria-modal="true" aria-label="微信联系">
+      <div class="dialog-h">
+        <div class="dialog-title"><span class="dot"></span>微信联系</div>
+        <button class="close" id="closeWechat">关闭</button>
+      </div>
+      <div class="dialog-b">
+        <div class="wechat-grid">
+          <div class="qrbox">
+            <img src="assets/wechat-qr.png" alt="微信二维码（后期放到 assets/wechat-qr.png）"
+                 onerror="this.style.opacity='.35'; this.style.filter='grayscale(1)';" />
+            <div class="qr-actions">
+              <a class="btn" href="assets/wechat-qr.png" download="wechat-qr.png" style="padding:10px 14px;">保存二维码</a>
+            </div>
+          </div>
+          <div class="intro-text" style="padding:14px;">
+            <p style="margin:0 0 10px;">微信号已复制：<b style="color:#fff; text-shadow:0 0 16px rgba(255,43,134,.18)">LG-202412</b></p>
+            <div class="cta" style="justify-content:flex-start; margin-top:8px;">
+              <button class="btn primary" id="wechatOpen" type="button">打开微信</button>
+              <button class="btn" id="wechatCopy" type="button">复制微信号</button>
+            </div>
+            <div class="divider"></div>
+            <p style="margin:0; color:rgba(233,238,255,.78); font-weight:700; line-height:1.7;">
+              若未自动跳转到微信：手动打开微信 → 搜索 → 粘贴微信号添加好友。<br/>
+              也可扫码添加（二维码文件放到 <code style="color:rgba(233,238,255,.88)">assets/wechat-qr.png</code>）。
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- toast -->
+  <div class="toast" id="toast" role="status" aria-live="polite">
+    <span class="t-dot"></span>
+    <span id="toastText">已复制</span>
+  </div>
 
   <script>
-    // ====== 基础配置（你的账号信息） ======
+    // ===== 基础工具 =====
     const WECHAT_ID = "LG-202412";
-    const WECHAT_QR = "assets/wechat-qr.png";
+    const EMAIL = "guoxingbiao521@gmail.com";
 
-    // ====== 工具函数 ======
-    const $ = (s)=>document.querySelector(s);
-    const toastEl = $("#toast");
-    let toastTimer = null;
-
-    function toast(msg){
-      toastEl.textContent = msg;
-      toastEl.classList.add("show");
-      clearTimeout(toastTimer);
-      toastTimer = setTimeout(()=>toastEl.classList.remove("show"), 2200);
-    }
-
-    const mask = $("#modalMask");
-    const modalTitle = $("#modalTitle");
-    const modalBody = $("#modalBody");
-    const modalClose = $("#modalClose");
-
-    function openModal(title, html){
-      modalTitle.textContent = title;
-      modalBody.innerHTML = html;
-      mask.classList.add("show");
-    }
-    function closeModal(){
-      // 关闭时停止弹窗内视频
-      const v = modalBody.querySelector("video");
-      if(v){ try{ v.pause(); v.src = ""; }catch(e){} }
-      mask.classList.remove("show");
-      modalBody.innerHTML = "";
-    }
-    modalClose.addEventListener("click", closeModal);
-    mask.addEventListener("click", (e)=>{ if(e.target === mask) closeModal(); });
-
-    function isWeChatInApp(){
-      return /MicroMessenger/i.test(navigator.userAgent);
-    }
     function isMobile(){
       return /Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
     }
 
-    // 同步复制（尽量不丢点击手势）
-    function copyTextSync(text){
+    function showToast(msg){
+      const t = document.getElementById('toast');
+      const tt = document.getElementById('toastText');
+      tt.textContent = msg;
+      t.classList.add('show');
+      clearTimeout(showToast._timer);
+      showToast._timer = setTimeout(()=>t.classList.remove('show'), 2200);
+    }
+
+    async function copyText(text){
       try{
-        const ta = document.createElement("textarea");
+        await navigator.clipboard.writeText(text);
+        return true;
+      }catch(e){
+        // fallback
+        const ta = document.createElement('textarea');
         ta.value = text;
-        ta.setAttribute("readonly", "");
-        ta.style.position = "fixed";
-        ta.style.left = "-9999px";
-        ta.style.top = "-9999px";
+        ta.style.position = 'fixed';
+        ta.style.top = '-9999px';
         document.body.appendChild(ta);
-        ta.select();
-        const ok = document.execCommand("copy");
+        ta.focus(); ta.select();
+        let ok=false;
+        try{ ok = document.execCommand('copy'); }catch(_){}
         document.body.removeChild(ta);
         return ok;
-      }catch(e){
-        return false;
       }
     }
-    // 异步兜底
-    function copyTextAsync(text){
-      if(!navigator.clipboard) return;
-      navigator.clipboard.writeText(text).catch(()=>{});
-    }
 
-    // 保存二维码（下载 + iOS兜底打开）
-    function tryDownloadQr(){
-      const a = document.createElement("a");
-      a.href = WECHAT_QR;
-      a.download = "wechat-qr.png";
+    function tryOpenScheme(url){
+      // 某些浏览器会拦截 scheme，这里做“尽力而为”
+      const a = document.createElement('a');
+      a.href = url;
+      a.style.display = 'none';
       document.body.appendChild(a);
       a.click();
-      a.remove();
-      setTimeout(()=>{ window.open(WECHAT_QR, "_blank"); }, 250);
+      document.body.removeChild(a);
     }
 
-    // ✅ 复制微信号 → 打开“添加朋友”页（失败再打开微信首页）
-    function openWeChatAddFriendWithFallback(){
-      if(!isMobile()){
-        toast("请在手机上使用此功能");
-        return;
+    // ===== Gmail：PC 走 Gmail 写信；手机走 mailto（更稳定，不乱跳）=====
+    (function setupGmail(){
+      const btn = document.getElementById('btnGmail');
+      if(!btn) return;
+      if(isMobile()){
+        btn.href = `mailto:${encodeURIComponent(EMAIL)}`;
+        btn.target = "_self";
+      }else{
+        btn.href = `https://mail.google.com/mail/?view=cm&fs=1&to=${encodeURIComponent(EMAIL)}`;
+        btn.target = "_blank";
       }
-      // 1) 尝试打开“添加朋友”
-      window.location.href = "weixin://dl/add";
-      // 2) 兜底：打开微信首页
-      setTimeout(()=>{ window.location.href = "weixin://"; }, 800);
-      // 3) 再兜底提示
-      setTimeout(()=>{ toast("若未自动打开微信：已复制微信号，可直接在微信搜索粘贴添加"); }, 1500);
+    })();
+
+    // ===== 微信：点击复制微信号 + 尝试打开微信主页（不再打开添加朋友页）=====
+    const btnWechat = document.getElementById('btnWechat');
+    const wechatModal = document.getElementById('wechatModal');
+
+    function openWechatModal(){
+      wechatModal.classList.add('show');
+      wechatModal.setAttribute('aria-hidden', 'false');
+    }
+    function closeWechatModal(){
+      wechatModal.classList.remove('show');
+      wechatModal.setAttribute('aria-hidden', 'true');
     }
 
-    // ====== 微信按钮：方案A（弹窗二维码 + 保存二维码按钮） ======
-    $("#btnWechat").addEventListener("click", ()=>{
-      const ok = copyTextSync(WECHAT_ID);
-      copyTextAsync(WECHAT_ID);
-      toast(ok ? `已复制微信号：${WECHAT_ID}` : `已尝试复制：${WECHAT_ID}（若失败请手动复制）`);
+    btnWechat.addEventListener('click', async ()=>{
+      const ok = await copyText(WECHAT_ID);
+      showToast(ok ? `已复制微信号：${WECHAT_ID}` : `复制失败，请手动复制：${WECHAT_ID}`);
 
-      openModal("微信加好友", `
-        <div class="wechatBox">
-          <div class="wechatInfo">
-            <div class="big">微信号：${WECHAT_ID}</div>
-            <div class="sub">
-              已自动复制微信号。可直接在微信搜索粘贴添加。<br/>
-              也可点击下方按钮尝试打开“添加朋友”页。<br/><br/>
-              <b>提示：</b>若在微信内置浏览器打开本网页，微信会拦截跳转；请右上角「…」→「在浏览器打开」再试。
-            </div>
-            <div class="wechatActions">
-              <button class="miniBtn primary" id="goAddFriend" type="button">打开添加朋友</button>
-              <button class="miniBtn" id="goWeChatHome" type="button">打开微信</button>
-              <button class="miniBtn" id="copyWechat" type="button">复制微信号</button>
-            </div>
-          </div>
+      // 先尝试拉起微信主页
+      tryOpenScheme('weixin://');
 
-          <div class="qrPane">
-            <img src="${WECHAT_QR}" alt="微信二维码"
-              onerror="this.outerHTML='<div class=&quot;sub&quot; style=&quot;color:rgba(255,255,255,.70);text-align:center;line-height:1.9&quot;>请上传二维码到<br><code>assets/wechat-qr.png</code></div>'">
-            <button class="miniBtn" id="saveQr" type="button">保存二维码</button>
-          </div>
-        </div>
-      `);
-
-      setTimeout(()=>{
-        const goAdd = $("#goAddFriend");
-        const goHome = $("#goWeChatHome");
-        const cp = $("#copyWechat");
-        const sv = $("#saveQr");
-
-        if(cp) cp.addEventListener("click", ()=>{
-          const ok2 = copyTextSync(WECHAT_ID);
-          copyTextAsync(WECHAT_ID);
-          toast(ok2 ? "已复制微信号" : "已尝试复制（若失败请手动复制）");
-        });
-
-        if(sv) sv.addEventListener("click", tryDownloadQr);
-
-        if(goAdd) goAdd.addEventListener("click", ()=>{
-          if(isWeChatInApp()){
-            toast("你正在微信内打开：右上角「…」→「在浏览器打开」后再点“打开添加朋友”");
-            return;
-          }
-          openWeChatAddFriendWithFallback();
-        });
-
-        if(goHome) goHome.addEventListener("click", ()=>{
-          if(!isMobile()){
-            toast("请在手机上使用此功能");
-            return;
-          }
-          if(isWeChatInApp()){
-            toast("你正在微信内打开：右上角「…」→「在浏览器打开」后再点“打开微信”");
-            return;
-          }
-          window.location.href = "weixin://";
-        });
-      }, 0);
-
-      // ✅ 非微信内置浏览器：自动尝试跳一次（你要的“一点就跳”）
-      if(!isWeChatInApp()){
-        openWeChatAddFriendWithFallback();
-      }
+      // 同时弹出一个极简弹窗（含二维码 + 保存二维码按钮），便于引导
+      openWechatModal();
     });
 
-    // ====== 展品：点击放大（图片/视频） ======
-    function openMedia(type, src){
-      if(type === "img"){
-        openModal("查看图片", `
-          <div style="display:flex;justify-content:center">
-            <img src="${src}" alt="图片预览" style="max-width:100%;max-height:74vh;border-radius:18px;border:1px solid rgba(255,255,255,.10);background:rgba(255,255,255,.02)">
-          </div>
-        `);
-        return;
-      }
+    document.getElementById('closeWechat').addEventListener('click', closeWechatModal);
+    document.getElementById('wechatCopy').addEventListener('click', async ()=>{
+      const ok = await copyText(WECHAT_ID);
+      showToast(ok ? `已复制微信号：${WECHAT_ID}` : `复制失败，请手动复制：${WECHAT_ID}`);
+    });
+    document.getElementById('wechatOpen').addEventListener('click', ()=>{
+      tryOpenScheme('weixin://');
+      showToast("已尝试打开微信");
+    });
+    wechatModal.addEventListener('click', (e)=>{
+      if(e.target === wechatModal) closeWechatModal();
+    });
 
-      // video：弹窗播放带声音（不 muted）
-      openModal("查看视频", `
-        <div style="display:flex;justify-content:center">
-          <video src="${src}" controls autoplay playsinline style="max-width:100%;max-height:74vh;border-radius:18px;border:1px solid rgba(255,255,255,.10);background:rgba(255,255,255,.02)"></video>
-        </div>
-        <div class="hint" style="text-align:center;margin-top:10px">提示：列表预览默认静音，打开弹窗播放为有声。</div>
-      `);
+    // ===== 图片/视频：点击打开弹窗；视频弹窗里带声音 =====
+    const mediaModal = document.getElementById('mediaModal');
+    const mediaBody = document.getElementById('mediaBody');
+    const modalTitle = document.getElementById('modalTitle');
+
+    function openMediaModal(title, node){
+      modalTitle.textContent = title || "预览";
+      mediaBody.innerHTML = "";
+      mediaBody.appendChild(node);
+      mediaModal.classList.add('show');
+      mediaModal.setAttribute('aria-hidden', 'false');
     }
+    function closeMediaModal(){
+      mediaModal.classList.remove('show');
+      mediaModal.setAttribute('aria-hidden', 'true');
+      // 关闭时停止视频播放
+      const v = mediaBody.querySelector('video');
+      if(v){ try{ v.pause(); v.src = v.src; }catch(e){} }
+      mediaBody.innerHTML = "";
+    }
+    document.getElementById('closeMedia').addEventListener('click', closeMediaModal);
+    mediaModal.addEventListener('click', (e)=>{
+      if(e.target === mediaModal) closeMediaModal();
+    });
 
-    document.querySelectorAll(".mediaTile").forEach(tile=>{
-      tile.addEventListener("click", ()=>{
-        const type = tile.getAttribute("data-type");
-        const src = tile.getAttribute("data-src");
-        openMedia(type, src);
+    // 图片 tiles
+    document.querySelectorAll('.tile[data-type="image"]').forEach(tile=>{
+      tile.addEventListener('click', ()=>{
+        const src = tile.getAttribute('data-src');
+        const img = document.createElement('img');
+        img.className = 'media-view';
+        img.alt = '预览图片';
+        img.src = src;
+        img.onerror = ()=> showToast("图片尚未上传或路径不正确");
+        openMediaModal(src.split('/').pop(), img);
       });
     });
 
-    // ====== 页脚年份 ======
-    $("#year").textContent = new Date().getFullYear();
+    // 视频 tiles：页面静音；弹窗播放有声音
+    document.querySelectorAll('.vtile[data-type="video"]').forEach(tile=>{
+      // 页面里的预览视频：尽量自动播放静音循环（有的浏览器会阻止，没关系）
+      const pv = tile.querySelector('video');
+      if(pv){
+        pv.muted = true;
+        pv.loop = true;
+        pv.playsInline = true;
+        pv.addEventListener('canplay', ()=>{ pv.play().catch(()=>{}); }, {once:true});
+      }
+
+      tile.addEventListener('click', ()=>{
+        const src = tile.getAttribute('data-src');
+        const v = document.createElement('video');
+        v.className = 'media-view';
+        v.src = src;
+        v.controls = true;
+        v.autoplay = true;
+        v.muted = false;     // ✅ 弹窗里带声音
+        v.playsInline = true;
+        v.onloadedmetadata = ()=> v.play().catch(()=>{});
+        v.onerror = ()=> showToast("视频尚未上传或路径不正确");
+        openMediaModal(src.split('/').pop(), v);
+      });
+    });
+
+    // ESC 关闭弹窗
+    window.addEventListener('keydown', (e)=>{
+      if(e.key === "Escape"){
+        if(mediaModal.classList.contains('show')) closeMediaModal();
+        if(wechatModal.classList.contains('show')) closeWechatModal();
+      }
+    });
   </script>
 </body>
 </html>
