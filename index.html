@@ -207,8 +207,14 @@ text-size-adjust: 100%;
   display: inline-block;
   width: max-content;
   max-width: 100%;
-  left: 50%;
-  transform: translateX(-50%) scale(var(--fit));
+  display: block;
+width: max-content;
+max-width: 100%;
+margin: 8px auto 16px;
+
+transform: scale(var(--fit));
+transform-origin: center;
+
   transform-origin: center;
 
   margin: 8px 0 16px;
@@ -836,13 +842,12 @@ text-size-adjust: 100%;
       .wechat-grid{grid-template-columns: 1fr;}
 
       /* ✅ 不允许换行：这里不再改 white-space */
-      .hero-title{
-        --t-vw: 7.2vw;
-        --t-space: .14em;
-        --t-stroke: 2.6px;
-        --t-edge-dark: 6px;
-        --t-ex: 8px;
-        --t-ey: 10px;
+       .hero-title{
+    letter-spacing: 0.12em;
+    white-space: nowrap;   /* ✅ 永远一行 */
+    padding-left: 0;       /* ✅ 别用这个纠偏，会造成“看起来不居中” */
+  }
+}
 
         /* 中屏轻微收敛光，不要糊结构 */
         text-shadow:
