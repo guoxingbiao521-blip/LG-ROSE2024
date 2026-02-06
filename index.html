@@ -69,25 +69,24 @@
       padding: 22px 0 76px;
     }
 
-   header{
-  /* ✅ 不吸顶：删除 sticky 行为 */
-  position: relative;   /* 也可以用 static，但 relative 更稳（不影响样式） */
-  top: auto;
+    header{
+      /* ✅ 不吸顶 */
+      position: relative;
+      top: auto;
 
-  /* ✅ 下面这些保持你原来的样式 */
-  z-index:50;
-  margin: 10px auto 22px;
-  backdrop-filter: blur(14px);
-  -webkit-backdrop-filter: blur(14px);
-  background: linear-gradient(180deg, rgba(10,14,40,.62), rgba(10,14,40,.28));
-  border: 1px solid var(--line);
-  border-radius: 999px;
-  box-shadow: var(--shadow);
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  padding: 10px 12px;
-}
+      z-index:50;
+      margin: 10px auto 22px;
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      background: linear-gradient(180deg, rgba(10,14,40,.62), rgba(10,14,40,.28));
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      box-shadow: var(--shadow);
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      padding: 10px 12px;
+    }
 
     .brand{
       display:flex;
@@ -136,23 +135,21 @@
       border-color: rgba(255,255,255,.16);
     }
 
-   .hero{
-  border-radius: var(--radius);
-  border:1px solid rgba(255,255,255,.10);
-  background:
-    radial-gradient(900px 380px at 18% 20%, rgba(62,166,255,.26), transparent 60%),
-    radial-gradient(900px 380px at 85% 30%, rgba(255,43,134,.20), transparent 60%),
-    linear-gradient(180deg, rgba(255,255,255,.08), rgba(255,255,255,.03));
-  box-shadow: var(--shadow);
+    .hero{
+      border-radius: var(--radius);
+      border:1px solid rgba(255,255,255,.10);
+      background:
+        radial-gradient(900px 380px at 18% 20%, rgba(62,166,255,.26), transparent 60%),
+        radial-gradient(900px 380px at 85% 30%, rgba(255,43,134,.20), transparent 60%),
+        linear-gradient(180deg, rgba(255,255,255,.08), rgba(255,255,255,.03));
+      box-shadow: var(--shadow);
 
-  /* ✅ 用“自适应安全内边距”，给3D阴影/发光留空间 */
-  padding: clamp(18px, 2.6vw, 32px);
+      padding: clamp(18px, 2.6vw, 32px);
 
-  position:relative;
-
-  /* ✅ 不要裁切标题的阴影/发光（你现在就是被这里截断） */
-  overflow: visible;
-}
+      position:relative;
+      overflow: visible; /* ✅ 不裁切标题发光/3D */
+      text-align:center; /* ✅ 兜底：让里面所有元素更稳的居中 */
+    }
 
     .hero::after{
       content:"";
@@ -186,108 +183,92 @@
       box-shadow: 0 10px 30px rgba(0,0,0,.35);
     }
 
-    /* ✅ 主标题：真3D挤出 + 金属硬边 + 天空蓝白渐变
-       关键修复：
-       1) 字距/字号自动缩放，VIP加入后大屏不再裁切
-       2) 手机保持 nowrap 不换行
-       3) 用变量缩放发光/厚度，小屏不糊字，大屏一致 */
-    /* ✅ 主标题：更“实心” + 仍然3D挤出 + 金属硬边（不空心） */
-/* ✅ 主标题：强制一行 + 天蓝实心渐变 + 3D挤出 */
-/* ✅ 主标题：稳定居中 + 真3D挤出（不丢字） */
-.hero-title{
-  position: relative;
-  display: block;
-  margin: 10px auto 16px;
-  text-align: center;
-  white-space: nowrap;
+    /* ✅ 主标题：桌面端 3D 挤出 + 实心天空蓝渐变 */
+    .hero-title{
+      position: relative;
+      display: inline-block;      /* ✅ 默认就用 inline-block，居中更稳 */
+      width: fit-content;
+      max-width: 100%;
+      margin: 10px auto 16px;
+      text-align: center;
+      white-space: nowrap;
 
-  --fs: clamp(30px, 4.8vw, 76px);
-  --ls: clamp(0.03em, 0.18vw, 0.12em);
-  font-size: var(--fs);
-  letter-spacing: var(--ls);
-  font-weight: 1000;
-  line-height: 1.08;
+      --fs: clamp(30px, 4.8vw, 76px);
+      --ls: clamp(0.03em, 0.18vw, 0.12em);
+      font-size: var(--fs);
+      letter-spacing: var(--ls);
+      font-weight: 1000;
+      line-height: 1.08;
 
-  /* 用左右padding保证不贴边，但不搞 padding-left 假居中 */
-  padding-inline: 0.35em;
+      /* ✅ 不用 padding-inline（这是你之前手机偏的根源之一） */
+      padding: 0;
 
-  /* ✅ 实心天空蓝白渐变（更“填满”） */
-  background: linear-gradient(180deg,
-    #ffffff 0%,
-    #eaf9ff 18%,
-    #bfeeff 42%,
-    #6fd9ff 66%,
-    #1aa6ff 86%,
-    #116bff 100%);
-  -webkit-background-clip: text;
-  background-clip: text;
-  color: transparent;
-  -webkit-text-fill-color: transparent;
+      background: linear-gradient(180deg,
+        #ffffff 0%,
+        #eaf9ff 18%,
+        #bfeeff 42%,
+        #6fd9ff 66%,
+        #1aa6ff 86%,
+        #116bff 100%);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      -webkit-text-fill-color: transparent;
 
-  /* ✅ 本体不要描边（避免空心/发灰） */
-  -webkit-text-stroke: 0;
+      -webkit-text-stroke: 0;
 
-  /* ✅ 只留少量清晰发光（手机不糊） */
-  text-shadow:
-    0 0 6px rgba(255,255,255,.16),
-    0 0 14px rgba(111,217,255,.28),
-    0 0 26px rgba(26,166,255,.18);
+      text-shadow:
+        0 0 6px rgba(255,255,255,.16),
+        0 0 14px rgba(111,217,255,.28),
+        0 0 26px rgba(26,166,255,.18);
 
-  -webkit-font-smoothing: antialiased;
-  text-rendering: geometricPrecision;
-}
+      -webkit-font-smoothing: antialiased;
+      text-rendering: geometricPrecision;
+    }
 
-/* ✅ 3D挤出体：只在后面，不要影响正面清晰度 */
-.hero-title::before{
-  content: attr(data-text);
-  position:absolute;
-  inset:0;
-  z-index:-2;
-  pointer-events:none;
+    .hero-title::before{
+      content: attr(data-text);
+      position:absolute;
+      inset:0;
+      z-index:-2;
+      pointer-events:none;
 
-  text-align: inherit;
-  font: inherit;
-  letter-spacing: inherit;
-  line-height: inherit;
-  white-space: inherit;
-  padding-inline: inherit;
+      text-align: inherit;
+      font: inherit;
+      letter-spacing: inherit;
+      line-height: inherit;
+      white-space: inherit;
 
-  color: rgba(10, 26, 48, .92);
-  transform: translate(10px, 12px);
+      color: rgba(10, 26, 48, .92);
+      transform: translate(10px, 12px);
 
-  /* 减层数，避免“脏” */
-  text-shadow:
-    1px 1px 0 rgba(8, 18, 34, .82),
-    2px 2px 0 rgba(8, 18, 34, .74),
-    3px 3px 0 rgba(8, 18, 34, .66),
-    4px 4px 0 rgba(8, 18, 34, .58),
-    6px 8px 14px rgba(0,0,0,.42);
-}
+      text-shadow:
+        1px 1px 0 rgba(8, 18, 34, .82),
+        2px 2px 0 rgba(8, 18, 34, .74),
+        3px 3px 0 rgba(8, 18, 34, .66),
+        4px 4px 0 rgba(8, 18, 34, .58),
+        6px 8px 14px rgba(0,0,0,.42);
+    }
 
-/* ✅ 金属细描边：只描一次，而且要细 */
-.hero-title::after{
-  content: attr(data-text);
-  position:absolute;
-  inset:0;
-  z-index:-1;
-  pointer-events:none;
+    .hero-title::after{
+      content: attr(data-text);
+      position:absolute;
+      inset:0;
+      z-index:-1;
+      pointer-events:none;
 
-  text-align: inherit;
-  font: inherit;
-  letter-spacing: inherit;
-  line-height: inherit;
-  white-space: inherit;
-  padding-inline: inherit;
+      text-align: inherit;
+      font: inherit;
+      letter-spacing: inherit;
+      line-height: inherit;
+      white-space: inherit;
 
-  color: transparent;
-  -webkit-text-fill-color: transparent;
+      color: transparent;
+      -webkit-text-fill-color: transparent;
 
-  /* 细描边=“实心字”不会空 */
-  -webkit-text-stroke: 2px rgba(245,252,255,.78);
-  transform: translate(1px, 1px);
-}
-
-
+      -webkit-text-stroke: 2px rgba(245,252,255,.78);
+      transform: translate(1px, 1px);
+    }
 
     .hero-sub{
       text-align:center;
@@ -416,28 +397,22 @@
       gap: 18px;
       align-items:stretch;
     }
+
     .imgbox{
-  border-radius: var(--radius2);
-  border: 1px solid rgba(255,255,255,.12);
-
-  /* ✅ 叠加：上面是图片，下面是你原来的渐变氛围 */
-  background:
-    linear-gradient(180deg, rgba(0,0,0,.15), rgba(0,0,0,.35)),
-    url("assets/about.jpg"),
-    radial-gradient(220px 160px at 20% 25%, rgba(62,166,255,.16), transparent 60%),
-    radial-gradient(220px 160px at 80% 65%, rgba(255,43,134,.14), transparent 60%),
-    rgba(10,14,40,.26);
-
-  background-size: cover, cover, auto, auto, auto;
-  background-position: center, center, center, center, center;
-  background-repeat: no-repeat;
-
-  box-shadow: 0 18px 50px rgba(0,0,0,.35);
-  position:relative;
-  overflow:hidden;
-  min-height: 240px;
-}
-
+      border-radius: var(--radius2);
+      border: 1px solid rgba(255,255,255,.12);
+      background:
+        radial-gradient(220px 160px at 20% 25%, rgba(62,166,255,.16), transparent 60%),
+        radial-gradient(220px 160px at 80% 65%, rgba(255,43,134,.14), transparent 60%),
+        rgba(10,14,40,.26);
+      box-shadow: 0 18px 50px rgba(0,0,0,.35);
+      position:relative;
+      overflow:hidden;
+      min-height: 240px;
+      background-size: cover;
+      background-position:center;
+      background-repeat:no-repeat;
+    }
     .imgbox::after{
       content:"";
       position:absolute;
@@ -445,15 +420,16 @@
       background: linear-gradient(180deg, transparent, rgba(0,0,0,.25));
       pointer-events:none;
     }
-    /* ✅ 方案1：介绍模块用背景图 */
-.imgbox-about{
-  background:
-    linear-gradient(180deg, rgba(0,0,0,.12), rgba(0,0,0,.32)),
-    url("assets/about.jpg");
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
-}
+
+    /* ✅ 介绍模块：用背景图（你现在上传的是 assets/about.jpg） */
+    .imgbox-about{
+      background:
+        linear-gradient(180deg, rgba(0,0,0,.12), rgba(0,0,0,.32)),
+        url("assets/about.jpg");
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+    }
 
     .intro-text{
       border-radius: var(--radius2);
@@ -817,78 +793,81 @@
       flex:0 0 auto;
     }
 
- /* Responsive */
-@media (max-width: 980px){
-  .intro-grid{grid-template-columns: 1fr;}
-  .imgbox{min-height: 210px;}
+    /* ===================== Responsive ===================== */
 
-  .svc-grid{grid-template-columns: repeat(2, minmax(0,1fr));}
-  .media-grid{grid-template-columns: repeat(2, minmax(0,1fr));}
-  .video-grid{grid-template-columns: 1fr;}
-  .wechat-grid{grid-template-columns: 1fr;}
+    @media (max-width: 980px){
+      .intro-grid{grid-template-columns: 1fr;}
+      .imgbox{min-height: 210px;}
 
-  /* ✅ 手机/平板：主标题“最稳真居中”（不靠 transform，不靠 padding-left 补偿） */
-  .hero-title{
-    display:block;
-    width:100%;
-    margin: 8px auto 16px;
-    text-align:center;
+      .svc-grid{grid-template-columns: repeat(2, minmax(0,1fr));}
+      .media-grid{grid-template-columns: repeat(2, minmax(0,1fr));}
+      .video-grid{grid-template-columns: 1fr;}
+      .wechat-grid{grid-template-columns: 1fr;}
 
-    white-space: nowrap;
-    padding-left: 0 !important;          /* 关键：去掉字距补偿 */
-    letter-spacing: .08em !important;    /* 手机端字距小一点，视觉更居中 */
-    font-size: clamp(28px, 7.2vw, 56px); /* 小屏自动缩，尽量不溢出 */
+      /* ✅ 手机/平板：主标题“绝对不偏”的最稳居中 */
+      .hero-title{
+        display:inline-block;
+        width:fit-content;
+        max-width:100%;
+        margin: 8px auto 16px;
+        text-align:center;
+        white-space: nowrap;
 
-    -webkit-text-stroke: 2px rgba(250,253,255,.92);
-    text-shadow:
-      0 0 6px rgba(146,230,255,.40),
-      0 0 14px rgba(61,185,255,.28);
-  }
-  /* ✅ 手机端：关掉 3D 挤出层（重影根源） */
-  .hero-title::before,
-  .hero-title::after{ content:none !important; }
+        padding: 0 !important;              /* 关键：彻底清掉任何内边距 */
+        letter-spacing: .08em !important;
+        font-size: clamp(28px, 7.2vw, 56px);
 
-  /* 联系方式：平板3列 */
-  .contact-row{grid-template-columns: repeat(3, minmax(0, 1fr));}
-}
+        -webkit-text-stroke: 2px rgba(250,253,255,.92);
+        text-shadow:
+          0 0 6px rgba(146,230,255,.40),
+          0 0 14px rgba(61,185,255,.28);
+      }
 
-/* ✅ 电脑端（≥981px）：服务介绍 左图右文 两列布局（保持你想要的） */
-@media (min-width: 981px){
-  .intro-grid{
-    display:grid;
-    grid-template-columns: 420px 1fr;
-    gap: 18px;
-    align-items: stretch;
-  }
-  .intro-grid .imgbox{
-    min-height: 320px;
-    background-position: center;
-    background-size: cover;
-  }
-}
+      /* ✅ 手机端：关掉 3D 挤出层（避免重影/糊字） */
+      .hero-title::before,
+      .hero-title::after{
+        content:none !important;
+        display:none !important;
+      }
 
-@media (max-width: 560px){
-  header{border-radius: 18px;}
-  .brand-title{font-size: 12px;}
-  .navpill{font-size: 12px; padding: 8px 10px;}
-  .hero{padding: 20px 16px 16px;}
-  .tagline{font-size: 14px;}
+      /* 联系方式：平板3列 */
+      .contact-row{grid-template-columns: repeat(3, minmax(0, 1fr));}
+    }
 
-  .slogan-row{grid-template-columns: repeat(2, minmax(0,1fr));}
-  .slogan{max-width: none;}
+    /* ✅ 电脑端（≥981px）：服务介绍 左图右文 两列布局 */
+    @media (min-width: 981px){
+      .intro-grid{
+        display:grid;
+        grid-template-columns: 420px 1fr;
+        gap: 18px;
+        align-items: stretch;
+      }
+      .intro-grid .imgbox{
+        min-height: 320px;
+        background-position: center;
+        background-size: cover;
+      }
+    }
 
-  .svc-grid{grid-template-columns: 1fr;}
-  .media-grid{grid-template-columns: 1fr;}
+    @media (max-width: 560px){
+      header{border-radius: 18px;}
+      .brand-title{font-size: 12px;}
+      .navpill{font-size: 12px; padding: 8px 10px;}
+      .hero{padding: 20px 16px 16px;}
+      .tagline{font-size: 14px;}
 
-  /* 联系方式：手机2列 */
-  .contact-row{grid-template-columns: repeat(2, minmax(0, 1fr));}
-  .iconbtn{min-height: 104px;}
-  .iconimg{width: 38px; height: 38px;}
-  .iconlabel{font-size: 13px;}
-}
+      .slogan-row{grid-template-columns: repeat(2, minmax(0,1fr));}
+      .slogan{max-width: none;}
 
+      .svc-grid{grid-template-columns: 1fr;}
+      .media-grid{grid-template-columns: 1fr;}
 
-
+      /* 联系方式：手机2列 */
+      .contact-row{grid-template-columns: repeat(2, minmax(0, 1fr));}
+      .iconbtn{min-height: 104px;}
+      .iconimg{width: 38px; height: 38px;}
+      .iconlabel{font-size: 13px;}
+    }
   </style>
 </head>
 
@@ -932,10 +911,9 @@
     <section id="intro">
       <div class="section-card">
         <div class="h"><span class="dot"></span>服务介绍</div>
-<div class="intro-grid">
 
-      <div class="imgbox imgbox-about" title="服务介绍配图"></div>
-
+        <div class="intro-grid">
+          <div class="imgbox imgbox-about" title="服务介绍配图"></div>
 
           <div class="intro-text">
             <p>专注于电子产品与多类数字化服务，覆盖从咨询到交付的一站式支持，同时延展至 AI 技术方向的教学、代做与工具教程。</p>
