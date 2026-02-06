@@ -69,7 +69,6 @@
       padding: 22px 0 76px;
     }
 
-    /* 顶部栏 */
     header{
       position:sticky;
       top:10px;
@@ -134,7 +133,6 @@
       border-color: rgba(255,255,255,.16);
     }
 
-    /* HERO */
     .hero{
       border-radius: var(--radius);
       border:1px solid rgba(255,255,255,.10);
@@ -179,34 +177,41 @@
       box-shadow: 0 10px 30px rgba(0,0,0,.35);
     }
 
-    /* ✅ 主标题：真3D挤出 + 金属硬边 + 天空蓝白渐变 + 强发光（并解决 VIP 不全/小屏换行） */
+    /* ✅ 主标题：真3D挤出 + 金属硬边 + 天空蓝白渐变
+       关键修复：
+       1) 字距/字号自动缩放，VIP加入后大屏不再裁切
+       2) 手机保持 nowrap 不换行
+       3) 用变量缩放发光/厚度，小屏不糊字，大屏一致 */
     .hero-title{
-      /* 可调参数（桌面默认） */
-      --ls: 0.30em;      /* 字距 */
-      --ex: 9px;         /* 挤出X */
-      --ey: 11px;        /* 挤出Y */
-      --ex2: 2px;        /* 金属暗边偏移X */
-      --ey2: 2px;        /* 金属暗边偏移Y */
-      --outerStroke: 7px;/* 外圈暗边粗细 */
+      /* 尺寸/字距/描边/厚度：自动随屏幕缩放 */
+      --ls: clamp(0.02em, 0.14vw, 0.12em);
+      --stroke: clamp(1.8px, 0.22vw, 3px);
+      --outline: clamp(3.5px, 0.55vw, 7px);
+
+      --dx: clamp(3px, 0.45vw, 9px);
+      --dy: clamp(4px, 0.60vw, 11px);
+      --edgeShift: clamp(1px, 0.20vw, 2px);
+
+      --g1: 10px;
+      --g2: 18px;
+      --g3: 34px;
+      --g4: 70px;
+      --dblur: 18px;
 
       position: relative;
       display:block;
       width:100%;
-      max-width:100%;
       margin: 8px auto 16px;
       text-align:center;
       font-weight: 1000;
-
       letter-spacing: var(--ls);
-
-      /* ✅ 给右侧/底部留空间，避免 3D/阴影被 .hero 的 overflow:hidden 裁掉 */
-      padding-left: var(--ls);                  /* 视觉居中补偿 */
-      padding-right: calc(var(--ls) + 0.22em);  /* 右侧额外空间（防裁切） */
-      padding-bottom: 0.28em;                   /* 底部额外空间（防裁切） */
       line-height: 1.05;
 
-      font-size: clamp(40px, 5.6vw, 82px);
-      white-space: nowrap;                      /* ✅ 全端强制一行 */
+      /* 关键：手机也不换行 */
+      white-space: nowrap;
+
+      /* 关键：字号更“保守”，保证大屏也不会超出 */
+      font-size: clamp(22px, 4.6vw, 72px);
 
       /* 正面“天空蓝+白云”渐变 */
       background: linear-gradient(180deg,
@@ -222,21 +227,24 @@
       -webkit-text-fill-color: transparent;
 
       /* 金属硬边（亮边） */
-      -webkit-text-stroke: 3px rgba(250,253,255,.92);
+      -webkit-text-stroke: var(--stroke) rgba(250,253,255,.92);
 
-      /* 发光（主发光放在本体） */
+      /* 结构清晰：先给一个“硬阴影”再给柔光 */
       text-shadow:
-        0 0 10px rgba(255,255,255,.22),
-        0 0 18px rgba(146,230,255,.60),
-        0 0 34px rgba(61,185,255,.46),
-        0 0 70px rgba(27,107,255,.28),
+        0 2px 0 rgba(0,0,0,.35),
+        0 0 var(--g1) rgba(255,255,255,.22),
+        0 0 var(--g2) rgba(146,230,255,.60),
+        0 0 var(--g3) rgba(61,185,255,.46),
+        0 0 var(--g4) rgba(27,107,255,.28),
         0 0 26px rgba(255,43,134,.10);
 
-      filter: saturate(1.55) contrast(1.18);
+      filter: saturate(1.50) contrast(1.18);
       text-rendering: geometricPrecision;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
     }
 
-    /* ① 更厚的“3D挤出体”（主体厚度层） */
+    /* ① 3D挤出体（厚度层） */
     .hero-title::before{
       content: attr(data-text);
       position:absolute;
@@ -250,16 +258,10 @@
       line-height: inherit;
       white-space: inherit;
 
-      /* 同步 padding，确保挤出层和本体对齐 */
-      padding-top: inherit;
-      padding-right: inherit;
-      padding-bottom: inherit;
-      padding-left: inherit;
-
       color: rgba(10, 28, 55, .92);
       -webkit-text-stroke: 0;
 
-      transform: translate(var(--ex), var(--ey));
+      transform: translate(var(--dx), var(--dy));
 
       text-shadow:
         1px 1px 0 rgba(8, 22, 45, .88),
@@ -268,12 +270,12 @@
         4px 4px 0 rgba(8, 22, 45, .70),
         5px 5px 0 rgba(8, 22, 45, .64),
         6px 6px 0 rgba(8, 22, 45, .58),
-        7px 7px 0 rgba(8, 22, 45, .52),
-        8px 8px 0 rgba(8, 22, 45, .46),
-        10px 12px 18px rgba(0,0,0,.55);
+        8px 10px var(--dblur) rgba(0,0,0,.55);
+
+      -webkit-font-smoothing: antialiased;
     }
 
-    /* ② 外圈“金属暗边”+ 冷光边缘（更硬朗金属） */
+    /* ② 金属暗边（加厚边缘） */
     .hero-title::after{
       content: attr(data-text);
       position:absolute;
@@ -287,19 +289,17 @@
       line-height: inherit;
       white-space: inherit;
 
-      padding-top: inherit;
-      padding-right: inherit;
-      padding-bottom: inherit;
-      padding-left: inherit;
-
       color: transparent;
       -webkit-text-fill-color: transparent;
-      -webkit-text-stroke: var(--outerStroke) rgba(12, 40, 85, .42);
+      -webkit-text-stroke: var(--outline) rgba(12, 40, 85, .42);
 
-      transform: translate(var(--ex2), var(--ey2));
+      transform: translate(var(--edgeShift), var(--edgeShift));
 
-      filter: drop-shadow(0 0 10px rgba(127,224,255,.25))
-              drop-shadow(0 0 18px rgba(42,168,255,.18));
+      filter:
+        drop-shadow(0 0 10px rgba(127,224,255,.22))
+        drop-shadow(0 0 18px rgba(42,168,255,.16));
+
+      -webkit-font-smoothing: antialiased;
     }
 
     .hero-sub{
@@ -312,7 +312,6 @@
       text-shadow: 0 0 14px rgba(62,166,255,.16);
     }
 
-    /* ✅ 让四卖点整体更短，确保主标题明显更长 */
     .slogan-row{
       display:grid;
       grid-template-columns: repeat(4, minmax(0, 1fr));
@@ -389,7 +388,6 @@
       box-shadow: 0 22px 54px rgba(255,43,134,.26);
     }
 
-    /* Sections */
     section{margin-top: 26px;}
     .section-card{
       border-radius: var(--radius);
@@ -425,7 +423,6 @@
       text-shadow: 0 0 10px rgba(62,166,255,.18);
     }
 
-    /* 服务介绍 */
     .intro-grid{
       display:grid;
       grid-template-columns: 380px 1fr;
@@ -477,7 +474,6 @@
       margin: 10px 0 10px;
     }
 
-    /* 业务分类 */
     .svc-grid{
       display:grid;
       grid-template-columns: repeat(3, minmax(0,1fr));
@@ -535,7 +531,6 @@
       box-shadow: 0 0 18px rgba(62,166,255,.10);
     }
 
-    /* 展示区 */
     .media-grid{
       display:grid;
       grid-template-columns: repeat(3, minmax(0,1fr));
@@ -640,7 +635,6 @@
       opacity:.85;
     }
 
-    /* 联系方式 */
     .contact-row{
       width: 100%;
       max-width: 1120px;
@@ -701,7 +695,6 @@
       letter-spacing: .6px;
     }
 
-    /* Modal */
     .modal{
       position:fixed;
       inset:0;
@@ -748,9 +741,7 @@
       padding: 8px 12px;
       cursor:pointer;
     }
-    .dialog-b{
-      padding: 14px;
-    }
+    .dialog-b{ padding: 14px; }
     .media-view{
       width:100%;
       display:block;
@@ -761,7 +752,6 @@
       object-fit: contain;
     }
 
-    /* WeChat modal */
     .wechat-grid{
       display:grid;
       grid-template-columns: 280px 1fr;
@@ -829,20 +819,12 @@
       .video-grid{grid-template-columns: 1fr;}
       .wechat-grid{grid-template-columns: 1fr;}
 
-      /* ✅ 主标题：小屏仍强制一行；降低字距/字号/挤出，避免溢出与裁切 */
+      /* ✅ 不再把标题改成换行；只缩小字距/厚度 */
       .hero-title{
-        --ls: 0.10em;
-        --ex: 6px;
-        --ey: 8px;
-        --ex2: 2px;
-        --ey2: 2px;
-        --outerStroke: 6px;
-
-        white-space: nowrap;
-        font-size: clamp(24px, 6.2vw, 44px);
-        padding-left: var(--ls);
-        padding-right: calc(var(--ls) + 0.18em);
-        padding-bottom: 0.26em;
+        --ls: clamp(0.01em, 0.10vw, 0.08em);
+        --outline: clamp(3px, 0.50vw, 6px);
+        --dx: clamp(2px, 0.40vw, 7px);
+        --dy: clamp(3px, 0.55vw, 9px);
       }
 
       .contact-row{grid-template-columns: repeat(3, minmax(0, 1fr));}
@@ -859,20 +841,22 @@
       .svc-grid{grid-template-columns: 1fr;}
       .media-grid{grid-template-columns: 1fr;}
 
-      /* ✅ 手机：仍必须一行不换行（更小字距/字号 + 更薄挤出，保证 320px 也不爆） */
+      /* ✅ 手机：保持一行不换行，但把光晕收紧，结构更清晰 */
       .hero-title{
-        --ls: 0.02em;
-        --ex: 4px;
-        --ey: 6px;
-        --ex2: 1px;
-        --ey2: 1px;
-        --outerStroke: 5px;
+        --ls: clamp(0.00em, 0.06vw, 0.05em);
+        --stroke: 2px;
+        --outline: 4px;
 
-        white-space: nowrap;
-        font-size: clamp(18px, 6.5vw, 34px);
-        padding-left: var(--ls);
-        padding-right: calc(var(--ls) + 0.14em);
-        padding-bottom: 0.24em;
+        --dx: 3px;
+        --dy: 4px;
+
+        --g1: 7px;
+        --g2: 12px;
+        --g3: 22px;
+        --g4: 44px;
+        --dblur: 14px;
+
+        font-size: clamp(20px, 6.0vw, 42px);
       }
 
       .contact-row{grid-template-columns: repeat(2, minmax(0, 1fr));}
@@ -900,10 +884,10 @@
       </nav>
     </header>
 
-    <!-- HERO -->
     <div class="hero" id="top">
       <div class="tagline">因为专注 · 所以专业 · 十年老店</div>
 
+      <!-- ✅ 改字时：data-text 和内容必须一致 -->
       <h1 class="hero-title" data-text="欢迎VIP贵宾来到筑梦电子">欢迎VIP贵宾来到筑梦电子</h1>
 
       <div class="slogan-row" aria-label="四个核心卖点">
@@ -920,7 +904,6 @@
       </div>
     </div>
 
-    <!-- 服务介绍 -->
     <section id="intro">
       <div class="section-card">
         <div class="h"><span class="dot"></span>服务介绍</div>
@@ -945,7 +928,6 @@
       </div>
     </section>
 
-    <!-- 业务分类 -->
     <section id="services">
       <div class="section-card">
         <div class="h"><span class="dot"></span>业务分类</div>
@@ -1009,12 +991,10 @@
       </div>
     </section>
 
-    <!-- 视图展示 -->
     <section id="gallery">
       <div class="section-card">
         <div class="h"><span class="dot"></span>视图展示</div>
 
-        <!-- 6 张照片 -->
         <div class="media-grid" aria-label="6张照片">
           <div class="tile" data-type="image" data-src="assets/photo-01.jpg">
             <img src="assets/photo-01.jpg" alt="photo-01" loading="lazy"
@@ -1060,7 +1040,6 @@
           </div>
         </div>
 
-        <!-- 3 个视频 -->
         <div class="video-grid" aria-label="3个视频">
           <div class="vtile" data-type="video" data-src="assets/video-01.mp4">
             <video src="assets/video-01.mp4" muted playsinline preload="metadata"
@@ -1101,43 +1080,36 @@
       </div>
     </section>
 
-    <!-- 联系方式 -->
     <section id="contact">
       <div class="section-card">
         <div class="h"><span class="dot"></span>联系方式</div>
 
         <div class="contact-row" aria-label="联系方式图标按钮">
-          <!-- 微信 -->
           <button class="iconbtn wechat" id="btnWechat" title="微信：复制微信号并打开微信" aria-label="微信">
             <img class="iconimg" alt="微信" src="https://cdn.simpleicons.org/wechat?viewbox=auto">
             <div class="iconlabel">微信</div>
           </button>
 
-          <!-- Telegram -->
           <a class="iconbtn" id="btnTg" href="https://t.me/guoxingbiao" target="_blank" rel="noopener" title="Telegram" aria-label="Telegram">
             <img class="iconimg" alt="Telegram" src="https://cdn.simpleicons.org/telegram?viewbox=auto">
             <div class="iconlabel">Telegram</div>
           </a>
 
-          <!-- Gmail -->
           <a class="iconbtn" id="btnGmail" href="#" target="_blank" rel="noopener" title="Gmail" aria-label="Gmail">
             <img class="iconimg" alt="Gmail" src="https://cdn.simpleicons.org/gmail?viewbox=auto">
             <div class="iconlabel">Gmail</div>
           </a>
 
-          <!-- 抖音（tiktok图标） -->
           <a class="iconbtn" href="https://v.douyin.com/hTxqO_qDO6M/" target="_blank" rel="noopener" title="抖音" aria-label="抖音">
             <img class="iconimg" alt="抖音" src="https://cdn.simpleicons.org/tiktok?viewbox=auto">
             <div class="iconlabel">抖音</div>
           </a>
 
-          <!-- 快手 -->
           <a class="iconbtn" href="https://v.kuaishou.com/KArQ2jnp" target="_blank" rel="noopener" title="快手" aria-label="快手">
             <img class="iconimg" alt="快手" src="https://cdn.simpleicons.org/kuaishou?viewbox=auto">
             <div class="iconlabel">快手</div>
           </a>
 
-          <!-- 小红书 -->
           <a class="iconbtn" href="https://xhslink.com/m/8My2Kr680Fb" target="_blank" rel="noopener" title="小红书" aria-label="小红书">
             <img class="iconimg" alt="小红书" src="https://cdn.simpleicons.org/xiaohongshu?viewbox=auto">
             <div class="iconlabel">小红书</div>
@@ -1150,7 +1122,6 @@
 
   </div>
 
-  <!-- 通用媒体弹窗（图片/视频） -->
   <div class="modal" id="mediaModal" aria-hidden="true">
     <div class="dialog" role="dialog" aria-modal="true" aria-label="媒体预览">
       <div class="dialog-h">
@@ -1161,7 +1132,6 @@
     </div>
   </div>
 
-  <!-- 微信弹窗（包含：保存二维码按钮） -->
   <div class="modal" id="wechatModal" aria-hidden="true">
     <div class="dialog" role="dialog" aria-modal="true" aria-label="微信联系">
       <div class="dialog-h">
@@ -1194,14 +1164,12 @@
     </div>
   </div>
 
-  <!-- toast -->
   <div class="toast" id="toast" role="status" aria-live="polite">
     <span class="t-dot"></span>
     <span id="toastText">已复制</span>
   </div>
 
   <script>
-    // ===== 基础工具 =====
     const WECHAT_ID = "LG-202412";
     const EMAIL = "guoxingbiao521@gmail.com";
 
@@ -1245,7 +1213,6 @@
       document.body.removeChild(a);
     }
 
-    // ===== Gmail：PC 走 Gmail 写信；手机走 mailto =====
     (function setupGmail(){
       const btn = document.getElementById('btnGmail');
       if(!btn) return;
@@ -1258,7 +1225,6 @@
       }
     })();
 
-    // ===== 微信：点击复制微信号 + 尝试打开微信主页 =====
     const btnWechat = document.getElementById('btnWechat');
     const wechatModal = document.getElementById('wechatModal');
 
@@ -1292,7 +1258,6 @@
       if(e.target === wechatModal) closeWechatModal();
     });
 
-    // ===== 图片/视频：点击打开弹窗；视频弹窗里带声音 =====
     const mediaModal = document.getElementById('mediaModal');
     const mediaBody = document.getElementById('mediaBody');
     const modalTitle = document.getElementById('modalTitle');
