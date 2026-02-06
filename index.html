@@ -909,6 +909,27 @@
     background-size: cover;
   }
 }
+/* ✅ 修复：手机端主标题视觉不居中（3D层偏移导致） */
+@media (max-width: 980px){
+  .hero-title{
+    display: flex;           /* 用 flex 强制视觉居中 */
+    justify-content: center;
+    width: 100%;
+    margin-left: auto;
+    margin-right: auto;
+    text-align: center;
+  }
+
+  /* 关键：手机端把挤出层偏移缩小（否则看起来右偏） */
+  .hero-title::before{ transform: translate(3px, 4px); }
+  .hero-title::after{  transform: translate(1px, 1px); }
+}
+
+/* 更小屏再收一点 */
+@media (max-width: 560px){
+  .hero-title::before{ transform: translate(2px, 3px); }
+  .hero-title::after{  transform: translate(1px, 1px); }
+}
 
 
   </style>
