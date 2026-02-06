@@ -195,81 +195,50 @@
 /* ✅ 主标题：强制一行 + 天蓝实心渐变 + 3D挤出 */
 /* ✅ 主标题：稳定居中 + 真3D挤出（不丢字） */
 .hero-title{
-  /* ✅ 关键：不要用 padding-left 去“假居中” */
   position: relative;
   display: block;
   margin: 10px auto 16px;
   text-align: center;
-
-  /* ✅ 永远不换行 */
   white-space: nowrap;
 
-  /* ✅ 自适应字号 + 自适应字距（VIP变长也不至于炸） */
   --fs: clamp(30px, 4.8vw, 76px);
-  --ls: clamp(0.04em, 0.22vw, 0.14em);
+  --ls: clamp(0.03em, 0.18vw, 0.12em);
   font-size: var(--fs);
   letter-spacing: var(--ls);
   font-weight: 1000;
   line-height: 1.08;
 
-  /* ✅ 给左右留一点点“呼吸空间”，避免挤到边缘 */
+  /* 用左右padding保证不贴边，但不搞 padding-left 假居中 */
   padding-inline: 0.35em;
 
-  /* ✅ 实心的“天空蓝白渐变”（不是空心） */
+  /* ✅ 实心天空蓝白渐变（更“填满”） */
   background: linear-gradient(180deg,
     #ffffff 0%,
-    #f4fdff 14%,
-    #d7f4ff 34%,
-    #92e6ff 56%,
-    #3db9ff 78%,
-    #1b6bff 100%);
+    #eaf9ff 18%,
+    #bfeeff 42%,
+    #6fd9ff 66%,
+    #1aa6ff 86%,
+    #116bff 100%);
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;
   -webkit-text-fill-color: transparent;
 
-  /* ✅ 描边改细一点：避免看起来像“空心” */
-  -webkit-text-stroke: 2px rgba(245,252,255,.78);
+  /* ✅ 本体不要描边（避免空心/发灰） */
+  -webkit-text-stroke: 0;
 
-  /* ✅ 本体发光（收敛一点，手机不会糊成一团） */
+  /* ✅ 只留少量清晰发光（手机不糊） */
   text-shadow:
-    0 0 8px rgba(255,255,255,.18),
-    0 0 14px rgba(146,230,255,.42),
-    0 0 26px rgba(61,185,255,.28);
+    0 0 6px rgba(255,255,255,.16),
+    0 0 14px rgba(111,217,255,.28),
+    0 0 26px rgba(26,166,255,.18);
+
+  -webkit-font-smoothing: antialiased;
+  text-rendering: geometricPrecision;
 }
 
-/* ✅ 3D挤出体：用伪元素做“实体厚度” */
+/* ✅ 3D挤出体：只在后面，不要影响正面清晰度 */
 .hero-title::before{
-  content: attr(data-text);
-  position:absolute;
-  inset:0;
-  z-index:-1;
-  pointer-events:none;
-
-  text-align: inherit;
-  font: inherit;
-  letter-spacing: inherit;
-  line-height: inherit;
-  white-space: inherit;
-  padding-inline: inherit;
-
-  /* 挤出体颜色：深蓝灰金属 */
-  color: rgba(12, 30, 55, .92);
-
-  /* 挤出方向 */
-  transform: translate(10px, 12px);
-
-  /* 厚度层（别太多，太多就脏） */
-  text-shadow:
-    1px 1px 0 rgba(8, 22, 45, .85),
-    2px 2px 0 rgba(8, 22, 45, .78),
-    3px 3px 0 rgba(8, 22, 45, .70),
-    4px 4px 0 rgba(8, 22, 45, .62),
-    6px 6px 12px rgba(0,0,0,.45);
-}
-
-/* ✅ 外圈硬朗金属边（很轻，不会空心） */
-.hero-title::after{
   content: attr(data-text);
   position:absolute;
   inset:0;
@@ -283,15 +252,41 @@
   white-space: inherit;
   padding-inline: inherit;
 
+  color: rgba(10, 26, 48, .92);
+  transform: translate(10px, 12px);
+
+  /* 减层数，避免“脏” */
+  text-shadow:
+    1px 1px 0 rgba(8, 18, 34, .82),
+    2px 2px 0 rgba(8, 18, 34, .74),
+    3px 3px 0 rgba(8, 18, 34, .66),
+    4px 4px 0 rgba(8, 18, 34, .58),
+    6px 8px 14px rgba(0,0,0,.42);
+}
+
+/* ✅ 金属细描边：只描一次，而且要细 */
+.hero-title::after{
+  content: attr(data-text);
+  position:absolute;
+  inset:0;
+  z-index:-1;
+  pointer-events:none;
+
+  text-align: inherit;
+  font: inherit;
+  letter-spacing: inherit;
+  line-height: inherit;
+  white-space: inherit;
+  padding-inline: inherit;
+
   color: transparent;
   -webkit-text-fill-color: transparent;
 
-  /* 暗边细描边 */
-  -webkit-text-stroke: 5px rgba(12, 40, 85, .26);
-
-  /* 轻微错层 */
-  transform: translate(2px, 2px);
+  /* 细描边=“实心字”不会空 */
+  -webkit-text-stroke: 2px rgba(245,252,255,.78);
+  transform: translate(1px, 1px);
 }
+
 
 
     .hero-sub{
