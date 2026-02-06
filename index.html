@@ -835,6 +835,15 @@
     font-size: clamp(22px, 6.2vw, 40px); /* 手机强制缩小但不换行 */
   }
 }
+/* ✅ 电脑端：方案B（横幅比例 + cover，减少裁切） */
+@media (min-width: 981px){
+  .intro-grid .imgbox{
+    aspect-ratio: 21 / 9;      /* 横幅比例：裁切会少很多 */
+    min-height: 260px;         /* 兜底高度 */
+    background-size: cover;    /* 保持你现在手机端那种“铺满”质感 */
+    background-position: center;
+  }
+}
 
 
   /* ✅ 不要改 white-space；只调变量 */
