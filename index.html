@@ -1137,8 +1137,10 @@
             <img src="assets/wechat-qr.jpg" alt="微信二维码"
                  onerror="this.style.opacity='.35'; this.style.filter='grayscale(1)';" />
             <div class="qr-actions">
-              <a class="btn" href="assets/wechat-qr.png" download="wechat-qr.png" style="padding:10px 14px;">保存二维码</a>
-            </div>
+  <button class="btn primary" id="saveQr" type="button" style="padding:10px 14px;">保存到相册/分享</button>
+  <a class="btn" href="assets/wechat-qr.jpg" target="_blank" rel="noopener" style="padding:10px 14px;">打开二维码</a>
+</div>
+
           </div>
           <div class="intro-text" style="padding:14px;">
             <p style="margin:0 0 10px;">微信号已复制：<b style="color:#fff; text-shadow:0 0 16px rgba(255,43,134,.18)">LG-202412</b></p>
@@ -1316,6 +1318,44 @@
         if(wechatModal.classList.contains('show')) closeWechatModal();
       }
     });
+    // ✅ 尝试“保存到相册/分享”（iOS/部分安卓支持），不支持则自动下载
+(function setupSaveQr(){
+  const btn = document.getElementById('saveQr');
+  if(!btn) return;
+
+  btn.addEventListener('click', async ()=>{
+    const url = 'assets/wechat-qr.jpg';
+
+    try{
+      const res = await fetch(url, {cache:'no-store'});
+      if(!res.ok) throw new Error('QR fetch failed');
+      const blob = await res.blob();
+
+      // Web Share（支持时会出现“存储到照片/保存图片”等选项）
+      if(navigator.canShare){
+        const file = new File([blob], 'wechat-qr.jpg', {type: blob.type || 'image/png'});
+        if(navigator.canShare({files:[file]}) && navigator.share){
+          await navigator.share({files:[file], title:'微信二维码'});
+          return;
+        }
+      }
+
+      // 不支持分享：走下载（注意：手机不一定进相册，但至少不会变HTML）
+      const a = document.createElement('a');
+      a.href = URL.createObjectURL(blob);
+      a.download = 'wechat-qr.jpg';
+      document.body.appendChild(a);
+      a.click();
+      a.remove();
+      URL.revokeObjectURL(a.href);
+
+      showToast("已下载二维码（如需进相册请用“打开二维码”后长按保存）");
+    }catch(e){
+      showToast("二维码未找到，请确认 assets/wechat-qr.jpg 路径/大小写正确");
+    }
+  });
+})();
+
   </script>
 </body>
 </html>
