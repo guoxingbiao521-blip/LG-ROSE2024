@@ -417,17 +417,27 @@
       align-items:stretch;
     }
     .imgbox{
-      border-radius: var(--radius2);
-      border: 1px solid rgba(255,255,255,.12);
-      background:
-        radial-gradient(220px 160px at 20% 25%, rgba(62,166,255,.16), transparent 60%),
-        radial-gradient(220px 160px at 80% 65%, rgba(255,43,134,.14), transparent 60%),
-        rgba(10,14,40,.26);
-      box-shadow: 0 18px 50px rgba(0,0,0,.35);
-      position:relative;
-      overflow:hidden;
-      min-height: 240px;
-    }
+  border-radius: var(--radius2);
+  border: 1px solid rgba(255,255,255,.12);
+
+  /* ✅ 叠加：上面是图片，下面是你原来的渐变氛围 */
+  background:
+    linear-gradient(180deg, rgba(0,0,0,.15), rgba(0,0,0,.35)),
+    url("assets/about.jpg"),
+    radial-gradient(220px 160px at 20% 25%, rgba(62,166,255,.16), transparent 60%),
+    radial-gradient(220px 160px at 80% 65%, rgba(255,43,134,.14), transparent 60%),
+    rgba(10,14,40,.26);
+
+  background-size: cover, cover, auto, auto, auto;
+  background-position: center, center, center, center, center;
+  background-repeat: no-repeat;
+
+  box-shadow: 0 18px 50px rgba(0,0,0,.35);
+  position:relative;
+  overflow:hidden;
+  min-height: 240px;
+}
+
     .imgbox::after{
       content:"";
       position:absolute;
@@ -841,6 +851,23 @@
     aspect-ratio: 21 / 9;      /* 横幅比例：裁切会少很多 */
     min-height: 260px;         /* 兜底高度 */
     background-size: cover;    /* 保持你现在手机端那种“铺满”质感 */
+    background-position: center;
+  }
+}
+/* ✅ 电脑端：左图右文（两列布局） */
+@media (min-width: 981px){
+  .intro-grid{
+    display: grid;
+    grid-template-columns: 420px 1fr;  /* 左侧图片宽度，可改 360/400/460 */
+    gap: 18px;
+    align-items: stretch;
+  }
+
+  /* 左侧图片变回“竖向卡片”，不做横幅 */
+  .intro-grid .imgbox{
+    min-height: 320px;          /* 左图高度，可改 280/360 */
+    aspect-ratio: auto;         /* 取消你之前横幅比例 */
+    background-size: cover;
     background-position: center;
   }
 }
