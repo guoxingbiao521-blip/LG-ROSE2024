@@ -187,58 +187,70 @@
        3) 用变量缩放发光/厚度，小屏不糊字，大屏一致 */
     /* ✅ 主标题：更“实心” + 仍然3D挤出 + 金属硬边（不空心） */
 /* ✅ 主标题：强制一行 + 天蓝实心渐变 + 3D挤出 */
+/* ✅ 主标题：稳定居中 + 真3D挤出（不丢字） */
 .hero-title{
-  /* ✅ 默认值（大屏） */
-  --ls: .22em;                 /* 字距 */
-  --outline: 1.6px;            /* 亮描边 */
-  --darkOutline: 4.8px;        /* 暗金属边 */
-  --dx: 8px;                   /* 挤出x */
-  --dy: 10px;                  /* 挤出y */
+  /* ——可调参数（默认=大屏）—— */
+  --ls: 0.26em;                 /* 字距 */
+  --outline: 3px;               /* 白色硬边描边 */
+  --outline2: 7px;              /* 深色金属外圈描边 */
+  --dx: 10px;                   /* 3D挤出 X 偏移 */
+  --dy: 12px;                   /* 3D挤出 Y 偏移 */
+  --safe: calc(var(--dx) + 36px); /* ✅ 关键：左右安全边距（防裁切） */
 
   position: relative;
-  display: inline-block;
+
+  /* ✅ 必须：block + max-width 才是跨设备稳定居中 */
+  display: block;
   width: 100%;
-  margin: 8px auto 16px;
+  max-width: 1120px;
+  margin: 10px auto 16px;
+
   text-align: center;
   font-weight: 1000;
   line-height: 1.05;
 
-  /* ✅ 永不换行 */
+  /* ✅ 永远一行 */
   white-space: nowrap;
 
-  /* ✅ 自动缩放，避免手机显示不全 */
-  font-size: clamp(22px, 6.4vw, 82px);
-
+  /* ✅ 左右都补偿字距（不要只 padding-left） */
   letter-spacing: var(--ls);
-padding-inline: var(--ls);   /* ✅ 左右都补偿，避免右侧被裁 */
- /* ✅ 抵消 letter-spacing 造成的视觉偏移，保证居中 */
+  padding-inline: var(--ls);
 
-  /* ✅ 天蓝兜底（防止某些手机 clip 失效变黑） */
-  color: #7fe0ff;
+  /* ✅ 关键：再给左右留“安全边距”，防止3D层被 .hero 裁 */
+  padding-left: calc(var(--ls) + var(--safe));
+  padding-right: calc(var(--ls) + var(--safe));
 
+  font-size: clamp(34px, 5.2vw, 82px);
+
+  /* 正面“天空蓝+白云”渐变（实心） */
   background: linear-gradient(180deg,
-    #f7fdff 0%,
-    #cfefff 18%,
-    #86e1ff 42%,
-    #2db5ff 68%,
-    #146bff 100%);
-  -webkit-background-clip: text;
-  background-clip: text;
+    #ffffff 0%,
+    #f4fdff 14%,
+    #d7f4ff 34%,
+    #92e6ff 56%,
+    #3db9ff 78%,
+    #1b6bff 100%);
+  -webkit-background-clip:text;
+  background-clip:text;
+  color: transparent;
   -webkit-text-fill-color: transparent;
 
-  -webkit-text-stroke: var(--outline) rgba(240,250,255,.78);
+  /* 白色硬边描边（让字不空心） */
+  -webkit-text-stroke: var(--outline) rgba(250,253,255,.92);
 
-  /* ✅ 发光收敛：手机也能看清结构 */
+  /* 发光（别太糊结构） */
   text-shadow:
-    0 1px 0 rgba(255,255,255,.14),
-    0 0 10px rgba(134,225,255,.35),
-    0 0 22px rgba(45,181,255,.20),
-    0 0 46px rgba(20,107,255,.14);
+    0 0 8px rgba(255,255,255,.18),
+    0 0 14px rgba(146,230,255,.45),
+    0 0 26px rgba(61,185,255,.32),
+    0 0 48px rgba(27,107,255,.18);
 
+  filter: saturate(1.45) contrast(1.15);
   text-rendering: geometricPrecision;
+  transform-origin: center;
 }
 
-/* 3D挤出体 */
+/* ① 3D挤出体 */
 .hero-title::before{
   content: attr(data-text);
   position:absolute;
@@ -250,25 +262,26 @@ padding-inline: var(--ls);   /* ✅ 左右都补偿，避免右侧被裁 */
   font: inherit;
   letter-spacing: inherit;
   line-height: inherit;
-  padding-left: inherit;
   white-space: inherit;
 
+  /* 挤出体：深蓝金属灰 */
   color: rgba(10, 28, 55, .92);
-  -webkit-text-stroke: 0;
 
   transform: translate(var(--dx), var(--dy));
 
   text-shadow:
-    1px 1px 0 rgba(8, 22, 45, .90),
-    2px 2px 0 rgba(8, 22, 45, .84),
-    3px 3px 0 rgba(8, 22, 45, .78),
-    4px 4px 0 rgba(8, 22, 45, .72),
-    5px 5px 0 rgba(8, 22, 45, .66),
-    6px 6px 0 rgba(8, 22, 45, .60),
-    8px 10px 18px rgba(0,0,0,.52);
+    1px 1px 0 rgba(8, 22, 45, .88),
+    2px 2px 0 rgba(8, 22, 45, .82),
+    3px 3px 0 rgba(8, 22, 45, .76),
+    4px 4px 0 rgba(8, 22, 45, .70),
+    5px 5px 0 rgba(8, 22, 45, .64),
+    6px 6px 0 rgba(8, 22, 45, .58),
+    7px 7px 0 rgba(8, 22, 45, .52),
+    8px 8px 0 rgba(8, 22, 45, .46),
+    10px 12px 18px rgba(0,0,0,.50);
 }
 
-/* 金属暗边 */
+/* ② 金属暗边外圈（增强“实心硬朗”） */
 .hero-title::after{
   content: attr(data-text);
   position:absolute;
@@ -280,18 +293,19 @@ padding-inline: var(--ls);   /* ✅ 左右都补偿，避免右侧被裁 */
   font: inherit;
   letter-spacing: inherit;
   line-height: inherit;
-  padding-left: inherit;
   white-space: inherit;
 
   color: transparent;
   -webkit-text-fill-color: transparent;
 
-  -webkit-text-stroke: var(--darkOutline) rgba(10, 34, 78, .30);
+  /* 深色金属外圈描边 */
+  -webkit-text-stroke: var(--outline2) rgba(12, 40, 85, .38);
+
   transform: translate(2px, 2px);
 
-  filter: drop-shadow(0 0 10px rgba(127,224,255,.12));
+  filter: drop-shadow(0 0 10px rgba(127,224,255,.20))
+          drop-shadow(0 0 16px rgba(42,168,255,.14));
 }
-
 
     .hero-sub{
       text-align:center;
@@ -809,12 +823,27 @@ padding-inline: var(--ls);   /* ✅ 左右都补偿，避免右侧被裁 */
   .media-grid{grid-template-columns: repeat(2, minmax(0,1fr));}
   .video-grid{grid-template-columns: 1fr;}
   .wechat-grid{grid-template-columns: 1fr;}
-@media (min-width: 981px){
-  .hero{
-    padding-left: 46px;
-    padding-right: 46px;  /* ✅ 给右侧阴影/挤出留空间，防裁切 */
+@media (max-width: 980px){
+  .hero-title{
+    --ls: 0.12em;
+    --outline: 2.5px;
+    --outline2: 6px;
+    --dx: 8px;
+    --dy: 9px;
   }
 }
+
+@media (max-width: 560px){
+  .hero-title{
+    --ls: 0.06em;
+    --outline: 2px;
+    --outline2: 5px;
+    --dx: 6px;
+    --dy: 7px;
+    font-size: clamp(22px, 6.2vw, 40px); /* 手机强制缩小但不换行 */
+  }
+}
+
 
   /* ✅ 不要改 white-space；只调变量 */
   .hero-title{
