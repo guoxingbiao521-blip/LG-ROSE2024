@@ -185,125 +185,133 @@
        1) 字距/字号自动缩放，VIP加入后大屏不再裁切
        2) 手机保持 nowrap 不换行
        3) 用变量缩放发光/厚度，小屏不糊字，大屏一致 */
-    .hero-title{
-      /* 尺寸/字距/描边/厚度：自动随屏幕缩放 */
-      --ls: clamp(0.02em, 0.14vw, 0.12em);
-      --stroke: clamp(1.8px, 0.22vw, 3px);
-      --outline: clamp(3.5px, 0.55vw, 7px);
+    /* ✅ 主标题：更“实心” + 仍然3D挤出 + 金属硬边（不空心） */
+.hero-title{
+  position: relative;
+  display:inline-block;
+  width: min(1120px, 100%);
+  margin: 8px auto 16px;
+  text-align:center;
+  font-weight: 1000;
 
-      --dx: clamp(3px, 0.45vw, 9px);
-      --dy: clamp(4px, 0.60vw, 11px);
-      --edgeShift: clamp(1px, 0.20vw, 2px);
+  letter-spacing: 0.30em;
+  padding-left: 0.30em;
+  line-height: 1.05;
 
-      --g1: 10px;
-      --g2: 18px;
-      --g3: 34px;
-      --g4: 70px;
-      --dblur: 18px;
+  font-size: clamp(40px, 5.6vw, 82px);
+  white-space: nowrap;
 
-      position: relative;
-      display:block;
-      width:100%;
-      margin: 8px auto 16px;
-      text-align:center;
-      font-weight: 1000;
-      letter-spacing: var(--ls);
-      line-height: 1.05;
+  /* ✅ 更“实心”的天空蓝白：减少纯白面积，中心更蓝更饱和 */
+  background: linear-gradient(180deg,
+    #f7fdff 0%,
+    #d8f4ff 18%,
+    #86e1ff 42%,
+    #2db5ff 68%,
+    #146bff 100%);
+  -webkit-background-clip:text;
+  background-clip:text;
+  color: transparent;
+  -webkit-text-fill-color: transparent;
 
-      /* 关键：手机也不换行 */
-      white-space: nowrap;
+  /* ✅ 亮描边变细 + 不用纯白，避免空心 */
+  -webkit-text-stroke: 2px rgba(240,250,255,.72);
 
-      /* 关键：字号更“保守”，保证大屏也不会超出 */
-      font-size: clamp(22px, 4.6vw, 72px);
+  /* ✅ 结构感：加一圈“深色轮廓”+ 适度发光（不糊） */
+  text-shadow:
+    /* 深色轮廓（让字“实”起来） */
+    0 2px 0 rgba(8, 22, 45, .55),
+    0 0 0 rgba(8, 22, 45, .55),
+    1px 0 0 rgba(8, 22, 45, .55),
+    -1px 0 0 rgba(8, 22, 45, .55),
+    0 1px 0 rgba(8, 22, 45, .55),
+    0 -1px 0 rgba(8, 22, 45, .55),
 
-      /* 正面“天空蓝+白云”渐变 */
-      background: linear-gradient(180deg,
-        #ffffff 0%,
-        #f4fdff 14%,
-        #d7f4ff 34%,
-        #92e6ff 56%,
-        #3db9ff 78%,
-        #1b6bff 100%);
-      -webkit-background-clip:text;
-      background-clip:text;
-      color: transparent;
-      -webkit-text-fill-color: transparent;
+    /* 轻高光（别太多） */
+    0 1px 0 rgba(255,255,255,.18),
 
-      /* 金属硬边（亮边） */
-      -webkit-text-stroke: var(--stroke) rgba(250,253,255,.92);
+    /* 发光（收敛，保证字结构清楚） */
+    0 0 10px rgba(134,225,255,.45),
+    0 0 22px rgba(45,181,255,.28),
+    0 0 46px rgba(20,107,255,.18);
 
-      /* 结构清晰：先给一个“硬阴影”再给柔光 */
-      text-shadow:
-        0 2px 0 rgba(0,0,0,.35),
-        0 0 var(--g1) rgba(255,255,255,.22),
-        0 0 var(--g2) rgba(146,230,255,.60),
-        0 0 var(--g3) rgba(61,185,255,.46),
-        0 0 var(--g4) rgba(27,107,255,.28),
-        0 0 26px rgba(255,43,134,.10);
+  filter: saturate(1.35) contrast(1.15);
+  text-rendering: geometricPrecision;
+}
 
-      filter: saturate(1.50) contrast(1.18);
-      text-rendering: geometricPrecision;
-      -webkit-font-smoothing: antialiased;
-      -moz-osx-font-smoothing: grayscale;
-    }
+/* ✅ ① 3D“挤出体”（厚度层） */
+.hero-title::before{
+  content: attr(data-text);
+  position:absolute;
+  inset:0;
+  z-index:-2;
+  pointer-events:none;
 
-    /* ① 3D挤出体（厚度层） */
-    .hero-title::before{
-      content: attr(data-text);
-      position:absolute;
-      inset:0;
-      z-index:-2;
-      pointer-events:none;
+  text-align: inherit;
+  font: inherit;
+  letter-spacing: inherit;
+  line-height: inherit;
+  padding-left: inherit;
+  white-space: inherit;
 
-      text-align: inherit;
-      font: inherit;
-      letter-spacing: inherit;
-      line-height: inherit;
-      white-space: inherit;
+  color: rgba(10, 28, 55, .92);
+  -webkit-text-stroke: 0;
 
-      color: rgba(10, 28, 55, .92);
-      -webkit-text-stroke: 0;
+  transform: translate(9px, 11px);
 
-      transform: translate(var(--dx), var(--dy));
+  text-shadow:
+    1px 1px 0 rgba(8, 22, 45, .90),
+    2px 2px 0 rgba(8, 22, 45, .84),
+    3px 3px 0 rgba(8, 22, 45, .78),
+    4px 4px 0 rgba(8, 22, 45, .72),
+    5px 5px 0 rgba(8, 22, 45, .66),
+    6px 6px 0 rgba(8, 22, 45, .60),
+    7px 7px 0 rgba(8, 22, 45, .54),
+    8px 8px 0 rgba(8, 22, 45, .48),
+    10px 12px 18px rgba(0,0,0,.52);
+}
 
-      text-shadow:
-        1px 1px 0 rgba(8, 22, 45, .88),
-        2px 2px 0 rgba(8, 22, 45, .82),
-        3px 3px 0 rgba(8, 22, 45, .76),
-        4px 4px 0 rgba(8, 22, 45, .70),
-        5px 5px 0 rgba(8, 22, 45, .64),
-        6px 6px 0 rgba(8, 22, 45, .58),
-        8px 10px var(--dblur) rgba(0,0,0,.55);
+/* ✅ ② 金属“暗边”层（加厚但不抢主体） */
+.hero-title::after{
+  content: attr(data-text);
+  position:absolute;
+  inset:0;
+  z-index:-1;
+  pointer-events:none;
 
-      -webkit-font-smoothing: antialiased;
-    }
+  text-align: inherit;
+  font: inherit;
+  letter-spacing: inherit;
+  line-height: inherit;
+  padding-left: inherit;
+  white-space: inherit;
 
-    /* ② 金属暗边（加厚边缘） */
-    .hero-title::after{
-      content: attr(data-text);
-      position:absolute;
-      inset:0;
-      z-index:-1;
-      pointer-events:none;
+  color: transparent;
+  -webkit-text-fill-color: transparent;
 
-      text-align: inherit;
-      font: inherit;
-      letter-spacing: inherit;
-      line-height: inherit;
-      white-space: inherit;
+  /* 深色外轮廓：让字不空心 */
+  -webkit-text-stroke: 6px rgba(10, 34, 78, .34);
 
-      color: transparent;
-      -webkit-text-fill-color: transparent;
-      -webkit-text-stroke: var(--outline) rgba(12, 40, 85, .42);
+  transform: translate(2px, 2px);
 
-      transform: translate(var(--edgeShift), var(--edgeShift));
+  filter: drop-shadow(0 0 10px rgba(127,224,255,.16))
+          drop-shadow(0 0 18px rgba(42,168,255,.12));
+}
 
-      filter:
-        drop-shadow(0 0 10px rgba(127,224,255,.22))
-        drop-shadow(0 0 18px rgba(42,168,255,.16));
-
-      -webkit-font-smoothing: antialiased;
-    }
+/* ✅ 手机端：压住发光/描边，保证“结构”清晰 */
+@media (max-width: 560px){
+  .hero-title{
+    -webkit-text-stroke: 1.5px rgba(240,250,255,.68);
+    text-shadow:
+      0 2px 0 rgba(8, 22, 45, .60),
+      1px 0 0 rgba(8, 22, 45, .60),
+      -1px 0 0 rgba(8, 22, 45, .60),
+      0 0 10px rgba(134,225,255,.28),
+      0 0 20px rgba(45,181,255,.16);
+  }
+  .hero-title::after{
+    -webkit-text-stroke: 5px rgba(10, 34, 78, .32);
+  }
+}
 
     .hero-sub{
       text-align:center;
