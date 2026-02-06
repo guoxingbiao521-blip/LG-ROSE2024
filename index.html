@@ -888,48 +888,6 @@
 }
 
 
-/* ======= ✅ 手机端主标题终极强制补丁（必须放在 </style> 前最后） ======= */
-@media (max-width: 980px){
-  .hero-title{
-    /* 强制把所有可能造成偏移的东西清零 */
-    left: auto !important;
-    right: auto !important;
-    transform: none !important;
-
-    /* 最稳居中：用 flex 居中，不吃任何 padding/字距补偿影响 */
-    display: flex !important;
-    justify-content: center !important;
-    align-items: center !important;
-
-    width: 100% !important;
-    max-width: 100% !important;
-    margin-left: auto !important;
-    margin-right: auto !important;
-
-    text-align: center !important;
-    white-space: nowrap !important;
-
-    /* 你之前用 padding-left 抵消字距，这会导致手机“看起来不居中” */
-    padding-left: 0 !important;
-
-    /* 手机字距收紧，避免溢出 + 视觉偏 */
-    letter-spacing: .08em !important;
-
-    /* 手机上发光别太强，否则结构糊 */
-    -webkit-text-stroke: 2px rgba(250,253,255,.92) !important;
-    text-shadow:
-      0 0 6px rgba(146,230,255,.40),
-      0 0 14px rgba(61,185,255,.28) !important;
-  }
-
-  /* ✅ 重影根源：伪元素挤出层（全部强制关掉） */
-  .hero-title::before,
-  .hero-title::after{
-    content: none !important;
-    display: none !important;
-  }
-}
-
 
   </style>
 </head>
