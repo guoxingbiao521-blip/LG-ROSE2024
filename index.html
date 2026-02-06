@@ -210,7 +210,8 @@
   font-size: clamp(22px, 6.4vw, 82px);
 
   letter-spacing: var(--ls);
-  padding-left: var(--ls);     /* ✅ 抵消 letter-spacing 造成的视觉偏移，保证居中 */
+padding-inline: var(--ls);   /* ✅ 左右都补偿，避免右侧被裁 */
+ /* ✅ 抵消 letter-spacing 造成的视觉偏移，保证居中 */
 
   /* ✅ 天蓝兜底（防止某些手机 clip 失效变黑） */
   color: #7fe0ff;
@@ -808,6 +809,12 @@
   .media-grid{grid-template-columns: repeat(2, minmax(0,1fr));}
   .video-grid{grid-template-columns: 1fr;}
   .wechat-grid{grid-template-columns: 1fr;}
+@media (min-width: 981px){
+  .hero{
+    padding-left: 46px;
+    padding-right: 46px;  /* ✅ 给右侧阴影/挤出留空间，防裁切 */
+  }
+}
 
   /* ✅ 不要改 white-space；只调变量 */
   .hero-title{
