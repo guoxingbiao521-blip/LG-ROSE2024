@@ -182,17 +182,15 @@
       box-shadow: 0 10px 30px rgba(0,0,0,.35);
     }
 
-    /* =========================
-       ✅ 替换(1)：hero-title 用你的代码
-       ========================= */
+    /* 主标题 */
     .hero-title {
-      display: inline-block; /* 确保容器宽度刚好等于文字宽度 */
-      width: fit-content;    /* 同上，防止撑满全屏导致无法居中 */
-      max-width: 100%;       /* 限制最大宽度，不超出屏幕 */
-      margin: 10px auto;     /* 配合 inline-block 实现绝对水平居中 */
-      white-space: nowrap;   /* 强制不换行（方案B的核心） */
-      padding: 0;            /* 彻底清空可能导致偏移的内边距 */
-      text-align: center;    /* ✅ 补一个兜底居中 */
+      display: inline-block;
+      width: fit-content;
+      max-width: 100%;
+      margin: 10px auto;
+      white-space: nowrap;
+      padding: 0;
+      text-align: center;
 
       --fs: clamp(30px, 4.8vw, 76px);
       --ls: clamp(0.03em, 0.18vw, 0.12em);
@@ -223,7 +221,7 @@
       -webkit-font-smoothing: antialiased;
       text-rendering: geometricPrecision;
 
-      position: relative; /* 保证伪元素定位 */
+      position: relative;
     }
 
     .hero-title::before{
@@ -781,18 +779,16 @@
       box-shadow: 0 0 14px rgba(255,43,134,.7);
       flex:0 0 auto;
     }
-/* ✅ 视频卡片：隐藏文件名 */
-.playbadge small{ display:none !important; }
-/* ✅ 弹窗：隐藏顶部标题条(文件名)与关闭按钮 */
-.dialog-h{ display:none !important; }
 
-/* 可选：让内容离顶部更舒服一点 */
-.dialog-b{ padding-top: 18px; }
-/* ✅ 视频卡片：彻底隐藏底部播放条（圆形icon+背景条） */
-.playbadge{ display:none !important; }
+    /* ✅ 视频卡片：隐藏文件名 */
+    .playbadge small{ display:none !important; }
+    /* ✅ 弹窗：隐藏顶部标题条(文件名)与关闭按钮（你要纯净界面） */
+    .dialog-h{ display:none !important; }
+    .dialog-b{ padding-top: 18px; }
+    /* ✅ 视频卡片：彻底隐藏底部播放条（圆形icon+背景条） */
+    .playbadge{ display:none !important; }
 
     /* ===================== Responsive ===================== */
-
     @media (max-width: 980px){
       .intro-grid{grid-template-columns: 1fr;}
       .imgbox{min-height: 210px;}
@@ -802,19 +798,12 @@
       .video-grid{grid-template-columns: 1fr;}
       .wechat-grid{grid-template-columns: 1fr;}
 
-      /* =========================
-         ✅ 替换(2)：手机端字号 clamp 用你的
-         ========================= */
       .hero-title{
         font-size: clamp(18px, 7.2vw, 56px);
       }
-
-      /* =========================
-         ✅ 替换(3)：手机端彻底移除伪元素
-         ========================= */
       .hero-title::before,
       .hero-title::after {
-        content: none !important; /* 彻底移除多余层 */
+        content: none !important;
         display: none !important;
       }
 
@@ -840,9 +829,6 @@
       .brand-title{font-size: 12px;}
       .navpill{font-size: 12px; padding: 8px 10px;}
 
-      /* =========================
-         ✅ 替换(4)：小屏 hero padding 用你的
-         ========================= */
       .hero { padding: 20px 8px 16px; }
 
       .tagline{font-size: 14px;}
@@ -1093,32 +1079,33 @@
             <div class="iconlabel">Gmail</div>
           </a>
 
+          <!-- ✅ 修改点1：统一成 href="#" + data-web -->
+          <!-- 抖音 -->
           <a class="iconbtn" id="btnDouyin"
-   href="#"
-   data-web="https://v.douyin.com/hTxqO_qDO6M/"
-   aria-label="抖音" title="抖音">
-  <img class="iconimg" alt="抖音" src="https://cdn.simpleicons.org/tiktok?viewbox=auto">
-  <div class="iconlabel">抖音</div>
-</a>
+             href="#"
+             data-web="https://v.douyin.com/hTxqO_qDO6M/"
+             aria-label="抖音" title="抖音">
+            <img class="iconimg" alt="抖音" src="https://cdn.simpleicons.org/tiktok?viewbox=auto">
+            <div class="iconlabel">抖音</div>
+          </a>
 
-<!-- 快手 -->
-<a class="iconbtn" id="btnKs"
-   href="https://v.kuaishou.com/KArQ2jnp"
-   target="_blank" rel="noopener"
-   title="快手" aria-label="快手">
-  <img class="iconimg" alt="快手" src="https://cdn.simpleicons.org/kuaishou?viewbox=auto">
-  <div class="iconlabel">快手</div>
-</a>
+          <!-- 快手 -->
+          <a class="iconbtn" id="btnKs"
+             href="#"
+             data-web="https://v.kuaishou.com/KArQ2jnp"
+             aria-label="快手" title="快手">
+            <img class="iconimg" alt="快手" src="https://cdn.simpleicons.org/kuaishou?viewbox=auto">
+            <div class="iconlabel">快手</div>
+          </a>
 
-<!-- 小红书 -->
-<a class="iconbtn" id="btnXhs"
-   href="https://xhslink.com/m/8My2Kr680Fb"
-   target="_blank" rel="noopener"
-   title="小红书" aria-label="小红书">
-  <img class="iconimg" alt="小红书" src="https://cdn.simpleicons.org/xiaohongshu?viewbox=auto">
-  <div class="iconlabel">小红书</div>
-</a>
-
+          <!-- 小红书 -->
+          <a class="iconbtn" id="btnXhs"
+             href="#"
+             data-web="https://xhslink.com/m/8My2Kr680Fb"
+             aria-label="小红书" title="小红书">
+            <img class="iconimg" alt="小红书" src="https://cdn.simpleicons.org/xiaohongshu?viewbox=auto">
+            <div class="iconlabel">小红书</div>
+          </a>
 
         </div>
 
@@ -1150,10 +1137,9 @@
             <img src="assets/wechat-qr.jpg" alt="微信二维码"
                  onerror="this.style.opacity='.35'; this.style.filter='grayscale(1)';" />
             <div class="qr-actions">
-  <button class="btn primary" id="saveQr" type="button" style="padding:10px 14px;">保存到相册/分享</button>
-  <a class="btn" href="assets/wechat-qr.jpg" target="_blank" rel="noopener" style="padding:10px 14px;">打开二维码</a>
-</div>
-
+              <button class="btn primary" id="saveQr" type="button" style="padding:10px 14px;">保存到相册/分享</button>
+              <a class="btn" href="assets/wechat-qr.jpg" target="_blank" rel="noopener" style="padding:10px 14px;">打开二维码</a>
+            </div>
           </div>
           <div class="intro-text" style="padding:14px;">
             <p style="margin:0 0 10px;">微信号已复制：<b style="color:#fff; text-shadow:0 0 16px rgba(255,43,134,.18)">LG-202412</b></p>
@@ -1277,11 +1263,20 @@
       mediaModal.classList.add('show');
       mediaModal.setAttribute('aria-hidden', 'false');
     }
+
     function closeMediaModal(){
       mediaModal.classList.remove('show');
       mediaModal.setAttribute('aria-hidden', 'true');
+
+      // ✅ 关键：关闭时彻底停止声音/释放资源（避免退出还在播放）
       const v = mediaBody.querySelector('video');
-      if(v){ try{ v.pause(); v.src = v.src; }catch(e){} }
+      if(v){
+        try{
+          v.pause();
+          v.removeAttribute('src');
+          v.load();
+        }catch(e){}
+      }
       mediaBody.innerHTML = "";
     }
     document.getElementById('closeMedia').addEventListener('click', closeMediaModal);
@@ -1297,7 +1292,7 @@
         img.alt = '预览图片';
         img.src = src;
         img.onerror = ()=> showToast("图片尚未上传或路径不正确");
-        openMediaModal(src.split('/').pop(), img);
+        openMediaModal("", img); // ✅ 不传文件名（你要纯净）
       });
     });
 
@@ -1321,7 +1316,7 @@
         v.playsInline = true;
         v.onloadedmetadata = ()=> v.play().catch(()=>{});
         v.onerror = ()=> showToast("视频尚未上传或路径不正确");
-        openMediaModal(src.split('/').pop(), v);
+        openMediaModal("", v); // ✅ 不传文件名（你要纯净）
       });
     });
 
@@ -1331,174 +1326,137 @@
         if(wechatModal.classList.contains('show')) closeWechatModal();
       }
     });
-    // ✅ 尝试“保存到相册/分享”（iOS/部分安卓支持），不支持则自动下载
-(function setupSaveQr(){
-  const btn = document.getElementById('saveQr');
-  if(!btn) return;
 
-  btn.addEventListener('click', async ()=>{
-    const url = 'assets/wechat-qr.jpg';
+    // ✅ 尝试“保存到相册/分享”（iOS/部分安卓支持），不支持则下载
+    (function setupSaveQr(){
+      const btn = document.getElementById('saveQr');
+      if(!btn) return;
 
-    try{
-      const res = await fetch(url, {cache:'no-store'});
-      if(!res.ok) throw new Error('QR fetch failed');
-      const blob = await res.blob();
+      btn.addEventListener('click', async ()=>{
+        const url = 'assets/wechat-qr.jpg';
 
-      // Web Share（支持时会出现“存储到照片/保存图片”等选项）
-      if(navigator.canShare){
-        const file = new File([blob], 'wechat-qr.jpg', {type: blob.type || 'image/png'});
-        if(navigator.canShare({files:[file]}) && navigator.share){
-          await navigator.share({files:[file], title:'微信二维码'});
-          return;
+        try{
+          const res = await fetch(url, {cache:'no-store'});
+          if(!res.ok) throw new Error('QR fetch failed');
+          const blob = await res.blob();
+
+          if(navigator.canShare){
+            const file = new File([blob], 'wechat-qr.jpg', {type: blob.type || 'image/jpeg'});
+            if(navigator.canShare({files:[file]}) && navigator.share){
+              await navigator.share({files:[file], title:'微信二维码'});
+              return;
+            }
+          }
+
+          const a = document.createElement('a');
+          a.href = URL.createObjectURL(blob);
+          a.download = 'wechat-qr.jpg';
+          document.body.appendChild(a);
+          a.click();
+          a.remove();
+          URL.revokeObjectURL(a.href);
+
+          showToast("已下载二维码（如需进相册请用“打开二维码”后长按保存）");
+        }catch(e){
+          showToast("二维码未找到，请确认 assets/wechat-qr.jpg 路径/大小写正确");
         }
+      });
+    })();
+
+    /* ✅ 修改点2：深链只保留这一段（推荐组合：Android Intent + iOS Scheme） */
+    (function setupDeepLinks_OneCorrectBlock(){
+      const ua = navigator.userAgent || "";
+      const isIOS = /iPhone|iPad|iPod/i.test(ua);
+      const isAndroid = /Android/i.test(ua);
+
+      function cancelableFallback(openUrl, fallbackUrl, timeoutMs = 900){
+        let done = false;
+        let t = null;
+
+        const cancel = ()=>{
+          done = true;
+          if(t) clearTimeout(t);
+          window.removeEventListener("visibilitychange", onVis, true);
+          window.removeEventListener("pagehide", onHide, true);
+          window.removeEventListener("blur", onBlur, true);
+        };
+
+        const onVis = ()=>{ if(document.hidden) cancel(); };
+        const onHide = ()=> cancel();
+        const onBlur = ()=> cancel();
+
+        window.addEventListener("visibilitychange", onVis, true);
+        window.addEventListener("pagehide", onHide, true);
+        window.addEventListener("blur", onBlur, true);
+
+        // 尝试拉起
+        window.location.href = openUrl;
+
+        // 失败回落
+        t = setTimeout(()=>{
+          if(!done){
+            window.location.replace(fallbackUrl);
+          }
+        }, timeoutMs);
       }
 
-      // 不支持分享：走下载（注意：手机不一定进相册，但至少不会变HTML）
-      const a = document.createElement('a');
-      a.href = URL.createObjectURL(blob);
-      a.download = 'wechat-qr.jpg';
-      document.body.appendChild(a);
-      a.click();
-      a.remove();
-      URL.revokeObjectURL(a.href);
-
-      showToast("已下载二维码（如需进相册请用“打开二维码”后长按保存）");
-    }catch(e){
-      showToast("二维码未找到，请确认 assets/wechat-qr.jpg 路径/大小写正确");
-    }
-  });
-})();
-(function setupAppDeepLinks(){
-  function openWithFallback(schemeUrl, webUrl){
-    // 先尝试唤起 App
-    try{
-      const a = document.createElement('a');
-      a.href = schemeUrl;
-      a.style.display = 'none';
-      document.body.appendChild(a);
-      a.click();
-      a.remove();
-    }catch(e){}
-
-    // 如果没唤起，短延迟回落到网页
-    // iOS/安卓不同浏览器表现不同，700~1200ms通常更稳
-    setTimeout(()=>{
-      window.location.href = webUrl;
-    }, 900);
-  }
-
-  // 抖音
-  const btnDouyin = document.getElementById('btnDouyin');
-  if(btnDouyin){
-    btnDouyin.addEventListener('click', (e)=>{
-      e.preventDefault();
-      const web = btnDouyin.getAttribute('data-web');
-      // 抖音：更通用的唤起方式（不保证100%，但比纯网页强）
-      // iOS/安卓都能尝试
-      const scheme = `snssdk1128://`;
-      openWithFallback(scheme, web);
-    });
-  }
-
-  // 快手
-  const btnKuaishou = document.getElementById('btnKuaishou');
-  if(btnKuaishou){
-    btnKuaishou.addEventListener('click', (e)=>{
-      e.preventDefault();
-      const web = btnKuaishou.getAttribute('data-web');
-      const scheme = `kwai://`;
-      openWithFallback(scheme, web);
-    });
-  }
-
-  // 小红书
-  const btnXhs = document.getElementById('btnXhs');
-  if(btnXhs){
-    btnXhs.addEventListener('click', (e)=>{
-      e.preventDefault();
-      const web = btnXhs.getAttribute('data-web');
-      const scheme = `xhsdiscover://`;
-      openWithFallback(scheme, web);
-    });
-  }
-})();
-// ===== Android 深链：最稳版本（带 fallback，避免白屏 & 必回落网页）=====
-(function setupAndroidDeepLinksV2(){
-  const ua = navigator.userAgent || "";
-  const isAndroid = /Android/i.test(ua);
-
-  function buildIntent({ intentTarget, scheme, pkg, fallbackUrl }) {
-    // intentTarget 示例： "v.kuaishou.com/KArQ2jnp" 或 "xhslink.com/m/xxxx"
-    // scheme 示例： "https"
-    const fb = encodeURIComponent(fallbackUrl);
-    return `intent://${intentTarget}#Intent;scheme=${scheme};package=${pkg};S.browser_fallback_url=${fb};end`;
-  }
-
-  function openWithIntent(el, pkg){
-    if(!isAndroid) return; // iOS/电脑不走 intent
-
-    const fallbackUrl = el.getAttribute("href");
-    let done = false;
-    let t = null;
-
-    const cancel = ()=>{
-      done = true;
-      if(t) clearTimeout(t);
-      window.removeEventListener("visibilitychange", onVis, true);
-      window.removeEventListener("pagehide", onHide, true);
-    };
-
-    const onVis = ()=>{
-      // 成功拉起 App：页面会进入后台（hidden）
-      if(document.hidden) cancel();
-    };
-    const onHide = ()=> cancel();
-
-    window.addEventListener("visibilitychange", onVis, true);
-    window.addEventListener("pagehide", onHide, true);
-
-    // 关键：带 browser_fallback_url，失败就会回落到网页
-    const u = new URL(fallbackUrl);
-    const intentUrl = buildIntent({
-      intentTarget: `${u.host}${u.pathname}${u.search}`,
-      scheme: u.protocol.replace(":", ""),  // https
-      pkg,
-      fallbackUrl
-    });
-
-    // 先尝试 intent
-    window.location.href = intentUrl;
-
-    // 兜底：某些机型/内置浏览器会白屏但不执行 fallback，这里强制回落
-    t = setTimeout(()=>{
-      if(!done){
-        // replace 比 href 更不容易卡历史记录/白屏
-        window.location.replace(fallbackUrl);
+      function buildIntent({pkg, scheme, fallbackUrl}){
+        // 带 browser_fallback_url：多数安卓浏览器失败会自动回落
+        const fb = encodeURIComponent(fallbackUrl);
+        return `intent://#Intent;package=${pkg};scheme=${scheme};S.browser_fallback_url=${fb};end`;
       }
-    }, 900);
-  }
 
-  // 绑定：快手/小红书
-  const btnKs = document.getElementById("btnKs");
-  if(btnKs){
-    btnKs.addEventListener("click", (e)=>{
-      if(isAndroid){
-        e.preventDefault();
-        openWithIntent(btnKs, "com.smile.gifmaker");
-      }
-    }, {passive:false});
-  }
+      function bind(id, cfg){
+        const el = document.getElementById(id);
+        if(!el) return;
 
-  const btnXhs = document.getElementById("btnXhs");
-  if(btnXhs){
-    btnXhs.addEventListener("click", (e)=>{
-      if(isAndroid){
-        e.preventDefault();
-        openWithIntent(btnXhs, "com.xingin.xhs");
+        el.addEventListener('click', (e)=>{
+          e.preventDefault();
+          const web = el.getAttribute('data-web') || cfg.web || "";
+          if(!web) return;
+
+          // 桌面端：直接开网页
+          if(!isIOS && !isAndroid){
+            window.open(web, "_blank");
+            return;
+          }
+
+          if(isIOS){
+            // iOS：Scheme 直跳，失败回落网页（尽量不弹询问框）
+            cancelableFallback(cfg.iosScheme, web, 900);
+            return;
+          }
+
+          if(isAndroid){
+            // Android：Intent（带 fallback），再加一层 setTimeout 兜底
+            const intent = buildIntent({pkg: cfg.androidPkg, scheme: cfg.androidScheme, fallbackUrl: web});
+            cancelableFallback(intent, web, 900);
+            return;
+          }
+        }, {passive:false});
       }
-    }, {passive:false});
-  }
-})();
+
+      // 抖音
+      bind("btnDouyin", {
+        iosScheme: "snssdk1128://",
+        androidPkg: "com.ss.android.ugc.aweme",
+        androidScheme: "snssdk1128",
+      });
+
+      // 快手
+      bind("btnKs", {
+        iosScheme: "kwai://",
+        androidPkg: "com.smile.gifmaker",
+        androidScheme: "kwai",
+      });
+
+      // 小红书
+      bind("btnXhs", {
+        iosScheme: "xhsdiscover://",
+        androidPkg: "com.xingin.xhs",
+        androidScheme: "xhsdiscover",
+      });
+    })();
 
   </script>
 </body>
