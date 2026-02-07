@@ -1422,45 +1422,82 @@
     });
   }
 })();
-// ===== Android：强制 intent 拉起 App（快手 / 小红书）=====
-(function setupAndroidDeepLinks(){
-  const isAndroid = /Android/i.test(navigator.userAgent);
+// ===== Android 深链：最稳版本（带 fallback，避免白屏 & 必回落网页）=====
+(function setupAndroidDeepLinksV2(){
+  const ua = navigator.userAgent || "";
+  const isAndroid = /Android/i.test(ua);
 
-  function bindIntent(btnId, packageName){
-    const el = document.getElementById(btnId);
-    if(!el) return;
+  function buildIntent({ intentTarget, scheme, pkg, fallbackUrl }) {
+    // intentTarget 示例： "v.kuaishou.com/KArQ2jnp" 或 "xhslink.com/m/xxxx"
+    // scheme 示例： "https"
+    const fb = encodeURIComponent(fallbackUrl);
+    return `intent://${intentTarget}#Intent;scheme=${scheme};package=${pkg};S.browser_fallback_url=${fb};end`;
+  }
 
-    el.addEventListener('click', (e)=>{
-      // iOS/电脑：照常走原来的 href（Universal Link / 网页）
-      if(!isAndroid) return;
+  function openWithIntent(el, pkg){
+    if(!isAndroid) return; // iOS/电脑不走 intent
 
-      // Android：用 intent:// 强制拉起 App
-      e.preventDefault();
+    const fallbackUrl = el.getAttribute("href");
+    let done = false;
+    let t = null;
 
-      const url = el.getAttribute('href');
-      try{
-        const u = new URL(url);
-        const intentUrl =
-          `intent://${u.host}${u.pathname}${u.search}` +
-          `#Intent;scheme=${u.protocol.replace(':','')};package=${packageName};end`;
+    const cancel = ()=>{
+      done = true;
+      if(t) clearTimeout(t);
+      window.removeEventListener("visibilitychange", onVis, true);
+      window.removeEventListener("pagehide", onHide, true);
+    };
 
-        // 尝试打开 App
-        window.location.href = intentUrl;
+    const onVis = ()=>{
+      // 成功拉起 App：页面会进入后台（hidden）
+      if(document.hidden) cancel();
+    };
+    const onHide = ()=> cancel();
 
-        // 如果没装 App：回落网页
-        setTimeout(()=>{ window.location.href = url; }, 800);
-      }catch(_){
-        // URL 解析失败就直接回落网页
-        window.location.href = url;
+    window.addEventListener("visibilitychange", onVis, true);
+    window.addEventListener("pagehide", onHide, true);
+
+    // 关键：带 browser_fallback_url，失败就会回落到网页
+    const u = new URL(fallbackUrl);
+    const intentUrl = buildIntent({
+      intentTarget: `${u.host}${u.pathname}${u.search}`,
+      scheme: u.protocol.replace(":", ""),  // https
+      pkg,
+      fallbackUrl
+    });
+
+    // 先尝试 intent
+    window.location.href = intentUrl;
+
+    // 兜底：某些机型/内置浏览器会白屏但不执行 fallback，这里强制回落
+    t = setTimeout(()=>{
+      if(!done){
+        // replace 比 href 更不容易卡历史记录/白屏
+        window.location.replace(fallbackUrl);
+      }
+    }, 900);
+  }
+
+  // 绑定：快手/小红书
+  const btnKs = document.getElementById("btnKs");
+  if(btnKs){
+    btnKs.addEventListener("click", (e)=>{
+      if(isAndroid){
+        e.preventDefault();
+        openWithIntent(btnKs, "com.smile.gifmaker");
       }
     }, {passive:false});
   }
 
-  // 快手（国内快手常用包名）
-  bindIntent('btnKs', 'com.smile.gifmaker');
-
-  // 小红书包名
-  bindIntent('btnXhs', 'com.xingin.xhs');
+  const btnXhs = document.getElementById("btnXhs");
+  if(btnXhs){
+    btnXhs.addEventListener("click", (e)=>{
+      if(isAndroid){
+        e.preventDefault();
+        openWithIntent(btnXhs, "com.xingin.xhs");
+      }
+    }, {passive:false});
+  }
 })();
 
   </script>
