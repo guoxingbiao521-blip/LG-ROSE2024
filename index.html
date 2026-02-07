@@ -182,7 +182,6 @@
       box-shadow: 0 10px 30px rgba(0,0,0,.35);
     }
 
-    /* 主标题 */
     .hero-title {
       display: inline-block;
       width: fit-content;
@@ -211,8 +210,6 @@
       color: transparent;
       -webkit-text-fill-color: transparent;
 
-      -webkit-text-stroke: 0;
-
       text-shadow:
         0 0 6px rgba(255,255,255,.16),
         0 0 14px rgba(111,217,255,.28),
@@ -222,50 +219,6 @@
       text-rendering: geometricPrecision;
 
       position: relative;
-    }
-
-    .hero-title::before{
-      content: attr(data-text);
-      position:absolute;
-      inset:0;
-      z-index:-2;
-      pointer-events:none;
-
-      text-align: inherit;
-      font: inherit;
-      letter-spacing: inherit;
-      line-height: inherit;
-      white-space: inherit;
-
-      color: rgba(10, 26, 48, .92);
-      transform: translate(10px, 12px);
-
-      text-shadow:
-        1px 1px 0 rgba(8, 18, 34, .82),
-        2px 2px 0 rgba(8, 18, 34, .74),
-        3px 3px 0 rgba(8, 18, 34, .66),
-        4px 4px 0 rgba(8, 18, 34, .58),
-        6px 8px 14px rgba(0,0,0,.42);
-    }
-
-    .hero-title::after{
-      content: attr(data-text);
-      position:absolute;
-      inset:0;
-      z-index:-1;
-      pointer-events:none;
-
-      text-align: inherit;
-      font: inherit;
-      letter-spacing: inherit;
-      line-height: inherit;
-      white-space: inherit;
-
-      color: transparent;
-      -webkit-text-fill-color: transparent;
-
-      -webkit-text-stroke: 2px rgba(245,252,255,.78);
-      transform: translate(1px, 1px);
     }
 
     .slogan-row{
@@ -294,17 +247,6 @@
       position:relative;
       overflow:hidden;
     }
-    .slogan::before{
-      content:"";
-      position:absolute;
-      inset: -2px;
-      border-radius: 999px;
-      background: radial-gradient(140px 60px at 20% 30%, rgba(62,166,255,.22), transparent 65%),
-                  radial-gradient(140px 60px at 80% 50%, rgba(255,43,134,.16), transparent 65%);
-      filter: blur(10px);
-      opacity:.9;
-    }
-    .slogan span{position:relative; z-index:1; font-size: 16px}
 
     .cta{
       display:flex;
@@ -340,9 +282,6 @@
       color: #fff;
       box-shadow: 0 18px 44px rgba(255,43,134,.18);
     }
-    .btn.primary:hover{
-      box-shadow: 0 22px 54px rgba(255,43,134,.26);
-    }
 
     section{margin-top: 26px;}
     .section-card{
@@ -354,18 +293,6 @@
       position:relative;
       overflow:hidden;
     }
-    .section-card::after{
-      content:"";
-      position:absolute;
-      inset:-2px;
-      pointer-events:none;
-      background:
-        radial-gradient(520px 220px at 18% 35%, rgba(62,166,255,.12), transparent 62%),
-        radial-gradient(520px 220px at 80% 30%, rgba(255,43,134,.10), transparent 62%);
-      filter: blur(14px);
-      opacity:.9;
-    }
-    .section-card > *{position:relative; z-index:2;}
 
     .h{
       display:flex;
@@ -400,13 +327,6 @@
       background-size: cover;
       background-position:center;
       background-repeat:no-repeat;
-    }
-    .imgbox::after{
-      content:"";
-      position:absolute;
-      inset:0;
-      background: linear-gradient(180deg, transparent, rgba(0,0,0,.25));
-      pointer-events:none;
     }
 
     .imgbox-about{
@@ -581,29 +501,6 @@
       display:block;
       filter: saturate(1.05) contrast(1.05);
     }
-    .playbadge{
-      position:absolute;
-      left: 12px; bottom: 12px;
-      display:flex;
-      align-items:center;
-      gap:10px;
-      padding: 10px 12px;
-      border-radius: 999px;
-      background: rgba(10,14,40,.60);
-      border:1px solid rgba(255,255,255,.14);
-      box-shadow: 0 16px 44px rgba(0,0,0,.38);
-      color: rgba(233,238,255,.92);
-      font-weight: 1000;
-      letter-spacing: .6px;
-      backdrop-filter: blur(10px);
-      -webkit-backdrop-filter: blur(10px);
-    }
-    .playbadge svg{width:18px;height:18px;opacity:.95}
-    .playbadge small{
-      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
-      font-weight: 900;
-      opacity:.85;
-    }
 
     .contact-row{
       width: 100%;
@@ -697,11 +594,6 @@
       padding: 14px 14px 12px;
       border-bottom: 1px solid rgba(255,255,255,.10);
     }
-    .dialog-title{
-      display:flex;align-items:center;gap:10px;
-      font-weight: 1000;
-      letter-spacing: .8px;
-    }
     .close{
       border:1px solid rgba(255,255,255,.16);
       background: rgba(255,255,255,.05);
@@ -780,65 +672,32 @@
       flex:0 0 auto;
     }
 
-    /* ✅ 视频卡片：隐藏文件名 */
+    /* 你之前隐藏 UI 的设置保留 */
     .playbadge small{ display:none !important; }
-    /* ✅ 弹窗：隐藏顶部标题条(文件名)与关闭按钮（你要纯净界面） */
     .dialog-h{ display:none !important; }
     .dialog-b{ padding-top: 18px; }
-    /* ✅ 视频卡片：彻底隐藏底部播放条（圆形icon+背景条） */
     .playbadge{ display:none !important; }
 
-    /* ===================== Responsive ===================== */
     @media (max-width: 980px){
       .intro-grid{grid-template-columns: 1fr;}
       .imgbox{min-height: 210px;}
-
       .svc-grid{grid-template-columns: repeat(2, minmax(0,1fr));}
       .media-grid{grid-template-columns: repeat(2, minmax(0,1fr));}
       .video-grid{grid-template-columns: 1fr;}
       .wechat-grid{grid-template-columns: 1fr;}
-
-      .hero-title{
-        font-size: clamp(18px, 7.2vw, 56px);
-      }
-      .hero-title::before,
-      .hero-title::after {
-        content: none !important;
-        display: none !important;
-      }
-
+      .hero-title{font-size: clamp(18px, 7.2vw, 56px);}
       .contact-row{grid-template-columns: repeat(3, minmax(0, 1fr));}
-    }
-
-    @media (min-width: 981px){
-      .intro-grid{
-        display:grid;
-        grid-template-columns: 420px 1fr;
-        gap: 18px;
-        align-items: stretch;
-      }
-      .intro-grid .imgbox{
-        min-height: 320px;
-        background-position: center;
-        background-size: cover;
-      }
     }
 
     @media (max-width: 560px){
       header{border-radius: 18px;}
       .brand-title{font-size: 12px;}
       .navpill{font-size: 12px; padding: 8px 10px;}
-
       .hero { padding: 20px 8px 16px; }
-
       .tagline{font-size: 14px;}
-
       .slogan-row{grid-template-columns: repeat(2, minmax(0,1fr));}
-      .slogan{max-width: none;}
-
       .svc-grid{grid-template-columns: 1fr;}
       .media-grid{grid-template-columns: 1fr;}
-
       .contact-row{grid-template-columns: repeat(2, minmax(0, 1fr));}
       .iconbtn{min-height: 104px;}
       .iconimg{width: 38px; height: 38px;}
@@ -866,7 +725,6 @@
 
     <div class="hero" id="top">
       <div class="tagline">因为专注 · 所以专业 · 十年老店</div>
-
       <h1 class="hero-title" data-text="欢迎VIP贵宾来到筑梦电子">欢迎VIP贵宾来到筑梦电子</h1>
 
       <div class="slogan-row" aria-label="四个核心卖点">
@@ -982,6 +840,7 @@
               <div>上传图片到</div><small>assets/photo-01.jpg</small>
             </div>
           </div>
+
           <div class="tile" data-type="image" data-src="assets/photo-02.jpg">
             <img src="assets/photo-02.jpg" alt="photo-02" loading="lazy"
                  onerror="this.style.display='none'; this.parentElement.querySelector('.placeholder').style.display='flex';" />
@@ -989,6 +848,7 @@
               <div>上传图片到</div><small>assets/photo-02.jpg</small>
             </div>
           </div>
+
           <div class="tile" data-type="image" data-src="assets/photo-03.jpg">
             <img src="assets/photo-03.jpg" alt="photo-03" loading="lazy"
                  onerror="this.style.display='none'; this.parentElement.querySelector('.placeholder').style.display='flex';" />
@@ -996,6 +856,7 @@
               <div>上传图片到</div><small>assets/photo-03.jpg</small>
             </div>
           </div>
+
           <div class="tile" data-type="image" data-src="assets/photo-04.jpg">
             <img src="assets/photo-04.jpg" alt="photo-04" loading="lazy"
                  onerror="this.style.display='none'; this.parentElement.querySelector('.placeholder').style.display='flex';" />
@@ -1003,6 +864,7 @@
               <div>上传图片到</div><small>assets/photo-04.jpg</small>
             </div>
           </div>
+
           <div class="tile" data-type="image" data-src="assets/photo-05.jpg">
             <img src="assets/photo-05.jpg" alt="photo-05" loading="lazy"
                  onerror="this.style.display='none'; this.parentElement.querySelector('.placeholder').style.display='flex';" />
@@ -1010,6 +872,7 @@
               <div>上传图片到</div><small>assets/photo-05.jpg</small>
             </div>
           </div>
+
           <div class="tile" data-type="image" data-src="assets/photo-06.jpg">
             <img src="assets/photo-06.jpg" alt="photo-06" loading="lazy"
                  onerror="this.style.display='none'; this.parentElement.querySelector('.placeholder').style.display='flex';" />
@@ -1026,10 +889,7 @@
             <div class="placeholder" style="display:none">
               <div>上传视频到</div><small>assets/video-01.mp4</small>
             </div>
-            <div class="playbadge">
-              <svg viewBox="0 0 24 24" fill="none"><path d="M9.2 7.6v8.8L17 12 9.2 7.6Z" fill="currentColor"/><path d="M12 21.2a9.2 9.2 0 1 0 0-18.4 9.2 9.2 0 0 0 0 18.4Z" stroke="currentColor" opacity=".7"/></svg>
-              <small>video-01.mp4</small>
-            </div>
+            <div class="playbadge"></div>
           </div>
 
           <div class="vtile" data-type="video" data-src="assets/video-02.mp4">
@@ -1038,10 +898,7 @@
             <div class="placeholder" style="display:none">
               <div>上传视频到</div><small>assets/video-02.mp4</small>
             </div>
-            <div class="playbadge">
-              <svg viewBox="0 0 24 24" fill="none"><path d="M9.2 7.6v8.8L17 12 9.2 7.6Z" fill="currentColor"/><path d="M12 21.2a9.2 9.2 0 1 0 0-18.4 9.2 9.2 0 0 0 0 18.4Z" stroke="currentColor" opacity=".7"/></svg>
-              <small>video-02.mp4</small>
-            </div>
+            <div class="playbadge"></div>
           </div>
 
           <div class="vtile" data-type="video" data-src="assets/video-03.mp4">
@@ -1050,10 +907,7 @@
             <div class="placeholder" style="display:none">
               <div>上传视频到</div><small>assets/video-03.mp4</small>
             </div>
-            <div class="playbadge">
-              <svg viewBox="0 0 24 24" fill="none"><path d="M9.2 7.6v8.8L17 12 9.2 7.6Z" fill="currentColor"/><path d="M12 21.2a9.2 9.2 0 1 0 0-18.4 9.2 9.2 0 0 0 0 18.4Z" stroke="currentColor" opacity=".7"/></svg>
-              <small>video-03.mp4</small>
-            </div>
+            <div class="playbadge"></div>
           </div>
         </div>
       </div>
@@ -1079,33 +933,29 @@
             <div class="iconlabel">Gmail</div>
           </a>
 
-         <!-- 抖音 -->
-<a class="iconbtn" id="btnDouyin"
-   href="https://www.douyin.com/user/MS4wLjABAAAAxh3PjSsMOxQ1TW5_NEtlz5bYVFLAGaBV7KMWdgZoX_XVXMKV0k268GGb_9hRSESc"
-   target="_blank" rel="noopener"
-   aria-label="抖音" title="抖音">
-  <img class="iconimg" alt="抖音" src="https://cdn.simpleicons.org/tiktok?viewbox=auto">
-  <div class="iconlabel">抖音</div>
-</a>
+          <!-- 抖音：href 置空防止先跳网页（网页回退在 JS 里） -->
+          <a class="iconbtn" id="btnDouyin"
+             href="javascript:void(0)"
+             aria-label="抖音" title="抖音">
+            <img class="iconimg" alt="抖音" src="https://cdn.simpleicons.org/tiktok?viewbox=auto">
+            <div class="iconlabel">抖音</div>
+          </a>
 
-<!-- 快手 -->
-<a class="iconbtn" id="btnKs"
-   href="https://live.kuaishou.com/profile/LG202412?fid=5155307591&cc=share_copylink&followRefer=151&shareMethod=TOKEN&kpn=KUAISHOU&subBiz=PROFILE&shareId=18837177814837&shareToken=X-6eBncBCAD8tiSu&shareMode=APP&originShareId=18837177814837&appType=1&shareObjectId=5155307591&shareUrlOpened=0&timestamp=1770332250605"
-   target="_blank" rel="noopener"
-   aria-label="快手" title="快手">
-  <img class="iconimg" alt="快手" src="https://cdn.simpleicons.org/kuaishou?viewbox=auto">
-  <div class="iconlabel">快手</div>
-</a>
+          <!-- 快手 -->
+          <a class="iconbtn" id="btnKs"
+             href="javascript:void(0)"
+             aria-label="快手" title="快手">
+            <img class="iconimg" alt="快手" src="https://cdn.simpleicons.org/kuaishou?viewbox=auto">
+            <div class="iconlabel">快手</div>
+          </a>
 
-<!-- 小红书 -->
-<a class="iconbtn" id="btnXhs"
-   href="https://www.xiaohongshu.com/user/profile/691edc530000000037005e68?xsec_token=YBvZcuTsC3jpZNy55EXdOFujWxRHVJKE6pRqPD-Re0Y_I=&xsec_source=app_share&xhsshare=CopyLink&shareRedId=OD8zRUdIOTw2NzUyOTgwNjk6OTc5SjxB&apptime=1770332268&share_id=8262883d1fed43ae9ac17736151d3094"
-   target="_blank" rel="noopener"
-   aria-label="小红书" title="小红书">
-  <img class="iconimg" alt="小红书" src="https://cdn.simpleicons.org/xiaohongshu?viewbox=auto">
-  <div class="iconlabel">小红书</div>
-</a>
-
+          <!-- 小红书 -->
+          <a class="iconbtn" id="btnXhs"
+             href="javascript:void(0)"
+             aria-label="小红书" title="小红书">
+            <img class="iconimg" alt="小红书" src="https://cdn.simpleicons.org/xiaohongshu?viewbox=auto">
+            <div class="iconlabel">小红书</div>
+          </a>
         </div>
 
         <div class="foot">© 2026 筑梦电子 · roselg.xyz</div>
@@ -1163,9 +1013,11 @@
   </div>
 
   <script>
+    /* ================== 基本配置 ================== */
     const WECHAT_ID = "LG-202412";
     const EMAIL = "guoxingbiao521@gmail.com";
 
+    /* ================== 工具函数 ================== */
     function isMobile(){
       return /Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
     }
@@ -1173,6 +1025,7 @@
     function showToast(msg){
       const t = document.getElementById('toast');
       const tt = document.getElementById('toastText');
+      if(!t || !tt) return;
       tt.textContent = msg;
       t.classList.add('show');
       clearTimeout(showToast._timer);
@@ -1190,7 +1043,7 @@
         ta.style.top = '-9999px';
         document.body.appendChild(ta);
         ta.focus(); ta.select();
-        let ok=false;
+        let ok = false;
         try{ ok = document.execCommand('copy'); }catch(_){}
         document.body.removeChild(ta);
         return ok;
@@ -1206,6 +1059,7 @@
       document.body.removeChild(a);
     }
 
+    /* ================== Gmail ================== */
     (function setupGmail(){
       const btn = document.getElementById('btnGmail');
       if(!btn) return;
@@ -1218,122 +1072,134 @@
       }
     })();
 
-    const btnWechat = document.getElementById('btnWechat');
-    const wechatModal = document.getElementById('wechatModal');
+    /* ================== 微信弹窗 ================== */
+    (function setupWechat(){
+      const btnWechat = document.getElementById('btnWechat');
+      const wechatModal = document.getElementById('wechatModal');
+      if(!btnWechat || !wechatModal) return;
 
-    function openWechatModal(){
-      wechatModal.classList.add('show');
-      wechatModal.setAttribute('aria-hidden', 'false');
-    }
-    function closeWechatModal(){
-      wechatModal.classList.remove('show');
-      wechatModal.setAttribute('aria-hidden', 'true');
-    }
-
-    btnWechat.addEventListener('click', async ()=>{
-      const ok = await copyText(WECHAT_ID);
-      showToast(ok ? `已复制微信号：${WECHAT_ID}` : `复制失败，请手动复制：${WECHAT_ID}`);
-
-      tryOpenScheme('weixin://');
-      openWechatModal();
-    });
-
-    document.getElementById('closeWechat').addEventListener('click', closeWechatModal);
-    document.getElementById('wechatCopy').addEventListener('click', async ()=>{
-      const ok = await copyText(WECHAT_ID);
-      showToast(ok ? `已复制微信号：${WECHAT_ID}` : `复制失败，请手动复制：${WECHAT_ID}`);
-    });
-    document.getElementById('wechatOpen').addEventListener('click', ()=>{
-      tryOpenScheme('weixin://');
-      showToast("已尝试打开微信");
-    });
-    wechatModal.addEventListener('click', (e)=>{
-      if(e.target === wechatModal) closeWechatModal();
-    });
-
-    const mediaModal = document.getElementById('mediaModal');
-    const mediaBody = document.getElementById('mediaBody');
-    const modalTitle = document.getElementById('modalTitle');
-
-    function openMediaModal(title, node){
-      modalTitle.textContent = title || "预览";
-      mediaBody.innerHTML = "";
-      mediaBody.appendChild(node);
-      mediaModal.classList.add('show');
-      mediaModal.setAttribute('aria-hidden', 'false');
-    }
-
-    function closeMediaModal(){
-      mediaModal.classList.remove('show');
-      mediaModal.setAttribute('aria-hidden', 'true');
-
-      // ✅ 关键：关闭时彻底停止声音/释放资源（避免退出还在播放）
-      const v = mediaBody.querySelector('video');
-      if(v){
-        try{
-          v.pause();
-          v.removeAttribute('src');
-          v.load();
-        }catch(e){}
+      function openWechatModal(){
+        wechatModal.classList.add('show');
+        wechatModal.setAttribute('aria-hidden', 'false');
       }
-      mediaBody.innerHTML = "";
-    }
-    document.getElementById('closeMedia').addEventListener('click', closeMediaModal);
-    mediaModal.addEventListener('click', (e)=>{
-      if(e.target === mediaModal) closeMediaModal();
-    });
+      function closeWechatModal(){
+        wechatModal.classList.remove('show');
+        wechatModal.setAttribute('aria-hidden', 'true');
+      }
 
-    document.querySelectorAll('.tile[data-type="image"]').forEach(tile=>{
-      tile.addEventListener('click', ()=>{
-        const src = tile.getAttribute('data-src');
-        const img = document.createElement('img');
-        img.className = 'media-view';
-        img.alt = '预览图片';
-        img.src = src;
-        img.onerror = ()=> showToast("图片尚未上传或路径不正确");
-        openMediaModal("", img); // ✅ 不传文件名（你要纯净）
+      btnWechat.addEventListener('click', async ()=>{
+        const ok = await copyText(WECHAT_ID);
+        showToast(ok ? `已复制微信号：${WECHAT_ID}` : `复制失败，请手动复制：${WECHAT_ID}`);
+        tryOpenScheme('weixin://');
+        openWechatModal();
       });
-    });
 
-    document.querySelectorAll('.vtile[data-type="video"]').forEach(tile=>{
-      const pv = tile.querySelector('video');
-      if(pv){
-        pv.muted = true;
-        pv.loop = true;
-        pv.playsInline = true;
-        pv.addEventListener('canplay', ()=>{ pv.play().catch(()=>{}); }, {once:true});
-      }
+      const closeBtn = document.getElementById('closeWechat');
+      const copyBtn  = document.getElementById('wechatCopy');
+      const openBtn  = document.getElementById('wechatOpen');
 
-      tile.addEventListener('click', ()=>{
-        const src = tile.getAttribute('data-src');
-        const v = document.createElement('video');
-        v.className = 'media-view';
-        v.src = src;
-        v.controls = true;
-        v.autoplay = true;
-        v.muted = false;
-        v.playsInline = true;
-        v.onloadedmetadata = ()=> v.play().catch(()=>{});
-        v.onerror = ()=> showToast("视频尚未上传或路径不正确");
-        openMediaModal("", v); // ✅ 不传文件名（你要纯净）
+      if(closeBtn) closeBtn.addEventListener('click', closeWechatModal);
+      if(copyBtn) copyBtn.addEventListener('click', async ()=>{
+        const ok = await copyText(WECHAT_ID);
+        showToast(ok ? `已复制微信号：${WECHAT_ID}` : `复制失败，请手动复制：${WECHAT_ID}`);
       });
-    });
+      if(openBtn) openBtn.addEventListener('click', ()=>{
+        tryOpenScheme('weixin://');
+        showToast("已尝试打开微信");
+      });
 
-    window.addEventListener('keydown', (e)=>{
-      if(e.key === "Escape"){
-        if(mediaModal.classList.contains('show')) closeMediaModal();
-        if(wechatModal.classList.contains('show')) closeWechatModal();
+      wechatModal.addEventListener('click', (e)=>{
+        if(e.target === wechatModal) closeWechatModal();
+      });
+
+      window.addEventListener('keydown', (e)=>{
+        if(e.key === "Escape" && wechatModal.classList.contains('show')) closeWechatModal();
+      });
+    })();
+
+    /* ================== 媒体弹窗 ================== */
+    (function setupMediaModal(){
+      const mediaModal = document.getElementById('mediaModal');
+      const mediaBody  = document.getElementById('mediaBody');
+      const modalTitle = document.getElementById('modalTitle');
+      const closeBtn   = document.getElementById('closeMedia');
+      if(!mediaModal || !mediaBody || !modalTitle) return;
+
+      function openMediaModal(title, node){
+        modalTitle.textContent = title || "预览";
+        mediaBody.innerHTML = "";
+        mediaBody.appendChild(node);
+        mediaModal.classList.add('show');
+        mediaModal.setAttribute('aria-hidden', 'false');
       }
-    });
 
-    // ✅ 尝试“保存到相册/分享”（iOS/部分安卓支持），不支持则下载
+      function closeMediaModal(){
+        mediaModal.classList.remove('show');
+        mediaModal.setAttribute('aria-hidden', 'true');
+        const v = mediaBody.querySelector('video');
+        if(v){
+          try{
+            v.pause();
+            v.removeAttribute('src');
+            v.load();
+          }catch(e){}
+        }
+        mediaBody.innerHTML = "";
+      }
+
+      if(closeBtn) closeBtn.addEventListener('click', closeMediaModal);
+      mediaModal.addEventListener('click', (e)=>{
+        if(e.target === mediaModal) closeMediaModal();
+      });
+
+      document.querySelectorAll('.tile[data-type="image"]').forEach(tile=>{
+        tile.addEventListener('click', ()=>{
+          const src = tile.getAttribute('data-src');
+          const img = document.createElement('img');
+          img.className = 'media-view';
+          img.alt = '预览图片';
+          img.src = src;
+          img.onerror = ()=> showToast("图片尚未上传或路径不正确");
+          openMediaModal("", img);
+        });
+      });
+
+      document.querySelectorAll('.vtile[data-type="video"]').forEach(tile=>{
+        const pv = tile.querySelector('video');
+        if(pv){
+          pv.muted = true;
+          pv.loop = true;
+          pv.playsInline = true;
+          pv.addEventListener('canplay', ()=>{ pv.play().catch(()=>{}); }, {once:true});
+        }
+
+        tile.addEventListener('click', ()=>{
+          const src = tile.getAttribute('data-src');
+          const v = document.createElement('video');
+          v.className = 'media-view';
+          v.src = src;
+          v.controls = true;
+          v.autoplay = true;
+          v.muted = false;
+          v.playsInline = true;
+          v.onloadedmetadata = ()=> v.play().catch(()=>{});
+          v.onerror = ()=> showToast("视频尚未上传或路径不正确");
+          openMediaModal("", v);
+        });
+      });
+
+      window.addEventListener('keydown', (e)=>{
+        if(e.key === "Escape" && mediaModal.classList.contains('show')) closeMediaModal();
+      });
+    })();
+
+    /* ================== 保存二维码 ================== */
     (function setupSaveQr(){
       const btn = document.getElementById('saveQr');
       if(!btn) return;
 
       btn.addEventListener('click', async ()=>{
         const url = 'assets/wechat-qr.jpg';
-
         try{
           const res = await fetch(url, {cache:'no-store'});
           if(!res.ok) throw new Error('QR fetch failed');
@@ -1362,1499 +1228,140 @@
       });
     })();
 
-   <!doctype html>
-<html lang="zh-CN">
-<head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>筑梦电子 · VIP服务站 · 7×24h服务</title>
-  <meta name="description" content="筑梦电子 · VIP服务站 · 7×24h服务｜电子产品 / 金融业务 / AI技术 / 网络服务 / 游戏服务 / 懒人特殊服务" />
-  <style>
-    :root{
-      --bg0:#070916;
-      --bg1:#0b1030;
-      --glass: rgba(255,255,255,.06);
-      --glass2: rgba(255,255,255,.08);
-      --line: rgba(255,255,255,.10);
-      --text:#e9eeff;
-      --muted: rgba(233,238,255,.78);
+    /* ================== 社交App：优先直达主页，失败回退网页 ================== */
+    (function socialDeepLinksOnly(){
+      const ua = navigator.userAgent || "";
+      const isIOS = /iPhone|iPad|iPod/i.test(ua);
+      const isAndroid = /Android/i.test(ua);
 
-      --rose:#ff2b86;
-      --rose2:#ff5aa7;
-      --rose3:#b31262;
-      --blue:#3ea6ff;
-      --blue2:#87d7ff;
-      --cyan:#8ff4ff;
+      const btnDy  = document.getElementById("btnDouyin");
+      const btnKs  = document.getElementById("btnKs");
+      const btnXhs = document.getElementById("btnXhs");
+      if(!btnDy || !btnKs || !btnXhs) return;
 
-      --shadow: 0 18px 60px rgba(0,0,0,.55);
-      --radius: 22px;
-      --radius2: 16px;
-    }
+      // 你的网页端主页链接（回退用）
+      const WEB = {
+        douyin: "https://www.douyin.com/user/MS4wLjABAAAAxh3PjSsMOxQ1TW5_NEtlz5bYVFLAGaBV7KMWdgZoX_XVXMKV0k268GGb_9hRSESc",
+        kuaishou: "https://live.kuaishou.com/profile/LG202412?fid=5155307591&cc=share_copylink&followRefer=151&shareMethod=TOKEN&kpn=KUAISHOU&subBiz=PROFILE&shareId=18837177814837&shareToken=X-6eBncBCAD8tiSu&shareMode=APP&originShareId=18837177814837&appType=1&shareObjectId=5155307591&shareUrlOpened=0&timestamp=1770332250605",
+        xhs: "https://www.xiaohongshu.com/user/profile/691edc530000000037005e68?xsec_token=YBvZcuTsC3jpZNy55EXdOFujWxRHVJKE6pRqPD-Re0Y_I=&xsec_source=app_share&xhsshare=CopyLink&shareRedId=OD8zRUdIOTw2NzUyOTgwNjk6OTc5SjxB&apptime=1770332268&share_id=8262883d1fed43ae9ac17736151d3094"
+      };
 
-    *{box-sizing:border-box}
-    html{scroll-behavior:smooth}
-    body{
-      margin:0;
-      font-family: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "PingFang SC", "Microsoft Yahei", "Noto Sans CJK SC", sans-serif;
-      color:var(--text);
+      // 主页ID
+      const ID = {
+        douyin_sec_uid: "MS4wLjABAAAAxh3PjSsMOxQ1TW5_NEtlz5bYVFLAGaBV7KMWdgZoX_XVXMKV0k268GGb_9hRSESc",
+        kuaishou_user_id: "5155307591",
+        kuaishou_kwai_id: "LG202412",
+        xhs_user_id: "691edc530000000037005e68"
+      };
 
-      background:
-        radial-gradient(1200px 720px at 18% 18%, rgba(255,43,134,.40), transparent 62%),
-        radial-gradient(980px 680px at 82% 18%, rgba(255,90,167,.34), transparent 62%),
-        radial-gradient(1100px 760px at 55% 92%, rgba(179,18,98,.26), transparent 65%),
-        radial-gradient(900px 560px at 22% 78%, rgba(255,43,134,.22), transparent 66%),
-        radial-gradient(900px 560px at 86% 72%, rgba(62,166,255,.16), transparent 66%),
-        linear-gradient(180deg, var(--bg1), var(--bg0));
+      // iOS：用 a.click 触发 scheme，失败再回退网页
+      function openIOS(appUrl, fallbackUrl, timeoutMs=900){
+        const a = document.createElement('a');
+        a.href = appUrl;
+        a.style.display = 'none';
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
 
-      min-height:100vh;
-      overflow-x:hidden;
-      background-attachment: fixed;
-    }
-
-    body::before{
-      content:"";
-      position:fixed;
-      inset:-30px;
-      pointer-events:none;
-      z-index:-1;
-      opacity:1;
-      background:
-        radial-gradient(420px 420px at 14% 22%, rgba(255,43,134,.22), transparent 65%),
-        radial-gradient(520px 520px at 28% 78%, rgba(255,90,167,.18), transparent 68%),
-        radial-gradient(460px 460px at 70% 30%, rgba(255,43,134,.16), transparent 68%),
-        radial-gradient(680px 680px at 86% 74%, rgba(179,18,98,.14), transparent 72%),
-        radial-gradient(820px 620px at 52% 58%, rgba(62,166,255,.10), transparent 72%);
-      filter: saturate(1.22) contrast(1.05);
-    }
-
-    .wrap{
-      width:min(1180px, calc(100% - 36px));
-      margin:0 auto;
-      padding: 22px 0 76px;
-    }
-
-    header{
-      position: relative;
-      top: auto;
-
-      z-index:50;
-      margin: 10px auto 22px;
-      backdrop-filter: blur(14px);
-      -webkit-backdrop-filter: blur(14px);
-      background: linear-gradient(180deg, rgba(10,14,40,.62), rgba(10,14,40,.28));
-      border: 1px solid var(--line);
-      border-radius: 999px;
-      box-shadow: var(--shadow);
-      display:flex;
-      align-items:center;
-      justify-content:space-between;
-      padding: 10px 12px;
-    }
-
-    .brand{
-      display:flex;
-      align-items:center;
-      gap:10px;
-      padding: 6px 10px;
-      border-radius:999px;
-    }
-    .dot{
-      width:8px;height:8px;border-radius:999px;
-      background: radial-gradient(circle at 30% 30%, #ffd2e7, var(--rose));
-      box-shadow: 0 0 14px rgba(255,43,134,.7);
-      flex:0 0 auto;
-    }
-    .brand-title{
-      font-weight:800;
-      letter-spacing:.8px;
-      color:rgba(233,238,255,.96);
-      text-shadow: 0 0 12px rgba(62,166,255,.18), 0 0 18px rgba(255,43,134,.14);
-      white-space:nowrap;
-      font-size: 14px;
-    }
-
-    nav{
-      display:flex;
-      gap:10px;
-      align-items:center;
-      padding-right: 6px;
-      flex-wrap:wrap;
-      justify-content:flex-end;
-    }
-    .navpill{
-      text-decoration:none;
-      color:rgba(233,238,255,.88);
-      font-weight:700;
-      font-size: 13px;
-      padding: 9px 12px;
-      border-radius: 999px;
-      border:1px solid rgba(255,255,255,.10);
-      background: rgba(255,255,255,.04);
-      transition: transform .15s ease, background .15s ease, border-color .15s ease;
-    }
-    .navpill:hover{
-      transform: translateY(-1px);
-      background: rgba(255,255,255,.07);
-      border-color: rgba(255,255,255,.16);
-    }
-
-    .hero{
-      border-radius: var(--radius);
-      border:1px solid rgba(255,255,255,.10);
-      background:
-        radial-gradient(900px 380px at 18% 20%, rgba(62,166,255,.26), transparent 60%),
-        radial-gradient(900px 380px at 85% 30%, rgba(255,43,134,.20), transparent 60%),
-        linear-gradient(180deg, rgba(255,255,255,.08), rgba(255,255,255,.03));
-      box-shadow: var(--shadow);
-
-      padding: clamp(18px, 2.6vw, 32px);
-
-      position:relative;
-      overflow: visible;
-      text-align:center;
-    }
-
-    .hero::after{
-      content:"";
-      position:absolute;
-      inset:-2px;
-      pointer-events:none;
-      border-radius: calc(var(--radius) + 2px);
-      background:
-        radial-gradient(520px 220px at 24% 30%, rgba(62,166,255,.16), transparent 62%),
-        radial-gradient(520px 220px at 76% 34%, rgba(255,43,134,.14), transparent 62%);
-      filter: blur(12px);
-      opacity:.95;
-    }
-    .hero > *{position:relative; z-index:2;}
-
-    .tagline{
-      width:fit-content;
-      margin: 0 auto 14px;
-      padding: 9px 16px;
-      border-radius: 999px;
-      border: 1px solid rgba(255,255,255,.14);
-      background: rgba(10,14,40,.38);
-      font-weight: 900;
-      font-size: 16px;
-      letter-spacing: 1.3px;
-      color: #eaf6ff;
-      text-shadow:
-        0 0 12px rgba(62,166,255,.55),
-        0 0 24px rgba(143,244,255,.26),
-        0 0 18px rgba(255,43,134,.22);
-      box-shadow: 0 10px 30px rgba(0,0,0,.35);
-    }
-
-    /* 主标题 */
-    .hero-title {
-      display: inline-block;
-      width: fit-content;
-      max-width: 100%;
-      margin: 10px auto;
-      white-space: nowrap;
-      padding: 0;
-      text-align: center;
-
-      --fs: clamp(30px, 4.8vw, 76px);
-      --ls: clamp(0.03em, 0.18vw, 0.12em);
-      font-size: var(--fs);
-      letter-spacing: var(--ls);
-      font-weight: 1000;
-      line-height: 1.08;
-
-      background: linear-gradient(180deg,
-        #ffffff 0%,
-        #eaf9ff 18%,
-        #bfeeff 42%,
-        #6fd9ff 66%,
-        #1aa6ff 86%,
-        #116bff 100%);
-      -webkit-background-clip: text;
-      background-clip: text;
-      color: transparent;
-      -webkit-text-fill-color: transparent;
-
-      -webkit-text-stroke: 0;
-
-      text-shadow:
-        0 0 6px rgba(255,255,255,.16),
-        0 0 14px rgba(111,217,255,.28),
-        0 0 26px rgba(26,166,255,.18);
-
-      -webkit-font-smoothing: antialiased;
-      text-rendering: geometricPrecision;
-
-      position: relative;
-    }
-
-    .hero-title::before{
-      content: attr(data-text);
-      position:absolute;
-      inset:0;
-      z-index:-2;
-      pointer-events:none;
-
-      text-align: inherit;
-      font: inherit;
-      letter-spacing: inherit;
-      line-height: inherit;
-      white-space: inherit;
-
-      color: rgba(10, 26, 48, .92);
-      transform: translate(10px, 12px);
-
-      text-shadow:
-        1px 1px 0 rgba(8, 18, 34, .82),
-        2px 2px 0 rgba(8, 18, 34, .74),
-        3px 3px 0 rgba(8, 18, 34, .66),
-        4px 4px 0 rgba(8, 18, 34, .58),
-        6px 8px 14px rgba(0,0,0,.42);
-    }
-
-    .hero-title::after{
-      content: attr(data-text);
-      position:absolute;
-      inset:0;
-      z-index:-1;
-      pointer-events:none;
-
-      text-align: inherit;
-      font: inherit;
-      letter-spacing: inherit;
-      line-height: inherit;
-      white-space: inherit;
-
-      color: transparent;
-      -webkit-text-fill-color: transparent;
-
-      -webkit-text-stroke: 2px rgba(245,252,255,.78);
-      transform: translate(1px, 1px);
-    }
-
-    .slogan-row{
-      display:grid;
-      grid-template-columns: repeat(4, minmax(0, 1fr));
-      gap: 12px;
-      margin: 14px auto 18px;
-      width: min(880px, 100%);
-    }
-    .slogan{
-      max-width: 220px;
-      margin:0 auto;
-      border-radius: 999px;
-      border: 1px solid rgba(255,255,255,.14);
-      background: rgba(10,14,40,.34);
-      padding: 12px 14px;
-      text-align:center;
-      font-weight: 900;
-      letter-spacing: 1px;
-      color:#f3fbff;
-      text-shadow:
-        0 0 14px rgba(62,166,255,.55),
-        0 0 18px rgba(255,43,134,.18),
-        0 3px 0 rgba(0,0,0,.30);
-      box-shadow: 0 14px 40px rgba(0,0,0,.32);
-      position:relative;
-      overflow:hidden;
-    }
-    .slogan::before{
-      content:"";
-      position:absolute;
-      inset: -2px;
-      border-radius: 999px;
-      background: radial-gradient(140px 60px at 20% 30%, rgba(62,166,255,.22), transparent 65%),
-                  radial-gradient(140px 60px at 80% 50%, rgba(255,43,134,.16), transparent 65%);
-      filter: blur(10px);
-      opacity:.9;
-    }
-    .slogan span{position:relative; z-index:1; font-size: 16px}
-
-    .cta{
-      display:flex;
-      justify-content:center;
-      gap: 10px;
-      flex-wrap:wrap;
-      margin-top: 6px;
-    }
-    .btn{
-      border:1px solid rgba(255,255,255,.16);
-      background: rgba(255,255,255,.05);
-      color: rgba(233,238,255,.92);
-      font-weight: 900;
-      letter-spacing: .6px;
-      padding: 12px 16px;
-      border-radius: 999px;
-      cursor:pointer;
-      text-decoration:none;
-      display:inline-flex;
-      align-items:center;
-      gap: 10px;
-      transition: transform .15s ease, background .15s ease, border-color .15s ease, box-shadow .15s ease;
-      box-shadow: 0 16px 40px rgba(0,0,0,.28);
-    }
-    .btn:hover{
-      transform: translateY(-1px);
-      background: rgba(255,255,255,.08);
-      border-color: rgba(255,255,255,.22);
-    }
-    .btn.primary{
-      background: linear-gradient(135deg, rgba(255,43,134,.92), rgba(255,90,167,.70));
-      border-color: rgba(255,90,167,.45);
-      color: #fff;
-      box-shadow: 0 18px 44px rgba(255,43,134,.18);
-    }
-    .btn.primary:hover{
-      box-shadow: 0 22px 54px rgba(255,43,134,.26);
-    }
-
-    section{margin-top: 26px;}
-    .section-card{
-      border-radius: var(--radius);
-      border:1px solid rgba(255,255,255,.10);
-      background: linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.03));
-      box-shadow: var(--shadow);
-      padding: 22px;
-      position:relative;
-      overflow:hidden;
-    }
-    .section-card::after{
-      content:"";
-      position:absolute;
-      inset:-2px;
-      pointer-events:none;
-      background:
-        radial-gradient(520px 220px at 18% 35%, rgba(62,166,255,.12), transparent 62%),
-        radial-gradient(520px 220px at 80% 30%, rgba(255,43,134,.10), transparent 62%);
-      filter: blur(14px);
-      opacity:.9;
-    }
-    .section-card > *{position:relative; z-index:2;}
-
-    .h{
-      display:flex;
-      align-items:center;
-      gap: 10px;
-      font-weight: 1000;
-      font-size: 18px;
-      letter-spacing: 1.2px;
-      margin: 0 0 14px;
-      color: rgba(233,238,255,.96);
-      text-shadow: 0 0 10px rgba(62,166,255,.18);
-    }
-
-    .intro-grid{
-      display:grid;
-      grid-template-columns: 380px 1fr;
-      gap: 18px;
-      align-items:stretch;
-    }
-
-    .imgbox{
-      border-radius: var(--radius2);
-      border: 1px solid rgba(255,255,255,.12);
-      background:
-        radial-gradient(220px 160px at 20% 25%, rgba(62,166,255,.16), transparent 60%),
-        radial-gradient(220px 160px at 80% 65%, rgba(255,43,134,.14), transparent 60%),
-        rgba(10,14,40,.26);
-      box-shadow: 0 18px 50px rgba(0,0,0,.35);
-      position:relative;
-      overflow:hidden;
-      min-height: 240px;
-      background-size: cover;
-      background-position:center;
-      background-repeat:no-repeat;
-    }
-    .imgbox::after{
-      content:"";
-      position:absolute;
-      inset:0;
-      background: linear-gradient(180deg, transparent, rgba(0,0,0,.25));
-      pointer-events:none;
-    }
-
-    .imgbox-about{
-      background:
-        linear-gradient(180deg, rgba(0,0,0,.12), rgba(0,0,0,.32)),
-        url("assets/about.jpg");
-      background-size: cover;
-      background-position: center;
-      background-repeat: no-repeat;
-    }
-
-    .intro-text{
-      border-radius: var(--radius2);
-      border: 1px solid rgba(255,255,255,.12);
-      background: rgba(10,14,40,.22);
-      padding: 16px 16px 14px;
-    }
-    .intro-text p{
-      margin: 0 0 10px;
-      color: rgba(233,238,255,.90);
-      line-height: 1.8;
-      font-weight: 650;
-    }
-    .bullets{
-      margin: 10px 0 0;
-      padding-left: 18px;
-      color: rgba(233,238,255,.88);
-      line-height: 1.85;
-      font-weight: 700;
-    }
-    .bullets li{margin: 4px 0}
-    .divider{
-      height:1px;
-      background: rgba(255,255,255,.10);
-      margin: 10px 0 10px;
-    }
-
-    .svc-grid{
-      display:grid;
-      grid-template-columns: repeat(3, minmax(0,1fr));
-      gap: 14px;
-    }
-    .svc{
-      border-radius: var(--radius2);
-      border:1px solid rgba(255,255,255,.12);
-      overflow:hidden;
-      background: rgba(10,14,40,.20);
-      box-shadow: 0 16px 44px rgba(0,0,0,.32);
-    }
-    .svc-h{
-      padding: 12px 14px;
-      font-weight: 1000;
-      letter-spacing: 1px;
-      background: linear-gradient(135deg, rgba(10,14,40,.55), rgba(30,40,110,.20));
-      border-bottom: 1px solid rgba(255,255,255,.10);
-      display:flex;
-      justify-content:space-between;
-      align-items:center;
-      gap:10px;
-    }
-    .svc-h .tag{
-      font-size: 12px;
-      font-weight: 1000;
-      padding: 6px 10px;
-      border-radius: 999px;
-      background: rgba(255,255,255,.05);
-      border: 1px solid rgba(255,255,255,.12);
-      color: rgba(233,238,255,.88);
-    }
-    .svc-b{
-      padding: 12px 14px 14px;
-      background: rgba(255,255,255,.04);
-      color: rgba(233,238,255,.86);
-      line-height: 1.75;
-      font-weight: 650;
-      min-height: 98px;
-    }
-    .mini-tags{
-      display:flex;
-      flex-wrap:wrap;
-      gap: 8px;
-      margin-top: 10px;
-    }
-    .mini-tags span{
-      font-size: 12px;
-      font-weight: 1000;
-      padding: 6px 10px;
-      border-radius: 999px;
-      border: 1px solid rgba(255,255,255,.12);
-      background: rgba(10,14,40,.28);
-      color: rgba(233,238,255,.90);
-      box-shadow: 0 0 18px rgba(62,166,255,.10);
-    }
-
-    .media-grid{
-      display:grid;
-      grid-template-columns: repeat(3, minmax(0,1fr));
-      gap: 12px;
-    }
-    .tile{
-      border-radius: var(--radius2);
-      border:1px solid rgba(255,255,255,.12);
-      background: rgba(10,14,40,.22);
-      overflow:hidden;
-      position:relative;
-      min-height: 150px;
-      cursor:pointer;
-      box-shadow: 0 16px 44px rgba(0,0,0,.30);
-      transition: transform .15s ease, border-color .15s ease;
-    }
-    .tile:hover{
-      transform: translateY(-2px);
-      border-color: rgba(255,90,167,.28);
-    }
-    .tile img{
-      width:100%;
-      height:100%;
-      object-fit:cover;
-      display:block;
-      opacity:.92;
-      filter: saturate(1.05) contrast(1.05);
-    }
-    .tile .placeholder{
-      position:absolute;
-      inset:0;
-      display:flex;
-      flex-direction:column;
-      justify-content:flex-start;
-      align-items:flex-start;
-      padding: 14px;
-      gap: 6px;
-      color: rgba(233,238,255,.78);
-      font-weight: 900;
-      letter-spacing:.6px;
-      background:
-        radial-gradient(220px 160px at 20% 20%, rgba(62,166,255,.16), transparent 60%),
-        radial-gradient(220px 160px at 80% 70%, rgba(255,43,134,.12), transparent 60%),
-        rgba(10,14,40,.10);
-    }
-    .tile .placeholder small{
-      font-weight: 800;
-      color: rgba(233,238,255,.66);
-      letter-spacing: .4px;
-      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
-    }
-
-    .video-grid{
-      display:grid;
-      grid-template-columns: repeat(3, minmax(0,1fr));
-      gap: 12px;
-      margin-top: 12px;
-    }
-    .vtile{
-      border-radius: var(--radius2);
-      border:1px solid rgba(255,255,255,.12);
-      background: rgba(10,14,40,.22);
-      overflow:hidden;
-      position:relative;
-      min-height: 170px;
-      cursor:pointer;
-      box-shadow: 0 16px 44px rgba(0,0,0,.30);
-      transition: transform .15s ease, border-color .15s ease;
-    }
-    .vtile:hover{
-      transform: translateY(-2px);
-      border-color: rgba(62,166,255,.30);
-    }
-    .vtile video{
-      width:100%;
-      height:100%;
-      object-fit:cover;
-      display:block;
-      filter: saturate(1.05) contrast(1.05);
-    }
-    .playbadge{
-      position:absolute;
-      left: 12px; bottom: 12px;
-      display:flex;
-      align-items:center;
-      gap:10px;
-      padding: 10px 12px;
-      border-radius: 999px;
-      background: rgba(10,14,40,.60);
-      border:1px solid rgba(255,255,255,.14);
-      box-shadow: 0 16px 44px rgba(0,0,0,.38);
-      color: rgba(233,238,255,.92);
-      font-weight: 1000;
-      letter-spacing: .6px;
-      backdrop-filter: blur(10px);
-      -webkit-backdrop-filter: blur(10px);
-    }
-    .playbadge svg{width:18px;height:18px;opacity:.95}
-    .playbadge small{
-      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
-      font-weight: 900;
-      opacity:.85;
-    }
-
-    .contact-row{
-      width: 100%;
-      max-width: 1120px;
-      margin: 6px auto 2px;
-      display: grid;
-      grid-template-columns: repeat(6, minmax(0, 1fr));
-      gap: 14px;
-      align-items: stretch;
-      justify-items: stretch;
-      padding: 6px 0 2px;
-    }
-    .iconbtn{
-      width: 100%;
-      min-height: 112px;
-      border-radius: 18px;
-      border:1px solid rgba(255,255,255,.14);
-      background: rgba(255,255,255,.05);
-      display:flex;
-      flex-direction: column;
-      align-items:center;
-      justify-content:center;
-      gap: 10px;
-      cursor:pointer;
-      transition: transform .15s ease, background .15s ease, border-color .15s ease, box-shadow .15s ease;
-      box-shadow: 0 16px 44px rgba(0,0,0,.32);
-      text-decoration:none;
-      padding: 14px 10px;
-      text-align:center;
-    }
-    .iconbtn:hover{
-      transform: translateY(-2px);
-      background: rgba(255,255,255,.08);
-      border-color: rgba(255,90,167,.26);
-      box-shadow: 0 20px 56px rgba(0,0,0,.36);
-    }
-    .iconbtn.wechat{ border-color: rgba(255,90,167,.22); }
-
-    .iconimg{
-      width: 40px;
-      height: 40px;
-      display:block;
-      filter: drop-shadow(0 10px 18px rgba(0,0,0,.35));
-    }
-    .iconlabel{
-      font-weight: 1000;
-      font-size: 14px;
-      letter-spacing: .8px;
-      color: rgba(233,238,255,.92);
-      text-shadow: 0 0 12px rgba(255,43,134,.10), 0 0 14px rgba(62,166,255,.10);
-      line-height: 1;
-    }
-
-    .foot{
-      text-align:center;
-      color: rgba(233,238,255,.55);
-      font-weight: 700;
-      margin-top: 16px;
-      letter-spacing: .6px;
-    }
-
-    .modal{
-      position:fixed;
-      inset:0;
-      display:none;
-      align-items:center;
-      justify-content:center;
-      z-index:200;
-      padding: 18px;
-      background: rgba(0,0,0,.55);
-      backdrop-filter: blur(8px);
-      -webkit-backdrop-filter: blur(8px);
-    }
-    .modal.show{display:flex;}
-    .dialog{
-      width:min(980px, 100%);
-      border-radius: 22px;
-      border:1px solid rgba(255,255,255,.14);
-      background:
-        radial-gradient(800px 300px at 20% 20%, rgba(62,166,255,.18), transparent 65%),
-        radial-gradient(800px 300px at 80% 40%, rgba(255,43,134,.14), transparent 65%),
-        rgba(10,14,40,.70);
-      box-shadow: 0 28px 90px rgba(0,0,0,.65);
-      overflow:hidden;
-      position:relative;
-    }
-    .dialog-h{
-      display:flex;
-      align-items:center;
-      justify-content:space-between;
-      padding: 14px 14px 12px;
-      border-bottom: 1px solid rgba(255,255,255,.10);
-    }
-    .dialog-title{
-      display:flex;align-items:center;gap:10px;
-      font-weight: 1000;
-      letter-spacing: .8px;
-    }
-    .close{
-      border:1px solid rgba(255,255,255,.16);
-      background: rgba(255,255,255,.05);
-      color: rgba(233,238,255,.92);
-      font-weight: 1000;
-      border-radius: 12px;
-      padding: 8px 12px;
-      cursor:pointer;
-    }
-    .dialog-b{ padding: 14px; }
-    .media-view{
-      width:100%;
-      display:block;
-      border-radius: 16px;
-      border:1px solid rgba(255,255,255,.12);
-      background: rgba(0,0,0,.22);
-      max-height: 72vh;
-      object-fit: contain;
-    }
-
-    .wechat-grid{
-      display:grid;
-      grid-template-columns: 280px 1fr;
-      gap: 14px;
-      align-items:start;
-    }
-    .qrbox{
-      border-radius: 18px;
-      border:1px solid rgba(255,255,255,.12);
-      background: rgba(255,255,255,.04);
-      padding: 12px;
-      text-align:center;
-    }
-    .qrbox img{
-      width:100%;
-      height:auto;
-      border-radius: 14px;
-      border:1px solid rgba(255,255,255,.12);
-      background: rgba(0,0,0,.18);
-      display:block;
-    }
-    .qr-actions{
-      display:flex;
-      gap:10px;
-      justify-content:center;
-      flex-wrap:wrap;
-      margin-top: 10px;
-    }
-
-    .toast{
-      position:fixed;
-      left: 50%;
-      bottom: 18px;
-      transform: translateX(-50%);
-      z-index: 260;
-      background: rgba(10,14,40,.78);
-      border: 1px solid rgba(255,255,255,.14);
-      border-radius: 999px;
-      padding: 12px 14px;
-      display:none;
-      gap:10px;
-      align-items:center;
-      color: rgba(233,238,255,.92);
-      font-weight: 900;
-      letter-spacing:.4px;
-      box-shadow: 0 18px 60px rgba(0,0,0,.55);
-      backdrop-filter: blur(10px);
-      -webkit-backdrop-filter: blur(10px);
-      max-width: min(92vw, 900px);
-    }
-    .toast.show{display:flex;}
-    .toast .t-dot{
-      width:8px;height:8px;border-radius:999px;
-      background: radial-gradient(circle at 30% 30%, #ffd2e7, var(--rose));
-      box-shadow: 0 0 14px rgba(255,43,134,.7);
-      flex:0 0 auto;
-    }
-
-    /* ✅ 视频卡片：隐藏文件名 */
-    .playbadge small{ display:none !important; }
-    /* ✅ 弹窗：隐藏顶部标题条(文件名)与关闭按钮（你要纯净界面） */
-    .dialog-h{ display:none !important; }
-    .dialog-b{ padding-top: 18px; }
-    /* ✅ 视频卡片：彻底隐藏底部播放条（圆形icon+背景条） */
-    .playbadge{ display:none !important; }
-
-    /* ===================== Responsive ===================== */
-    @media (max-width: 980px){
-      .intro-grid{grid-template-columns: 1fr;}
-      .imgbox{min-height: 210px;}
-
-      .svc-grid{grid-template-columns: repeat(2, minmax(0,1fr));}
-      .media-grid{grid-template-columns: repeat(2, minmax(0,1fr));}
-      .video-grid{grid-template-columns: 1fr;}
-      .wechat-grid{grid-template-columns: 1fr;}
-
-      .hero-title{
-        font-size: clamp(18px, 7.2vw, 56px);
-      }
-      .hero-title::before,
-      .hero-title::after {
-        content: none !important;
-        display: none !important;
+        const t0 = Date.now();
+        setTimeout(()=>{
+          if (Date.now() - t0 < timeoutMs + 180) window.location.href = fallbackUrl;
+        }, timeoutMs);
       }
 
-      .contact-row{grid-template-columns: repeat(3, minmax(0, 1fr));}
-    }
+      // Android：intent + 监听是否切到后台，没切就回退网页
+      function openAndroidIntent(intentUrl, fallbackUrl, timeoutMs=900){
+        let done = false;
+        const cleanup = ()=>{
+          window.removeEventListener("visibilitychange", onVis, true);
+          window.removeEventListener("pagehide", onHide, true);
+        };
+        const onVis = ()=>{ if(document.hidden){ done = true; cleanup(); } };
+        const onHide = ()=>{ done = true; cleanup(); };
 
-    @media (min-width: 981px){
-      .intro-grid{
-        display:grid;
-        grid-template-columns: 420px 1fr;
-        gap: 18px;
-        align-items: stretch;
-      }
-      .intro-grid .imgbox{
-        min-height: 320px;
-        background-position: center;
-        background-size: cover;
-      }
-    }
+        window.addEventListener("visibilitychange", onVis, true);
+        window.addEventListener("pagehide", onHide, true);
 
-    @media (max-width: 560px){
-      header{border-radius: 18px;}
-      .brand-title{font-size: 12px;}
-      .navpill{font-size: 12px; padding: 8px 10px;}
+        const a = document.createElement('a');
+        a.href = intentUrl;
+        a.style.display = 'none';
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
 
-      .hero { padding: 20px 8px 16px; }
-
-      .tagline{font-size: 14px;}
-
-      .slogan-row{grid-template-columns: repeat(2, minmax(0,1fr));}
-      .slogan{max-width: none;}
-
-      .svc-grid{grid-template-columns: 1fr;}
-      .media-grid{grid-template-columns: 1fr;}
-
-      .contact-row{grid-template-columns: repeat(2, minmax(0, 1fr));}
-      .iconbtn{min-height: 104px;}
-      .iconimg{width: 38px; height: 38px;}
-      .iconlabel{font-size: 13px;}
-    }
-  </style>
-</head>
-
-<body>
-  <div class="wrap">
-
-    <header>
-      <div class="brand" title="筑梦电子 · VIP服务站 · 7x24h服务">
-        <span class="dot"></span>
-        <div class="brand-title">筑梦电子 · VIP服务站 · 7x24h服务</div>
-      </div>
-
-      <nav>
-        <a class="navpill" href="#intro">服务介绍</a>
-        <a class="navpill" href="#services">业务分类</a>
-        <a class="navpill" href="#gallery">视图展示</a>
-        <a class="navpill" href="#contact">联系方式</a>
-      </nav>
-    </header>
-
-    <div class="hero" id="top">
-      <div class="tagline">因为专注 · 所以专业 · 十年老店</div>
-
-      <h1 class="hero-title" data-text="欢迎VIP贵宾来到筑梦电子">欢迎VIP贵宾来到筑梦电子</h1>
-
-      <div class="slogan-row" aria-label="四个核心卖点">
-        <div class="slogan"><span>新店拼价格</span></div>
-        <div class="slogan"><span>老店拼质量</span></div>
-        <div class="slogan"><span>同价拼服务</span></div>
-        <div class="slogan"><span>骗子无成本</span></div>
-      </div>
-
-      <div class="cta">
-        <a class="btn primary" href="#contact">立即联系</a>
-        <a class="btn" href="#gallery">查看展品</a>
-        <a class="btn" href="#services">查看业务</a>
-      </div>
-    </div>
-
-    <section id="intro">
-      <div class="section-card">
-        <div class="h"><span class="dot"></span>服务介绍</div>
-
-        <div class="intro-grid">
-          <div class="imgbox imgbox-about" title="服务介绍配图"></div>
-
-          <div class="intro-text">
-            <p>专注于电子产品与多类数字化服务，覆盖从咨询到交付的一站式支持，同时延展至 AI 技术方向的教学、代做与工具教程。</p>
-            <p>支持按需求定制方案，范围明确后快速推进；支持远程协助与成品交付；沟通清晰、流程透明，适合需要省心落地与长期协作的客户。</p>
-            <p>无论是账号内容包装、网络服务、工具搭建，还是视图展示与引流页面的持续优化，都可按目标分阶段完成，优先解决“最关键的那一步”。</p>
-
-            <div class="divider"></div>
-
-            <ul class="bullets">
-              <li>服务特点：快速响应｜流程清晰｜按需定制</li>
-              <li>交付形式：文字方案｜文件/脚本｜远程协助｜成品交付</li>
-              <li>合作方式：先沟通需求 → 明确范围 → 交付与售后</li>
-            </ul>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <section id="services">
-      <div class="section-card">
-        <div class="h"><span class="dot"></span>业务分类</div>
-
-        <div class="svc-grid">
-          <div class="svc">
-            <div class="svc-h">
-              <div>电子产品</div>
-              <span class="tag">产品/选购/供货</span>
-            </div>
-            <div class="svc-b">（待补充）这里填写电子产品相关服务介绍：选购建议、渠道供货、配件周边等。</div>
-          </div>
-
-          <div class="svc">
-            <div class="svc-h">
-              <div>金融业务</div>
-              <span class="tag">咨询/办理</span>
-            </div>
-            <div class="svc-b">（待补充）这里填写金融业务服务介绍：按需说明范围与规则，保持合规与清晰。</div>
-          </div>
-
-          <div class="svc">
-            <div class="svc-h">
-              <div>AI技术</div>
-              <span class="tag">教学/代做/教程</span>
-            </div>
-            <div class="svc-b">
-              （待补充）这里写 AI 技术方向的总体介绍：从入门到落地，兼顾效率与效果。
-              <div class="mini-tags" aria-label="AI子类目">
-                <span>AI收徒</span>
-                <span>AI代做</span>
-                <span>AI工具白嫖教程</span>
-              </div>
-            </div>
-          </div>
-
-          <div class="svc">
-            <div class="svc-h">
-              <div>网络服务</div>
-              <span class="tag">工具/搭建</span>
-            </div>
-            <div class="svc-b">（待补充）这里写网络服务介绍：网站/域名/部署/线路/加速等。</div>
-          </div>
-
-          <div class="svc">
-            <div class="svc-h">
-              <div>游戏服务</div>
-              <span class="tag">代练/咨询</span>
-            </div>
-            <div class="svc-b">（待补充）这里写游戏服务介绍：按需求沟通，支持方案与执行。</div>
-          </div>
-
-          <div class="svc">
-            <div class="svc-h">
-              <div>懒人特殊服务</div>
-              <span class="tag">按需定制</span>
-            </div>
-            <div class="svc-b">（待补充）这里写你的“省心代办/懒人服务”介绍：明确边界、按步骤交付。</div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <section id="gallery">
-      <div class="section-card">
-        <div class="h"><span class="dot"></span>视图展示</div>
-
-        <div class="media-grid" aria-label="6张照片">
-          <div class="tile" data-type="image" data-src="assets/photo-01.jpg">
-            <img src="assets/photo-01.jpg" alt="photo-01" loading="lazy"
-                 onerror="this.style.display='none'; this.parentElement.querySelector('.placeholder').style.display='flex';" />
-            <div class="placeholder" style="display:none">
-              <div>上传图片到</div><small>assets/photo-01.jpg</small>
-            </div>
-          </div>
-          <div class="tile" data-type="image" data-src="assets/photo-02.jpg">
-            <img src="assets/photo-02.jpg" alt="photo-02" loading="lazy"
-                 onerror="this.style.display='none'; this.parentElement.querySelector('.placeholder').style.display='flex';" />
-            <div class="placeholder" style="display:none">
-              <div>上传图片到</div><small>assets/photo-02.jpg</small>
-            </div>
-          </div>
-          <div class="tile" data-type="image" data-src="assets/photo-03.jpg">
-            <img src="assets/photo-03.jpg" alt="photo-03" loading="lazy"
-                 onerror="this.style.display='none'; this.parentElement.querySelector('.placeholder').style.display='flex';" />
-            <div class="placeholder" style="display:none">
-              <div>上传图片到</div><small>assets/photo-03.jpg</small>
-            </div>
-          </div>
-          <div class="tile" data-type="image" data-src="assets/photo-04.jpg">
-            <img src="assets/photo-04.jpg" alt="photo-04" loading="lazy"
-                 onerror="this.style.display='none'; this.parentElement.querySelector('.placeholder').style.display='flex';" />
-            <div class="placeholder" style="display:none">
-              <div>上传图片到</div><small>assets/photo-04.jpg</small>
-            </div>
-          </div>
-          <div class="tile" data-type="image" data-src="assets/photo-05.jpg">
-            <img src="assets/photo-05.jpg" alt="photo-05" loading="lazy"
-                 onerror="this.style.display='none'; this.parentElement.querySelector('.placeholder').style.display='flex';" />
-            <div class="placeholder" style="display:none">
-              <div>上传图片到</div><small>assets/photo-05.jpg</small>
-            </div>
-          </div>
-          <div class="tile" data-type="image" data-src="assets/photo-06.jpg">
-            <img src="assets/photo-06.jpg" alt="photo-06" loading="lazy"
-                 onerror="this.style.display='none'; this.parentElement.querySelector('.placeholder').style.display='flex';" />
-            <div class="placeholder" style="display:none">
-              <div>上传图片到</div><small>assets/photo-06.jpg</small>
-            </div>
-          </div>
-        </div>
-
-        <div class="video-grid" aria-label="3个视频">
-          <div class="vtile" data-type="video" data-src="assets/video-01.mp4">
-            <video src="assets/video-01.mp4" muted playsinline preload="metadata"
-                   onerror="this.style.display='none'; this.parentElement.querySelector('.placeholder').style.display='flex';"></video>
-            <div class="placeholder" style="display:none">
-              <div>上传视频到</div><small>assets/video-01.mp4</small>
-            </div>
-            <div class="playbadge">
-              <svg viewBox="0 0 24 24" fill="none"><path d="M9.2 7.6v8.8L17 12 9.2 7.6Z" fill="currentColor"/><path d="M12 21.2a9.2 9.2 0 1 0 0-18.4 9.2 9.2 0 0 0 0 18.4Z" stroke="currentColor" opacity=".7"/></svg>
-              <small>video-01.mp4</small>
-            </div>
-          </div>
-
-          <div class="vtile" data-type="video" data-src="assets/video-02.mp4">
-            <video src="assets/video-02.mp4" muted playsinline preload="metadata"
-                   onerror="this.style.display='none'; this.parentElement.querySelector('.placeholder').style.display='flex';"></video>
-            <div class="placeholder" style="display:none">
-              <div>上传视频到</div><small>assets/video-02.mp4</small>
-            </div>
-            <div class="playbadge">
-              <svg viewBox="0 0 24 24" fill="none"><path d="M9.2 7.6v8.8L17 12 9.2 7.6Z" fill="currentColor"/><path d="M12 21.2a9.2 9.2 0 1 0 0-18.4 9.2 9.2 0 0 0 0 18.4Z" stroke="currentColor" opacity=".7"/></svg>
-              <small>video-02.mp4</small>
-            </div>
-          </div>
-
-          <div class="vtile" data-type="video" data-src="assets/video-03.mp4">
-            <video src="assets/video-03.mp4" muted playsinline preload="metadata"
-                   onerror="this.style.display='none'; this.parentElement.querySelector('.placeholder').style.display='flex';"></video>
-            <div class="placeholder" style="display:none">
-              <div>上传视频到</div><small>assets/video-03.mp4</small>
-            </div>
-            <div class="playbadge">
-              <svg viewBox="0 0 24 24" fill="none"><path d="M9.2 7.6v8.8L17 12 9.2 7.6Z" fill="currentColor"/><path d="M12 21.2a9.2 9.2 0 1 0 0-18.4 9.2 9.2 0 0 0 0 18.4Z" stroke="currentColor" opacity=".7"/></svg>
-              <small>video-03.mp4</small>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <section id="contact">
-      <div class="section-card">
-        <div class="h"><span class="dot"></span>联系方式</div>
-
-        <div class="contact-row" aria-label="联系方式图标按钮">
-          <button class="iconbtn wechat" id="btnWechat" title="微信：复制微信号并打开微信" aria-label="微信">
-            <img class="iconimg" alt="微信" src="https://cdn.simpleicons.org/wechat?viewbox=auto">
-            <div class="iconlabel">微信</div>
-          </button>
-
-          <a class="iconbtn" id="btnTg" href="https://t.me/guoxingbiao" target="_blank" rel="noopener" title="Telegram" aria-label="Telegram">
-            <img class="iconimg" alt="Telegram" src="https://cdn.simpleicons.org/telegram?viewbox=auto">
-            <div class="iconlabel">Telegram</div>
-          </a>
-
-          <a class="iconbtn" id="btnGmail" href="#" target="_blank" rel="noopener" title="Gmail" aria-label="Gmail">
-            <img class="iconimg" alt="Gmail" src="https://cdn.simpleicons.org/gmail?viewbox=auto">
-            <div class="iconlabel">Gmail</div>
-          </a>
-<!-- 抖音 -->
-<a class="iconbtn" id="btnDouyin"
-   href="https://www.douyin.com/user/MS4wLjABAAAAxh3PjSsMOxQ1TW5_NEtlz5bYVFLAGaBV7KMWdgZoX_XVXMKV0k268GGb_9hRSESc"
-   target="_blank" rel="noopener"
-   aria-label="抖音" title="抖音">
-  <img class="iconimg" alt="抖音" src="https://cdn.simpleicons.org/tiktok?viewbox=auto">
-  <div class="iconlabel">抖音</div>
-</a>
-
-<!-- 快手 -->
-<a class="iconbtn" id="btnKs"
-   href="https://live.kuaishou.com/profile/LG202412?fid=5155307591&cc=share_copylink&followRefer=151&shareMethod=TOKEN&kpn=KUAISHOU&subBiz=PROFILE&shareId=18837177814837&shareToken=X-6eBncBCAD8tiSu&shareMode=APP&originShareId=18837177814837&appType=1&shareObjectId=5155307591&shareUrlOpened=0&timestamp=1770332250605"
-   target="_blank" rel="noopener"
-   aria-label="快手" title="快手">
-  <img class="iconimg" alt="快手" src="https://cdn.simpleicons.org/kuaishou?viewbox=auto">
-  <div class="iconlabel">快手</div>
-</a>
-
-<!-- 小红书 -->
-<a class="iconbtn" id="btnXhs"
-   href="https://www.xiaohongshu.com/user/profile/691edc530000000037005e68?xsec_token=YBvZcuTsC3jpZNy55EXdOFujWxRHVJKE6pRqPD-Re0Y_I=&xsec_source=app_share&xhsshare=CopyLink&shareRedId=OD8zRUdIOTw2NzUyOTgwNjk6OTc5SjxB&apptime=1770332268&share_id=8262883d1fed43ae9ac17736151d3094"
-   target="_blank" rel="noopener"
-   aria-label="小红书" title="小红书">
-  <img class="iconimg" alt="小红书" src="https://cdn.simpleicons.org/xiaohongshu?viewbox=auto">
-  <div class="iconlabel">小红书</div>
-</a>
-
-         
-
-        </div>
-
-        <div class="foot">© 2026 筑梦电子 · roselg.xyz</div>
-      </div>
-    </section>
-
-  </div>
-
-  <div class="modal" id="mediaModal" aria-hidden="true">
-    <div class="dialog" role="dialog" aria-modal="true" aria-label="媒体预览">
-      <div class="dialog-h">
-        <div class="dialog-title"><span class="dot"></span><span id="modalTitle">预览</span></div>
-        <button class="close" id="closeMedia">关闭</button>
-      </div>
-      <div class="dialog-b" id="mediaBody"></div>
-    </div>
-  </div>
-
-  <div class="modal" id="wechatModal" aria-hidden="true">
-    <div class="dialog" role="dialog" aria-modal="true" aria-label="微信联系">
-      <div class="dialog-h">
-        <div class="dialog-title"><span class="dot"></span>微信联系</div>
-        <button class="close" id="closeWechat">关闭</button>
-      </div>
-      <div class="dialog-b">
-        <div class="wechat-grid">
-          <div class="qrbox">
-            <img src="assets/wechat-qr.jpg" alt="微信二维码"
-                 onerror="this.style.opacity='.35'; this.style.filter='grayscale(1)';" />
-            <div class="qr-actions">
-              <button class="btn primary" id="saveQr" type="button" style="padding:10px 14px;">保存到相册/分享</button>
-              <a class="btn" href="assets/wechat-qr.jpg" target="_blank" rel="noopener" style="padding:10px 14px;">打开二维码</a>
-            </div>
-          </div>
-          <div class="intro-text" style="padding:14px;">
-            <p style="margin:0 0 10px;">微信号已复制：<b style="color:#fff; text-shadow:0 0 16px rgba(255,43,134,.18)">LG-202412</b></p>
-            <div class="cta" style="justify-content:flex-start; margin-top:8px;">
-              <button class="btn primary" id="wechatOpen" type="button">打开微信</button>
-              <button class="btn" id="wechatCopy" type="button">复制微信号</button>
-            </div>
-            <div class="divider"></div>
-            <p style="margin:0; color:rgba(233,238,255,.78); font-weight:700; line-height:1.7;">
-              若未自动跳转到微信：手动打开微信 → 搜索 → 粘贴微信号添加好友。<br/>
-              也可扫码添加
-            </p>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <div class="toast" id="toast" role="status" aria-live="polite">
-    <span class="t-dot"></span>
-    <span id="toastText">已复制</span>
-  </div>
-
-  <script>
-    const WECHAT_ID = "LG-202412";
-    const EMAIL = "guoxingbiao521@gmail.com";
-
-    function isMobile(){
-      return /Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
-    }
-
-    function showToast(msg){
-      const t = document.getElementById('toast');
-      const tt = document.getElementById('toastText');
-      tt.textContent = msg;
-      t.classList.add('show');
-      clearTimeout(showToast._timer);
-      showToast._timer = setTimeout(()=>t.classList.remove('show'), 2200);
-    }
-
-    async function copyText(text){
-      try{
-        await navigator.clipboard.writeText(text);
-        return true;
-      }catch(e){
-        const ta = document.createElement('textarea');
-        ta.value = text;
-        ta.style.position = 'fixed';
-        ta.style.top = '-9999px';
-        document.body.appendChild(ta);
-        ta.focus(); ta.select();
-        let ok=false;
-        try{ ok = document.execCommand('copy'); }catch(_){}
-        document.body.removeChild(ta);
-        return ok;
-      }
-    }
-
-    function tryOpenScheme(url){
-      const a = document.createElement('a');
-      a.href = url;
-      a.style.display = 'none';
-      document.body.appendChild(a);
-      a.click();
-      document.body.removeChild(a);
-    }
-
-    (function setupGmail(){
-      const btn = document.getElementById('btnGmail');
-      if(!btn) return;
-      if(isMobile()){
-        btn.href = `mailto:${encodeURIComponent(EMAIL)}`;
-        btn.target = "_self";
-      }else{
-        btn.href = `https://mail.google.com/mail/?view=cm&fs=1&to=${encodeURIComponent(EMAIL)}`;
-        btn.target = "_blank";
-      }
-    })();
-
-    const btnWechat = document.getElementById('btnWechat');
-    const wechatModal = document.getElementById('wechatModal');
-
-    function openWechatModal(){
-      wechatModal.classList.add('show');
-      wechatModal.setAttribute('aria-hidden', 'false');
-    }
-    function closeWechatModal(){
-      wechatModal.classList.remove('show');
-      wechatModal.setAttribute('aria-hidden', 'true');
-    }
-
-    btnWechat.addEventListener('click', async ()=>{
-      const ok = await copyText(WECHAT_ID);
-      showToast(ok ? `已复制微信号：${WECHAT_ID}` : `复制失败，请手动复制：${WECHAT_ID}`);
-
-      tryOpenScheme('weixin://');
-      openWechatModal();
-    });
-
-    document.getElementById('closeWechat').addEventListener('click', closeWechatModal);
-    document.getElementById('wechatCopy').addEventListener('click', async ()=>{
-      const ok = await copyText(WECHAT_ID);
-      showToast(ok ? `已复制微信号：${WECHAT_ID}` : `复制失败，请手动复制：${WECHAT_ID}`);
-    });
-    document.getElementById('wechatOpen').addEventListener('click', ()=>{
-      tryOpenScheme('weixin://');
-      showToast("已尝试打开微信");
-    });
-    wechatModal.addEventListener('click', (e)=>{
-      if(e.target === wechatModal) closeWechatModal();
-    });
-
-    const mediaModal = document.getElementById('mediaModal');
-    const mediaBody = document.getElementById('mediaBody');
-    const modalTitle = document.getElementById('modalTitle');
-
-    function openMediaModal(title, node){
-      modalTitle.textContent = title || "预览";
-      mediaBody.innerHTML = "";
-      mediaBody.appendChild(node);
-      mediaModal.classList.add('show');
-      mediaModal.setAttribute('aria-hidden', 'false');
-    }
-
-    function closeMediaModal(){
-      mediaModal.classList.remove('show');
-      mediaModal.setAttribute('aria-hidden', 'true');
-
-      // ✅ 关键：关闭时彻底停止声音/释放资源（避免退出还在播放）
-      const v = mediaBody.querySelector('video');
-      if(v){
-        try{
-          v.pause();
-          v.removeAttribute('src');
-          v.load();
-        }catch(e){}
-      }
-      mediaBody.innerHTML = "";
-    }
-    document.getElementById('closeMedia').addEventListener('click', closeMediaModal);
-    mediaModal.addEventListener('click', (e)=>{
-      if(e.target === mediaModal) closeMediaModal();
-    });
-
-    document.querySelectorAll('.tile[data-type="image"]').forEach(tile=>{
-      tile.addEventListener('click', ()=>{
-        const src = tile.getAttribute('data-src');
-        const img = document.createElement('img');
-        img.className = 'media-view';
-        img.alt = '预览图片';
-        img.src = src;
-        img.onerror = ()=> showToast("图片尚未上传或路径不正确");
-        openMediaModal("", img); // ✅ 不传文件名（你要纯净）
-      });
-    });
-
-    document.querySelectorAll('.vtile[data-type="video"]').forEach(tile=>{
-      const pv = tile.querySelector('video');
-      if(pv){
-        pv.muted = true;
-        pv.loop = true;
-        pv.playsInline = true;
-        pv.addEventListener('canplay', ()=>{ pv.play().catch(()=>{}); }, {once:true});
+        setTimeout(()=>{
+          if(!done) window.location.replace(fallbackUrl);
+          cleanup();
+        }, timeoutMs);
       }
 
-      tile.addEventListener('click', ()=>{
-        const src = tile.getAttribute('data-src');
-        const v = document.createElement('video');
-        v.className = 'media-view';
-        v.src = src;
-        v.controls = true;
-        v.autoplay = true;
-        v.muted = false;
-        v.playsInline = true;
-        v.onloadedmetadata = ()=> v.play().catch(()=>{});
-        v.onerror = ()=> showToast("视频尚未上传或路径不正确");
-        openMediaModal("", v); // ✅ 不传文件名（你要纯净）
-      });
-    });
+      // 抖音
+      function goDouyin(e){
+        e.preventDefault();
+        const web = WEB.douyin;
+        const sec = ID.douyin_sec_uid;
 
-    window.addEventListener('keydown', (e)=>{
-      if(e.key === "Escape"){
-        if(mediaModal.classList.contains('show')) closeMediaModal();
-        if(wechatModal.classList.contains('show')) closeWechatModal();
+        const iosUrl = `snssdk1128://user/profile/${encodeURIComponent(sec)}`;
+        const andIntent =
+          `intent://user/profile/${encodeURIComponent(sec)}#Intent;` +
+          `scheme=snssdk1128;package=com.ss.android.ugc.aweme;` +
+          `S.browser_fallback_url=${encodeURIComponent(web)};end`;
+
+        if(isAndroid) return openAndroidIntent(andIntent, web);
+        if(isIOS) return openIOS(iosUrl, web);
+        window.open(web, "_blank");
       }
-    });
 
-    // ✅ 尝试“保存到相册/分享”（iOS/部分安卓支持），不支持则下载
-    (function setupSaveQr(){
-      const btn = document.getElementById('saveQr');
-      if(!btn) return;
+      // 快手（先 userId，再 kwaiId）
+      function goKuaishou(e){
+        e.preventDefault();
+        const web = WEB.kuaishou;
+        const uid = ID.kuaishou_user_id;
+        const kid = ID.kuaishou_kwai_id;
 
-      btn.addEventListener('click', async ()=>{
-        const url = 'assets/wechat-qr.jpg';
+        const intent1 =
+          `intent://profile/${encodeURIComponent(uid)}#Intent;` +
+          `scheme=kwai;package=com.smile.gifmaker;` +
+          `S.browser_fallback_url=${encodeURIComponent(web)};end`;
+        const intent2 =
+          `intent://profile/${encodeURIComponent(kid)}#Intent;` +
+          `scheme=kwai;package=com.smile.gifmaker;` +
+          `S.browser_fallback_url=${encodeURIComponent(web)};end`;
 
-        try{
-          const res = await fetch(url, {cache:'no-store'});
-          if(!res.ok) throw new Error('QR fetch failed');
-          const blob = await res.blob();
-
-          if(navigator.canShare){
-            const file = new File([blob], 'wechat-qr.jpg', {type: blob.type || 'image/jpeg'});
-            if(navigator.canShare({files:[file]}) && navigator.share){
-              await navigator.share({files:[file], title:'微信二维码'});
-              return;
-            }
-          }
-
-          const a = document.createElement('a');
-          a.href = URL.createObjectURL(blob);
-          a.download = 'wechat-qr.jpg';
-          document.body.appendChild(a);
-          a.click();
-          a.remove();
-          URL.revokeObjectURL(a.href);
-
-          showToast("已下载二维码（如需进相册请用“打开二维码”后长按保存）");
-        }catch(e){
-          showToast("二维码未找到，请确认 assets/wechat-qr.jpg 路径/大小写正确");
+        if(isAndroid){
+          openAndroidIntent(intent1, web, 700);
+          setTimeout(()=> openAndroidIntent(intent2, web, 700), 260);
+          return;
         }
-      });
+        if(isIOS){
+          openIOS(`kwai://profile/${encodeURIComponent(uid)}`, web, 650);
+          setTimeout(()=> openIOS(`kwai://profile/${encodeURIComponent(kid)}`, web, 650), 260);
+          return;
+        }
+        window.open(web, "_blank");
+      }
+
+      // 小红书
+      function goXhs(e){
+        e.preventDefault();
+        const web = WEB.xhs;
+        const uid = ID.xhs_user_id;
+
+        const iosUrl = `xhsdiscover://user/${encodeURIComponent(uid)}`;
+        const andIntent =
+          `intent://user/${encodeURIComponent(uid)}#Intent;` +
+          `scheme=xhsdiscover;package=com.xingin.xhs;` +
+          `S.browser_fallback_url=${encodeURIComponent(web)};end`;
+
+        if(isAndroid) return openAndroidIntent(andIntent, web);
+        if(isIOS) return openIOS(iosUrl, web);
+        window.open(web, "_blank");
+      }
+
+      btnDy.addEventListener("click", goDouyin, {passive:false});
+      btnKs.addEventListener("click", goKuaishou, {passive:false});
+      btnXhs.addEventListener("click", goXhs, {passive:false});
     })();
-// ========= 社交App：直达“我的主页”（唯一保留版）=========
-(function socialDeepLinksOnly(){
-  const ua = navigator.userAgent || "";
-  const isIOS = /iPhone|iPad|iPod/i.test(ua);
-  const isAndroid = /Android/i.test(ua);
-
-  // 网页回退（就是你给我的长链接）
-  const WEB = {
-    douyin: document.getElementById("btnDouyin")?.href,
-    kuaishou: document.getElementById("btnKs")?.href,
-    xhs: document.getElementById("btnXhs")?.href
-  };
-
-  // 主页ID（已从你链接解析并填好）
-  const ID = {
-    douyin_sec_uid: "MS4wLjABAAAAxh3PjSsMOxQ1TW5_NEtlz5bYVFLAGaBV7KMWdgZoX_XVXMKV0k268GGb_9hRSESc",
-    kuaishou_user_id: "5155307591",
-    kuaishou_kwai_id: "LG202412",
-    xhs_user_id: "691edc530000000037005e68"
-  };
-
-  function openIOS(appUrl, fallbackUrl, timeoutMs=900){
-    const t0 = Date.now();
-    window.location.href = appUrl;
-    setTimeout(()=>{
-      if (Date.now() - t0 < timeoutMs + 180) window.location.href = fallbackUrl;
-    }, timeoutMs);
-  }
-
-  function openAndroidIntent(intentUrl, fallbackUrl, timeoutMs=900){
-    let done = false;
-    const cancel = ()=>{ done = true; cleanup(); };
-    const onVis = ()=>{ if (document.hidden) cancel(); };
-    const onHide = ()=> cancel();
-    const cleanup = ()=>{
-      window.removeEventListener("visibilitychange", onVis, true);
-      window.removeEventListener("pagehide", onHide, true);
-    };
-
-    window.addEventListener("visibilitychange", onVis, true);
-    window.addEventListener("pagehide", onHide, true);
-
-    window.location.href = intentUrl;
-
-    setTimeout(()=>{
-      if(!done) window.location.replace(fallbackUrl);
-      cleanup();
-    }, timeoutMs);
-  }
-
-  const btnDy  = document.getElementById("btnDouyin");
-  const btnKs  = document.getElementById("btnKs");
-  const btnXhs = document.getElementById("btnXhs");
-  if(!btnDy || !btnKs || !btnXhs) return;
-
-  // —— 抖音：直达个人主页 ——
-  function goDouyin(e){
-    e.preventDefault();
-    const web = WEB.douyin || "https://www.douyin.com/";
-    const sec = ID.douyin_sec_uid;
-
-    const iosUrl = `snssdk1128://user/profile/${encodeURIComponent(sec)}`;
-    const andIntent =
-      `intent://user/profile/${encodeURIComponent(sec)}#Intent;` +
-      `scheme=snssdk1128;package=com.ss.android.ugc.aweme;` +
-      `S.browser_fallback_url=${encodeURIComponent(web)};end`;
-
-    if(isAndroid) return openAndroidIntent(andIntent, web);
-    if(isIOS) return openIOS(iosUrl, web);
-    window.open(web, "_blank");
-  }
-
-  // —— 快手：直达个人主页（双兼容：userId -> kwaiId）——
-  function goKuaishou(e){
-    e.preventDefault();
-    const web = WEB.kuaishou || "https://live.kuaishou.com/";
-    const uid = ID.kuaishou_user_id;
-    const kid = ID.kuaishou_kwai_id;
-
-    const tryIOS = ()=>{
-      // 先试 userId
-      openIOS(`kwai://profile/${encodeURIComponent(uid)}`, web, 650);
-      // 再试 kwaiId（部分机型/版本更认这个）
-      setTimeout(()=> openIOS(`kwai://profile/${encodeURIComponent(kid)}`, web, 650), 260);
-    };
-
-    const intent1 =
-      `intent://profile/${encodeURIComponent(uid)}#Intent;` +
-      `scheme=kwai;package=com.smile.gifmaker;` +
-      `S.browser_fallback_url=${encodeURIComponent(web)};end`;
-    const intent2 =
-      `intent://profile/${encodeURIComponent(kid)}#Intent;` +
-      `scheme=kwai;package=com.smile.gifmaker;` +
-      `S.browser_fallback_url=${encodeURIComponent(web)};end`;
-
-    if(isAndroid){
-      // 先试 userId，不行再试 kwaiId（再不行回网页）
-      openAndroidIntent(intent1, web, 700);
-      setTimeout(()=> openAndroidIntent(intent2, web, 700), 260);
-      return;
-    }
-    if(isIOS) return tryIOS();
-    window.open(web, "_blank");
-  }
-
-  // —— 小红书：直达个人主页 ——
-  function goXhs(e){
-    e.preventDefault();
-    const web = WEB.xhs || "https://www.xiaohongshu.com/";
-    const uid = ID.xhs_user_id;
-
-    const iosUrl = `xhsdiscover://user/${encodeURIComponent(uid)}`;
-    const andIntent =
-      `intent://user/${encodeURIComponent(uid)}#Intent;` +
-      `scheme=xhsdiscover;package=com.xingin.xhs;` +
-      `S.browser_fallback_url=${encodeURIComponent(web)};end`;
-
-    if(isAndroid) return openAndroidIntent(andIntent, web);
-    if(isIOS) return openIOS(iosUrl, web);
-    window.open(web, "_blank");
-  }
-
-  btnDy.addEventListener("click", goDouyin, {passive:false});
-  btnKs.addEventListener("click", goKuaishou, {passive:false});
-  btnXhs.addEventListener("click", goXhs, {passive:false});
-})();
-
-    
-
   </script>
 </body>
 </html>
