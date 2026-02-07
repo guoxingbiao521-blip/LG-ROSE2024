@@ -933,29 +933,33 @@
             <div class="iconlabel">Gmail</div>
           </a>
 
-          <!-- 抖音：href 置空防止先跳网页（网页回退在 JS 里） -->
-          <a class="iconbtn" id="btnDouyin"
-             href="javascript:void(0)"
-             aria-label="抖音" title="抖音">
-            <img class="iconimg" alt="抖音" src="https://cdn.simpleicons.org/tiktok?viewbox=auto">
-            <div class="iconlabel">抖音</div>
-          </a>
+         <!-- 抖音 -->
+<a class="iconbtn" id="btnDouyin"
+   href="https://v.douyin.com/hTxqO_qDO6M/"
+   target="_self" rel="noopener"
+   aria-label="抖音" title="抖音">
+  <img class="iconimg" alt="抖音" src="https://cdn.simpleicons.org/tiktok?viewbox=auto">
+  <div class="iconlabel">抖音</div>
+</a>
 
-          <!-- 快手 -->
-          <a class="iconbtn" id="btnKs"
-             href="javascript:void(0)"
-             aria-label="快手" title="快手">
-            <img class="iconimg" alt="快手" src="https://cdn.simpleicons.org/kuaishou?viewbox=auto">
-            <div class="iconlabel">快手</div>
-          </a>
+<!-- 快手 -->
+<a class="iconbtn" id="btnKs"
+   href="https://v.kuaishou.com/KArQ2jnp"
+   target="_self" rel="noopener"
+   aria-label="快手" title="快手">
+  <img class="iconimg" alt="快手" src="https://cdn.simpleicons.org/kuaishou?viewbox=auto">
+  <div class="iconlabel">快手</div>
+</a>
 
-          <!-- 小红书 -->
-          <a class="iconbtn" id="btnXhs"
-             href="javascript:void(0)"
-             aria-label="小红书" title="小红书">
-            <img class="iconimg" alt="小红书" src="https://cdn.simpleicons.org/xiaohongshu?viewbox=auto">
-            <div class="iconlabel">小红书</div>
-          </a>
+<!-- 小红书 -->
+<a class="iconbtn" id="btnXhs"
+   href="https://xhslink.com/m/8My2Kr680Fb"
+   target="_self" rel="noopener"
+   aria-label="小红书" title="小红书">
+  <img class="iconimg" alt="小红书" src="https://cdn.simpleicons.org/xiaohongshu?viewbox=auto">
+  <div class="iconlabel">小红书</div>
+</a>
+
         </div>
 
         <div class="foot">© 2026 筑梦电子 · roselg.xyz</div>
@@ -1012,356 +1016,258 @@
     <span id="toastText">已复制</span>
   </div>
 
-  <script>
-    /* ================== 基本配置 ================== */
-    const WECHAT_ID = "LG-202412";
-    const EMAIL = "guoxingbiao521@gmail.com";
+ <script>
+  // ===== 基本信息 =====
+  const WECHAT_ID = "LG-202412";
+  const EMAIL = "guoxingbiao521@gmail.com";
 
-    /* ================== 工具函数 ================== */
-    function isMobile(){
-      return /Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
+  // ✅ 你的三条“短链”（一键直达 App 主页的关键）
+  const SOCIAL_SHORT = {
+    douyin: "https://v.douyin.com/hTxqO_qDO6M/",
+    kuaishou: "https://v.kuaishou.com/KArQ2jnp",
+    xhs: "https://xhslink.com/m/8My2Kr680Fb"
+  };
+
+  function isMobile(){
+    return /Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
+  }
+
+  function showToast(msg){
+    const t = document.getElementById('toast');
+    const tt = document.getElementById('toastText');
+    if(!t || !tt) return;
+    tt.textContent = msg;
+    t.classList.add('show');
+    clearTimeout(showToast._timer);
+    showToast._timer = setTimeout(()=>t.classList.remove('show'), 2200);
+  }
+
+  async function copyText(text){
+    try{
+      await navigator.clipboard.writeText(text);
+      return true;
+    }catch(e){
+      const ta = document.createElement('textarea');
+      ta.value = text;
+      ta.style.position = 'fixed';
+      ta.style.top = '-9999px';
+      document.body.appendChild(ta);
+      ta.focus(); ta.select();
+      let ok=false;
+      try{ ok = document.execCommand('copy'); }catch(_){}
+      document.body.removeChild(ta);
+      return ok;
+    }
+  }
+
+  function tryOpenScheme(url){
+    const a = document.createElement('a');
+    a.href = url;
+    a.style.display = 'none';
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+  }
+
+  // ===== Gmail 按钮 =====
+  (function setupGmail(){
+    const btn = document.getElementById('btnGmail');
+    if(!btn) return;
+    if(isMobile()){
+      btn.href = `mailto:${encodeURIComponent(EMAIL)}`;
+      btn.target = "_self";
+    }else{
+      btn.href = `https://mail.google.com/mail/?view=cm&fs=1&to=${encodeURIComponent(EMAIL)}`;
+      btn.target = "_blank";
+    }
+  })();
+
+  // ===== 微信弹窗 =====
+  (function setupWechat(){
+    const btnWechat = document.getElementById('btnWechat');
+    const wechatModal = document.getElementById('wechatModal');
+    if(!btnWechat || !wechatModal) return;
+
+    function openWechatModal(){
+      wechatModal.classList.add('show');
+      wechatModal.setAttribute('aria-hidden', 'false');
+    }
+    function closeWechatModal(){
+      wechatModal.classList.remove('show');
+      wechatModal.setAttribute('aria-hidden', 'true');
     }
 
-    function showToast(msg){
-      const t = document.getElementById('toast');
-      const tt = document.getElementById('toastText');
-      if(!t || !tt) return;
-      tt.textContent = msg;
-      t.classList.add('show');
-      clearTimeout(showToast._timer);
-      showToast._timer = setTimeout(()=>t.classList.remove('show'), 2200);
+    btnWechat.addEventListener('click', async ()=>{
+      const ok = await copyText(WECHAT_ID);
+      showToast(ok ? `已复制微信号：${WECHAT_ID}` : `复制失败，请手动复制：${WECHAT_ID}`);
+      // 尝试唤起微信（失败也无所谓，弹窗仍可用）
+      tryOpenScheme('weixin://');
+      openWechatModal();
+    });
+
+    const closeBtn = document.getElementById('closeWechat');
+    const copyBtn  = document.getElementById('wechatCopy');
+    const openBtn  = document.getElementById('wechatOpen');
+
+    closeBtn && closeBtn.addEventListener('click', closeWechatModal);
+    copyBtn && copyBtn.addEventListener('click', async ()=>{
+      const ok = await copyText(WECHAT_ID);
+      showToast(ok ? `已复制微信号：${WECHAT_ID}` : `复制失败，请手动复制：${WECHAT_ID}`);
+    });
+    openBtn && openBtn.addEventListener('click', ()=>{
+      tryOpenScheme('weixin://');
+      showToast("已尝试打开微信");
+    });
+
+    wechatModal.addEventListener('click', (e)=>{
+      if(e.target === wechatModal) closeWechatModal();
+    });
+  })();
+
+  // ===== 图片/视频弹窗预览 =====
+  (function setupMediaModal(){
+    const mediaModal = document.getElementById('mediaModal');
+    const mediaBody  = document.getElementById('mediaBody');
+    const modalTitle = document.getElementById('modalTitle');
+    const closeMedia = document.getElementById('closeMedia');
+    if(!mediaModal || !mediaBody || !modalTitle) return;
+
+    function openMediaModal(title, node){
+      modalTitle.textContent = title || "预览";
+      mediaBody.innerHTML = "";
+      mediaBody.appendChild(node);
+      mediaModal.classList.add('show');
+      mediaModal.setAttribute('aria-hidden', 'false');
     }
 
-    async function copyText(text){
-      try{
-        await navigator.clipboard.writeText(text);
-        return true;
-      }catch(e){
-        const ta = document.createElement('textarea');
-        ta.value = text;
-        ta.style.position = 'fixed';
-        ta.style.top = '-9999px';
-        document.body.appendChild(ta);
-        ta.focus(); ta.select();
-        let ok = false;
-        try{ ok = document.execCommand('copy'); }catch(_){}
-        document.body.removeChild(ta);
-        return ok;
-      }
-    }
+    function closeMediaModal(){
+      mediaModal.classList.remove('show');
+      mediaModal.setAttribute('aria-hidden', 'true');
 
-    function tryOpenScheme(url){
-      const a = document.createElement('a');
-      a.href = url;
-      a.style.display = 'none';
-      document.body.appendChild(a);
-      a.click();
-      document.body.removeChild(a);
-    }
-
-    /* ================== Gmail ================== */
-    (function setupGmail(){
-      const btn = document.getElementById('btnGmail');
-      if(!btn) return;
-      if(isMobile()){
-        btn.href = `mailto:${encodeURIComponent(EMAIL)}`;
-        btn.target = "_self";
-      }else{
-        btn.href = `https://mail.google.com/mail/?view=cm&fs=1&to=${encodeURIComponent(EMAIL)}`;
-        btn.target = "_blank";
-      }
-    })();
-
-    /* ================== 微信弹窗 ================== */
-    (function setupWechat(){
-      const btnWechat = document.getElementById('btnWechat');
-      const wechatModal = document.getElementById('wechatModal');
-      if(!btnWechat || !wechatModal) return;
-
-      function openWechatModal(){
-        wechatModal.classList.add('show');
-        wechatModal.setAttribute('aria-hidden', 'false');
-      }
-      function closeWechatModal(){
-        wechatModal.classList.remove('show');
-        wechatModal.setAttribute('aria-hidden', 'true');
-      }
-
-      btnWechat.addEventListener('click', async ()=>{
-        const ok = await copyText(WECHAT_ID);
-        showToast(ok ? `已复制微信号：${WECHAT_ID}` : `复制失败，请手动复制：${WECHAT_ID}`);
-        tryOpenScheme('weixin://');
-        openWechatModal();
-      });
-
-      const closeBtn = document.getElementById('closeWechat');
-      const copyBtn  = document.getElementById('wechatCopy');
-      const openBtn  = document.getElementById('wechatOpen');
-
-      if(closeBtn) closeBtn.addEventListener('click', closeWechatModal);
-      if(copyBtn) copyBtn.addEventListener('click', async ()=>{
-        const ok = await copyText(WECHAT_ID);
-        showToast(ok ? `已复制微信号：${WECHAT_ID}` : `复制失败，请手动复制：${WECHAT_ID}`);
-      });
-      if(openBtn) openBtn.addEventListener('click', ()=>{
-        tryOpenScheme('weixin://');
-        showToast("已尝试打开微信");
-      });
-
-      wechatModal.addEventListener('click', (e)=>{
-        if(e.target === wechatModal) closeWechatModal();
-      });
-
-      window.addEventListener('keydown', (e)=>{
-        if(e.key === "Escape" && wechatModal.classList.contains('show')) closeWechatModal();
-      });
-    })();
-
-    /* ================== 媒体弹窗 ================== */
-    (function setupMediaModal(){
-      const mediaModal = document.getElementById('mediaModal');
-      const mediaBody  = document.getElementById('mediaBody');
-      const modalTitle = document.getElementById('modalTitle');
-      const closeBtn   = document.getElementById('closeMedia');
-      if(!mediaModal || !mediaBody || !modalTitle) return;
-
-      function openMediaModal(title, node){
-        modalTitle.textContent = title || "预览";
-        mediaBody.innerHTML = "";
-        mediaBody.appendChild(node);
-        mediaModal.classList.add('show');
-        mediaModal.setAttribute('aria-hidden', 'false');
-      }
-
-      function closeMediaModal(){
-        mediaModal.classList.remove('show');
-        mediaModal.setAttribute('aria-hidden', 'true');
-        const v = mediaBody.querySelector('video');
-        if(v){
-          try{
-            v.pause();
-            v.removeAttribute('src');
-            v.load();
-          }catch(e){}
-        }
-        mediaBody.innerHTML = "";
-      }
-
-      if(closeBtn) closeBtn.addEventListener('click', closeMediaModal);
-      mediaModal.addEventListener('click', (e)=>{
-        if(e.target === mediaModal) closeMediaModal();
-      });
-
-      document.querySelectorAll('.tile[data-type="image"]').forEach(tile=>{
-        tile.addEventListener('click', ()=>{
-          const src = tile.getAttribute('data-src');
-          const img = document.createElement('img');
-          img.className = 'media-view';
-          img.alt = '预览图片';
-          img.src = src;
-          img.onerror = ()=> showToast("图片尚未上传或路径不正确");
-          openMediaModal("", img);
-        });
-      });
-
-      document.querySelectorAll('.vtile[data-type="video"]').forEach(tile=>{
-        const pv = tile.querySelector('video');
-        if(pv){
-          pv.muted = true;
-          pv.loop = true;
-          pv.playsInline = true;
-          pv.addEventListener('canplay', ()=>{ pv.play().catch(()=>{}); }, {once:true});
-        }
-
-        tile.addEventListener('click', ()=>{
-          const src = tile.getAttribute('data-src');
-          const v = document.createElement('video');
-          v.className = 'media-view';
-          v.src = src;
-          v.controls = true;
-          v.autoplay = true;
-          v.muted = false;
-          v.playsInline = true;
-          v.onloadedmetadata = ()=> v.play().catch(()=>{});
-          v.onerror = ()=> showToast("视频尚未上传或路径不正确");
-          openMediaModal("", v);
-        });
-      });
-
-      window.addEventListener('keydown', (e)=>{
-        if(e.key === "Escape" && mediaModal.classList.contains('show')) closeMediaModal();
-      });
-    })();
-
-    /* ================== 保存二维码 ================== */
-    (function setupSaveQr(){
-      const btn = document.getElementById('saveQr');
-      if(!btn) return;
-
-      btn.addEventListener('click', async ()=>{
-        const url = 'assets/wechat-qr.jpg';
+      // 关闭时停止视频
+      const v = mediaBody.querySelector('video');
+      if(v){
         try{
-          const res = await fetch(url, {cache:'no-store'});
-          if(!res.ok) throw new Error('QR fetch failed');
-          const blob = await res.blob();
+          v.pause();
+          v.removeAttribute('src');
+          v.load();
+        }catch(e){}
+      }
+      mediaBody.innerHTML = "";
+    }
 
-          if(navigator.canShare){
-            const file = new File([blob], 'wechat-qr.jpg', {type: blob.type || 'image/jpeg'});
-            if(navigator.canShare({files:[file]}) && navigator.share){
-              await navigator.share({files:[file], title:'微信二维码'});
-              return;
-            }
-          }
+    closeMedia && closeMedia.addEventListener('click', closeMediaModal);
+    mediaModal.addEventListener('click', (e)=>{
+      if(e.target === mediaModal) closeMediaModal();
+    });
 
-          const a = document.createElement('a');
-          a.href = URL.createObjectURL(blob);
-          a.download = 'wechat-qr.jpg';
-          document.body.appendChild(a);
-          a.click();
-          a.remove();
-          URL.revokeObjectURL(a.href);
-
-          showToast("已下载二维码（如需进相册请用“打开二维码”后长按保存）");
-        }catch(e){
-          showToast("二维码未找到，请确认 assets/wechat-qr.jpg 路径/大小写正确");
-        }
+    document.querySelectorAll('.tile[data-type="image"]').forEach(tile=>{
+      tile.addEventListener('click', ()=>{
+        const src = tile.getAttribute('data-src');
+        const img = document.createElement('img');
+        img.className = 'media-view';
+        img.alt = '预览图片';
+        img.src = src;
+        img.onerror = ()=> showToast("图片尚未上传或路径不正确");
+        openMediaModal("", img);
       });
-    })();
+    });
 
-    /* ================== 社交App：优先直达主页，失败回退网页 ================== */
-    (function socialDeepLinksOnly(){
-      const ua = navigator.userAgent || "";
-      const isIOS = /iPhone|iPad|iPod/i.test(ua);
-      const isAndroid = /Android/i.test(ua);
+    document.querySelectorAll('.vtile[data-type="video"]').forEach(tile=>{
+      const pv = tile.querySelector('video');
+      if(pv){
+        pv.muted = true;
+        pv.loop = true;
+        pv.playsInline = true;
+        pv.addEventListener('canplay', ()=>{ pv.play().catch(()=>{}); }, {once:true});
+      }
 
-      const btnDy  = document.getElementById("btnDouyin");
-      const btnKs  = document.getElementById("btnKs");
-      const btnXhs = document.getElementById("btnXhs");
-      if(!btnDy || !btnKs || !btnXhs) return;
+      tile.addEventListener('click', ()=>{
+        const src = tile.getAttribute('data-src');
+        const v = document.createElement('video');
+        v.className = 'media-view';
+        v.src = src;
+        v.controls = true;
+        v.autoplay = true;
+        v.muted = false;
+        v.playsInline = true;
+        v.onloadedmetadata = ()=> v.play().catch(()=>{});
+        v.onerror = ()=> showToast("视频尚未上传或路径不正确");
+        openMediaModal("", v);
+      });
+    });
 
-      // 你的网页端主页链接（回退用）
-      const WEB = {
-        douyin: "https://www.douyin.com/user/MS4wLjABAAAAxh3PjSsMOxQ1TW5_NEtlz5bYVFLAGaBV7KMWdgZoX_XVXMKV0k268GGb_9hRSESc",
-        kuaishou: "https://live.kuaishou.com/profile/LG202412?fid=5155307591&cc=share_copylink&followRefer=151&shareMethod=TOKEN&kpn=KUAISHOU&subBiz=PROFILE&shareId=18837177814837&shareToken=X-6eBncBCAD8tiSu&shareMode=APP&originShareId=18837177814837&appType=1&shareObjectId=5155307591&shareUrlOpened=0&timestamp=1770332250605",
-        xhs: "https://www.xiaohongshu.com/user/profile/691edc530000000037005e68?xsec_token=YBvZcuTsC3jpZNy55EXdOFujWxRHVJKE6pRqPD-Re0Y_I=&xsec_source=app_share&xhsshare=CopyLink&shareRedId=OD8zRUdIOTw2NzUyOTgwNjk6OTc5SjxB&apptime=1770332268&share_id=8262883d1fed43ae9ac17736151d3094"
-      };
+    window.addEventListener('keydown', (e)=>{
+      if(e.key === "Escape"){
+        if(mediaModal.classList.contains('show')) closeMediaModal();
+        const wechatModal = document.getElementById('wechatModal');
+        if(wechatModal && wechatModal.classList.contains('show')){
+          wechatModal.classList.remove('show');
+          wechatModal.setAttribute('aria-hidden', 'true');
+        }
+      }
+    });
+  })();
 
-      // 主页ID
-      const ID = {
-        douyin_sec_uid: "MS4wLjABAAAAxh3PjSsMOxQ1TW5_NEtlz5bYVFLAGaBV7KMWdgZoX_XVXMKV0k268GGb_9hRSESc",
-        kuaishou_user_id: "5155307591",
-        kuaishou_kwai_id: "LG202412",
-        xhs_user_id: "691edc530000000037005e68"
-      };
+  // ===== 保存二维码（分享/下载） =====
+  (function setupSaveQr(){
+    const btn = document.getElementById('saveQr');
+    if(!btn) return;
 
-      // iOS：用 a.click 触发 scheme，失败再回退网页
-      function openIOS(appUrl, fallbackUrl, timeoutMs=900){
+    btn.addEventListener('click', async ()=>{
+      const url = 'assets/wechat-qr.jpg';
+
+      try{
+        const res = await fetch(url, {cache:'no-store'});
+        if(!res.ok) throw new Error('QR fetch failed');
+        const blob = await res.blob();
+
+        if(navigator.canShare){
+          const file = new File([blob], 'wechat-qr.jpg', {type: blob.type || 'image/jpeg'});
+          if(navigator.canShare({files:[file]}) && navigator.share){
+            await navigator.share({files:[file], title:'微信二维码'});
+            return;
+          }
+        }
+
         const a = document.createElement('a');
-        a.href = appUrl;
-        a.style.display = 'none';
+        a.href = URL.createObjectURL(blob);
+        a.download = 'wechat-qr.jpg';
         document.body.appendChild(a);
         a.click();
-        document.body.removeChild(a);
+        a.remove();
+        URL.revokeObjectURL(a.href);
 
-        const t0 = Date.now();
-        setTimeout(()=>{
-          if (Date.now() - t0 < timeoutMs + 180) window.location.href = fallbackUrl;
-        }, timeoutMs);
+        showToast("已下载二维码（如需进相册请用“打开二维码”后长按保存）");
+      }catch(e){
+        showToast("二维码未找到，请确认 assets/wechat-qr.jpg 路径/大小写正确");
       }
+    });
+  })();
 
-      // Android：intent + 监听是否切到后台，没切就回退网页
-      function openAndroidIntent(intentUrl, fallbackUrl, timeoutMs=900){
-        let done = false;
-        const cleanup = ()=>{
-          window.removeEventListener("visibilitychange", onVis, true);
-          window.removeEventListener("pagehide", onHide, true);
-        };
-        const onVis = ()=>{ if(document.hidden){ done = true; cleanup(); } };
-        const onHide = ()=>{ done = true; cleanup(); };
+  // ===== ✅ 社交按钮：回到“短链一键直达 App 主页”方案（不拼 scheme/intent） =====
+  (function setupSocialShortLinks(){
+    const btnDy  = document.getElementById("btnDouyin");
+    const btnKs  = document.getElementById("btnKs");
+    const btnXhs = document.getElementById("btnXhs");
 
-        window.addEventListener("visibilitychange", onVis, true);
-        window.addEventListener("pagehide", onHide, true);
+    if(btnDy){
+      btnDy.href = SOCIAL_SHORT.douyin;
+      btnDy.target = isMobile() ? "_self" : "_blank";
+      btnDy.rel = "noopener";
+    }
+    if(btnKs){
+      btnKs.href = SOCIAL_SHORT.kuaishou;
+      btnKs.target = isMobile() ? "_self" : "_blank";
+      btnKs.rel = "noopener";
+    }
+    if(btnXhs){
+      btnXhs.href = SOCIAL_SHORT.xhs;
+      btnXhs.target = isMobile() ? "_self" : "_blank";
+      btnXhs.rel = "noopener";
+    }
+  })();
+</script>
 
-        const a = document.createElement('a');
-        a.href = intentUrl;
-        a.style.display = 'none';
-        document.body.appendChild(a);
-        a.click();
-        document.body.removeChild(a);
-
-        setTimeout(()=>{
-          if(!done) window.location.replace(fallbackUrl);
-          cleanup();
-        }, timeoutMs);
-      }
-
-      // 抖音
-      function goDouyin(e){
-        e.preventDefault();
-        const web = WEB.douyin;
-        const sec = ID.douyin_sec_uid;
-
-        const iosUrl = `snssdk1128://user/profile/${encodeURIComponent(sec)}`;
-        const andIntent =
-          `intent://user/profile/${encodeURIComponent(sec)}#Intent;` +
-          `scheme=snssdk1128;package=com.ss.android.ugc.aweme;` +
-          `S.browser_fallback_url=${encodeURIComponent(web)};end`;
-
-        if(isAndroid) return openAndroidIntent(andIntent, web);
-        if(isIOS) return openIOS(iosUrl, web);
-        window.open(web, "_blank");
-      }
-
-      // 快手（先 userId，再 kwaiId）
-      function goKuaishou(e){
-        e.preventDefault();
-        const web = WEB.kuaishou;
-        const uid = ID.kuaishou_user_id;
-        const kid = ID.kuaishou_kwai_id;
-
-        const intent1 =
-          `intent://profile/${encodeURIComponent(uid)}#Intent;` +
-          `scheme=kwai;package=com.smile.gifmaker;` +
-          `S.browser_fallback_url=${encodeURIComponent(web)};end`;
-        const intent2 =
-          `intent://profile/${encodeURIComponent(kid)}#Intent;` +
-          `scheme=kwai;package=com.smile.gifmaker;` +
-          `S.browser_fallback_url=${encodeURIComponent(web)};end`;
-
-        if(isAndroid){
-          openAndroidIntent(intent1, web, 700);
-          setTimeout(()=> openAndroidIntent(intent2, web, 700), 260);
-          return;
-        }
-        if(isIOS){
-          openIOS(`kwai://profile/${encodeURIComponent(uid)}`, web, 650);
-          setTimeout(()=> openIOS(`kwai://profile/${encodeURIComponent(kid)}`, web, 650), 260);
-          return;
-        }
-        window.open(web, "_blank");
-      }
-
-      // 小红书
-      function goXhs(e){
-        e.preventDefault();
-        const web = WEB.xhs;
-        const uid = ID.xhs_user_id;
-
-        const iosUrl = `xhsdiscover://user/${encodeURIComponent(uid)}`;
-        const andIntent =
-          `intent://user/${encodeURIComponent(uid)}#Intent;` +
-          `scheme=xhsdiscover;package=com.xingin.xhs;` +
-          `S.browser_fallback_url=${encodeURIComponent(web)};end`;
-
-        if(isAndroid) return openAndroidIntent(andIntent, web);
-        if(isIOS) return openIOS(iosUrl, web);
-        window.open(web, "_blank");
-      }
-
-      btnDy.addEventListener("click", goDouyin, {passive:false});
-      btnKs.addEventListener("click", goKuaishou, {passive:false});
-      btnXhs.addEventListener("click", goXhs, {passive:false});
-    })();
-  </script>
 </body>
 </html>
