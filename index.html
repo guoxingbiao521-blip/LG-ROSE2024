@@ -714,8 +714,29 @@
         <span class="dot"></span>
         <div class="brand-title">筑梦电子 · VIP服务站 · 7x24h服务</div>
       </div>
+.navcounter{
+  color: rgba(233,238,255,.88);
+  font-weight: 900;
+  font-size: 13px;
+  padding: 9px 12px;
+  border-radius: 999px;
+  border:1px solid rgba(255,255,255,.10);
+  background: rgba(255,255,255,.04);
+  display:flex;
+  align-items:center;
+  gap:6px;
+  white-space:nowrap;
+}
+.navcounter #visitCount{
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+  font-weight: 1000;
+}
 
       <nav>
+        <div class="navcounter" id="navCounter">
+  www.roselg.xyz · 访问量 <span id="visitCount">--</span>
+</div>
+
         <a class="navpill" href="#intro">服务介绍</a>
         <a class="navpill" href="#services">业务分类</a>
         <a class="navpill" href="#gallery">视图展示</a>
@@ -1267,6 +1288,29 @@
       btnXhs.rel = "noopener";
     }
   })();
+   <script>
+(async function initCounter(){
+  const API_BASE = "https://roselg-counter.guoxingbiao521.workers.dev";
+  const KEY = "total";
+
+  // 访问一次 +1（这一步就是真实访问量的计数）
+  try{
+    await fetch(`${API_BASE}/hit?key=${encodeURIComponent(KEY)}`, { cache: "no-store" });
+  }catch(e){}
+
+  // 再读取一次显示出来（避免有些浏览器缓存/跨域问题）
+  try{
+    const res = await fetch(`${API_BASE}/get?key=${encodeURIComponent(KEY)}`, { cache: "no-store" });
+    const data = await res.json();
+    const el = document.getElementById("visitCount");
+    if(el) el.textContent = (data && typeof data.count === "number") ? data.count : "--";
+  }catch(e){
+    const el = document.getElementById("visitCount");
+    if(el) el.textContent = "--";
+  }
+})();
+</script>
+
 </script>
 
 </body>
