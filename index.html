@@ -1101,21 +1101,24 @@
   <div class="iconlabel">抖音</div>
 </a>
 
-<a class="iconbtn" id="btnKuaishou"
-   href="#"
-   data-web="https://v.kuaishou.com/KArQ2jnp"
-   aria-label="快手" title="快手">
+<!-- 快手 -->
+<a class="iconbtn" id="btnKs"
+   href="https://v.kuaishou.com/KArQ2jnp"
+   target="_blank" rel="noopener"
+   title="快手" aria-label="快手">
   <img class="iconimg" alt="快手" src="https://cdn.simpleicons.org/kuaishou?viewbox=auto">
   <div class="iconlabel">快手</div>
 </a>
 
+<!-- 小红书 -->
 <a class="iconbtn" id="btnXhs"
-   href="#"
-   data-web="https://xhslink.com/m/8My2Kr680Fb"
-   aria-label="小红书" title="小红书">
+   href="https://xhslink.com/m/8My2Kr680Fb"
+   target="_blank" rel="noopener"
+   title="小红书" aria-label="小红书">
   <img class="iconimg" alt="小红书" src="https://cdn.simpleicons.org/xiaohongshu?viewbox=auto">
   <div class="iconlabel">小红书</div>
 </a>
+
 
         </div>
 
@@ -1418,6 +1421,46 @@
       openWithFallback(scheme, web);
     });
   }
+})();
+// ===== Android：强制 intent 拉起 App（快手 / 小红书）=====
+(function setupAndroidDeepLinks(){
+  const isAndroid = /Android/i.test(navigator.userAgent);
+
+  function bindIntent(btnId, packageName){
+    const el = document.getElementById(btnId);
+    if(!el) return;
+
+    el.addEventListener('click', (e)=>{
+      // iOS/电脑：照常走原来的 href（Universal Link / 网页）
+      if(!isAndroid) return;
+
+      // Android：用 intent:// 强制拉起 App
+      e.preventDefault();
+
+      const url = el.getAttribute('href');
+      try{
+        const u = new URL(url);
+        const intentUrl =
+          `intent://${u.host}${u.pathname}${u.search}` +
+          `#Intent;scheme=${u.protocol.replace(':','')};package=${packageName};end`;
+
+        // 尝试打开 App
+        window.location.href = intentUrl;
+
+        // 如果没装 App：回落网页
+        setTimeout(()=>{ window.location.href = url; }, 800);
+      }catch(_){
+        // URL 解析失败就直接回落网页
+        window.location.href = url;
+      }
+    }, {passive:false});
+  }
+
+  // 快手（国内快手常用包名）
+  bindIntent('btnKs', 'com.smile.gifmaker');
+
+  // 小红书包名
+  bindIntent('btnXhs', 'com.xingin.xhs');
 })();
 
   </script>
