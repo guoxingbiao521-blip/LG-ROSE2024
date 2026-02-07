@@ -1238,9 +1238,9 @@
         a.remove();
         URL.revokeObjectURL(a.href);
 
-        showToast("已下载二维码（如需进相册请用“打开二维码”后长按保存）");
+        showToast("已下载二维码！请打开微信进行扫码添加");
       }catch(e){
-        showToast("二维码未找到，请确认 assets/wechat-qr.jpg 路径/大小写正确");
+        showToast("二维码下载失败！请点击“打开二维码”长按保存后扫码添加！");
       }
     });
   })();
