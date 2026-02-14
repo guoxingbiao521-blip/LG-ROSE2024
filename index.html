@@ -1380,23 +1380,17 @@ header nav{
       btnXhs.rel = "noopener";
     }
   })();
-   // ====== 访问量：从 Cloudflare Worker 读取/增加 ======
+   // ====== 访问量：同源路径（走 www.roselg.xyz/_counter/* 路由到 Worker） ======
 (function setupVisitCounter(){
-  // ✅ 改成你的 Worker 域名（你测试 hit/get 成功的那个）
- const WORKER_BASE = "https://counter.roselg.xyz";
- // ← 改这里
-
   const el = document.getElementById("visitCount");
-  const hostEl = document.getElementById("siteHost");
-  if(hostEl) hostEl.textContent = location.hostname;
-
   if(!el) return;
 
-  // 你可以用 key 区分页面：比如 key=home
-  const key = "home";
+  const key = "home"; // 页面 key
 
-  // 进入页面就计数：/hit
-  fetch(`${WORKER_BASE}/hit?key=${encodeURIComponent(key)}`, { cache: "no-store" })
+  fetch(`/_counter/hit?key=${encodeURIComponent(key)}`, {
+    cache: "no-store",
+    keepalive: true
+  })
     .then(r => r.json())
     .then(data => {
       if(typeof data.count === "number") el.textContent = data.count;
@@ -1404,10 +1398,10 @@ header nav{
     })
     .catch(() => {
       el.textContent = "-";
-      // 可选：控制台看报错原因
       console.warn("visit counter fetch failed");
     });
 })();
+
 
 </script>
 
