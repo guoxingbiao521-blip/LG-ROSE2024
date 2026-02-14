@@ -1380,12 +1380,12 @@ header nav{
       btnXhs.rel = "noopener";
     }
   })();
-   // ====== 访问量：同源路径（走 www.roselg.xyz/_counter/* 路由到 Worker） ======
+   // ====== 访问量：同源路径（走 /_counter/* 路由到 Worker） ======
 (function setupVisitCounter(){
   const el = document.getElementById("visitCount");
   if(!el) return;
 
-  const key = "home"; // 页面 key
+  const key = "home"; // 你可以改成不同页面不同 key
 
   fetch(`/_counter/hit?key=${encodeURIComponent(key)}`, {
     cache: "no-store",
@@ -1393,8 +1393,9 @@ header nav{
   })
     .then(r => r.json())
     .then(data => {
-      if(typeof data.count === "number") el.textContent = data.count;
-      else el.textContent = "-";
+      // 兼容 count 是数字或字符串
+      const c = Number(data?.count);
+      el.textContent = Number.isFinite(c) ? c : "-";
     })
     .catch(() => {
       el.textContent = "-";
