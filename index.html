@@ -1383,7 +1383,8 @@ header nav{
    // ====== 访问量：从 Cloudflare Worker 读取/增加 ======
 (function setupVisitCounter(){
   // ✅ 改成你的 Worker 域名（你测试 hit/get 成功的那个）
-  const WORKER_BASE = "https://roselg-counter.guoxingbiao521.workers.dev"; // ← 改这里
+ const WORKER_BASE = "https://counter.roselg.xyz";
+ // ← 改这里
 
   const el = document.getElementById("visitCount");
   const hostEl = document.getElementById("siteHost");
