@@ -1,326 +1,1410 @@
 <!doctype html>
 <html lang="zh-CN">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>筑梦电子 · VIP服务站 · 7×24h服务</title>
-  <meta name="description" content="筑梦电子 · VIP服务站 · 7×24h服务｜电子产品 / 金融业务 / AI技术 / 网络服务 / 游戏服务 / 懒人特殊服务" />
-  <style>
-    /* === 保持你原本的所有 CSS 变量和基础样式 === */
-    .navcounter{ color: rgba(233,238,255,.88); font-weight: 900; font-size: 13px; padding: 9px 12px; border-radius: 999px; border:1px solid rgba(255,255,255,.10); background: rgba(255,255,255,.04); display:flex; align-items:center; gap:6px; white-space:nowrap; }
-    .navcounter #visitCount{ font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace; font-weight: 1000; }
-    :root{ --bg0:#070916; --bg1:#0b1030; --glass: rgba(255,255,255,.06); --glass2: rgba(255,255,255,.08); --line: rgba(255,255,255,.10); --text:#e9eeff; --muted: rgba(233,238,255,.78); --rose:#ff2b86; --rose2:#ff5aa7; --rose3:#b31262; --blue:#3ea6ff; --blue2:#87d7ff; --cyan:#8ff4ff; --shadow: 0 18px 60px rgba(0,0,0,.55); --radius: 22px; --radius2: 16px; }
-    *{box-sizing:border-box}
-    html{scroll-behavior:smooth}
-    body{ margin:0; font-family: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "PingFang SC", "Microsoft Yahei", sans-serif; color:var(--text); background: radial-gradient(1200px 720px at 18% 18%, rgba(255,43,134,.40), transparent 62%), radial-gradient(980px 680px at 82% 18%, rgba(255,90,167,.34), transparent 62%), radial-gradient(1100px 760px at 55% 92%, rgba(179,18,98,.26), transparent 65%), radial-gradient(900px 560px at 22% 78%, rgba(255,43,134,.22), transparent 66%), radial-gradient(900px 560px at 86% 72%, rgba(62,166,255,.16), transparent 66%), linear-gradient(180deg, var(--bg1), var(--bg0)); min-height:100vh; overflow-x:hidden; background-attachment: fixed; }
-    body::before{ content:""; position:fixed; inset:-30px; pointer-events:none; z-index:-1; opacity:1; background: radial-gradient(420px 420px at 14% 22%, rgba(255,43,134,.22), transparent 65%), radial-gradient(520px 520px at 28% 78%, rgba(255,90,167,.18), transparent 68%), radial-gradient(460px 460px at 70% 30%, rgba(255,43,134,.16), transparent 68%), radial-gradient(680px 680px at 86% 74%, rgba(179,18,98,.14), transparent 72%), radial-gradient(820px 620px at 52% 58%, rgba(62,166,255,.10), transparent 72%); filter: saturate(1.22) contrast(1.05); }
-    .wrap{ width:min(1180px, calc(100% - 36px)); margin:0 auto; padding: 22px 0 76px; }
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>筑梦电子 · VIP服务站 · 7×24h服务</title>
+  <meta name="description" content="筑梦电子 · VIP服务站 · 7×24h服务｜电子产品 / 金融业务 / AI技术 / 网络服务 / 游戏服务 / 懒人特殊服务" />
+  <style>
+    .navcounter{
+  color: rgba(233,238,255,.88);
+  font-weight: 900;
+  font-size: 13px;
+  padding: 9px 12px;
+  border-radius: 999px;
+  border:1px solid rgba(255,255,255,.10);
+  background: rgba(255,255,255,.04);
+  display:flex;
+  align-items:center;
+  gap:6px;
+  white-space:nowrap;
+}
+.navcounter #visitCount{
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+  font-weight: 1000;
+}
 
-    /* --- 原有 Header 样式 --- */
-    header{ display:grid !important; grid-template-columns: 1fr auto 1fr; align-items:center; gap: 10px; position: relative; z-index:50; margin: 10px auto 22px; backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px); background: linear-gradient(180deg, rgba(10,14,40,.62), rgba(10,14,40,.28)); border: 1px solid var(--line); border-radius: 999px; box-shadow: var(--shadow); padding: 10px 12px; }
-    .brand{ display:flex; align-items:center; gap:10px; padding: 6px 10px; border-radius:999px; }
-    .dot{ width:8px;height:8px;border-radius:999px; background: radial-gradient(circle at 30% 30%, #ffd2e7, var(--rose)); box-shadow: 0 0 14px rgba(255,43,134,.7); flex:0 0 auto; }
-    .brand-title{ font-weight:800; letter-spacing:.8px; color:rgba(233,238,255,.96); white-space:nowrap; font-size: 14px; }
-    .navcenter{ justify-self:center; display:flex; align-items:baseline; gap: 8px; padding: 10px 18px; border-radius: 999px; border: 1px solid rgba(255,255,255,.16); background: linear-gradient(135deg, rgba(255,255,255,.10), rgba(255,255,255,.04)); box-shadow: 0 18px 55px rgba(0,0,0,.35), 0 0 22px rgba(62,166,255,.20); backdrop-filter: blur(14px); }
-    .navcenter-domain{ font-weight: 1000; font-size: 16px; color: rgba(255,255,255,.98); }
-    .navcenter-count{ font-weight: 1100; font-size: 18px; color: #ffffff; text-shadow: 0 0 18px rgba(62,166,255,.35); }
-    nav{ display:flex; gap:10px; align-items:center; padding-right: 6px; flex-wrap:wrap; justify-self:end; }
-    .navpill{ text-decoration:none; color:rgba(233,238,255,.88); font-weight:700; font-size: 13px; padding: 9px 12px; border-radius: 999px; border:1px solid rgba(255,255,255,.10); background: rgba(255,255,255,.04); transition: transform .15s ease; }
+    :root{
+      --bg0:#070916;
+      --bg1:#0b1030;
+      --glass: rgba(255,255,255,.06);
+      --glass2: rgba(255,255,255,.08);
+      --line: rgba(255,255,255,.10);
+      --text:#e9eeff;
+      --muted: rgba(233,238,255,.78);
 
-    /* --- 原有 Hero 样式 --- */
-    .hero{ border-radius: var(--radius); border:1px solid rgba(255,255,255,.10); background: linear-gradient(180deg, rgba(255,255,255,.08), rgba(255,255,255,.03)); box-shadow: var(--shadow); padding: clamp(18px, 2.6vw, 32px); position:relative; text-align:center; }
-    .tagline{ width:fit-content; margin: 0 auto 14px; padding: 9px 16px; border-radius: 999px; border: 1px solid rgba(255,255,255,.14); background: rgba(10,14,40,.38); font-weight: 900; font-size: 16px; color: #eaf6ff; text-shadow: 0 0 12px var(--blue); }
-    .hero-title { font-size: clamp(30px, 4.8vw, 76px); font-weight: 1000; background: linear-gradient(180deg, #ffffff, #6fd9ff, #116bff); -webkit-background-clip: text; color: transparent; line-height: 1.08; }
-    .slogan-row{ display:grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 12px; margin: 14px auto 18px; width: min(880px, 100%); }
-    .slogan{ border-radius: 999px; border: 1px solid rgba(255,255,255,.14); background: rgba(10,14,40,.34); padding: 12px 14px; font-weight: 900; color:#f3fbff; text-shadow: 0 0 14px var(--blue); }
+      --rose:#ff2b86;
+      --rose2:#ff5aa7;
+      --rose3:#b31262;
+      --blue:#3ea6ff;
+      --blue2:#87d7ff;
+      --cyan:#8ff4ff;
 
-    /* ============================================================
-       核心增加：邮箱系统模块 (宽度精准对齐标语行 880px)
-       ============================================================ */
-    .mail-module-card {
-      width: min(880px, 100%); margin: 26px auto 0;
-      border-radius: var(--radius); border: 1px solid rgba(255, 43, 134, 0.3);
-      background: linear-gradient(180deg, rgba(255, 255, 255, 0.08), rgba(255, 43, 134, 0.04));
-      padding: 24px; box-shadow: var(--shadow); position: relative; overflow: hidden;
-    }
-    .mail-notice-banner { 
-      background: rgba(255, 43, 134, 0.08); border-left: 5px solid var(--rose); 
-      padding: 12px 16px; border-radius: 8px; margin-bottom: 20px; text-align: left;
-      font-size: 14px; color: #ff9ccb; line-height: 1.6; font-weight: 700;
-    }
-    .mail-address-viewer {
-      font-size: clamp(22px, 4vw, 36px); font-weight: 1000; color: #fff;
-      background: rgba(0,0,0,0.4); border: 2px dashed var(--rose); border-radius: 16px;
-      padding: 22px; margin-bottom: 20px; text-shadow: 0 0 20px var(--rose);
-    }
-    
-    /* 3D 按压感按钮 */
-    .btn-3d-style {
-      border: none; border-radius: 12px; color: white; font-weight: 900; cursor: pointer;
-      padding: 12px 20px; transition: all 0.1s; position: relative; user-select: none;
-    }
-    .btn-3d-rose { background: var(--rose); box-shadow: 0 5px 0 var(--rose3); }
-    .btn-3d-blue { background: var(--blue); box-shadow: 0 5px 0 var(--blue-dark); }
-    .btn-3d-style:active { transform: translateY(4px); box-shadow: 0 1px 0 rgba(0,0,0,0.3); }
+      --shadow: 0 18px 60px rgba(0,0,0,.55);
+      --radius: 22px;
+      --radius2: 16px;
+    }
 
-    .mail-control-grid { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; margin-bottom: 15px; }
-    .mail-name-input {
-      background: rgba(255,255,255,0.06); border: 1px solid var(--line); border-radius: 12px;
-      padding: 12px; color: #fff; font-weight: 900; width: 220px; text-align: center; outline: none;
-    }
+    *{box-sizing:border-box}
+    html{scroll-behavior:smooth}
+    body{
+      margin:0;
+      font-family: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "PingFang SC", "Microsoft Yahei", "Noto Sans CJK SC", sans-serif;
+      color:var(--text);
 
-    .mail-inbox-section {
-      background: rgba(255,255,255,0.03); border: 1px solid var(--line); border-radius: 18px;
-      padding: 20px; text-align: left; min-height: 240px; margin-top: 20px;
-    }
-    .inbox-title-bar { display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--line); padding-bottom: 12px; margin-bottom: 15px; }
-    .countdown-pill { font-size: 12px; font-weight: 900; color: var(--muted); background: rgba(255,255,255,0.05); padding: 4px 12px; border-radius: 20px; border: 1px solid var(--line); }
-    
-    /* 中间弹窗提示 */
-    #globalMailToast {
-      visibility: hidden; position: fixed; left: 50%; top: 50%; transform: translate(-50%, -50%);
-      background: rgba(10,14,40,0.95); border: 1px solid var(--rose); color: #fff;
-      padding: 16px 32px; border-radius: 16px; font-weight: 1000; z-index: 9999; backdrop-filter: blur(10px);
-    }
-    #globalMailToast.show { visibility: visible; animation: fadeInOut 2.5s; }
-    @keyframes fadeInOut { 0%, 100% {opacity:0; scale:0.9;} 15%, 85% {opacity:1; scale:1;} }
+      background:
+        radial-gradient(1200px 720px at 18% 18%, rgba(255,43,134,.40), transparent 62%),
+        radial-gradient(980px 680px at 82% 18%, rgba(255,90,167,.34), transparent 62%),
+        radial-gradient(1100px 760px at 55% 92%, rgba(179,18,98,.26), transparent 65%),
+        radial-gradient(900px 560px at 22% 78%, rgba(255,43,134,.22), transparent 66%),
+        radial-gradient(900px 560px at 86% 72%, rgba(62,166,255,.16), transparent 66%),
+        linear-gradient(180deg, var(--bg1), var(--bg0));
 
-    /* === 你原有的其余所有样式 === */
-    section{margin-top: 26px;}
-    .section-card{ border-radius: var(--radius); border:1px solid rgba(255,255,255,.10); background: linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.03)); box-shadow: var(--shadow); padding: 22px; position:relative; overflow:hidden; }
-    .h{ display:flex; align-items:center; gap: 10px; font-weight: 1000; font-size: 18px; margin: 0 0 14px; color: rgba(233,238,255,.96); }
-    .intro-grid{ display:grid; grid-template-columns: 380px 1fr; gap: 18px; }
-    .imgbox{ border-radius: var(--radius2); border: 1px solid rgba(255,255,255,.12); background: rgba(10,14,40,.26); box-shadow: 0 18px 50px rgba(0,0,0,.35); min-height: 240px; background-size: cover; background-position:center; }
-    .intro-text p{ margin: 0 0 10px; color: rgba(233,238,255,.90); line-height: 1.8; font-weight: 650; }
-    .svc-grid{ display:grid; grid-template-columns: repeat(3, minmax(0,1fr)); gap: 14px; }
-    .svc{ border-radius: var(--radius2); border:1px solid rgba(255,255,255,.12); background: rgba(10,14,40,.20); box-shadow: 0 16px 44px rgba(0,0,0,.32); }
-    .svc-h{ padding: 12px 14px; font-weight: 1000; background: linear-gradient(135deg, rgba(10,14,40,.55), rgba(30,40,110,.20)); border-bottom: 1px solid rgba(255,255,255,.10); display:flex; justify-content:space-between; align-items:center; }
-    .svc-b{ padding: 12px 14px 14px; color: rgba(233,238,255,.86); font-weight: 650; min-height: 98px; }
-    .media-grid{ display:grid; grid-template-columns: repeat(3, minmax(0,1fr)); gap: 12px; }
-    .tile{ border-radius: var(--radius2); border:1px solid rgba(255,255,255,.12); background: rgba(10,14,40,.22); overflow:hidden; min-height: 150px; cursor:pointer; }
-    .tile img{ width:100%; height:100%; object-fit:cover; display:block; }
-    .contact-row{ width: 100%; display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); gap: 14px; padding: 6px 0 2px; }
-    .iconbtn{ width: 100%; min-height: 112px; border-radius: 18px; border:1px solid rgba(255,255,255,.14); background: rgba(255,255,255,.05); display:flex; flex-direction: column; align-items:center; justify-content:center; gap: 10px; cursor:pointer; text-decoration:none; }
-    .modal{ position:fixed; inset:0; display:none; align-items:center; justify-content:center; z-index:2000; padding: 18px; background: rgba(0,0,0,.55); backdrop-filter: blur(8px); }
-    .modal.show{display:flex;}
-    .dialog{ width:min(980px, 100%); border-radius: 22px; border:1px solid rgba(255,255,255,.14); background: rgba(10,14,40,.70); box-shadow: 0 28px 90px rgba(0,0,0,.65); padding: 18px; position:relative; }
-    
-    @media (max-width: 980px){
-      .intro-grid{grid-template-columns: 1fr;}
-      .svc-grid{grid-template-columns: repeat(2, minmax(0,1fr));}
-      .contact-row{grid-template-columns: repeat(3, minmax(0, 1fr));}
-    }
-  </style>
+      min-height:100vh;
+      overflow-x:hidden;
+      background-attachment: fixed;
+    }
+
+    body::before{
+      content:"";
+      position:fixed;
+      inset:-30px;
+      pointer-events:none;
+      z-index:-1;
+      opacity:1;
+      background:
+        radial-gradient(420px 420px at 14% 22%, rgba(255,43,134,.22), transparent 65%),
+        radial-gradient(520px 520px at 28% 78%, rgba(255,90,167,.18), transparent 68%),
+        radial-gradient(460px 460px at 70% 30%, rgba(255,43,134,.16), transparent 68%),
+        radial-gradient(680px 680px at 86% 74%, rgba(179,18,98,.14), transparent 72%),
+        radial-gradient(820px 620px at 52% 58%, rgba(62,166,255,.10), transparent 72%);
+      filter: saturate(1.22) contrast(1.05);
+    }
+
+    .wrap{
+      width:min(1180px, calc(100% - 36px));
+      margin:0 auto;
+      padding: 22px 0 76px;
+    }
+
+    header{
+      position: relative;
+      top: auto;
+
+      z-index:50;
+      margin: 10px auto 22px;
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      background: linear-gradient(180deg, rgba(10,14,40,.62), rgba(10,14,40,.28));
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      box-shadow: var(--shadow);
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      padding: 10px 12px;
+    }
+
+    .brand{
+      display:flex;
+      align-items:center;
+      gap:10px;
+      padding: 6px 10px;
+      border-radius:999px;
+    }
+    .dot{
+      width:8px;height:8px;border-radius:999px;
+      background: radial-gradient(circle at 30% 30%, #ffd2e7, var(--rose));
+      box-shadow: 0 0 14px rgba(255,43,134,.7);
+      flex:0 0 auto;
+    }
+    .brand-title{
+      font-weight:800;
+      letter-spacing:.8px;
+      color:rgba(233,238,255,.96);
+      text-shadow: 0 0 12px rgba(62,166,255,.18), 0 0 18px rgba(255,43,134,.14);
+      white-space:nowrap;
+      font-size: 14px;
+    }
+
+    nav{
+      display:flex;
+      gap:10px;
+      align-items:center;
+      padding-right: 6px;
+      flex-wrap:wrap;
+      justify-content:flex-end;
+    }
+    .navpill{
+      text-decoration:none;
+      color:rgba(233,238,255,.88);
+      font-weight:700;
+      font-size: 13px;
+      padding: 9px 12px;
+      border-radius: 999px;
+      border:1px solid rgba(255,255,255,.10);
+      background: rgba(255,255,255,.04);
+      transition: transform .15s ease, background .15s ease, border-color .15s ease;
+    }
+    /* ✅ header 三段式：左品牌 / 中主体 / 右导航 */
+header{
+  display:grid !important;
+  grid-template-columns: 1fr auto 1fr;
+  align-items:center;
+  gap: 10px;
+}
+
+/* 右侧 nav 靠右 */
+header nav{
+  justify-self:end;
+}
+
+/* ✅ 中间主体（网址+访问量） */
+.navcenter{
+  justify-self:center;
+  display:flex;
+  align-items:baseline;
+  gap: 8px;
+
+  padding: 10px 18px;
+  border-radius: 999px;
+  border: 1px solid rgba(255,255,255,.16);
+
+  background: linear-gradient(135deg,
+    rgba(255,255,255,.10),
+    rgba(255,255,255,.04)
+  );
+
+  box-shadow:
+    0 18px 55px rgba(0,0,0,.35),
+    0 0 22px rgba(62,166,255,.20),
+    0 0 22px rgba(255,43,134,.18);
+
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+}
+
+/* 字体：更大、更粗、更亮眼 */
+.navcenter-domain{
+  font-weight: 1000;
+  font-size: 16px;
+  letter-spacing: .6px;
+  color: rgba(255,255,255,.98);
+  text-shadow: 0 0 16px rgba(143,244,255,.35), 0 0 18px rgba(255,43,134,.18);
+}
+
+.navcenter-label{
+  font-weight: 1000;
+  font-size: 16px;
+  color: rgba(233,238,255,.92);
+}
+
+.navcenter-count{
+  font-weight: 1100;
+  font-size: 18px;
+  color: #ffffff;
+  text-shadow: 0 0 18px rgba(62,166,255,.35), 0 0 22px rgba(255,43,134,.22);
+}
+
+.navcenter-sep{
+  opacity: .75;
+  font-weight: 900;
+}
+
+/* ✅ 手机端：中间块换到第二行，避免挤压 */
+@media (max-width: 560px){
+  header{
+    grid-template-columns: 1fr 1fr;
+    grid-template-areas:
+      "brand nav"
+      "center center";
+    border-radius: 18px;
+  }
+  header .brand{ grid-area: brand; }
+  header nav{ grid-area: nav; }
+  .navcenter{
+    grid-area: center;
+    margin: 6px auto 0;
+    width: fit-content;
+    max-width: 100%;
+  }
+  .navcenter-domain, .navcenter-label{ font-size: 14px; }
+  .navcenter-count{ font-size: 16px; }
+}
+
+    .navpill:hover{
+      transform: translateY(-1px);
+      background: rgba(255,255,255,.07);
+      border-color: rgba(255,255,255,.16);
+    }
+
+    .hero{
+      border-radius: var(--radius);
+      border:1px solid rgba(255,255,255,.10);
+      background:
+        radial-gradient(900px 380px at 18% 20%, rgba(62,166,255,.26), transparent 60%),
+        radial-gradient(900px 380px at 85% 30%, rgba(255,43,134,.20), transparent 60%),
+        linear-gradient(180deg, rgba(255,255,255,.08), rgba(255,255,255,.03));
+      box-shadow: var(--shadow);
+
+      padding: clamp(18px, 2.6vw, 32px);
+
+      position:relative;
+      overflow: visible;
+      text-align:center;
+    }
+
+    .hero::after{
+      content:"";
+      position:absolute;
+      inset:-2px;
+      pointer-events:none;
+      border-radius: calc(var(--radius) + 2px);
+      background:
+        radial-gradient(520px 220px at 24% 30%, rgba(62,166,255,.16), transparent 62%),
+        radial-gradient(520px 220px at 76% 34%, rgba(255,43,134,.14), transparent 62%);
+      filter: blur(12px);
+      opacity:.95;
+    }
+    .hero > *{position:relative; z-index:2;}
+
+    .tagline{
+      width:fit-content;
+      margin: 0 auto 14px;
+      padding: 9px 16px;
+      border-radius: 999px;
+      border: 1px solid rgba(255,255,255,.14);
+      background: rgba(10,14,40,.38);
+      font-weight: 900;
+      font-size: 16px;
+      letter-spacing: 1.3px;
+      color: #eaf6ff;
+      text-shadow:
+        0 0 12px rgba(62,166,255,.55),
+        0 0 24px rgba(143,244,255,.26),
+        0 0 18px rgba(255,43,134,.22);
+      box-shadow: 0 10px 30px rgba(0,0,0,.35);
+    }
+
+    .hero-title {
+      display: inline-block;
+      width: fit-content;
+      max-width: 100%;
+      margin: 10px auto;
+      white-space: nowrap;
+      padding: 0;
+      text-align: center;
+
+      --fs: clamp(30px, 4.8vw, 76px);
+      --ls: clamp(0.03em, 0.18vw, 0.12em);
+      font-size: var(--fs);
+      letter-spacing: var(--ls);
+      font-weight: 1000;
+      line-height: 1.08;
+
+      background: linear-gradient(180deg,
+        #ffffff 0%,
+        #eaf9ff 18%,
+        #bfeeff 42%,
+        #6fd9ff 66%,
+        #1aa6ff 86%,
+        #116bff 100%);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      -webkit-text-fill-color: transparent;
+
+      text-shadow:
+        0 0 6px rgba(255,255,255,.16),
+        0 0 14px rgba(111,217,255,.28),
+        0 0 26px rgba(26,166,255,.18);
+
+      -webkit-font-smoothing: antialiased;
+      text-rendering: geometricPrecision;
+
+      position: relative;
+    }
+
+    .slogan-row{
+      display:grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 12px;
+      margin: 14px auto 18px;
+      width: min(880px, 100%);
+    }
+    .slogan{
+      max-width: 220px;
+      margin:0 auto;
+      border-radius: 999px;
+      border: 1px solid rgba(255,255,255,.14);
+      background: rgba(10,14,40,.34);
+      padding: 12px 14px;
+      text-align:center;
+      font-weight: 900;
+      letter-spacing: 1px;
+      color:#f3fbff;
+      text-shadow:
+        0 0 14px rgba(62,166,255,.55),
+        0 0 18px rgba(255,43,134,.18),
+        0 3px 0 rgba(0,0,0,.30);
+      box-shadow: 0 14px 40px rgba(0,0,0,.32);
+      position:relative;
+      overflow:hidden;
+    }
+
+    .cta{
+      display:flex;
+      justify-content:center;
+      gap: 10px;
+      flex-wrap:wrap;
+      margin-top: 6px;
+    }
+    .btn{
+      border:1px solid rgba(255,255,255,.16);
+      background: rgba(255,255,255,.05);
+      color: rgba(233,238,255,.92);
+      font-weight: 900;
+      letter-spacing: .6px;
+      padding: 12px 16px;
+      border-radius: 999px;
+      cursor:pointer;
+      text-decoration:none;
+      display:inline-flex;
+      align-items:center;
+      gap: 10px;
+      transition: transform .15s ease, background .15s ease, border-color .15s ease, box-shadow .15s ease;
+      box-shadow: 0 16px 40px rgba(0,0,0,.28);
+    }
+    .btn:hover{
+      transform: translateY(-1px);
+      background: rgba(255,255,255,.08);
+      border-color: rgba(255,255,255,.22);
+    }
+    .btn.primary{
+      background: linear-gradient(135deg, rgba(255,43,134,.92), rgba(255,90,167,.70));
+      border-color: rgba(255,90,167,.45);
+      color: #fff;
+      box-shadow: 0 18px 44px rgba(255,43,134,.18);
+    }
+
+    section{margin-top: 26px;}
+    .section-card{
+      border-radius: var(--radius);
+      border:1px solid rgba(255,255,255,.10);
+      background: linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.03));
+      box-shadow: var(--shadow);
+      padding: 22px;
+      position:relative;
+      overflow:hidden;
+    }
+
+    .h{
+      display:flex;
+      align-items:center;
+      gap: 10px;
+      font-weight: 1000;
+      font-size: 18px;
+      letter-spacing: 1.2px;
+      margin: 0 0 14px;
+      color: rgba(233,238,255,.96);
+      text-shadow: 0 0 10px rgba(62,166,255,.18);
+    }
+
+    .intro-grid{
+      display:grid;
+      grid-template-columns: 380px 1fr;
+      gap: 18px;
+      align-items:stretch;
+    }
+
+    .imgbox{
+      border-radius: var(--radius2);
+      border: 1px solid rgba(255,255,255,.12);
+      background:
+        radial-gradient(220px 160px at 20% 25%, rgba(62,166,255,.16), transparent 60%),
+        radial-gradient(220px 160px at 80% 65%, rgba(255,43,134,.14), transparent 60%),
+        rgba(10,14,40,.26);
+      box-shadow: 0 18px 50px rgba(0,0,0,.35);
+      position:relative;
+      overflow:hidden;
+      min-height: 240px;
+      background-size: cover;
+      background-position:center;
+      background-repeat:no-repeat;
+    }
+
+    .imgbox-about{
+      background:
+        linear-gradient(180deg, rgba(0,0,0,.12), rgba(0,0,0,.32)),
+        url("assets/about.jpg");
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+    }
+
+    .intro-text{
+      border-radius: var(--radius2);
+      border: 1px solid rgba(255,255,255,.12);
+      background: rgba(10,14,40,.22);
+      padding: 16px 16px 14px;
+    }
+    .intro-text p{
+      margin: 0 0 10px;
+      color: rgba(233,238,255,.90);
+      line-height: 1.8;
+      font-weight: 650;
+    }
+    .bullets{
+      margin: 10px 0 0;
+      padding-left: 18px;
+      color: rgba(233,238,255,.88);
+      line-height: 1.85;
+      font-weight: 700;
+    }
+    .bullets li{margin: 4px 0}
+    .divider{
+      height:1px;
+      background: rgba(255,255,255,.10);
+      margin: 10px 0 10px;
+    }
+
+    .svc-grid{
+      display:grid;
+      grid-template-columns: repeat(3, minmax(0,1fr));
+      gap: 14px;
+    }
+    .svc{
+      border-radius: var(--radius2);
+      border:1px solid rgba(255,255,255,.12);
+      overflow:hidden;
+      background: rgba(10,14,40,.20);
+      box-shadow: 0 16px 44px rgba(0,0,0,.32);
+    }
+    .svc-h{
+      padding: 12px 14px;
+      font-weight: 1000;
+      letter-spacing: 1px;
+      background: linear-gradient(135deg, rgba(10,14,40,.55), rgba(30,40,110,.20));
+      border-bottom: 1px solid rgba(255,255,255,.10);
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      gap:10px;
+    }
+    .svc-h .tag{
+      font-size: 12px;
+      font-weight: 1000;
+      padding: 6px 10px;
+      border-radius: 999px;
+      background: rgba(255,255,255,.05);
+      border: 1px solid rgba(255,255,255,.12);
+      color: rgba(233,238,255,.88);
+    }
+    .svc-b{
+      padding: 12px 14px 14px;
+      background: rgba(255,255,255,.04);
+      color: rgba(233,238,255,.86);
+      line-height: 1.75;
+      font-weight: 650;
+      min-height: 98px;
+    }
+    .mini-tags{
+      display:flex;
+      flex-wrap:wrap;
+      gap: 8px;
+      margin-top: 10px;
+    }
+    .mini-tags span{
+      font-size: 12px;
+      font-weight: 1000;
+      padding: 6px 10px;
+      border-radius: 999px;
+      border: 1px solid rgba(255,255,255,.12);
+      background: rgba(10,14,40,.28);
+      color: rgba(233,238,255,.90);
+      box-shadow: 0 0 18px rgba(62,166,255,.10);
+    }
+
+    .media-grid{
+      display:grid;
+      grid-template-columns: repeat(3, minmax(0,1fr));
+      gap: 12px;
+    }
+    .tile{
+      border-radius: var(--radius2);
+      border:1px solid rgba(255,255,255,.12);
+      background: rgba(10,14,40,.22);
+      overflow:hidden;
+      position:relative;
+      min-height: 150px;
+      cursor:pointer;
+      box-shadow: 0 16px 44px rgba(0,0,0,.30);
+      transition: transform .15s ease, border-color .15s ease;
+    }
+    .tile:hover{
+      transform: translateY(-2px);
+      border-color: rgba(255,90,167,.28);
+    }
+    .tile img{
+      width:100%;
+      height:100%;
+      object-fit:cover;
+      display:block;
+      opacity:.92;
+      filter: saturate(1.05) contrast(1.05);
+    }
+    .tile .placeholder{
+      position:absolute;
+      inset:0;
+      display:flex;
+      flex-direction:column;
+      justify-content:flex-start;
+      align-items:flex-start;
+      padding: 14px;
+      gap: 6px;
+      color: rgba(233,238,255,.78);
+      font-weight: 900;
+      letter-spacing:.6px;
+      background:
+        radial-gradient(220px 160px at 20% 20%, rgba(62,166,255,.16), transparent 60%),
+        radial-gradient(220px 160px at 80% 70%, rgba(255,43,134,.12), transparent 60%),
+        rgba(10,14,40,.10);
+    }
+    .tile .placeholder small{
+      font-weight: 800;
+      color: rgba(233,238,255,.66);
+      letter-spacing: .4px;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+    }
+
+    .video-grid{
+      display:grid;
+      grid-template-columns: repeat(3, minmax(0,1fr));
+      gap: 12px;
+      margin-top: 12px;
+    }
+    .vtile{
+      border-radius: var(--radius2);
+      border:1px solid rgba(255,255,255,.12);
+      background: rgba(10,14,40,.22);
+      overflow:hidden;
+      position:relative;
+      min-height: 170px;
+      cursor:pointer;
+      box-shadow: 0 16px 44px rgba(0,0,0,.30);
+      transition: transform .15s ease, border-color .15s ease;
+    }
+    .vtile:hover{
+      transform: translateY(-2px);
+      border-color: rgba(62,166,255,.30);
+    }
+    .vtile video{
+      width:100%;
+      height:100%;
+      object-fit:cover;
+      display:block;
+      filter: saturate(1.05) contrast(1.05);
+    }
+
+    .contact-row{
+      width: 100%;
+      max-width: 1120px;
+      margin: 6px auto 2px;
+      display: grid;
+      grid-template-columns: repeat(6, minmax(0, 1fr));
+      gap: 14px;
+      align-items: stretch;
+      justify-items: stretch;
+      padding: 6px 0 2px;
+    }
+    .iconbtn{
+      width: 100%;
+      min-height: 112px;
+      border-radius: 18px;
+      border:1px solid rgba(255,255,255,.14);
+      background: rgba(255,255,255,.05);
+      display:flex;
+      flex-direction: column;
+      align-items:center;
+      justify-content:center;
+      gap: 10px;
+      cursor:pointer;
+      transition: transform .15s ease, background .15s ease, border-color .15s ease, box-shadow .15s ease;
+      box-shadow: 0 16px 44px rgba(0,0,0,.32);
+      text-decoration:none;
+      padding: 14px 10px;
+      text-align:center;
+    }
+    .iconbtn:hover{
+      transform: translateY(-2px);
+      background: rgba(255,255,255,.08);
+      border-color: rgba(255,90,167,.26);
+      box-shadow: 0 20px 56px rgba(0,0,0,.36);
+    }
+    .iconbtn.wechat{ border-color: rgba(255,90,167,.22); }
+
+    .iconimg{
+      width: 40px;
+      height: 40px;
+      display:block;
+      filter: drop-shadow(0 10px 18px rgba(0,0,0,.35));
+    }
+    .iconlabel{
+      font-weight: 1000;
+      font-size: 14px;
+      letter-spacing: .8px;
+      color: rgba(233,238,255,.92);
+      text-shadow: 0 0 12px rgba(255,43,134,.10), 0 0 14px rgba(62,166,255,.10);
+      line-height: 1;
+    }
+
+    .foot{
+      text-align:center;
+      color: rgba(233,238,255,.55);
+      font-weight: 700;
+      margin-top: 16px;
+      letter-spacing: .6px;
+    }
+
+    .modal{
+      position:fixed;
+      inset:0;
+      display:none;
+      align-items:center;
+      justify-content:center;
+      z-index:200;
+      padding: 18px;
+      background: rgba(0,0,0,.55);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+    }
+    .modal.show{display:flex;}
+    .dialog{
+      width:min(980px, 100%);
+      border-radius: 22px;
+      border:1px solid rgba(255,255,255,.14);
+      background:
+        radial-gradient(800px 300px at 20% 20%, rgba(62,166,255,.18), transparent 65%),
+        radial-gradient(800px 300px at 80% 40%, rgba(255,43,134,.14), transparent 65%),
+        rgba(10,14,40,.70);
+      box-shadow: 0 28px 90px rgba(0,0,0,.65);
+      overflow:hidden;
+      position:relative;
+    }
+    .dialog-h{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      padding: 14px 14px 12px;
+      border-bottom: 1px solid rgba(255,255,255,.10);
+    }
+    .close{
+      border:1px solid rgba(255,255,255,.16);
+      background: rgba(255,255,255,.05);
+      color: rgba(233,238,255,.92);
+      font-weight: 1000;
+      border-radius: 12px;
+      padding: 8px 12px;
+      cursor:pointer;
+    }
+    .dialog-b{ padding: 14px; }
+    .media-view{
+      width:100%;
+      display:block;
+      border-radius: 16px;
+      border:1px solid rgba(255,255,255,.12);
+      background: rgba(0,0,0,.22);
+      max-height: 72vh;
+      object-fit: contain;
+    }
+
+    .wechat-grid{
+      display:grid;
+      grid-template-columns: 280px 1fr;
+      gap: 14px;
+      align-items:start;
+    }
+    .qrbox{
+      border-radius: 18px;
+      border:1px solid rgba(255,255,255,.12);
+      background: rgba(255,255,255,.04);
+      padding: 12px;
+      text-align:center;
+    }
+    .qrbox img{
+      width:100%;
+      height:auto;
+      border-radius: 14px;
+      border:1px solid rgba(255,255,255,.12);
+      background: rgba(0,0,0,.18);
+      display:block;
+    }
+    .qr-actions{
+      display:flex;
+      gap:10px;
+      justify-content:center;
+      flex-wrap:wrap;
+      margin-top: 10px;
+    }
+
+    .toast{
+      position:fixed;
+      left: 50%;
+      bottom: 18px;
+      transform: translateX(-50%);
+      z-index: 260;
+      background: rgba(10,14,40,.78);
+      border: 1px solid rgba(255,255,255,.14);
+      border-radius: 999px;
+      padding: 12px 14px;
+      display:none;
+      gap:10px;
+      align-items:center;
+      color: rgba(233,238,255,.92);
+      font-weight: 900;
+      letter-spacing:.4px;
+      box-shadow: 0 18px 60px rgba(0,0,0,.55);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      max-width: min(92vw, 900px);
+    }
+    .toast.show{display:flex;}
+    .toast .t-dot{
+      width:8px;height:8px;border-radius:999px;
+      background: radial-gradient(circle at 30% 30%, #ffd2e7, var(--rose));
+      box-shadow: 0 0 14px rgba(255,43,134,.7);
+      flex:0 0 auto;
+    }
+
+    /* 你之前隐藏 UI 的设置保留 */
+    .playbadge small{ display:none !important; }
+    .dialog-h{ display:none !important; }
+    .dialog-b{ padding-top: 18px; }
+    .playbadge{ display:none !important; }
+
+    @media (max-width: 980px){
+      .intro-grid{grid-template-columns: 1fr;}
+      .imgbox{min-height: 210px;}
+      .svc-grid{grid-template-columns: repeat(2, minmax(0,1fr));}
+      .media-grid{grid-template-columns: repeat(2, minmax(0,1fr));}
+      .video-grid{grid-template-columns: 1fr;}
+      .wechat-grid{grid-template-columns: 1fr;}
+      .hero-title{font-size: clamp(18px, 7.2vw, 56px);}
+      .contact-row{grid-template-columns: repeat(3, minmax(0, 1fr));}
+    }
+
+    @media (max-width: 560px){
+      header{border-radius: 18px;}
+      .brand-title{font-size: 12px;}
+      .navpill{font-size: 12px; padding: 8px 10px;}
+      .hero { padding: 20px 8px 16px; }
+      .tagline{font-size: 14px;}
+      .slogan-row{grid-template-columns: repeat(2, minmax(0,1fr));}
+      .svc-grid{grid-template-columns: 1fr;}
+      .media-grid{grid-template-columns: 1fr;}
+      .contact-row{grid-template-columns: repeat(2, minmax(0, 1fr));}
+      .iconbtn{min-height: 104px;}
+      .iconimg{width: 38px; height: 38px;}
+      .iconlabel{font-size: 13px;}
+    }
+  </style>
 </head>
 
 <body>
-  <audio id="notifVoice" src="https://tts.baidu.com/text2audio?lan=zh&ie=UTF-8&spd=5&text=%E6%82%A8%E6%9C%89%E6%96%B0%E7%9A%84%E9%82%AE%E4%BB%B6%EF%BC%8C%E8%AF%B7%E6%B3%A8%E6%84%8F%E6%9F%A5%E6%94%B6" preload="auto"></audio>
-  <div id="globalMailToast">✅ 操作成功</div>
+  <div class="wrap">
 
-  <div class="wrap">
-    <header>
-      <div class="brand"><span class="dot"></span><div class="brand-title">筑梦电子 · VIP服务站</div></div>
-      <div class="navcenter"><span class="navcenter-domain">www.roselg.xyz</span><span class="navcenter-sep">·</span><span class="navcenter-label">访问量</span><span class="navcenter-count" id="visitCount">330</span></div>
-      <nav><a class="navpill" href="#intro">服务介绍</a><a class="navpill" href="#gallery">视图展示</a><a class="navpill" href="#contact">联系方式</a></nav>
-    </header>
+   <header>
+  <div class="brand" title="筑梦电子 · VIP服务站 · 7x24h服务">
+    <span class="dot"></span>
+    <div class="brand-title">筑梦电子 · VIP服务站 · 7x24h服务</div>
+  </div>
 
-    <div class="hero">
-      <div class="tagline">因为专注 · 所以专业 · 十年老店</div>
-      <h1 class="hero-title">欢迎VIP贵宾来到筑梦电子</h1>
-      <div class="slogan-row">
-        <div class="slogan"><span>新店拼价格</span></div>
-        <div class="slogan"><span>老店拼质量</span></div>
-        <div class="slogan"><span>同价拼服务</span></div>
-        <div class="slogan"><span>骗子无成本</span></div>
-      </div>
-      <div class="cta" style="display:flex; justify-content:center; gap:10px; margin-top:5px;">
-        <a class="navpill" href="#contact" style="background:var(--rose); border:none; padding:12px 20px; font-weight:900;">立即联系</a>
-        <a class="navpill" href="#gallery" style="padding:12px 20px; font-weight:900;">查看展品</a>
-      </div>
-    </div>
+  <!-- ✅ 中间：网址 + 访问量（独立，不跟右边按钮混排） -->
+  <div class="navcenter" id="navCounter">
+    <span class="navcenter-domain">www.roselg.xyz</span>
+    <span class="navcenter-sep">·</span>
+    <span class="navcenter-label">访问量</span>
+    <span class="navcenter-count" id="visitCount">—</span>
+  </div>
 
-    <div class="mail-module">
-      <div class="mail-module-card">
-        <div class="mail-hint">
-          🌹 <strong>玫瑰物语：</strong>在下方输入名字并点击“使用自定义名字”即可找回属于你的历史邮件！<br>
-          📢 <strong>天窗提醒：</strong>点击开启语音按钮并允许权限，最小化窗口也能收到温柔播报提醒。
-        </div>
+  <nav>
+    <a class="navpill" href="#intro">服务介绍</a>
+    <a class="navpill" href="#services">业务分类</a>
+    <a class="navpill" href="#gallery">视图展示</a>
+    <a class="navpill" href="#contact">联系方式</a>
+  </nav>
+</header>
 
-        <div style="text-align:center; margin-bottom:15px;">
-          <button class="btn-3d-style btn-3d-rose" style="font-size:13px; padding:8px 16px;" onclick="unlockVoiceAndNotice()">🔊 开启收件提示音 & 天窗提醒</button>
-        </div>
 
-        <div class="mail-address-viewer" id="mailDisplay">正在呼唤玫瑰...</div>
+    <div class="hero" id="top">
+      <div class="tagline">因为专注 · 所以专业 · 十年老店</div>
+      <h1 class="hero-title" data-text="欢迎VIP贵宾来到筑梦电子">欢迎VIP贵宾来到筑梦电子</h1>
 
-        <div class="mail-control-grid">
-          <input type="text" class="mail-name-input" id="mailNameInput" placeholder="输入名字 (如: vip777)">
-          <button class="btn-3d-style btn-3d-rose" onclick="setMyMail()">🌹 使用自定义名字</button>
-          <button class="btn-3d-style btn-3d-rose" onclick="genRandomMail()">🔄 随机生成地址</button>
-        </div>
+      <div class="slogan-row" aria-label="四个核心卖点">
+        <div class="slogan"><span>新店拼价格</span></div>
+        <div class="slogan"><span>老店拼质量</span></div>
+        <div class="slogan"><span>同价拼服务</span></div>
+        <div class="slogan"><span>骗子无成本</span></div>
+      </div>
 
-        <button class="btn-3d-style btn-3d-blue" style="width:100%; margin-bottom:20px;" onclick="copyMailToClipboard()">📋 复制完整邮箱地址</button>
+      <div class="cta">
+        <a class="btn primary" href="#contact">立即联系</a>
+        <a class="btn" href="#gallery">查看展品</a>
+        <a class="btn" href="#services">查看业务</a>
+      </div>
+    </div>
 
-        <div class="mail-inbox-section">
-          <div class="inbox-title-bar">
-            <span style="font-weight:1000; color:var(--rose2); display:flex; align-items:center; gap:8px;">
-              📥 玫瑰收件箱 <span id="voiceStatusTag" style="font-size:10px; opacity:0.5; font-weight:normal;">(待开启)</span>
-            </span>
-            <div style="display:flex; align-items:center; gap:10px;">
-              <span class="countdown-pill" id="refreshTimerText">5s 刷新</span>
-              <button class="btn-3d-style btn-3d-blue" style="padding:6px 14px; font-size:12px;" onclick="triggerMailSync()">🔄 手动刷新</button>
-            </div>
-          </div>
-          <div id="mailListContainer" style="text-align:center; padding-top:60px; color:var(--muted); font-weight:700;">暂无新邮件</div>
-        </div>
-      </div>
-    </div>
+    <section id="intro">
+      <div class="section-card">
+        <div class="h"><span class="dot"></span>服务介绍</div>
 
-    <section id="intro">
-      <div class="section-card">
-        <div class="h"><span class="dot"></span>服务介绍</div>
-        <div class="intro-grid">
-          <div class="imgbox" style="background-image:url('assets/about.jpg')"></div>
-          <div class="intro-text">
-            <p>专注于电子产品十余年并扩展多类数字化服务，覆盖从咨询到定制到交付最后到提供售后的一站式服务支持，现延展至 AI 技术方向的教学、代做与工具教程以及游戏的代练、陪玩等个性服务。</p>
-            <p>按客户需求定制最优人性化方案，明确需求后快速推进；支持远程协助、上门服务等一对一交互式的交付服务；沟通清晰、流程透明，适合需要省钱省心与长期协作的客户。</p>
-            <p>无论是电子产品、金融业务、AI技术、网络服务、游戏服务，还是远程协助与懒人指定服务都具备广泛的资源与个独特的个性服务，并可按指定需求进行完成，优先解决“最关键的那一步”。</p>
-            <ul style="font-weight:700; color:var(--muted); line-height:2; margin-top:15px; padding-left:20px;">
-              <li>服务特点：快速响应｜流程清晰｜按需定制</li>
-              <li>交付形式：远程协助｜上门服务｜个性定制｜成品交付</li>
-              <li>合作方式：先沟通需求 → 明确范围 → 交付与售后</li>
-            </ul>
-          </div>
-        </div>
-      </div>
-    </section>
+        <div class="intro-grid">
+          <div class="imgbox imgbox-about" title="服务介绍配图"></div>
 
-    <section id="services">
-      <div class="section-card">
-        <div class="h"><span class="dot"></span>业务分类</div>
-        <div class="svc-grid">
-          <div class="svc"><div class="svc-h">电子产品</div><div class="svc-b">苹果、华为、三星手机平板电脑收售、回收、维修、分期。品质保障！</div></div>
-          <div class="svc"><div class="svc-h">金融业务</div><div class="svc-b">额度提取、还款协商、各类资产抵押贷款办理。点位合理！</div></div>
-          <div class="svc"><div class="svc-h">AI技术</div><div class="svc-b">AI生图、视频、工作流定制代做与工具白嫖教程教学。</div></div>
-          <div class="svc"><div class="svc-h">网络服务</div><div class="svc-b">IP搭建、APPLE ID、软件注册接码、成品号及软件定制多开。</div></div>
-          <div class="svc"><div class="svc-h">游戏服务</div><div class="svc-b">和平精英代练陪玩、设备调试、高刷陀螺仪远程开启。</div></div>
-          <div class="svc"><div class="svc-h">懒人特殊服务</div><div class="svc-b">省心代办、懒人专属上门、OBS高清画质配置等远程交付。</div></div>
-        </div>
-      </div>
-    </section>
+          <div class="intro-text">
+                <p>专注于电子产品十余年并扩展多类数字化服务，覆盖从咨询到定制到交付最后到提供售后的一站式服务支持，现延展至 AI 技术方向的教学、代做与工具教程以及游戏的代练、陪玩等个性服务。</p>
+            <p>按客户需求定制最优人性化方案，明确需求后快速推进；支持远程协助、上门服务等一对一交互式的交付服务；沟通清晰、流程透明，适合需要省钱省心与长期协作的客户。</p>
+            <p>无论是电子产品、金融业务、AI技术、网络服务、游戏服务，还是远程协助与懒人指定服务都具备广泛的资源与个独特的个性服务，并可按指定需求进行完成，优先解决“最关键的那一步”。</p>
 
-    <section id="gallery">
-      <div class="section-card">
-        <div class="h"><span class="dot"></span>视图展示</div>
-        <div class="media-grid">
-          <div class="tile" onclick="openMe('assets/photo-01.jpg')"><img src="assets/photo-01.jpg"></div>
-          <div class="tile" onclick="openMe('assets/photo-02.jpg')"><img src="assets/photo-02.jpg"></div>
-          <div class="tile" onclick="openMe('assets/photo-03.jpg')"><img src="assets/photo-03.jpg"></div>
-          <div class="tile" onclick="openMe('assets/photo-04.jpg')"><img src="assets/photo-04.jpg"></div>
-          <div class="tile" onclick="openMe('assets/photo-05.jpg')"><img src="assets/photo-05.jpg"></div>
-          <div class="tile" onclick="openMe('assets/photo-06.jpg')"><img src="assets/photo-06.jpg"></div>
-        </div>
-        <div class="video-grid" style="display:grid; grid-template-columns: repeat(3, 1fr); gap:12px; margin-top:12px;">
-          <div class="svc" style="height:170px;"><video src="assets/video-01.mp4" muted style="width:100%;height:100%;object-fit:cover;"></video></div>
-          <div class="svc" style="height:170px;"><video src="assets/video-02.mp4" muted style="width:100%;height:100%;object-fit:cover;"></video></div>
-          <div class="svc" style="height:170px;"><video src="assets/video-03.mp4" muted style="width:100%;height:100%;object-fit:cover;"></video></div>
-        </div>
-      </div>
-    </section>
+            <div class="divider"></div>
 
-    <section id="contact">
-      <div class="section-card">
-        <div class="h"><span class="dot"></span>联系方式</div>
-        <div class="contact-row">
-          <button class="iconbtn" onclick="document.getElementById('wechatModal').classList.add('show')"><div class="iconlabel">微信</div></button>
-          <a class="iconbtn" href="https://t.me/guoxingbiao" target="_blank"><div class="iconlabel">Telegram</div></a>
-          <a class="iconbtn" href="mailto:guoxingbiao521@gmail.com"><div class="iconlabel">Gmail</div></a>
-          <a class="iconbtn" href="https://v.douyin.com/hTxqO_qDO6M/" target="_blank"><div class="iconlabel">抖音</div></a>
-          <a class="iconbtn" href="https://v.kuaishou.com/KArQ2jnp" target="_blank"><div class="iconlabel">快手</div></a>
-          <a class="iconbtn" href="https://xhslink.com/m/8My2Kr680Fb" target="_blank"><div class="iconlabel">小红书</div></a>
-        </div>
-        <div class="foot">© 2026 筑梦电子 · www.roselg.xyz</div>
-      </div>
-    </section>
-  </div>
+            <ul class="bullets">
+              <li>服务特点：快速响应｜流程清晰｜按需定制</li>
+              <li>交付形式：远程协助｜上门服务｜个性定制｜成品交付</li>
+              <li>合作方式：先沟通需求 → 明确范围 → 交付与售后</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
 
-  <div class="modal" id="wechatModal">
-    <div class="dialog">
-      <div style="display:flex; justify-content:space-between; margin-bottom:15px;"><span class="dot"></span>微信扫码/搜索添加好友</div>
-      <img src="assets/wechat-qr.jpg" style="width:100%; border-radius:12px;">
-      <div style="text-align:center; padding:15px 0;">微信号：<b>LG-202412</b></div>
-      <button class="btn-3d-style btn-3d-rose" style="width:100%" onclick="document.getElementById('wechatModal').classList.remove('show')">返回网页</button>
-    </div>
-  </div>
+    <section id="services">
+      <div class="section-card">
+        <div class="h"><span class="dot"></span>业务分类</div>
 
-  <script>
-    /* --- 1. 邮箱逻辑核心 --- */
-    const MAIL_URL = "http://47.251.143.74/api/emails";
-    const DOMAIN_STR = "@roselg.xyz";
-    let myMailAddr = "", mailCountdown = 5, prevMailCount = -1, audioReady = false;
+        <div class="svc-grid">
+          <div class="svc">
+            <div class="svc-h">
+              <div>电子产品</div>
+              <span class="tag">产品/选购/供货</span>
+            </div>
+            <div class="svc-b">苹果、华为、三星以及各品牌手机、平板、电脑、手表、相机、游戏机等数码产品全新机跟二手机的销售、回收、维修、以旧换新、分期付款。支持上门收售、快递邮寄、快递回收。品质保障！售后无忧！</div>
+          </div>
 
-    function showMailToast(m) {
-      const t = document.getElementById('globalMailToast');
-      t.innerText = m; t.classList.add('show');
-      setTimeout(() => t.classList.remove('show'), 2500);
-    }
+          <div class="svc">
+            <div class="svc-h">
+              <div>金融业务</div>
+              <span class="tag">咨询/办理</span>
+            </div>
+            <div class="svc-b">花呗、分期乐、京东白条、公积金、信用卡等各平台信用额度的提取与延期还款协商，不能按时还款逾期后让您及您的亲朋好友不被骚扰。黄金、汽车、房产、数码产品等抵押贷款以及银行贷款办理。大额银行贷款无本续贷办理。极速办理！海外账户、国际银行卡办理。点位合理！绝无套路！</div>
+          </div>
 
-    function unlockVoiceAndNotice() {
-      audioReady = true;
-      document.getElementById('voiceStatusTag').innerText = "(语音/天窗已就绪)";
-      document.getElementById('notifVoice').play().catch(()=>{});
-      showMailToast("✅ 全能提醒已激活");
-      if ("Notification" in window) Notification.requestPermission();
-    }
+          <div class="svc">
+            <div class="svc-h">
+              <div>AI技术</div>
+              <span class="tag">教学/代做/教程</span>
+            </div>
+            <div class="svc-b">
+              AI生图、AI生视频、AI设计、AI语音及工作流、智能体搭建的定制代做服务及教学服务，提供免费白嫖各AI工具的教程，让你低成本畅享AI工具的会员与积分的使用。
+              <div class="mini-tags" aria-label="AI子类目">
+                <span>AI收徒</span>
+                <span>AI代做</span>
+                <span>AI工具白嫖教程</span>
+              </div>
+            </div>
+          </div>
 
-    function genRandomMail() { applyMail(Math.random().toString(36).substring(2, 10) + DOMAIN_STR); }
-    function setMyMail() {
-      const v = document.getElementById('mailNameInput').value.trim().toLowerCase().replace(/[^a-z0-9]/g, '');
-      if(!v) return showMailToast("⚠️ 请先输入名字");
-      applyMail(v + DOMAIN_STR);
-    }
-    function applyMail(a) {
-      myMailAddr = a; document.getElementById('mailDisplay').innerText = a;
-      prevMailCount = -1; mailCountdown = 5; syncEmails();
-    }
-    function copyMailToClipboard() { navigator.clipboard.writeText(myMailAddr).then(()=>showMailToast("📋 地址已复制")); }
+          <div class="svc">
+            <div class="svc-h">
+              <div>网络服务</div>
+              <span class="tag">工具/搭建</span>
+            </div>
+            <div class="svc-b">提供个人独享动/静态住宅IP节点搭建、网站搭建、外区APPLE ID 共享、（TG、谷歌等）海外软件注册接码、海外软件成品号出售、海外平台的订阅与产品购买（需要国际账户支付时）、个人独享临时邮箱等服务、软件高端定制：微信、抖音、小红书、闲鱼等软件多功版本以及多开等服务</div>
+          </div>
 
-    function syncEmails() {
-      if(!myMailAddr) return;
-      fetch(`${MAIL_URL}?address=${myMailAddr}`).then(res => res.json()).then(data => {
-        if (prevMailCount !== -1 && data.length > prevMailCount && audioReady) {
-          document.getElementById('notifVoice').play();
-          if (Notification.permission === "granted") new Notification("🌹 筑梦电子：新邮件", { body: `发件人: ${data[0].from}\n主题: ${data[0].subject}` });
-        }
-        prevMailCount = data.length;
-        const list = document.getElementById('mailListContainer');
-        if(data.length === 0) { list.innerHTML = `<p style="padding-top:60px;">暂无新邮件</p>`; }
-        else {
-          list.innerHTML = data.map(m => `
-            <div style="background:rgba(255,255,255,0.05); padding:18px; margin-bottom:12px; border-radius:12px; border-left:4px solid var(--rose);">
-              <div style="font-size:12px; opacity:0.6; margin-bottom:5px;">来自: ${m.from}</div>
-              <div style="font-weight:bold; color:var(--rose2); font-size:16px;">${m.subject}</div>
-              <div style="font-size:13px; margin-top:8px; opacity:0.9;">${m.html || m.text}</div>
-            </div>
-          `).join('');
-        }
-      });
-    }
+          <div class="svc">
+            <div class="svc-h">
+              <div>游戏服务</div>
+              <span class="tag">代练/咨询</span>
+            </div>
+            <div class="svc-b">目前只提供和平精英（只会玩和平精英）相关服务，陪玩服务，代练服务（上分、晋级赛、战神-双系统），军需与游戏账号售卖服务、游戏设备（安卓、鸿蒙、IOS）改超广角、120帧率、高亮度、高陀螺仪等远程调试服务</div>
+          </div>
 
-    function triggerMailSync() { mailCountdown = 5; syncEmails(); showMailToast("🔄 刷新成功"); }
+          <div class="svc">
+            <div class="svc-h">
+              <div>懒人特殊服务</div>
+              <span class="tag">按需定制</span>
+            </div>
+            <div class="svc-b">“省心代办/懒人专属-上门服务/各种电子设备、网络产品服务、软件配置（OBS等直播软件4K高清原画质）等远程调试服务”按需交付。</div>
+          </div>
+        </div>
+      </div>
+    </section>
 
-    setInterval(() => {
-      mailCountdown--;
-      if (mailCountdown < 0) { syncEmails(); mailCountdown = 5; }
-      document.getElementById('refreshTimerText').innerText = `${mailCountdown}s 刷新`;
-    }, 1000);
+    <section id="gallery">
+      <div class="section-card">
+        <div class="h"><span class="dot"></span>视图展示</div>
 
-    /* --- 2. 原有逻辑初始化 (访问量等) --- */
-    (function initOldScripts(){
-      genRandomMail(); // 初始生成一个邮箱
-      // 访问量
-      const countEl = document.getElementById("visitCount");
-      if(countEl) fetch(`/_counter/hit?key=home`).then(r=>r.json()).then(d=>{ if(d.count) countEl.textContent = d.count; }).catch(()=>{});
-    })();
-  </script>
+        <div class="media-grid" aria-label="6张照片">
+          <div class="tile" data-type="image" data-src="assets/photo-01.jpg">
+            <img src="assets/photo-01.jpg" alt="photo-01" loading="lazy"
+                 onerror="this.style.display='none'; this.parentElement.querySelector('.placeholder').style.display='flex';" />
+            <div class="placeholder" style="display:none">
+              <div>上传图片到</div><small>assets/photo-01.jpg</small>
+            </div>
+          </div>
+
+          <div class="tile" data-type="image" data-src="assets/photo-02.jpg">
+            <img src="assets/photo-02.jpg" alt="photo-02" loading="lazy"
+                 onerror="this.style.display='none'; this.parentElement.querySelector('.placeholder').style.display='flex';" />
+            <div class="placeholder" style="display:none">
+              <div>上传图片到</div><small>assets/photo-02.jpg</small>
+            </div>
+          </div>
+
+          <div class="tile" data-type="image" data-src="assets/photo-03.jpg">
+            <img src="assets/photo-03.jpg" alt="photo-03" loading="lazy"
+                 onerror="this.style.display='none'; this.parentElement.querySelector('.placeholder').style.display='flex';" />
+            <div class="placeholder" style="display:none">
+              <div>上传图片到</div><small>assets/photo-03.jpg</small>
+            </div>
+          </div>
+
+          <div class="tile" data-type="image" data-src="assets/photo-04.jpg">
+            <img src="assets/photo-04.jpg" alt="photo-04" loading="lazy"
+                 onerror="this.style.display='none'; this.parentElement.querySelector('.placeholder').style.display='flex';" />
+            <div class="placeholder" style="display:none">
+              <div>上传图片到</div><small>assets/photo-04.jpg</small>
+            </div>
+          </div>
+
+          <div class="tile" data-type="image" data-src="assets/photo-05.jpg">
+            <img src="assets/photo-05.jpg" alt="photo-05" loading="lazy"
+                 onerror="this.style.display='none'; this.parentElement.querySelector('.placeholder').style.display='flex';" />
+            <div class="placeholder" style="display:none">
+              <div>上传图片到</div><small>assets/photo-05.jpg</small>
+            </div>
+          </div>
+
+          <div class="tile" data-type="image" data-src="assets/photo-06.jpg">
+            <img src="assets/photo-06.jpg" alt="photo-06" loading="lazy"
+                 onerror="this.style.display='none'; this.parentElement.querySelector('.placeholder').style.display='flex';" />
+            <div class="placeholder" style="display:none">
+              <div>上传图片到</div><small>assets/photo-06.jpg</small>
+            </div>
+          </div>
+        </div>
+
+        <div class="video-grid" aria-label="3个视频">
+          <div class="vtile" data-type="video" data-src="assets/video-01.mp4">
+            <video src="assets/video-01.mp4" muted playsinline preload="metadata"
+                   onerror="this.style.display='none'; this.parentElement.querySelector('.placeholder').style.display='flex';"></video>
+            <div class="placeholder" style="display:none">
+              <div>上传视频到</div><small>assets/video-01.mp4</small>
+            </div>
+            <div class="playbadge"></div>
+          </div>
+
+          <div class="vtile" data-type="video" data-src="assets/video-02.mp4">
+            <video src="assets/video-02.mp4" muted playsinline preload="metadata"
+                   onerror="this.style.display='none'; this.parentElement.querySelector('.placeholder').style.display='flex';"></video>
+            <div class="placeholder" style="display:none">
+              <div>上传视频到</div><small>assets/video-02.mp4</small>
+            </div>
+            <div class="playbadge"></div>
+          </div>
+
+          <div class="vtile" data-type="video" data-src="assets/video-03.mp4">
+            <video src="assets/video-03.mp4" muted playsinline preload="metadata"
+                   onerror="this.style.display='none'; this.parentElement.querySelector('.placeholder').style.display='flex';"></video>
+            <div class="placeholder" style="display:none">
+              <div>上传视频到</div><small>assets/video-03.mp4</small>
+            </div>
+            <div class="playbadge"></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="contact">
+      <div class="section-card">
+        <div class="h"><span class="dot"></span>联系方式</div>
+
+        <div class="contact-row" aria-label="联系方式图标按钮">
+          <button class="iconbtn wechat" id="btnWechat" title="微信：复制微信号并打开微信" aria-label="微信">
+            <img class="iconimg" alt="微信" src="https://cdn.simpleicons.org/wechat?viewbox=auto">
+            <div class="iconlabel">微信</div>
+          </button>
+
+          <a class="iconbtn" id="btnTg" href="https://t.me/guoxingbiao" target="_blank" rel="noopener" title="Telegram" aria-label="Telegram">
+            <img class="iconimg" alt="Telegram" src="https://cdn.simpleicons.org/telegram?viewbox=auto">
+            <div class="iconlabel">Telegram</div>
+          </a>
+
+          <a class="iconbtn" id="btnGmail" href="#" target="_blank" rel="noopener" title="Gmail" aria-label="Gmail">
+            <img class="iconimg" alt="Gmail" src="https://cdn.simpleicons.org/gmail?viewbox=auto">
+            <div class="iconlabel">Gmail</div>
+          </a>
+
+         <!-- 抖音 -->
+<a class="iconbtn" id="btnDouyin"
+   href="https://v.douyin.com/hTxqO_qDO6M/"
+   target="_self" rel="noopener"
+   aria-label="抖音" title="抖音">
+  <img class="iconimg" alt="抖音" src="https://cdn.simpleicons.org/tiktok?viewbox=auto">
+  <div class="iconlabel">抖音</div>
+</a>
+
+<!-- 快手 -->
+<a class="iconbtn" id="btnKs"
+   href="https://v.kuaishou.com/KArQ2jnp"
+   target="_self" rel="noopener"
+   aria-label="快手" title="快手">
+  <img class="iconimg" alt="快手" src="https://cdn.simpleicons.org/kuaishou?viewbox=auto">
+  <div class="iconlabel">快手</div>
+</a>
+
+<!-- 小红书 -->
+<a class="iconbtn" id="btnXhs"
+   href="https://xhslink.com/m/8My2Kr680Fb"
+   target="_self" rel="noopener"
+   aria-label="小红书" title="小红书">
+  <img class="iconimg" alt="小红书" src="https://cdn.simpleicons.org/xiaohongshu?viewbox=auto">
+  <div class="iconlabel">小红书</div>
+</a>
+
+        </div>
+
+        <div class="foot">© 2026 筑梦电子 ·www.roselg.xyz</div>
+      </div>
+    </section>
+
+  </div>
+
+  <div class="modal" id="mediaModal" aria-hidden="true">
+    <div class="dialog" role="dialog" aria-modal="true" aria-label="媒体预览">
+      <div class="dialog-h">
+        <div class="dialog-title"><span class="dot"></span><span id="modalTitle">预览</span></div>
+        <button class="close" id="closeMedia">关闭</button>
+      </div>
+      <div class="dialog-b" id="mediaBody"></div>
+    </div>
+  </div>
+
+  <div class="modal" id="wechatModal" aria-hidden="true">
+    <div class="dialog" role="dialog" aria-modal="true" aria-label="微信联系">
+      <div class="dialog-h">
+        <div class="dialog-title"><span class="dot"></span>微信联系</div>
+        <button class="close" id="closeWechat">关闭</button>
+      </div>
+      <div class="dialog-b">
+        <div class="wechat-grid">
+          <div class="qrbox">
+            <img src="assets/wechat-qr.jpg" alt="微信二维码"
+                 onerror="this.style.opacity='.35'; this.style.filter='grayscale(1)';" />
+            <div class="qr-actions">
+              <button class="btn primary" id="saveQr" type="button" style="padding:10px 14px;">保存到相册/分享</button>
+              <a class="btn" href="assets/wechat-qr.jpg" target="_blank" rel="noopener" style="padding:10px 14px;">打开二维码</a>
+            </div>
+          </div>
+          <div class="intro-text" style="padding:14px;">
+            <p style="margin:0 0 10px;">微信号已复制：<b style="color:#fff; text-shadow:0 0 16px rgba(255,43,134,.18)">LG-202412</b></p>
+            <div class="cta" style="justify-content:flex-start; margin-top:8px;">
+              <button class="btn primary" id="wechatOpen" type="button">打开微信</button>
+              <button class="btn" id="wechatCopy" type="button">复制微信号</button>
+            </div>
+            <div class="divider"></div>
+            <p style="margin:0; color:rgba(233,238,255,.78); font-weight:700; line-height:1.7;">
+              若未自动跳转到微信：手动打开微信 → 搜索 → 粘贴微信号添加好友。<br/>
+              也可扫码添加
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="toast" id="toast" role="status" aria-live="polite">
+    <span class="t-dot"></span>
+    <span id="toastText">已复制</span>
+  </div>
+
+ <script>
+  // ===== 基本信息 =====
+  const WECHAT_ID = "LG-202412";
+  const EMAIL = "guoxingbiao521@gmail.com";
+
+  // ✅ 你的三条“短链”（一键直达 App 主页的关键）
+  const SOCIAL_SHORT = {
+    douyin: "https://v.douyin.com/hTxqO_qDO6M/",
+    kuaishou: "https://v.kuaishou.com/KArQ2jnp",
+    xhs: "https://xhslink.com/m/8My2Kr680Fb"
+  };
+
+  function isMobile(){
+    return /Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
+  }
+
+  function showToast(msg){
+    const t = document.getElementById('toast');
+    const tt = document.getElementById('toastText');
+    if(!t || !tt) return;
+    tt.textContent = msg;
+    t.classList.add('show');
+    clearTimeout(showToast._timer);
+    showToast._timer = setTimeout(()=>t.classList.remove('show'), 2200);
+  }
+
+  async function copyText(text){
+    try{
+      await navigator.clipboard.writeText(text);
+      return true;
+    }catch(e){
+      const ta = document.createElement('textarea');
+      ta.value = text;
+      ta.style.position = 'fixed';
+      ta.style.top = '-9999px';
+      document.body.appendChild(ta);
+      ta.focus(); ta.select();
+      let ok=false;
+      try{ ok = document.execCommand('copy'); }catch(_){}
+      document.body.removeChild(ta);
+      return ok;
+    }
+  }
+
+  function tryOpenScheme(url){
+    const a = document.createElement('a');
+    a.href = url;
+    a.style.display = 'none';
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+  }
+
+  // ===== Gmail 按钮 =====
+  (function setupGmail(){
+    const btn = document.getElementById('btnGmail');
+    if(!btn) return;
+    if(isMobile()){
+      btn.href = `mailto:${encodeURIComponent(EMAIL)}`;
+      btn.target = "_self";
+    }else{
+      btn.href = `https://mail.google.com/mail/?view=cm&fs=1&to=${encodeURIComponent(EMAIL)}`;
+      btn.target = "_blank";
+    }
+  })();
+
+  // ===== 微信弹窗 =====
+  (function setupWechat(){
+    const btnWechat = document.getElementById('btnWechat');
+    const wechatModal = document.getElementById('wechatModal');
+    if(!btnWechat || !wechatModal) return;
+
+    function openWechatModal(){
+      wechatModal.classList.add('show');
+      wechatModal.setAttribute('aria-hidden', 'false');
+    }
+    function closeWechatModal(){
+      wechatModal.classList.remove('show');
+      wechatModal.setAttribute('aria-hidden', 'true');
+    }
+
+    btnWechat.addEventListener('click', async ()=>{
+      const ok = await copyText(WECHAT_ID);
+      showToast(ok ? `已复制微信号：${WECHAT_ID}` : `复制失败，请手动复制：${WECHAT_ID}`);
+      // 尝试唤起微信（失败也无所谓，弹窗仍可用）
+      tryOpenScheme('weixin://');
+      openWechatModal();
+    });
+
+    const closeBtn = document.getElementById('closeWechat');
+    const copyBtn  = document.getElementById('wechatCopy');
+    const openBtn  = document.getElementById('wechatOpen');
+
+    closeBtn && closeBtn.addEventListener('click', closeWechatModal);
+    copyBtn && copyBtn.addEventListener('click', async ()=>{
+      const ok = await copyText(WECHAT_ID);
+      showToast(ok ? `已复制微信号：${WECHAT_ID}` : `复制失败，请手动复制：${WECHAT_ID}`);
+    });
+    openBtn && openBtn.addEventListener('click', ()=>{
+      tryOpenScheme('weixin://');
+      showToast("已尝试打开微信");
+    });
+
+    wechatModal.addEventListener('click', (e)=>{
+      if(e.target === wechatModal) closeWechatModal();
+    });
+  })();
+
+  // ===== 图片/视频弹窗预览 =====
+  (function setupMediaModal(){
+    const mediaModal = document.getElementById('mediaModal');
+    const mediaBody  = document.getElementById('mediaBody');
+    const modalTitle = document.getElementById('modalTitle');
+    const closeMedia = document.getElementById('closeMedia');
+    if(!mediaModal || !mediaBody || !modalTitle) return;
+
+    function openMediaModal(title, node){
+      modalTitle.textContent = title || "预览";
+      mediaBody.innerHTML = "";
+      mediaBody.appendChild(node);
+      mediaModal.classList.add('show');
+      mediaModal.setAttribute('aria-hidden', 'false');
+    }
+
+    function closeMediaModal(){
+      mediaModal.classList.remove('show');
+      mediaModal.setAttribute('aria-hidden', 'true');
+
+      // 关闭时停止视频
+      const v = mediaBody.querySelector('video');
+      if(v){
+        try{
+          v.pause();
+          v.removeAttribute('src');
+          v.load();
+        }catch(e){}
+      }
+      mediaBody.innerHTML = "";
+    }
+
+    closeMedia && closeMedia.addEventListener('click', closeMediaModal);
+    mediaModal.addEventListener('click', (e)=>{
+      if(e.target === mediaModal) closeMediaModal();
+    });
+
+    document.querySelectorAll('.tile[data-type="image"]').forEach(tile=>{
+      tile.addEventListener('click', ()=>{
+        const src = tile.getAttribute('data-src');
+        const img = document.createElement('img');
+        img.className = 'media-view';
+        img.alt = '预览图片';
+        img.src = src;
+        img.onerror = ()=> showToast("图片尚未上传或路径不正确");
+        openMediaModal("", img);
+      });
+    });
+
+    document.querySelectorAll('.vtile[data-type="video"]').forEach(tile=>{
+      const pv = tile.querySelector('video');
+      if(pv){
+        pv.muted = true;
+        pv.loop = true;
+        pv.playsInline = true;
+        pv.addEventListener('canplay', ()=>{ pv.play().catch(()=>{}); }, {once:true});
+      }
+
+      tile.addEventListener('click', ()=>{
+        const src = tile.getAttribute('data-src');
+        const v = document.createElement('video');
+        v.className = 'media-view';
+        v.src = src;
+        v.controls = true;
+        v.autoplay = true;
+        v.muted = false;
+        v.playsInline = true;
+        v.onloadedmetadata = ()=> v.play().catch(()=>{});
+        v.onerror = ()=> showToast("视频尚未上传或路径不正确");
+        openMediaModal("", v);
+      });
+    });
+
+    window.addEventListener('keydown', (e)=>{
+      if(e.key === "Escape"){
+        if(mediaModal.classList.contains('show')) closeMediaModal();
+        const wechatModal = document.getElementById('wechatModal');
+        if(wechatModal && wechatModal.classList.contains('show')){
+          wechatModal.classList.remove('show');
+          wechatModal.setAttribute('aria-hidden', 'true');
+        }
+      }
+    });
+  })();
+
+  // ===== 保存二维码（分享/下载） =====
+  (function setupSaveQr(){
+    const btn = document.getElementById('saveQr');
+    if(!btn) return;
+
+    btn.addEventListener('click', async ()=>{
+      const url = 'assets/wechat-qr.jpg';
+
+      try{
+        const res = await fetch(url, {cache:'no-store'});
+        if(!res.ok) throw new Error('QR fetch failed');
+        const blob = await res.blob();
+
+        if(navigator.canShare){
+          const file = new File([blob], 'wechat-qr.jpg', {type: blob.type || 'image/jpeg'});
+          if(navigator.canShare({files:[file]}) && navigator.share){
+            await navigator.share({files:[file], title:'微信二维码'});
+            return;
+          }
+        }
+
+        const a = document.createElement('a');
+        a.href = URL.createObjectURL(blob);
+        a.download = 'wechat-qr.jpg';
+        document.body.appendChild(a);
+        a.click();
+        a.remove();
+        URL.revokeObjectURL(a.href);
+
+        showToast("已下载二维码！请打开微信进行扫码添加");
+      }catch(e){
+        showToast("二维码下载失败！请点击“打开二维码”长按保存后扫码添加！");
+      }
+    });
+  })();
+
+  // ===== ✅ 社交按钮：回到“短链一键直达 App 主页”方案（不拼 scheme/intent） =====
+  (function setupSocialShortLinks(){
+    const btnDy  = document.getElementById("btnDouyin");
+    const btnKs  = document.getElementById("btnKs");
+    const btnXhs = document.getElementById("btnXhs");
+
+    if(btnDy){
+      btnDy.href = SOCIAL_SHORT.douyin;
+      btnDy.target = isMobile() ? "_self" : "_blank";
+      btnDy.rel = "noopener";
+    }
+    if(btnKs){
+      btnKs.href = SOCIAL_SHORT.kuaishou;
+      btnKs.target = isMobile() ? "_self" : "_blank";
+      btnKs.rel = "noopener";
+    }
+    if(btnXhs){
+      btnXhs.href = SOCIAL_SHORT.xhs;
+      btnXhs.target = isMobile() ? "_self" : "_blank";
+      btnXhs.rel = "noopener";
+    }
+  })();
+   // ====== 访问量：同源路径（走 /_counter/* 路由到 Worker） ======
+(function setupVisitCounter(){
+  const el = document.getElementById("visitCount");
+  if(!el) return;
+
+  const key = "home"; // 你可以改成不同页面不同 key
+
+  fetch(`/_counter/hit?key=${encodeURIComponent(key)}`, {
+    cache: "no-store",
+    keepalive: true
+  })
+    .then(r => r.json())
+    .then(data => {
+      // 兼容 count 是数字或字符串
+      const c = Number(data?.count);
+      el.textContent = Number.isFinite(c) ? c : "-";
+    })
+    .catch(() => {
+      el.textContent = "-";
+      console.warn("visit counter fetch failed");
+    });
+})();
+
+
+</script>
+
 </body>
 </html>
