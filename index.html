@@ -6,7 +6,7 @@
   <title>筑梦电子 · VIP服务站 · 7×24h服务</title>
   <meta name="description" content="筑梦电子 · VIP服务站 · 7×24h服务｜电子产品 / 金融业务 / AI技术 / 网络服务 / 游戏服务 / 懒人特殊服务" />
   <style>
-    /* === 这里是你原封不动的原始样式 === */
+    /* === 保持你原本的所有 CSS 变量和基础样式 === */
     .navcounter{ color: rgba(233,238,255,.88); font-weight: 900; font-size: 13px; padding: 9px 12px; border-radius: 999px; border:1px solid rgba(255,255,255,.10); background: rgba(255,255,255,.04); display:flex; align-items:center; gap:6px; white-space:nowrap; }
     .navcounter #visitCount{ font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace; font-weight: 1000; }
     :root{ --bg0:#070916; --bg1:#0b1030; --glass: rgba(255,255,255,.06); --glass2: rgba(255,255,255,.08); --line: rgba(255,255,255,.10); --text:#e9eeff; --muted: rgba(233,238,255,.78); --rose:#ff2b86; --rose2:#ff5aa7; --rose3:#b31262; --blue:#3ea6ff; --blue2:#87d7ff; --cyan:#8ff4ff; --shadow: 0 18px 60px rgba(0,0,0,.55); --radius: 22px; --radius2: 16px; }
@@ -16,79 +16,76 @@
     body::before{ content:""; position:fixed; inset:-30px; pointer-events:none; z-index:-1; opacity:1; background: radial-gradient(420px 420px at 14% 22%, rgba(255,43,134,.22), transparent 65%), radial-gradient(520px 520px at 28% 78%, rgba(255,90,167,.18), transparent 68%), radial-gradient(460px 460px at 70% 30%, rgba(255,43,134,.16), transparent 68%), radial-gradient(680px 680px at 86% 74%, rgba(179,18,98,.14), transparent 72%), radial-gradient(820px 620px at 52% 58%, rgba(62,166,255,.10), transparent 72%); filter: saturate(1.22) contrast(1.05); }
     .wrap{ width:min(1180px, calc(100% - 36px)); margin:0 auto; padding: 22px 0 76px; }
 
-    /* --- 原始 Header 逻辑 --- */
-    header{ position: relative; z-index:50; margin: 10px auto 22px; backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px); background: linear-gradient(180deg, rgba(10,14,40,.62), rgba(10,14,40,.28)); border: 1px solid var(--line); border-radius: 999px; box-shadow: var(--shadow); display:grid !important; grid-template-columns: 1fr auto 1fr; align-items:center; gap: 10px; padding: 10px 12px; }
+    /* --- 原有 Header 样式 --- */
+    header{ display:grid !important; grid-template-columns: 1fr auto 1fr; align-items:center; gap: 10px; position: relative; z-index:50; margin: 10px auto 22px; backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px); background: linear-gradient(180deg, rgba(10,14,40,.62), rgba(10,14,40,.28)); border: 1px solid var(--line); border-radius: 999px; box-shadow: var(--shadow); padding: 10px 12px; }
     .brand{ display:flex; align-items:center; gap:10px; padding: 6px 10px; border-radius:999px; }
     .dot{ width:8px;height:8px;border-radius:999px; background: radial-gradient(circle at 30% 30%, #ffd2e7, var(--rose)); box-shadow: 0 0 14px rgba(255,43,134,.7); flex:0 0 auto; }
     .brand-title{ font-weight:800; letter-spacing:.8px; color:rgba(233,238,255,.96); white-space:nowrap; font-size: 14px; }
-    nav{ display:flex; gap:10px; align-items:center; padding-right: 6px; flex-wrap:wrap; justify-self:end; }
-    .navpill{ text-decoration:none; color:rgba(233,238,255,.88); font-weight:700; font-size: 13px; padding: 9px 12px; border-radius: 999px; border:1px solid rgba(255,255,255,.10); background: rgba(255,255,255,.04); transition: transform .15s ease; }
     .navcenter{ justify-self:center; display:flex; align-items:baseline; gap: 8px; padding: 10px 18px; border-radius: 999px; border: 1px solid rgba(255,255,255,.16); background: linear-gradient(135deg, rgba(255,255,255,.10), rgba(255,255,255,.04)); box-shadow: 0 18px 55px rgba(0,0,0,.35), 0 0 22px rgba(62,166,255,.20); backdrop-filter: blur(14px); }
     .navcenter-domain{ font-weight: 1000; font-size: 16px; color: rgba(255,255,255,.98); }
     .navcenter-count{ font-weight: 1100; font-size: 18px; color: #ffffff; text-shadow: 0 0 18px rgba(62,166,255,.35); }
+    nav{ display:flex; gap:10px; align-items:center; padding-right: 6px; flex-wrap:wrap; justify-self:end; }
+    .navpill{ text-decoration:none; color:rgba(233,238,255,.88); font-weight:700; font-size: 13px; padding: 9px 12px; border-radius: 999px; border:1px solid rgba(255,255,255,.10); background: rgba(255,255,255,.04); transition: transform .15s ease; }
 
-    /* --- 原始 Hero 样式 --- */
+    /* --- 原有 Hero 样式 --- */
     .hero{ border-radius: var(--radius); border:1px solid rgba(255,255,255,.10); background: linear-gradient(180deg, rgba(255,255,255,.08), rgba(255,255,255,.03)); box-shadow: var(--shadow); padding: clamp(18px, 2.6vw, 32px); position:relative; text-align:center; }
     .tagline{ width:fit-content; margin: 0 auto 14px; padding: 9px 16px; border-radius: 999px; border: 1px solid rgba(255,255,255,.14); background: rgba(10,14,40,.38); font-weight: 900; font-size: 16px; color: #eaf6ff; text-shadow: 0 0 12px var(--blue); }
-    .hero-title { font-size: clamp(30px, 4.8vw, 76px); font-weight: 1000; background: linear-gradient(180deg, #ffffff, #6fd9ff, #116bff); -webkit-background-clip: text; background-clip: text; color: transparent; }
+    .hero-title { font-size: clamp(30px, 4.8vw, 76px); font-weight: 1000; background: linear-gradient(180deg, #ffffff, #6fd9ff, #116bff); -webkit-background-clip: text; color: transparent; line-height: 1.08; }
     .slogan-row{ display:grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 12px; margin: 14px auto 18px; width: min(880px, 100%); }
     .slogan{ border-radius: 999px; border: 1px solid rgba(255,255,255,.14); background: rgba(10,14,40,.34); padding: 12px 14px; font-weight: 900; color:#f3fbff; text-shadow: 0 0 14px var(--blue); }
 
     /* ============================================================
-       以下是为您新增的：LG筑梦电子临时邮箱系统模块 (深度融合版)
+       核心增加：邮箱系统模块 (宽度精准对齐标语行 880px)
        ============================================================ */
-    .mail-module {
+    .mail-module-card {
       width: min(880px, 100%); margin: 26px auto 0;
       border-radius: var(--radius); border: 1px solid rgba(255, 43, 134, 0.3);
       background: linear-gradient(180deg, rgba(255, 255, 255, 0.08), rgba(255, 43, 134, 0.04));
       padding: 24px; box-shadow: var(--shadow); position: relative; overflow: hidden;
     }
-    .mail-hint { 
+    .mail-notice-banner { 
       background: rgba(255, 43, 134, 0.08); border-left: 5px solid var(--rose); 
       padding: 12px 16px; border-radius: 8px; margin-bottom: 20px; text-align: left;
       font-size: 14px; color: #ff9ccb; line-height: 1.6; font-weight: 700;
     }
-    .mail-address-display {
+    .mail-address-viewer {
       font-size: clamp(22px, 4vw, 36px); font-weight: 1000; color: #fff;
       background: rgba(0,0,0,0.4); border: 2px dashed var(--rose); border-radius: 16px;
       padding: 22px; margin-bottom: 20px; text-shadow: 0 0 20px var(--rose);
     }
-    .mail-action-row { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; margin-bottom: 15px; }
-    .mail-input-name {
-      background: rgba(255,255,255,0.06); border: 1px solid var(--line); border-radius: 12px;
-      padding: 12px; color: #fff; font-weight: 900; width: 220px; text-align: center; outline: none;
-    }
     
-    /* 3D 风格按钮 */
-    .btn-3d {
+    /* 3D 按压感按钮 */
+    .btn-3d-style {
       border: none; border-radius: 12px; color: white; font-weight: 900; cursor: pointer;
       padding: 12px 20px; transition: all 0.1s; position: relative; user-select: none;
     }
     .btn-3d-rose { background: var(--rose); box-shadow: 0 5px 0 var(--rose3); }
     .btn-3d-blue { background: var(--blue); box-shadow: 0 5px 0 var(--blue-dark); }
-    .btn-3d:active { transform: translateY(4px); box-shadow: 0 1px 0 rgba(0,0,0,0.3); }
+    .btn-3d-style:active { transform: translateY(4px); box-shadow: 0 1px 0 rgba(0,0,0,0.3); }
 
-    /* 收件箱区域 */
-    .mail-inbox-area {
+    .mail-control-grid { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; margin-bottom: 15px; }
+    .mail-name-input {
+      background: rgba(255,255,255,0.06); border: 1px solid var(--line); border-radius: 12px;
+      padding: 12px; color: #fff; font-weight: 900; width: 220px; text-align: center; outline: none;
+    }
+
+    .mail-inbox-section {
       background: rgba(255,255,255,0.03); border: 1px solid var(--line); border-radius: 18px;
       padding: 20px; text-align: left; min-height: 240px; margin-top: 20px;
     }
-    .inbox-title-row { display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--line); padding-bottom: 12px; margin-bottom: 15px; }
-    .timer-pill { font-size: 12px; font-weight: 900; color: var(--muted); background: rgba(255,255,255,0.05); padding: 4px 10px; border-radius: 20px; }
-    .mail-list-content { text-align: center; padding-top: 60px; color: var(--muted); font-weight: 700; }
+    .inbox-title-bar { display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--line); padding-bottom: 12px; margin-bottom: 15px; }
+    .countdown-pill { font-size: 12px; font-weight: 900; color: var(--muted); background: rgba(255,255,255,0.05); padding: 4px 12px; border-radius: 20px; border: 1px solid var(--line); }
     
-    /* 弹窗提示 */
-    #mailToast {
+    /* 中间弹窗提示 */
+    #globalMailToast {
       visibility: hidden; position: fixed; left: 50%; top: 50%; transform: translate(-50%, -50%);
       background: rgba(10,14,40,0.95); border: 1px solid var(--rose); color: #fff;
-      padding: 16px 32px; border-radius: 16px; font-weight: 1000; z-index: 999; backdrop-filter: blur(10px);
+      padding: 16px 32px; border-radius: 16px; font-weight: 1000; z-index: 9999; backdrop-filter: blur(10px);
     }
-    #mailToast.show { visibility: visible; animation: fadeInOut 2.5s; }
-    @keyframes fadeInOut { 0%, 100% {opacity:0} 15%, 85% {opacity:1} }
+    #globalMailToast.show { visibility: visible; animation: fadeInOut 2.5s; }
+    @keyframes fadeInOut { 0%, 100% {opacity:0; scale:0.9;} 15%, 85% {opacity:1; scale:1;} }
 
-    /* ============================================================
-       原有网页其余部分的所有样式 (svc-grid, media-grid 等)
-       ============================================================ */
+    /* === 你原有的其余所有样式 === */
     section{margin-top: 26px;}
     .section-card{ border-radius: var(--radius); border:1px solid rgba(255,255,255,.10); background: linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.03)); box-shadow: var(--shadow); padding: 22px; position:relative; overflow:hidden; }
     .h{ display:flex; align-items:center; gap: 10px; font-weight: 1000; font-size: 18px; margin: 0 0 14px; color: rgba(233,238,255,.96); }
@@ -104,72 +101,77 @@
     .tile img{ width:100%; height:100%; object-fit:cover; display:block; }
     .contact-row{ width: 100%; display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); gap: 14px; padding: 6px 0 2px; }
     .iconbtn{ width: 100%; min-height: 112px; border-radius: 18px; border:1px solid rgba(255,255,255,.14); background: rgba(255,255,255,.05); display:flex; flex-direction: column; align-items:center; justify-content:center; gap: 10px; cursor:pointer; text-decoration:none; }
-    .modal{ position:fixed; inset:0; display:none; align-items:center; justify-content:center; z-index:200; padding: 18px; background: rgba(0,0,0,.55); backdrop-filter: blur(8px); }
+    .modal{ position:fixed; inset:0; display:none; align-items:center; justify-content:center; z-index:2000; padding: 18px; background: rgba(0,0,0,.55); backdrop-filter: blur(8px); }
     .modal.show{display:flex;}
-    .dialog{ width:min(980px, 100%); border-radius: 22px; border:1px solid rgba(255,255,255,.14); background: rgba(10,14,40,.70); box-shadow: 0 28px 90px rgba(0,0,0,.65); padding: 18px; }
+    .dialog{ width:min(980px, 100%); border-radius: 22px; border:1px solid rgba(255,255,255,.14); background: rgba(10,14,40,.70); box-shadow: 0 28px 90px rgba(0,0,0,.65); padding: 18px; position:relative; }
     
     @media (max-width: 980px){
       .intro-grid{grid-template-columns: 1fr;}
       .svc-grid{grid-template-columns: repeat(2, minmax(0,1fr));}
       .contact-row{grid-template-columns: repeat(3, minmax(0, 1fr));}
-      .mail-action-row { flex-direction: column; align-items: center; }
-      .mail-input-name { width: 100%; }
     }
   </style>
 </head>
 
 <body>
-  <audio id="mailVoice" src="https://tts.baidu.com/text2audio?lan=zh&ie=UTF-8&spd=5&text=%E6%82%A8%E6%9C%89%E6%96%B0%E7%9A%84%E9%82%AE%E4%BB%B6%EF%BC%8C%E8%AF%B7%E6%B3%A8%E6%84%8F%E6%9F%A5%E6%94%B6" preload="auto"></audio>
-  <div id="mailToast">✅ 操作成功</div>
+  <audio id="notifVoice" src="https://tts.baidu.com/text2audio?lan=zh&ie=UTF-8&spd=5&text=%E6%82%A8%E6%9C%89%E6%96%B0%E7%9A%84%E9%82%AE%E4%BB%B6%EF%BC%8C%E8%AF%B7%E6%B3%A8%E6%84%8F%E6%9F%A5%E6%94%B6" preload="auto"></audio>
+  <div id="globalMailToast">✅ 操作成功</div>
 
   <div class="wrap">
     <header>
       <div class="brand"><span class="dot"></span><div class="brand-title">筑梦电子 · VIP服务站</div></div>
-      <div class="navcenter"><span class="navcenter-domain">www.roselg.xyz</span><span class="navcenter-sep">·</span><span class="navcenter-label">访问量</span><span class="navcenter-count" id="visitCount">—</span></div>
+      <div class="navcenter"><span class="navcenter-domain">www.roselg.xyz</span><span class="navcenter-sep">·</span><span class="navcenter-label">访问量</span><span class="navcenter-count" id="visitCount">330</span></div>
       <nav><a class="navpill" href="#intro">服务介绍</a><a class="navpill" href="#gallery">视图展示</a><a class="navpill" href="#contact">联系方式</a></nav>
     </header>
 
-    <div class="hero" id="top">
+    <div class="hero">
       <div class="tagline">因为专注 · 所以专业 · 十年老店</div>
       <h1 class="hero-title">欢迎VIP贵宾来到筑梦电子</h1>
       <div class="slogan-row">
-        <div class="slogan">新店拼价格</div><div class="slogan">老店拼质量</div><div class="slogan">同价拼服务</div><div class="slogan">骗子无成本</div>
+        <div class="slogan"><span>新店拼价格</span></div>
+        <div class="slogan"><span>老店拼质量</span></div>
+        <div class="slogan"><span>同价拼服务</span></div>
+        <div class="slogan"><span>骗子无成本</span></div>
       </div>
-      <div style="display:flex; justify-content:center; gap:10px; margin-top:10px;">
-        <a class="navpill" href="#contact" style="background:var(--rose); border:none; padding:12px 20px;">立即联系</a>
-        <a class="navpill" href="#gallery" style="padding:12px 20px;">查看展品</a>
+      <div class="cta" style="display:flex; justify-content:center; gap:10px; margin-top:5px;">
+        <a class="navpill" href="#contact" style="background:var(--rose); border:none; padding:12px 20px; font-weight:900;">立即联系</a>
+        <a class="navpill" href="#gallery" style="padding:12px 20px; font-weight:900;">查看展品</a>
       </div>
     </div>
 
     <div class="mail-module">
-      <div class="mail-hint">
-        🌹 <strong>玫瑰物语：</strong>在下方输入名字并点击“使用自定义名字”即可找回属于你的历史邮件！<br>
-        📢 <strong>天窗提醒：</strong>点击下方开启按钮并允许权限，最小化窗口也能收到温柔语音播报。
-      </div>
-
-      <div style="text-align:center; margin-bottom:15px;">
-        <button class="btn-3d btn-3d-rose" style="font-size:13px; padding:8px 16px;" onclick="initMailAudio()">🔊 开启收件提示音 & 天窗提醒</button>
-      </div>
-
-      <div class="mail-address-display" id="mailText">正在唤醒玫瑰...</div>
-
-      <div class="mail-action-row">
-        <input type="text" class="mail-input-name" id="nameInput" placeholder="输入名字 (如: vip888)">
-        <button class="btn-3d btn-3d-rose" onclick="useCustomName()">🌹 使用自定义名字</button>
-        <button class="btn-3d btn-3d-rose" onclick="getNewMail()">🔄 随机生成地址</button>
-      </div>
-
-      <button class="btn-3d btn-3d-blue" style="width:100%; margin-bottom:20px;" onclick="copyMailAddr()">📋 复制完整邮箱地址</button>
-
-      <div class="mail-inbox-area">
-        <div class="inbox-title-row">
-          <span style="font-weight:1000; color:var(--rose2);">📥 玫瑰收件箱 <span id="voiceTag" style="font-size:10px; opacity:0.5;">(待开启)</span></span>
-          <div style="display:flex; align-items:center; gap:10px;">
-            <span class="timer-pill" id="mailTimer">5s 刷新</span>
-            <button class="btn-3d btn-3d-blue" style="padding:6px 12px; font-size:12px;" onclick="manualMailCheck()">🔄 手动刷新</button>
-          </div>
+      <div class="mail-module-card">
+        <div class="mail-hint">
+          🌹 <strong>玫瑰物语：</strong>在下方输入名字并点击“使用自定义名字”即可找回属于你的历史邮件！<br>
+          📢 <strong>天窗提醒：</strong>点击开启语音按钮并允许权限，最小化窗口也能收到温柔播报提醒。
         </div>
-        <div id="mailContentList" class="mail-list-content">暂无新邮件</div>
+
+        <div style="text-align:center; margin-bottom:15px;">
+          <button class="btn-3d-style btn-3d-rose" style="font-size:13px; padding:8px 16px;" onclick="unlockVoiceAndNotice()">🔊 开启收件提示音 & 天窗提醒</button>
+        </div>
+
+        <div class="mail-address-viewer" id="mailDisplay">正在呼唤玫瑰...</div>
+
+        <div class="mail-control-grid">
+          <input type="text" class="mail-name-input" id="mailNameInput" placeholder="输入名字 (如: vip777)">
+          <button class="btn-3d-style btn-3d-rose" onclick="setMyMail()">🌹 使用自定义名字</button>
+          <button class="btn-3d-style btn-3d-rose" onclick="genRandomMail()">🔄 随机生成地址</button>
+        </div>
+
+        <button class="btn-3d-style btn-3d-blue" style="width:100%; margin-bottom:20px;" onclick="copyMailToClipboard()">📋 复制完整邮箱地址</button>
+
+        <div class="mail-inbox-section">
+          <div class="inbox-title-bar">
+            <span style="font-weight:1000; color:var(--rose2); display:flex; align-items:center; gap:8px;">
+              📥 玫瑰收件箱 <span id="voiceStatusTag" style="font-size:10px; opacity:0.5; font-weight:normal;">(待开启)</span>
+            </span>
+            <div style="display:flex; align-items:center; gap:10px;">
+              <span class="countdown-pill" id="refreshTimerText">5s 刷新</span>
+              <button class="btn-3d-style btn-3d-blue" style="padding:6px 14px; font-size:12px;" onclick="triggerMailSync()">🔄 手动刷新</button>
+            </div>
+          </div>
+          <div id="mailListContainer" style="text-align:center; padding-top:60px; color:var(--muted); font-weight:700;">暂无新邮件</div>
+        </div>
       </div>
     </div>
 
@@ -179,10 +181,13 @@
         <div class="intro-grid">
           <div class="imgbox" style="background-image:url('assets/about.jpg')"></div>
           <div class="intro-text">
-            <p>专注于电子产品十余年并扩展多类数字化服务，覆盖从咨询到交付最后到提供售后的一站式服务支持...</p>
-            <ul style="font-weight:700; color:var(--muted); line-height:2;">
+            <p>专注于电子产品十余年并扩展多类数字化服务，覆盖从咨询到定制到交付最后到提供售后的一站式服务支持，现延展至 AI 技术方向的教学、代做与工具教程以及游戏的代练、陪玩等个性服务。</p>
+            <p>按客户需求定制最优人性化方案，明确需求后快速推进；支持远程协助、上门服务等一对一交互式的交付服务；沟通清晰、流程透明，适合需要省钱省心与长期协作的客户。</p>
+            <p>无论是电子产品、金融业务、AI技术、网络服务、游戏服务，还是远程协助与懒人指定服务都具备广泛的资源与个独特的个性服务，并可按指定需求进行完成，优先解决“最关键的那一步”。</p>
+            <ul style="font-weight:700; color:var(--muted); line-height:2; margin-top:15px; padding-left:20px;">
               <li>服务特点：快速响应｜流程清晰｜按需定制</li>
-              <li>交付形式：远程协助｜上门服务｜个性定制</li>
+              <li>交付形式：远程协助｜上门服务｜个性定制｜成品交付</li>
+              <li>合作方式：先沟通需求 → 明确范围 → 交付与售后</li>
             </ul>
           </div>
         </div>
@@ -193,9 +198,12 @@
       <div class="section-card">
         <div class="h"><span class="dot"></span>业务分类</div>
         <div class="svc-grid">
-          <div class="svc"><div class="svc-h">电子产品</div><div class="svc-b">品牌手机、平板、电脑回收与销售。品质保障！</div></div>
-          <div class="svc"><div class="svc-h">金融业务</div><div class="svc-b">信用额度提取与延期协商，抵押贷款办理。</div></div>
-          <div class="svc"><div class="svc-h">AI技术</div><div class="svc-b">AI生图、视频定制代做服务及教学服务。</div></div>
+          <div class="svc"><div class="svc-h">电子产品</div><div class="svc-b">苹果、华为、三星手机平板电脑收售、回收、维修、分期。品质保障！</div></div>
+          <div class="svc"><div class="svc-h">金融业务</div><div class="svc-b">额度提取、还款协商、各类资产抵押贷款办理。点位合理！</div></div>
+          <div class="svc"><div class="svc-h">AI技术</div><div class="svc-b">AI生图、视频、工作流定制代做与工具白嫖教程教学。</div></div>
+          <div class="svc"><div class="svc-h">网络服务</div><div class="svc-b">IP搭建、APPLE ID、软件注册接码、成品号及软件定制多开。</div></div>
+          <div class="svc"><div class="svc-h">游戏服务</div><div class="svc-b">和平精英代练陪玩、设备调试、高刷陀螺仪远程开启。</div></div>
+          <div class="svc"><div class="svc-h">懒人特殊服务</div><div class="svc-b">省心代办、懒人专属上门、OBS高清画质配置等远程交付。</div></div>
         </div>
       </div>
     </section>
@@ -204,9 +212,17 @@
       <div class="section-card">
         <div class="h"><span class="dot"></span>视图展示</div>
         <div class="media-grid">
-          <div class="tile"><img src="assets/photo-01.jpg"></div>
-          <div class="tile"><img src="assets/photo-02.jpg"></div>
-          <div class="tile"><img src="assets/photo-03.jpg"></div>
+          <div class="tile" onclick="openMe('assets/photo-01.jpg')"><img src="assets/photo-01.jpg"></div>
+          <div class="tile" onclick="openMe('assets/photo-02.jpg')"><img src="assets/photo-02.jpg"></div>
+          <div class="tile" onclick="openMe('assets/photo-03.jpg')"><img src="assets/photo-03.jpg"></div>
+          <div class="tile" onclick="openMe('assets/photo-04.jpg')"><img src="assets/photo-04.jpg"></div>
+          <div class="tile" onclick="openMe('assets/photo-05.jpg')"><img src="assets/photo-05.jpg"></div>
+          <div class="tile" onclick="openMe('assets/photo-06.jpg')"><img src="assets/photo-06.jpg"></div>
+        </div>
+        <div class="video-grid" style="display:grid; grid-template-columns: repeat(3, 1fr); gap:12px; margin-top:12px;">
+          <div class="svc" style="height:170px;"><video src="assets/video-01.mp4" muted style="width:100%;height:100%;object-fit:cover;"></video></div>
+          <div class="svc" style="height:170px;"><video src="assets/video-02.mp4" muted style="width:100%;height:100%;object-fit:cover;"></video></div>
+          <div class="svc" style="height:170px;"><video src="assets/video-03.mp4" muted style="width:100%;height:100%;object-fit:cover;"></video></div>
         </div>
       </div>
     </section>
@@ -215,86 +231,95 @@
       <div class="section-card">
         <div class="h"><span class="dot"></span>联系方式</div>
         <div class="contact-row">
-          <button class="iconbtn wechat" id="btnWechat"><div class="iconlabel">微信</div></button>
+          <button class="iconbtn" onclick="document.getElementById('wechatModal').classList.add('show')"><div class="iconlabel">微信</div></button>
           <a class="iconbtn" href="https://t.me/guoxingbiao" target="_blank"><div class="iconlabel">Telegram</div></a>
+          <a class="iconbtn" href="mailto:guoxingbiao521@gmail.com"><div class="iconlabel">Gmail</div></a>
+          <a class="iconbtn" href="https://v.douyin.com/hTxqO_qDO6M/" target="_blank"><div class="iconlabel">抖音</div></a>
+          <a class="iconbtn" href="https://v.kuaishou.com/KArQ2jnp" target="_blank"><div class="iconlabel">快手</div></a>
+          <a class="iconbtn" href="https://xhslink.com/m/8My2Kr680Fb" target="_blank"><div class="iconlabel">小红书</div></a>
         </div>
         <div class="foot">© 2026 筑梦电子 · www.roselg.xyz</div>
       </div>
     </section>
   </div>
 
-  <div class="modal" id="wechatModal"><div class="dialog">微信联系内容...<button onclick="document.getElementById('wechatModal').classList.remove('show')">关闭</button></div></div>
+  <div class="modal" id="wechatModal">
+    <div class="dialog">
+      <div style="display:flex; justify-content:space-between; margin-bottom:15px;"><span class="dot"></span>微信扫码/搜索添加好友</div>
+      <img src="assets/wechat-qr.jpg" style="width:100%; border-radius:12px;">
+      <div style="text-align:center; padding:15px 0;">微信号：<b>LG-202412</b></div>
+      <button class="btn-3d-style btn-3d-rose" style="width:100%" onclick="document.getElementById('wechatModal').classList.remove('show')">返回网页</button>
+    </div>
+  </div>
 
   <script>
-    /* --- 邮箱逻辑部分 --- */
-    const MAIL_API = "http://47.251.143.74/api/emails";
-    const MAIL_SUFFIX = "@roselg.xyz";
-    let activeMail = "", mailTime = 5, mailCount = -1, canPlayVoice = false;
+    /* --- 1. 邮箱逻辑核心 --- */
+    const MAIL_URL = "http://47.251.143.74/api/emails";
+    const DOMAIN_STR = "@roselg.xyz";
+    let myMailAddr = "", mailCountdown = 5, prevMailCount = -1, audioReady = false;
 
-    function mailMsg(txt) {
-      const toast = document.getElementById('mailToast');
-      toast.innerText = txt; toast.classList.add('show');
-      setTimeout(() => toast.classList.remove('show'), 2200);
+    function showMailToast(m) {
+      const t = document.getElementById('globalMailToast');
+      t.innerText = m; t.classList.add('show');
+      setTimeout(() => t.classList.remove('show'), 2500);
     }
 
-    function initMailAudio() {
-      canPlayVoice = true;
-      document.getElementById('voiceTag').innerText = "(语音已就绪)";
-      document.getElementById('mailVoice').play().catch(()=>{});
-      mailMsg("✅ 语音与桌面通知已开启");
+    function unlockVoiceAndNotice() {
+      audioReady = true;
+      document.getElementById('voiceStatusTag').innerText = "(语音/天窗已就绪)";
+      document.getElementById('notifVoice').play().catch(()=>{});
+      showMailToast("✅ 全能提醒已激活");
       if ("Notification" in window) Notification.requestPermission();
     }
 
-    function getNewMail() { setMail(Math.random().toString(36).substring(2, 10) + MAIL_SUFFIX); }
-    function useCustomName() {
-      const v = document.getElementById('nameInput').value.trim().toLowerCase().replace(/[^a-z0-9]/g, '');
-      if(!v) return mailMsg("⚠️ 请先输入名字");
-      setMail(v + MAIL_SUFFIX);
+    function genRandomMail() { applyMail(Math.random().toString(36).substring(2, 10) + DOMAIN_STR); }
+    function setMyMail() {
+      const v = document.getElementById('mailNameInput').value.trim().toLowerCase().replace(/[^a-z0-9]/g, '');
+      if(!v) return showMailToast("⚠️ 请先输入名字");
+      applyMail(v + DOMAIN_STR);
     }
-    function setMail(addr) {
-      activeMail = addr; document.getElementById('mailText').innerText = addr;
-      mailCount = -1; mailTime = 5; checkEmails();
+    function applyMail(a) {
+      myMailAddr = a; document.getElementById('mailDisplay').innerText = a;
+      prevMailCount = -1; mailCountdown = 5; syncEmails();
     }
-    function copyMailAddr() { navigator.clipboard.writeText(activeMail).then(()=>mailMsg("📋 复制成功")); }
+    function copyMailToClipboard() { navigator.clipboard.writeText(myMailAddr).then(()=>showMailToast("📋 地址已复制")); }
 
-    function checkEmails() {
-      if(!activeMail) return;
-      fetch(`${MAIL_API}?address=${activeMail}`).then(r => r.json()).then(data => {
-        if (mailCount !== -1 && data.length > mailCount && canPlayVoice) {
-          document.getElementById('mailVoice').play();
-          if (Notification.permission === "granted") new Notification("🌹 新邮件通知", { body: `发件人: ${data[0].from}\n主题: ${data[0].subject}` });
+    function syncEmails() {
+      if(!myMailAddr) return;
+      fetch(`${MAIL_URL}?address=${myMailAddr}`).then(res => res.json()).then(data => {
+        if (prevMailCount !== -1 && data.length > prevMailCount && audioReady) {
+          document.getElementById('notifVoice').play();
+          if (Notification.permission === "granted") new Notification("🌹 筑梦电子：新邮件", { body: `发件人: ${data[0].from}\n主题: ${data[0].subject}` });
         }
-        mailCount = data.length;
-        const list = document.getElementById('mailContentList');
+        prevMailCount = data.length;
+        const list = document.getElementById('mailListContainer');
         if(data.length === 0) { list.innerHTML = `<p style="padding-top:60px;">暂无新邮件</p>`; }
         else {
           list.innerHTML = data.map(m => `
-            <div style="background:rgba(255,255,255,0.05); padding:15px; margin-bottom:12px; border-radius:12px; border-left:4px solid var(--rose);">
-              <div style="font-size:12px; opacity:0.6;">来自: ${m.from}</div>
-              <div style="font-weight:bold; color:var(--rose2);">${m.subject}</div>
-              <div style="font-size:13px; margin-top:8px;">${m.html || m.text}</div>
+            <div style="background:rgba(255,255,255,0.05); padding:18px; margin-bottom:12px; border-radius:12px; border-left:4px solid var(--rose);">
+              <div style="font-size:12px; opacity:0.6; margin-bottom:5px;">来自: ${m.from}</div>
+              <div style="font-weight:bold; color:var(--rose2); font-size:16px;">${m.subject}</div>
+              <div style="font-size:13px; margin-top:8px; opacity:0.9;">${m.html || m.text}</div>
             </div>
           `).join('');
         }
       });
     }
 
-    function manualMailCheck() { mailTime = 5; checkEmails(); mailMsg("🔄 正在刷新..."); }
+    function triggerMailSync() { mailCountdown = 5; syncEmails(); showMailToast("🔄 刷新成功"); }
 
     setInterval(() => {
-      mailTime--;
-      if (mailTime < 0) { checkEmails(); mailTime = 5; }
-      document.getElementById('mailTimer').innerText = `${mailTime}s 刷新`;
+      mailCountdown--;
+      if (mailCountdown < 0) { syncEmails(); mailCountdown = 5; }
+      document.getElementById('refreshTimerText').innerText = `${mailCountdown}s 刷新`;
     }, 1000);
 
-    /* --- 原始脚本部分 (访问量统计等) --- */
-    (function(){
-      getNewMail();
-      const vc = document.getElementById("visitCount");
-      if(vc) fetch(`/_counter/hit?key=home`).then(r=>r.json()).then(d=>{ vc.textContent = d.count || "330"; }).catch(()=>vc.textContent="330");
-      
-      const btnWc = document.getElementById('btnWechat');
-      if(btnWc) btnWc.onclick = () => document.getElementById('wechatModal').classList.add('show');
+    /* --- 2. 原有逻辑初始化 (访问量等) --- */
+    (function initOldScripts(){
+      genRandomMail(); // 初始生成一个邮箱
+      // 访问量
+      const countEl = document.getElementById("visitCount");
+      if(countEl) fetch(`/_counter/hit?key=home`).then(r=>r.json()).then(d=>{ if(d.count) countEl.textContent = d.count; }).catch(()=>{});
     })();
   </script>
 </body>
