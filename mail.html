@@ -493,7 +493,7 @@ async function unlockInbox() {
     // ✅ 补回丢失的渲染邮件功能（画图师傅）
     function renderEmails(emails) {
         // 尝试自动寻找你的邮件大框，如果找不到就找个默认的
-        const container = document.getElementById('mailList') || document.querySelector('.mail-list-container') || document.querySelector('.content-box');
+        const container = document.getElementById('emailList') || document.querySelector('.mail-list-container') || document.querySelector('.content-box');
         
         if (!container) {
             console.error("找不到展示邮件的容器，请检查网页里的 div ID！");
@@ -502,7 +502,7 @@ async function unlockInbox() {
 
         // 如果收件箱是空的
         if (!emails || emails.length === 0) {
-            container.innerHTML = '<div style="text-align: center; padding: 30px; color: #aaa; font-size: 16px;">📭 收件箱空空如也，正在为您实时监听新邮件...</div>';
+            container.innerHTML = '<div style="text-align: center; padding: 30px; color: #aaa; font-size: 16px;">📭 收件箱空空如也，正在为您实时获取新邮件...</div>';
             return;
         }
 
@@ -524,6 +524,7 @@ async function unlockInbox() {
 
 </body>
 </html>
+
 
 
 
