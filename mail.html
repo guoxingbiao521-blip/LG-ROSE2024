@@ -236,46 +236,84 @@ h2::before, h2::after {
         showToast("🔄 正在刷新邮件");
     }
 
-    async function fetchEmails() {
+   async function fetchEmails() {
+
     if (!currentEmail) return;
 
-    // 1. 安全获取本地存储，防止手机端隐私模式报错
+
+
     const code = localStorage.getItem('authCode');
-    const devId = localStorage.getItem('deviceId') || 'dev_mobile';
+
+    const devId = localStorage.getItem('deviceId');
+
+
 
     if (!code) {
-        if (typeof renderLockedInbox === 'function') renderLockedInbox();
+
+        renderLockedInbox(); 
+
         return;
+
     }
 
+
+
     try {
-        // 🚩 加上随机数后缀，防止手机浏览器缓存旧数据导致一直显示“正在连接”
-        const response = await fetch(`${API_BASE}?address=${currentEmail}&code=${code}&deviceId=${devId}&v=${Math.random()}`);
+
+        const response = await fetch(`${API_BASE}?address=${currentEmail}&code=${code}&deviceId=${devId}`);
+
         
+
         if (response.status === 401 || response.status === 403) {
+
+            const errData = await response.json();
+
             localStorage.removeItem('authCode');
-            if (typeof renderLockedInbox === 'function') renderLockedInbox("激活码失效，请重新激活");
+
+            renderLockedInbox(errData.message || "激活码无效，请重新输入");
+
             return;
+
         }
+
+
 
         const data = await response.json();
 
-        // 🔊 语音 + 🚀 弹窗逻辑（针对手机端做了防崩溃处理）
-        if (data.length > lastEmailCount && lastEmailCount !== -1) {
-            
-            // 语音播报尝试
-            try {
-                const msg = new SpeechSynthesisUtterance("您有新的邮件，请注意查收！");
-                msg.lang = "zh-CN";
-                window.speechSynthesis.speak(msg);
-            } catch(e) { console.warn("手机语音受限"); }
 
-            // 🚩 核心修复：先看手机支不支持 Notification 属性，防止报错卡死
-            if (window.Notification && Notification.permission === "granted") {
-                new Notification("📬 筑梦收件箱新邮件提示！", {
-                    body: `主题: ${data[0].subject}`
+
+        // 🔊 语音 + 🚀 弹窗逻辑
+
+        if (data.length > lastEmailCount && lastEmailCount !== -1) {
+
+            // 调用浏览器语音
+
+            const msg = new SpeechSynthesisUtterance();
+
+            msg.text = "主人，您有新的邮件，请注意查收";
+
+            msg.lang = "zh-CN";
+
+            window.speechSynthesis.speak(msg);
+
+
+
+            // 触发系统弹窗
+
+            if (Notification.permission === "granted") {
+
+                const newMail = data[0];
+
+                new Notification("📬 筑梦收件箱新邮件！", {
+
+                    body: `发件人: ${newMail.from}\n主题: ${newMail.subject}`,
+
+                    icon: "https://roselg.xyz/favicon.ico" 
+
                 });
+
             }
+
         }
         
         lastEmailCount = data.length;
@@ -331,6 +369,7 @@ h2::before, h2::after {
 </script>
 </body>
 </html>
+
 
 
 
