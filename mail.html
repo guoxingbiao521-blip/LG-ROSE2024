@@ -42,24 +42,31 @@
             border: 1px solid rgba(255, 182, 193, 0.2) !important; 
         }
         
-        /* ✅ 标题终极排版 */
-        h2 {
-            display: flex !important;
-            justify-content: space-between !important; 
-            align-items: center !important;
-            width: 100% !important;
-            margin-top: 0;
-            margin-bottom: 30px;
-            font-size: 44px !important; 
-            letter-spacing: 4px !important; 
-            font-weight: 900; 
-            white-space: nowrap !important;
-            color: #ffffff; 
-            text-shadow: 0 0 3px #ffffff, 4px 4px 0px #c2185b, 0 0 15px #ff69b4, 0 0 35px #ff69b4, 5px 5px 15px rgba(0,0,0,0.9);
-        }
-        
-        h2::before { content: "🌹"; font-size: 38px; }
-        h2::after { content: "🌹"; font-size: 38px; }
+       /* ✅ 标题完美居中：让玫瑰花紧贴文字 */
+h2 {
+    display: block !important; /* 从 flex 换回 block */
+    text-align: center !important; /* 核心：让内容水平居中 */
+    width: 100% !important;
+    margin-top: 0;
+    margin-bottom: 30px;
+    
+    /* 保持你的霸气字号和霓虹效果 */
+    font-size: 44px !important; 
+    letter-spacing: 2px !important; /* 稍微缩短间距，显得更精致 */
+    font-weight: 900; 
+    white-space: nowrap !important;
+    color: #ffffff; 
+    text-shadow: 
+        0 0 3px #ffffff,
+        4px 4px 0px #c2185b,
+        0 0 15px #ff69b4,
+        0 0 35px #ff69b4,
+        5px 5px 15px rgba(0,0,0,0.9);
+}
+
+/* 给玫瑰花加点左右边距，别贴字太死 */
+h2::before { content: "🌹"; font-size: 38px; margin-right: 15px; }
+h2::after { content: "🌹"; font-size: 38px; margin-left: 15px; }
         
         .email-card { 
             font-size: 34px; font-weight: bold; color: #ffffff; 
@@ -294,4 +301,5 @@
 </script>
 </body>
 </html>
+
 
