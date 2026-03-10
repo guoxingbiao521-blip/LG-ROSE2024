@@ -25,7 +25,7 @@
             background: rgba(0, 0, 0, 0.45) !important; /* 加了45%透明度的黑底 */
             padding: 40px; border-radius: 24px; 
             box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5) !important; /* 给整个框加点立体阴影 */
-            display: inline-block; width: 680px; max-width: 95%; 
+            display: inline-block; width: 820px; max-width: 95%; 
             backdrop-filter: blur(10px) !important; /* 核心：磨砂模糊 */
             -webkit-backdrop-filter: blur(10px) !important;
             border: 1px solid rgba(255, 182, 193, 0.3) !important; /* 保留细微的粉色边框 */
@@ -41,25 +41,30 @@
             border: 1px solid rgba(255, 182, 193, 0.2) !important; 
         }
         
-     /* ✅ 标题终极进化：完美适配电脑框宽度的 3D 立体霓虹字 */
+    /* ✅ 标题终极排版：自动贴边对齐 + 更大3D发光 */
         h2 {
-            text-align: center;
+            display: flex !important;
+            justify-content: space-between !important; /* 👈 核心魔法：强制内容左右两端对齐 */
+            align-items: center !important;
+            width: 100% !important;
             margin-top: 0;
-            /* 👈 字号回调到 32px，确保刚好能塞进玻璃框 */
-            font-size: 32px !important; 
-            /* 👈 死命令：电脑端也绝对不允许换行！ */
-            white-space: nowrap !important; 
+            margin-bottom: 30px;
+            font-size: 38px !important; /* 👈 字体无视限制，放大到 38px */
             font-weight: 900; 
             letter-spacing: 2px; 
-            margin-bottom: 30px;
+            white-space: nowrap !important;
             color: #ffffff; 
             text-shadow: 
                 0 0 3px #ffffff,
-                3px 3px 0px #c2185b, /* 匹配 32px 的厚度 */
+                4px 4px 0px #c2185b,
                 0 0 15px #ff69b4,
                 0 0 35px #ff69b4,
                 5px 5px 15px rgba(0,0,0,0.9);
         }
+        
+        /* 👇 魔法在这里：用 CSS 自动在两端生成玫瑰，它们会死死贴住左右边界！ */
+        h2::before { content: "🌹"; }
+        h2::after { content: "🌹"; }
         
        /* 3. 显示邮箱地址的粉色框：深色黑透 + 霓虹发光字 */
         .email-card { 
@@ -145,7 +150,7 @@
         📢 <strong>设置提醒：</strong>点击下方开启按钮并允许权限，最小化浏览器也能收到语音与弹窗提醒！
     </div>
 
-    <h2>🌹 LG筑梦电子 📧 无限临时邮箱系统 🌹</h2>
+   <h2>LG筑梦电子 📧 无限临时邮箱系统</h2>
     
     <button class="btn-audio-test" onclick="enableAllNotifications()">🔊 开启收件提示音 & 弹窗提醒</button>
 
@@ -402,6 +407,7 @@ function generateRandom() {
 
 </body>
 </html>
+
 
 
 
