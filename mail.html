@@ -322,12 +322,10 @@ h2::before, h2::after {
         if (typeof renderEmails === 'function') {
             renderEmails(data);
         }
-
-    } catch (e) {
-        console.error("手机连接异常:", e);
-        const list = document.getElementById('emailList');
-        if (list) list.innerHTML = `<p style="text-align:center; color:#ff6b81; padding-top:40px;">💡 筑梦系统正在全力连接中...</p>`;
+} catch (e) {
+        document.getElementById('emailList').innerHTML = '<p style="color:red; text-align:center; padding-top:50px;">手机端报错: ' + String(e) + '</p>';
     }
+  
 }
 
     function renderEmails(emails) {
@@ -369,6 +367,7 @@ h2::before, h2::after {
 </script>
 </body>
 </html>
+
 
 
 
