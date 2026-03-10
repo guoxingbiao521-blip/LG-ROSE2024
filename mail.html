@@ -450,7 +450,7 @@ async function unlockInbox() {
 }
     // 📩 强化版取邮件函数：自动检查工牌 + 锁死收件箱
   // 1. 变量保护（防止报错，放在函数外面）
-if (typeof lastEmailCount === 'undefined') { var lastEmailCount = -1; }
+
 
 async function fetchEmails() {
     if (!currentEmail) return;
@@ -536,6 +536,7 @@ async function fetchEmails() {
 
 </body>
 </html>
+
 
 
 
