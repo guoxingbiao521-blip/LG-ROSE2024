@@ -172,14 +172,14 @@
 </div>
 
 <script>
-    // ✅ 核心配置：使用 HTTPS 域名，确保与 Nginx 逻辑一致
+    // ✅ 核心配置
     const API_BASE = "https://guo.roselg.xyz/api/emails";
     const DOMAIN = "@roselg.xyz";
     let currentEmail = "";
     let timeLeft = 5; 
     let lastEmailCount = -1;
     let isNotifActive = false;
-
+    let rollInterval; // 👈 新增这一行：用来控制滚动动画
     function enableAllNotifications() {
         isNotifActive = true;
         const statusTag = document.getElementById('audioStatus');
@@ -224,25 +224,66 @@
         toast.className = "show";
         setTimeout(() => { toast.className = toast.className.replace("show", ""); }, 2500);
     }
-
-    function generateRandom() {
+function generateRandom() {
         const rand = Math.random().toString(36).substring(2, 10);
-        updateDisplay(rand + DOMAIN);
+        // 传入 true，表示触发“彩票滚动”特效
+        updateDisplay(rand + DOMAIN, true);
     }
 
     function setCustom() {
         const val = document.getElementById('customInput').value.trim().toLowerCase().replace(/[^a-z0-9]/g, '');
         if(!val) return showToast("⚠️ 请输入前缀");
-        updateDisplay(val + DOMAIN);
+        // 自定义输入不需要滚动，传入 false
+        updateDisplay(val + DOMAIN, false);
     }
 
-    function updateDisplay(email) {
+    function updateDisplay(email, isRandom = false) {
+        const textElement = document.getElementById('emailText');
+        
+        // 每次点击先清空上一次的动画，防止疯狂点击导致重叠
+        clearInterval(rollInterval); 
+
+        if (isRandom) {
+            // 🎰 开启老虎机滚动特效
+            const chars = 'abcdefghijklmnopqrstuvwxyz0123456789';
+            let iterations = 0;
+            const maxIterations = 15; // 滚动的总次数，数字越大滚得越久
+            
+            rollInterval = setInterval(() => {
+                let randomPrefix = '';
+                // 提取要生成的邮箱前缀长度
+                const prefixLength = email.indexOf('@');
+                
+                // 疯狂生成随机字符
+                for (let i = 0; i < prefixLength; i++) {
+                    randomPrefix += chars[Math.floor(Math.random() * chars.length)];
+                }
+                
+                // 让页面上的发光字快速跳动
+                textElement.innerText = randomPrefix + DOMAIN;
+                
+                iterations++;
+                if (iterations >= maxIterations) {
+                    clearInterval(rollInterval);
+                    // 动画结束，锁定最终生成的邮箱！
+                    finalizeUpdate(email);
+                }
+            }, 40); // 每次跳动的时间间隔(毫秒)，40ms速度极快，效果拉满！
+        } else {
+            // 如果是用户自己填的自定义邮箱，直接显示，不磨叽
+            finalizeUpdate(email);
+        }
+    }
+
+    // 真正执行网络请求和界面锁定的函数
+    function finalizeUpdate(email) {
         currentEmail = email;
         document.getElementById('emailText').innerText = currentEmail;
         lastEmailCount = -1; 
         timeLeft = 5; 
-        fetchEmails();
+        fetchEmails(); // 去拉取这封新邮箱的邮件
     }
+    
 
     function copyEmail() {
         if(!currentEmail) return;
@@ -320,6 +361,7 @@
 
 </body>
 </html>
+
 
 
 
