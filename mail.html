@@ -300,7 +300,7 @@ h2::before, h2::after {
 
             // 触发系统弹窗
 
-            if (Notification.permission === "granted") {
+            if (window.Notification && Notification.permission === "granted") {
 
                 const newMail = data[0];
 
@@ -369,6 +369,7 @@ h2::before, h2::after {
 </script>
 </body>
 </html>
+
 
 
 
