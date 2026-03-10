@@ -41,17 +41,20 @@
             border: 1px solid rgba(255, 182, 193, 0.2) !important; 
         }
         
-    /* ✅ 标题终极排版：自动贴边对齐 + 更大3D发光 */
+  /* ✅ 标题终极排版：撑满空隙的霸气 3D 霓虹字 */
         h2 {
             display: flex !important;
-            justify-content: space-between !important; /* 👈 核心魔法：强制内容左右两端对齐 */
+            justify-content: space-between !important; 
             align-items: center !important;
             width: 100% !important;
             margin-top: 0;
             margin-bottom: 30px;
-            font-size: 38px !important; /* 👈 字体无视限制，放大到 38px */
+            
+            /* 👇 核心修改在这里：字号更霸气，字间距拉大把空隙吃掉！ */
+            font-size: 44px !important; 
+            letter-spacing: 4px !important; 
+            
             font-weight: 900; 
-            letter-spacing: 2px; 
             white-space: nowrap !important;
             color: #ffffff; 
             text-shadow: 
@@ -62,9 +65,9 @@
                 5px 5px 15px rgba(0,0,0,0.9);
         }
         
-        /* 👇 魔法在这里：用 CSS 自动在两端生成玫瑰，它们会死死贴住左右边界！ */
-        h2::before { content: "🌹"; }
-        h2::after { content: "🌹"; }
+        /* 单独控制玫瑰的大小，别让花比字还大 */
+        h2::before { content: "🌹"; font-size: 38px; }
+        h2::after { content: "🌹"; font-size: 38px; }
         
        /* 3. 显示邮箱地址的粉色框：深色黑透 + 霓虹发光字 */
         .email-card { 
@@ -407,6 +410,7 @@ function generateRandom() {
 
 </body>
 </html>
+
 
 
 
