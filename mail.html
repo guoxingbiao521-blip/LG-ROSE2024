@@ -4,99 +4,76 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>🌹 LG筑梦电子无限临时邮箱系统 🌹</title>
-   <style>
+  <style>
         :root { 
-            --rose-main: #d63384; --rose-dark: #a02060; --rose-bg: #fff0f5; --rose-border: #ffb6c1; 
+            /* 调整了主色调，让它在暗背景下更亮眼 */
+            --rose-main: #ff69b4; --rose-dark: #d81b60; --rose-bg: transparent; --rose-border: #ffb6c1; 
             --blue-main: #0078D7; --blue-dark: #005a9e; --green-main: #4caf50; --green-dark: #388e3c;
             --purple-main: #da70d6; --purple-dark: #b359b0;
         }
 
         /* --- 绝对属于你的玫瑰背景 --- */
         body {
-            margin: 0;
-            padding: 0;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
+            margin: 0; padding: 0; display: flex; justify-content: center; align-items: center; min-height: 100vh;
             background: url('./bg.JPG') no-repeat center center fixed !important;
             background-size: cover !important;
         }
         
-        /* 强制透明底层 */
-        .main-container, .wrapper, #app {
-            background-color: transparent !important;
-        }
+        .main-container, .wrapper, #app { background-color: transparent !important; }
         
-        /* 1. 最外层的大框：半透明 + 毛玻璃模糊 */
+        /* 1. 最外层的大框：全透明，保留细边框维持轮廓 */
         .main-card { 
-            background: rgba(255, 255, 255, 0.4) !important; 
-            padding: 40px; border-radius: 24px; box-shadow: 0 12px 50px rgba(0,0,0,0.15); 
+            background: transparent !important; 
+            padding: 40px; border-radius: 24px; box-shadow: none !important; 
             display: inline-block; width: 680px; max-width: 95%; 
-            backdrop-filter: blur(12px) !important; 
-            -webkit-backdrop-filter: blur(12px) !important;
+            backdrop-filter: none !important; -webkit-backdrop-filter: none !important;
             border: 2px solid rgba(255, 182, 193, 0.5) !important; 
             position: relative; 
         }
         
-        /* 2. 顶部的提示框：半透明 */
+        /* 2. 顶部的提示框：全透明 + 白色发光文字 */
         .hint-box { 
-            background-color: rgba(255, 249, 250, 0.6) !important; 
-            color: #b0003a; padding: 15px 20px; border-left: 5px solid #ff69b4 !important; 
+            background-color: transparent !important; 
+            color: #ffffff; text-shadow: 1px 1px 4px rgba(0,0,0,0.9); /* 加深阴影防看不清 */
+            padding: 15px 20px; border-left: 5px solid #ff69b4 !important; 
             border-radius: 8px; margin-bottom: 30px; font-size: 14px; text-align: left; line-height: 1.8; 
             border: 1px solid rgba(255, 182, 193, 0.4) !important; 
         }
         
-        /* 标题样式：居中 */
-        h2 { text-align: center; color: var(--rose-main); margin-top: 0; font-size: 28px; letter-spacing: 1px; margin-bottom: 25px; } 
+        /* 标题样式：居中 + 亮粉色发光 */
+        h2 { text-align: center; color: #ff69b4; margin-top: 0; font-size: 28px; letter-spacing: 1px; margin-bottom: 25px; text-shadow: 1px 1px 5px rgba(0,0,0,0.9); } 
         
-        /* 3. 显示邮箱地址的粉色框：半透明 */
+        /* 3. 显示邮箱地址的粉色框：全透明 + 纯白大字 */
         .email-card { 
-            font-size: 32px; font-weight: bold; color: #c2185b; margin: 20px 0; padding: 25px; 
-            background: rgba(255, 240, 245, 0.6) !important; 
-            border-radius: 16px; border: 2px dashed rgba(255, 105, 180, 0.6) !important; 
-            word-break: break-all; text-align: center;
-            box-shadow: inset 0 2px 10px rgba(255,105,180,0.1); 
+            font-size: 32px; font-weight: bold; color: #ffffff; text-shadow: 1px 1px 6px rgba(0,0,0,0.9);
+            margin: 20px 0; padding: 25px; 
+            background: transparent !important; 
+            border-radius: 16px; border: 2px dashed rgba(255, 105, 180, 0.8) !important; 
+            word-break: break-all; text-align: center; box-shadow: none !important; 
         }
         
-        button { 
-            font-size: 15px; padding: 12px 24px; cursor: pointer; border: none; border-radius: 12px; 
-            color: white; font-weight: bold; display: flex; align-items: center; justify-content: center; gap: 6px; 
-            position: relative; transition: all 0.1s; user-select: none;
-        }
+        button { font-size: 15px; padding: 12px 24px; cursor: pointer; border: none; border-radius: 12px; color: white; font-weight: bold; display: flex; align-items: center; justify-content: center; gap: 6px; position: relative; transition: all 0.1s; user-select: none; }
         .btn-custom { background: var(--purple-main); box-shadow: 0 5px 0 var(--purple-dark); }
         .btn-gen { background: var(--rose-main); box-shadow: 0 5px 0 var(--rose-dark); }
         .btn-refresh-inbox { background: var(--green-main); box-shadow: 0 4px 0 var(--green-dark); padding: 8px 18px; font-size: 14px; }
         .btn-audio-test { background: #607d8b; box-shadow: 0 4px 0 #455a64; padding: 10px 20px; font-size: 15px; margin: 0 auto 20px auto; }
-
         button:active { transform: translateY(4px) !important; box-shadow: 0 1px 0 rgba(0,0,0,0.2) !important; }
-
         .btn-group { display: flex; gap: 15px; justify-content: center; margin-bottom: 25px; flex-wrap: wrap; }
-        input[type="text"] { padding: 12px 15px; font-size: 16px; border: 2px solid var(--rose-border); border-radius: 12px; outline: none; width: 200px; text-align: center; 
-            /* 让输入框也稍微透一点背景 */
-            background: rgba(255, 255, 255, 0.8);
-        }
         
-        /* 4. 底部的收件箱：半透明 */
-        .inbox-card { 
-            margin-top: 40px; text-align: left; 
-            background: rgba(255, 255, 255, 0.4) !important; 
-            padding: 25px; border-radius: 18px; 
-            border: 1px solid rgba(255, 182, 193, 0.5) !important; 
-            min-height: 300px; 
-        }
-        .inbox-header { display: flex; justify-content: space-between; align-items: center; border-bottom: 2px solid rgba(255, 240, 245, 0.5); padding-bottom: 15px; margin-bottom: 20px; }
-        .inbox-title { margin: 0; color: #c2185b; font-size: 22px; }
+        /* 输入框：加了一点点黑底，不然你打字看不见 */
+        input[type="text"] { padding: 12px 15px; font-size: 16px; border: 2px solid var(--rose-border); border-radius: 12px; outline: none; width: 200px; text-align: center; background: rgba(0, 0, 0, 0.4); color: white; }
+        input[type="text"]::placeholder { color: #cccccc; }
         
-        .status-tag { font-size: 11px; color: #888; background: rgba(245, 245, 245, 0.8); padding: 3px 8px; border-radius: 10px; font-weight: normal; margin-left: 5px; border: 1px solid #ddd; }
-        .refresh-timer { font-size: 13px; color: #999; font-weight: normal; margin-left: 5px; background: rgba(254, 240, 245, 0.8); padding: 2px 8px; border-radius: 20px; border: 1px solid var(--rose-border); }
+        /* 4. 底部的收件箱：全透明 */
+        .inbox-card { margin-top: 40px; text-align: left; background: transparent !important; padding: 25px; border-radius: 18px; border: 1px solid rgba(255, 182, 193, 0.5) !important; min-height: 300px; }
+        .inbox-header { display: flex; justify-content: space-between; align-items: center; border-bottom: 2px solid rgba(255, 182, 193, 0.5); padding-bottom: 15px; margin-bottom: 20px; }
+        .inbox-title { margin: 0; color: #ff69b4; font-size: 22px; text-shadow: 1px 1px 4px rgba(0,0,0,0.9); }
+        
+        /* 细微标签：半透明黑底白字 */
+        .status-tag { font-size: 11px; color: #fff; background: rgba(0, 0, 0, 0.5); padding: 3px 8px; border-radius: 10px; font-weight: normal; margin-left: 5px; border: 1px solid #666; }
+        .refresh-timer { font-size: 13px; color: #fff; font-weight: normal; margin-left: 5px; background: rgba(0, 0, 0, 0.5); padding: 2px 8px; border-radius: 20px; border: 1px solid var(--rose-border); }
 
-        #customToast {
-            visibility: hidden; min-width: 200px; background-color: rgba(0, 0, 0, 0.85); color: #fff;
-            text-align: center; border-radius: 12px; padding: 18px 30px; position: fixed;
-            z-index: 1000; left: 50%; top: 50%; transform: translate(-50%, -50%);
-            font-size: 16px; font-weight: bold; backdrop-filter: blur(8px); box-shadow: 0 10px 40px rgba(0,0,0,0.4);
-        }
+        #customToast { visibility: hidden; min-width: 200px; background-color: rgba(0, 0, 0, 0.85); color: #fff; text-align: center; border-radius: 12px; padding: 18px 30px; position: fixed; z-index: 1000; left: 50%; top: 50%; transform: translate(-50%, -50%); font-size: 16px; font-weight: bold; backdrop-filter: blur(8px); box-shadow: 0 10px 40px rgba(0,0,0,0.4); }
         #customToast.show { visibility: visible; animation: fadeInOut 2.5s; }
         @keyframes fadeInOut { 0% {opacity: 0; transform: translate(-50%, -40%);} 15% {opacity: 1; transform: translate(-50%, -50%);} 85% {opacity: 1; transform: translate(-50%, -50%);} 100% {opacity: 0; transform: translate(-50%, -60%);} }
     </style>
@@ -329,5 +306,6 @@
 
 </body>
 </html>
+
 
 
