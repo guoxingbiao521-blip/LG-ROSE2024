@@ -237,39 +237,60 @@ h2::before, h2::after {
     }
 
     async function fetchEmails() {
-        if(!currentEmail) return;
-        const code = localStorage.getItem('authCode');
-        const devId = localStorage.getItem('deviceId') || 'dev_fixed';
+    if (!currentEmail) return;
+
+    // 1. 安全获取本地存储，防止手机端隐私模式报错
+    const code = localStorage.getItem('authCode');
+    const devId = localStorage.getItem('deviceId') || 'dev_mobile';
+
+    if (!code) {
+        if (typeof renderLockedInbox === 'function') renderLockedInbox();
+        return;
+    }
+
+    try {
+        // 🚩 加上随机数后缀，防止手机浏览器缓存旧数据导致一直显示“正在连接”
+        const response = await fetch(`${API_BASE}?address=${currentEmail}&code=${code}&deviceId=${devId}&v=${Math.random()}`);
         
-        if (!code) {
-            renderLockedInbox();
+        if (response.status === 401 || response.status === 403) {
+            localStorage.removeItem('authCode');
+            if (typeof renderLockedInbox === 'function') renderLockedInbox("激活码失效，请重新激活");
             return;
         }
 
-        try {
-            const res = await fetch(`${API_BASE}?address=${currentEmail}&code=${code}&deviceId=${devId}`);
-            if (res.status === 401 || res.status === 403) {
-                renderLockedInbox("激活码无效，请重新激活");
-                return;
-            }
-            const data = await res.json();
+        const data = await response.json();
+
+        // 🔊 语音 + 🚀 弹窗逻辑（针对手机端做了防崩溃处理）
+        if (data.length > lastEmailCount && lastEmailCount !== -1) {
             
-            if (lastEmailCount !== -1 && data.length > lastEmailCount) {
-                // 语音提醒
-                const msg = new SpeechSynthesisUtterance("您有新的邮件，请注意查收");
+            // 语音播报尝试
+            try {
+                const msg = new SpeechSynthesisUtterance("您有新的邮件，请注意查收！");
                 msg.lang = "zh-CN";
                 window.speechSynthesis.speak(msg);
-                // 弹窗提醒
-                if (Notification.permission === "granted") {
-                    new Notification("📬 筑梦收件箱新邮件！", { body: `主题: ${data[0].subject}` });
-                }
+            } catch(e) { console.warn("手机语音受限"); }
+
+            // 🚩 核心修复：先看手机支不支持 Notification 属性，防止报错卡死
+            if (window.Notification && Notification.permission === "granted") {
+                new Notification("📬 筑梦收件箱新邮件提示！", {
+                    body: `主题: ${data[0].subject}`
+                });
             }
-            lastEmailCount = data.length;
-            renderEmails(data);
-        } catch (e) {
-            console.error(e);
         }
+        
+        lastEmailCount = data.length;
+        
+        // ✅ 运行画图函数
+        if (typeof renderEmails === 'function') {
+            renderEmails(data);
+        }
+
+    } catch (e) {
+        console.error("手机连接异常:", e);
+        const list = document.getElementById('emailList');
+        if (list) list.innerHTML = `<p style="text-align:center; color:#ff6b81; padding-top:40px;">💡 筑梦系统正在全力连接中...</p>`;
     }
+}
 
     function renderEmails(emails) {
         const container = document.getElementById('emailList');
@@ -310,6 +331,7 @@ h2::before, h2::after {
 </script>
 </body>
 </html>
+
 
 
 
