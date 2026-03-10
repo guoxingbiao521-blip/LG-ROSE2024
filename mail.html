@@ -75,35 +75,72 @@
 
 <div class="main-card">
     <div class="hint-box">
-        🌹 <strong>玫瑰物语：</strong>在下方输入名字并点击“使用自定义名字”即可找回属于你的历史邮件！<br>
-        📢 <strong>天窗提醒：</strong>点击下方开启按钮并允许权限，最小化浏览器也能收到提醒。
+        🌹 <strong>筑梦物语：</strong>在下方输入前缀并点击“自定义邮箱”即可找回属于你的历史邮箱！<br>
+        📢 <strong>设置提醒：</strong>点击下方开启按钮并允许权限，最小化浏览器也能收到语音与弹窗提醒！
     </div>
 
     <h2>🌹 LG筑梦电子无限临时邮箱系统 🌹</h2>
     
-    <button class="btn-audio-test" onclick="enableAllNotifications()">🔊 开启收件提示音 & 天窗提醒</button>
+    <button class="btn-audio-test" onclick="enableAllNotifications()">🔊 开启收件提示音 & 弹窗提醒</button>
 
-    <div class="email-card" id="emailText">正在呼唤玫瑰...</div>
+    <div class="email-card" id="emailText">正在呼唤筑梦...</div>
 
     <div class="btn-group">
-        <input type="text" id="customInput" placeholder="输入名字 (如: test)">
-        <button class="btn-custom" onclick="setCustom()">🌹 使用自定义名字</button>
-        <button class="btn-gen" onclick="generateRandom()">🔄 随机生成地址</button>
+        <input type="text" id="customInput" placeholder="输入邮箱前缀 (如:LG)">
+        <button class="btn-custom" onclick="setCustom()">🌹 自定义邮箱</button>
+        <button class="btn-gen" onclick="generateRandom()">🔄 随机生成</button>
     </div>
 
-    <button class="btn-copy" onclick="copyEmail()">📋 复制完整邮箱地址</button>
+   <div style="display: flex; gap: 10px; margin-top: 15px;">
+    
+    <button class="btn-copy" onclick="copyEmail()" style="
+        flex: 1;
+        padding: 12px;
+        background-color: #007bff;
+        color: white;
+        border: none;
+        border-radius: 8px;
+        font-weight: bold;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 5px;
+        font-size: 14px;
+    ">
+        📋 复制地址
+    </button>
+
+    <button onclick="window.location.href='/'" style="
+        flex: 1;
+        padding: 12px;
+        background-color: #6c757d;
+        color: white;
+        border: none;
+        border-radius: 8px;
+        font-weight: bold;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 5px;
+        font-size: 14px;
+    ">
+        🏠 返回主页
+    </button>
+</div>
 
     <div class="inbox-card">
         <div class="inbox-header">
             <h3 class="inbox-title">
-                📥 玫瑰收件箱 
+                📥 筑梦收件箱 
                 <span class="status-tag" id="audioStatus">🔇 提醒未激活</span>
                 <span class="refresh-timer" id="timerDisplay">5s 刷新</span>
             </h3>
             <button class="btn-refresh-inbox" onclick="manualRefresh()">🔄 手动刷新</button>
         </div>
         <div id="emailList">
-            <p style="text-align:center; color:#999; padding-top:80px;">正在连接玫瑰花园...</p>
+            <p style="text-align:center; color:#999; padding-top:80px;">正在连接筑梦电子...</p>
         </div>
     </div>
 </div>
@@ -128,9 +165,9 @@
         if ("Notification" in window) {
             Notification.requestPermission().then(permission => {
                 if (permission === "granted") {
-                    showToast("✅ 语音与天窗提醒已同步开启");
+                    showToast("✅ 语音与弹窗提醒已同步开启");
                 } else {
-                    showToast("⚠️ 天窗权限被拒绝，仅开启语音");
+                    showToast("⚠️ 弹窗权限被拒绝，仅开启语音");
                 }
             });
         }
@@ -148,7 +185,7 @@
 
     function pushDesktopNotice(subject, from) {
         if (Notification.permission === "granted") {
-            new Notification("🌹 LG玫瑰系统：新邮件", {
+            new Notification("🌹 LG筑梦系统：新邮件", {
                 body: `来自: ${from}\n主题: ${subject}`,
                 icon: "https://cdn-icons-png.flaticon.com/512/2907/2907253.png"
             });
@@ -169,7 +206,7 @@
 
     function setCustom() {
         const val = document.getElementById('customInput').value.trim().toLowerCase().replace(/[^a-z0-9]/g, '');
-        if(!val) return showToast("⚠️ 请输入名字");
+        if(!val) return showToast("⚠️ 请输入前缀");
         updateDisplay(val + DOMAIN);
     }
 
@@ -184,7 +221,7 @@
     function copyEmail() {
         if(!currentEmail) return;
         navigator.clipboard.writeText(currentEmail).then(() => {
-            showToast("📋 地址已复制");
+            showToast("📋 邮箱地址已复制");
         });
     }
 
@@ -202,7 +239,7 @@
     function manualRefresh() {
         fetchEmails();
         timeLeft = 5; 
-        showToast("🔄 正在从玫瑰花园刷新...");
+        showToast("🔄 正在从筑梦电子刷新...");
     }
 
     function fetchEmails() {
@@ -258,6 +295,7 @@
 </body>
 
 </html>
+
 
 
 
