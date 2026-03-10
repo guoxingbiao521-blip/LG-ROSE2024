@@ -4,9 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>🌹 LG筑梦电子无限临时邮箱系统 🌹</title>
-  <style>
+ <style>
         :root { 
-            /* 调整了主色调，让它在暗背景下更亮眼 */
             --rose-main: #ff69b4; --rose-dark: #d81b60; --rose-bg: transparent; --rose-border: #ffb6c1; 
             --blue-main: #0078D7; --blue-dark: #005a9e; --green-main: #4caf50; --green-dark: #388e3c;
             --purple-main: #da70d6; --purple-dark: #b359b0;
@@ -21,34 +20,36 @@
         
         .main-container, .wrapper, #app { background-color: transparent !important; }
         
-        /* 1. 最外层的大框：全透明，保留细边框维持轮廓 */
+        /* 1. 最外层的大框：深色黑透 + 10px毛玻璃模糊 */
         .main-card { 
-            background: transparent !important; 
-            padding: 40px; border-radius: 24px; box-shadow: none !important; 
+            background: rgba(0, 0, 0, 0.45) !important; /* 加了45%透明度的黑底 */
+            padding: 40px; border-radius: 24px; 
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5) !important; /* 给整个框加点立体阴影 */
             display: inline-block; width: 680px; max-width: 95%; 
-            backdrop-filter: none !important; -webkit-backdrop-filter: none !important;
-            border: 2px solid rgba(255, 182, 193, 0.5) !important; 
+            backdrop-filter: blur(10px) !important; /* 核心：磨砂模糊 */
+            -webkit-backdrop-filter: blur(10px) !important;
+            border: 1px solid rgba(255, 182, 193, 0.3) !important; /* 保留细微的粉色边框 */
             position: relative; 
         }
         
-        /* 2. 顶部的提示框：全透明 + 白色发光文字 */
+        /* 2. 顶部的提示框 */
         .hint-box { 
-            background-color: transparent !important; 
-            color: #ffffff; text-shadow: 1px 1px 4px rgba(0,0,0,0.9); /* 加深阴影防看不清 */
+            background-color: rgba(0, 0, 0, 0.3) !important; 
+            color: #ffffff; text-shadow: 1px 1px 2px rgba(0,0,0,0.8); 
             padding: 15px 20px; border-left: 5px solid #ff69b4 !important; 
             border-radius: 8px; margin-bottom: 30px; font-size: 14px; text-align: left; line-height: 1.8; 
-            border: 1px solid rgba(255, 182, 193, 0.4) !important; 
+            border: 1px solid rgba(255, 182, 193, 0.2) !important; 
         }
         
-        /* 标题样式：居中 + 亮粉色发光 */
-        h2 { text-align: center; color: #ff69b4; margin-top: 0; font-size: 28px; letter-spacing: 1px; margin-bottom: 25px; text-shadow: 1px 1px 5px rgba(0,0,0,0.9); } 
+        /* 标题样式 */
+        h2 { text-align: center; color: #ff69b4; margin-top: 0; font-size: 28px; letter-spacing: 1px; margin-bottom: 25px; text-shadow: 1px 1px 4px rgba(0,0,0,0.8); } 
         
-        /* 3. 显示邮箱地址的粉色框：全透明 + 纯白大字 */
+        /* 3. 显示邮箱地址的粉色框 */
         .email-card { 
-            font-size: 32px; font-weight: bold; color: #ffffff; text-shadow: 1px 1px 6px rgba(0,0,0,0.9);
+            font-size: 32px; font-weight: bold; color: #ffffff; text-shadow: 1px 1px 4px rgba(0,0,0,0.8);
             margin: 20px 0; padding: 25px; 
-            background: transparent !important; 
-            border-radius: 16px; border: 2px dashed rgba(255, 105, 180, 0.8) !important; 
+            background: rgba(0, 0, 0, 0.3) !important; 
+            border-radius: 16px; border: 2px dashed rgba(255, 105, 180, 0.5) !important; 
             word-break: break-all; text-align: center; box-shadow: none !important; 
         }
         
@@ -60,18 +61,16 @@
         button:active { transform: translateY(4px) !important; box-shadow: 0 1px 0 rgba(0,0,0,0.2) !important; }
         .btn-group { display: flex; gap: 15px; justify-content: center; margin-bottom: 25px; flex-wrap: wrap; }
         
-        /* 输入框：加了一点点黑底，不然你打字看不见 */
-        input[type="text"] { padding: 12px 15px; font-size: 16px; border: 2px solid var(--rose-border); border-radius: 12px; outline: none; width: 200px; text-align: center; background: rgba(0, 0, 0, 0.4); color: white; }
-        input[type="text"]::placeholder { color: #cccccc; }
+        input[type="text"] { padding: 12px 15px; font-size: 16px; border: 2px solid rgba(255, 182, 193, 0.5); border-radius: 12px; outline: none; width: 200px; text-align: center; background: rgba(0, 0, 0, 0.5); color: white; }
+        input[type="text"]::placeholder { color: #aaaaaa; }
         
-        /* 4. 底部的收件箱：全透明 */
-        .inbox-card { margin-top: 40px; text-align: left; background: transparent !important; padding: 25px; border-radius: 18px; border: 1px solid rgba(255, 182, 193, 0.5) !important; min-height: 300px; }
-        .inbox-header { display: flex; justify-content: space-between; align-items: center; border-bottom: 2px solid rgba(255, 182, 193, 0.5); padding-bottom: 15px; margin-bottom: 20px; }
-        .inbox-title { margin: 0; color: #ff69b4; font-size: 22px; text-shadow: 1px 1px 4px rgba(0,0,0,0.9); }
+        /* 4. 底部的收件箱 */
+        .inbox-card { margin-top: 40px; text-align: left; background: rgba(0, 0, 0, 0.3) !important; padding: 25px; border-radius: 18px; border: 1px solid rgba(255, 182, 193, 0.2) !important; min-height: 300px; }
+        .inbox-header { display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid rgba(255, 182, 193, 0.3); padding-bottom: 15px; margin-bottom: 20px; }
+        .inbox-title { margin: 0; color: #ff69b4; font-size: 22px; text-shadow: 1px 1px 3px rgba(0,0,0,0.8); }
         
-        /* 细微标签：半透明黑底白字 */
-        .status-tag { font-size: 11px; color: #fff; background: rgba(0, 0, 0, 0.5); padding: 3px 8px; border-radius: 10px; font-weight: normal; margin-left: 5px; border: 1px solid #666; }
-        .refresh-timer { font-size: 13px; color: #fff; font-weight: normal; margin-left: 5px; background: rgba(0, 0, 0, 0.5); padding: 2px 8px; border-radius: 20px; border: 1px solid var(--rose-border); }
+        .status-tag { font-size: 11px; color: #fff; background: rgba(0, 0, 0, 0.6); padding: 3px 8px; border-radius: 10px; font-weight: normal; margin-left: 5px; border: 1px solid #555; }
+        .refresh-timer { font-size: 13px; color: #fff; font-weight: normal; margin-left: 5px; background: rgba(0, 0, 0, 0.6); padding: 2px 8px; border-radius: 20px; border: 1px solid rgba(255, 182, 193, 0.5); }
 
         #customToast { visibility: hidden; min-width: 200px; background-color: rgba(0, 0, 0, 0.85); color: #fff; text-align: center; border-radius: 12px; padding: 18px 30px; position: fixed; z-index: 1000; left: 50%; top: 50%; transform: translate(-50%, -50%); font-size: 16px; font-weight: bold; backdrop-filter: blur(8px); box-shadow: 0 10px 40px rgba(0,0,0,0.4); }
         #customToast.show { visibility: visible; animation: fadeInOut 2.5s; }
@@ -306,6 +305,7 @@
 
 </body>
 </html>
+
 
 
 
