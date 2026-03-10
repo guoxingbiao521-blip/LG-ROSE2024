@@ -361,12 +361,15 @@ h2::before, h2::after {
 
     // 初始化
     if (!localStorage.getItem('deviceId')) localStorage.setItem('deviceId', 'dev_' + Math.random().toString(36).substring(2, 10));
-    Notification.requestPermission();
+    if (window.Notification) {
+    Notification.requestPermission().catch(e => console.log("弹窗权限被忽略"));
+}
     generateRandom();
     startCountdown();
 </script>
 </body>
 </html>
+
 
 
 
