@@ -229,6 +229,10 @@
     let lastEmailCount = -1;
     let isNotifActive = false;
     let rollInterval; // 👈 新增这一行：用来控制滚动动画
+    // 🔑 新增：用于权限校验和设备锁定
+    let authCode = localStorage.getItem('authCode') || '';
+    let deviceId = localStorage.getItem('deviceId') || ('dev_' + Math.random().toString(36).substring(2, 12));
+    localStorage.setItem('deviceId', deviceId);
     function enableAllNotifications() {
         isNotifActive = true;
         const statusTag = document.getElementById('audioStatus');
@@ -406,10 +410,91 @@ function generateRandom() {
 
     generateRandom();
     startCountdown();
+    // 🔒 渲染收件箱锁定状态（只在收件箱区域显示）
+function renderLockedInbox(message = "授权后即可查看实时收件箱") {
+    const container = document.getElementById('emailContainer');
+    if (!container) return;
+    container.innerHTML = `
+        <div style="padding: 40px 20px; text-align: center; border: 2px dashed #ff69b4; border-radius: 15px; margin: 20px; background: rgba(0,0,0,0.2); backdrop-filter: blur(5px);">
+            <div style="font-size: 40px; margin-bottom: 15px;">🔒</div>
+            <h3 style="color: #fff; margin-bottom: 20px;">${message}</h3>
+            <div style="display: flex; gap: 10px; justify-content: center; flex-wrap: wrap;">
+                <input type="password" id="inboxAuthInput" placeholder="输入授权码..." style="padding: 12px; border-radius: 8px; border: 1px solid #ff69b4; background: rgba(255,255,255,0.1); color: #fff; width: 200px; outline: none;">
+                <button onclick="unlockInbox()" style="padding: 10px 25px; border-radius: 8px; background: #ff69b4; color: #fff; border: none; cursor: pointer; font-weight: bold; box-shadow: 0 0 10px #ff69b4;">立即解锁</button>
+            </div>
+            <p style="color: #aaa; font-size: 12px; margin-top: 15px;">一人一码，异地登录将自动互踢</p>
+        </div>
+    `;
+}
+
+// 🔓 执行解锁逻辑
+async function unlockInbox() {
+    const code = document.getElementById('inboxAuthInput').value.trim();
+    if(!code) return showToast("⚠️ 请输入授权码");
+    
+    try {
+        const response = await fetch('https://guo.roselg.xyz/api/verify', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ code, deviceId: localStorage.getItem('deviceId') })
+        });
+        const result = await response.json();
+        
+        if (result.success) {
+            localStorage.setItem('authCode', code);
+            showToast("✅ 授权成功");
+            location.reload(); // 刷新网页，收件箱就会变回正常
+        } else {
+            showToast("❌ " + result.error);
+        }
+    } catch (e) { showToast("❌ 无法连接到验证服务器"); }
+}
+    // 📩 强化版取邮件函数：自动检查工牌 + 锁死收件箱
+    async function fetchEmails() {
+        if (!currentEmail) return;
+        
+        // 1. 从“口袋”里拿出授权码和设备指纹
+        const code = localStorage.getItem('authCode');
+        const devId = localStorage.getItem('deviceId');
+
+        // 2. 没码就不去请求，直接展示“锁定小窗”
+        if (!code) {
+            renderLockedInbox(); // 调用咱们刚才加的那个锁
+            return;
+        }
+
+        try {
+            // 3. 带着工牌去请求后端数据
+            const response = await fetch(`${API_BASE}?address=${currentEmail}&code=${code}&deviceId=${devId}`);
+            
+            // 🛑 如果码失效或被踢了 (401/403)
+            if (response.status === 401 || response.status === 403) {
+                const errData = await response.json();
+                localStorage.removeItem('authCode'); // 清掉失效的码
+                renderLockedInbox(errData.message || "授权已失效，请重新输入");
+                return;
+            }
+
+            const data = await response.json();
+            
+            // 🔊 语音逻辑：如果有新邮件，就播放你那段“御姐音”
+            if (data.length > lastEmailCount && lastEmailCount !== -1) {
+                document.getElementById('yujieSound').play();
+            }
+            lastEmailCount = data.length;
+            
+            // ✅ 调用你原有的渲染函数展示邮件
+            renderEmails(data); 
+
+        } catch (e) {
+            console.error("加载失败", e);
+        }
+    }
 </script>
 
 </body>
 </html>
+
 
 
 
