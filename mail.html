@@ -11,17 +11,21 @@
             --purple-main: #da70d6; --purple-dark: #b359b0;
         }
 
- body {
-    margin: 0;
-    padding: 0;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    min-height: 100vh;
-    /* 强行换回玫瑰花背景 */
-    background: url('https://images.unsplash.com/photo-1518709268805-4e9042af9f23?q=80&w=2000') no-repeat center center fixed !important;
-    background-size: cover !important;
-}
+        /* --- 玫瑰背景终极强制修复 --- */
+        body {
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background: url('https://images.unsplash.com/photo-1518709268805-4e9042af9f23?q=80&w=2000') no-repeat center center fixed !important;
+            background-size: cover !important;
+        }
+        
+        /* 如果网页里有其他遮挡层，也强制透明 */
+        .main-container, .wrapper, #app {
+            background-color: transparent !important;
         }
         
         .main-card { 
@@ -34,11 +38,12 @@
             border-radius: 8px; margin-bottom: 30px; font-size: 14px; text-align: left; line-height: 1.8; border: 1px solid var(--rose-border); border-left-width: 5px;
         }
         
-        h2 { color: var(--rose-main); margin-top: 0; font-size: 28px; letter-spacing: 1px; margin-bottom: 25px; } 
+        /* ✅ 标题样式：加入 text-align: center 强制居中 */
+        h2 { text-align: center; color: var(--rose-main); margin-top: 0; font-size: 28px; letter-spacing: 1px; margin-bottom: 25px; } 
         
         .email-card { 
             font-size: 32px; font-weight: bold; color: #c2185b; margin: 20px 0; padding: 25px; 
-            background: var(--rose-bg); border-radius: 16px; border: 2px dashed #ff69b4; word-break: break-all; 
+            background: var(--rose-bg); border-radius: 16px; border: 2px dashed #ff69b4; word-break: break-all; text-align: center;
             box-shadow: inset 0 2px 10px rgba(255,105,180,0.1); 
         }
         
@@ -49,7 +54,6 @@
         }
         .btn-custom { background: var(--purple-main); box-shadow: 0 5px 0 var(--purple-dark); }
         .btn-gen { background: var(--rose-main); box-shadow: 0 5px 0 var(--rose-dark); }
-        .btn-copy { background: var(--blue-main); box-shadow: 0 5px 0 var(--blue-dark); width: 100%; max-width: 500px; margin: 10px auto; }
         .btn-refresh-inbox { background: var(--green-main); box-shadow: 0 4px 0 var(--green-dark); padding: 8px 18px; font-size: 14px; }
         .btn-audio-test { background: #607d8b; box-shadow: 0 4px 0 #455a64; padding: 10px 20px; font-size: 15px; margin: 0 auto 20px auto; }
 
@@ -73,16 +77,6 @@
         }
         #customToast.show { visibility: visible; animation: fadeInOut 2.5s; }
         @keyframes fadeInOut { 0% {opacity: 0; transform: translate(-50%, -40%);} 15% {opacity: 1; transform: translate(-50%, -50%);} 85% {opacity: 1; transform: translate(-50%, -50%);} 100% {opacity: 0; transform: translate(-50%, -60%);} }
-   /* --- 玫瑰背景终极强制修复 --- */
-    body {
-        background: url('https://images.unsplash.com/photo-1518709268805-4e9042af9f23?q=80&w=2000') no-repeat center center fixed !important;
-        background-size: cover !important;
-    }
-
-    /* 如果网页里有其他遮挡层，也强制透明 */
-    .main-container, .wrapper, #app {
-        background-color: transparent !important;
-    }
     </style>
 </head>
 <body>
@@ -97,7 +91,7 @@
         📢 <strong>设置提醒：</strong>点击下方开启按钮并允许权限，最小化浏览器也能收到语音与弹窗提醒！
     </div>
 
-    <h2>🌹 LG筑梦电子无限临时邮箱系统 🌹</h2>
+    <h2>🌹 LG筑梦电子 📧 无限临时邮箱系统 🌹</h2>
     
     <button class="btn-audio-test" onclick="enableAllNotifications()">🔊 开启收件提示音 & 弹窗提醒</button>
 
@@ -108,46 +102,46 @@
         <button class="btn-custom" onclick="setCustom()">🌹 自定义邮箱</button>
         <button class="btn-gen" onclick="generateRandom()">🔄 随机生成</button>
     </div>
-<div style="display: flex !important; flex-direction: row !important; gap: 10px !important; margin-top: 15px !important; width: 100% !important; align-items: stretch !important;">
-    
-    <button class="btn-copy" onclick="copyEmail()" style="
-        flex: 1 !important; 
-        height: 45px !important; 
-        margin: 0 !important; 
-        padding: 0 !important;
-        background-color: #e91e63 !important; 
-        color: white !important; 
-        border: none !important; 
-        border-radius: 8px !important; 
-        font-weight: bold !important; 
-        cursor: pointer !important;
-        display: flex !important; 
-        align-items: center !important; 
-        justify-content: center !important;
-        font-size: 14px !important;
-    ">
-        📋 复制地址
-    </button>
 
-    <button onclick="window.location.href='/'" style="
-        flex: 1 !important; 
-        height: 45px !important; 
-        margin: 0 !important; 
-        padding: 0 !important;
-        background-color: #f06292 !important; 
-        color: white !important; 
-        border: none !important; 
-        border-radius: 8px !important; 
-        font-weight: bold !important; 
-        cursor: pointer !important;
-        display: flex !important; 
-        align-items: center !important; 
-        justify-content: center !important;
-        font-size: 14px !important;
-    ">
-        🏠 返回主页
-    </button>
-</div>
+    <div style="display: flex !important; flex-direction: row !important; gap: 10px !important; margin-top: 15px !important; width: 100% !important; align-items: stretch !important;">
+        <button class="btn-copy" onclick="copyEmail()" style="
+            flex: 1 !important; 
+            height: 45px !important; 
+            margin: 0 !important; 
+            padding: 0 !important;
+            background-color: #e91e63 !important; 
+            color: white !important; 
+            border: none !important; 
+            border-radius: 8px !important; 
+            font-weight: bold !important; 
+            cursor: pointer !important;
+            display: flex !important; 
+            align-items: center !important; 
+            justify-content: center !important;
+            font-size: 14px !important;
+        ">
+            📋 复制地址
+        </button>
+
+        <button onclick="window.location.href='/'" style="
+            flex: 1 !important; 
+            height: 45px !important; 
+            margin: 0 !important; 
+            padding: 0 !important;
+            background-color: #f06292 !important; 
+            color: white !important; 
+            border: none !important; 
+            border-radius: 8px !important; 
+            font-weight: bold !important; 
+            cursor: pointer !important;
+            display: flex !important; 
+            align-items: center !important; 
+            justify-content: center !important;
+            font-size: 14px !important;
+        ">
+            🏠 返回主页
+        </button>
+    </div>
    
     <div class="inbox-card">
         <div class="inbox-header">
@@ -312,16 +306,4 @@
 </script>
 
 </body>
-
 </html>
-
-
-
-
-
-
-
-
-
-
-
