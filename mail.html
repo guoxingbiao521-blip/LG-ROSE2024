@@ -347,14 +347,14 @@ h2::before, h2::after {
         const container = document.getElementById('emailList');
         if (!container) return;
         container.innerHTML = `
-            <div style="padding: 40px 20px; text-align: center; border: 2px dashed #ff69b4; border-radius: 15px; margin: 20px; background: rgba(0,0,0,0.2); backdrop-filter: blur(5px);">
+            <div style="padding: 40px 20px; text-align: center; border: 2px dashed #ff69b4; border-radius: 15px; margin: 20px; transparent: rgba(0,0,0,0.2); backdrop-filter: blur(5px);">
                 <div style="font-size: 40px; margin-bottom: 15px;">🔒</div>
                 <h3 style="color: #fff; margin-bottom: 20px;">${msg}</h3>
                 <div style="display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; align-items: center;">
                     <input type="password" id="authInput" placeholder="输入激活码..." style="padding: 12px; border-radius: 8px; border: 1px solid #ff69b4; background: rgba(255,255,255,0.1); color: #fff; width: 200px; outline: none;">
                     <button onclick="unlock()" style="padding: 12px 25px; border-radius: 8px; background: #ff69b4; color: #fff; border: none; cursor: pointer; font-weight: bold; box-shadow: 0 0 15px rgba(255,105,180,0.6);">立即激活</button>
                 </div>
-                <p style="color: #aaa; font-size: 12px; margin-top: 15px;">⚠️温馨提醒：一人一码，系统自动检测，多人共用激活码将失效</p>
+                <p style="color: #aaa; font-size: 12px; margin-top: 15px;">⚠️温馨提醒：一人一码，系统自动检测，多人共用激活码将自动失效！</p>
             </div>
         `;
     }
@@ -376,6 +376,7 @@ h2::before, h2::after {
 </script>
 </body>
 </html>
+
 
 
 
