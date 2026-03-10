@@ -41,8 +41,30 @@
             border: 1px solid rgba(255, 182, 193, 0.2) !important; 
         }
         
-        /* 标题样式 */
-        h2 { text-align: center; color: #ff69b4; margin-top: 0; font-size: 28px; letter-spacing: 1px; margin-bottom: 25px; text-shadow: 1px 1px 4px rgba(0,0,0,0.8); } 
+     /* ✅ 标题终极进化：3D立体 + 霓虹发光特效 */
+        h2 {
+            text-align: center;
+            margin-top: 0;
+            /* 字体稍微加大一点，3D效果更震撼 */
+            font-size: 32px !important; 
+            font-weight: 900; /* 最粗字体，增加体积感 */
+            letter-spacing: 2px; /* 字间距拉大，让光芒透出来 */
+            margin-bottom: 30px;
+            
+            /* 核心魔法：多层阴影叠加出的3D光效 */
+            color: #ffffff; /* 字体表面是纯白高光 */
+            text-shadow: 
+                /* 第1层：紧贴边缘的亮白色光晕，制造锐利感 */
+                0 0 3px #ffffff,
+                /* 第2层：向右下偏移的深粉色，制造3D厚度感 */
+                3px 3px 0px #c2185b,
+                /* 第3层：中等范围的粉色霓虹光辉 */
+                0 0 15px #ff69b4,
+                /* 第4层：大范围的粉紫色环境光 */
+                0 0 35px #ff69b4,
+                /* 第5层：最底部的黑色投影，把字从背景上“托”起来 */
+                5px 5px 15px rgba(0,0,0,0.9);
+        }
         
        /* 3. 显示邮箱地址的粉色框：深色黑透 + 霓虹发光字 */
         .email-card { 
@@ -380,6 +402,7 @@ function generateRandom() {
 
 </body>
 </html>
+
 
 
 
