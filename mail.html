@@ -41,22 +41,24 @@
             border: 1px solid rgba(255, 182, 193, 0.2) !important; 
         }
         
-     /* ✅ 标题终极进化：3D立体 + 霓虹发光特效 */
-       /* ✅ 标题终极进化：更大尺寸的 3D 立体霓虹字 */
+     /* ✅ 标题终极进化：完美适配电脑框宽度的 3D 立体霓虹字 */
         h2 {
             text-align: center;
             margin-top: 0;
-            font-size: 40px !important; /* 👈 从 32px 放大到 40px */
+            /* 👈 字号回调到 32px，确保刚好能塞进玻璃框 */
+            font-size: 32px !important; 
+            /* 👈 死命令：电脑端也绝对不允许换行！ */
+            white-space: nowrap !important; 
             font-weight: 900; 
             letter-spacing: 2px; 
             margin-bottom: 30px;
             color: #ffffff; 
             text-shadow: 
                 0 0 3px #ffffff,
-                4px 4px 0px #c2185b, /* 👈 厚度从 3px 加深到 4px 匹配大字体 */
+                3px 3px 0px #c2185b, /* 匹配 32px 的厚度 */
                 0 0 15px #ff69b4,
                 0 0 35px #ff69b4,
-                6px 6px 15px rgba(0,0,0,0.9);
+                5px 5px 15px rgba(0,0,0,0.9);
         }
         
        /* 3. 显示邮箱地址的粉色框：深色黑透 + 霓虹发光字 */
@@ -400,6 +402,7 @@ function generateRandom() {
 
 </body>
 </html>
+
 
 
 
