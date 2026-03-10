@@ -143,7 +143,6 @@
 <body>
     
 
-<audio id="yujieSound" src="https://tts.baidu.com/text2audio?lan=zh&ie=UTF-8&spd=5&text=%E6%82%A8%E6%9C%89%E6%96%B0%E7%9A%84%E9%82%AE%E4%BB%B6%EF%BC%8C%E8%AF%B7%E6%B3%A8%E6%84%8F%E6%9F%A5%E6%94%B6" preload="auto"></audio>
 
 <div id="customToast">✅ 已开启全能提醒</div>
 
@@ -477,8 +476,27 @@ async function unlockInbox() {
 
             const data = await response.json();
             
-            // 🔊 语音 + 🚀 弹窗逻辑：如果有新邮件，双管齐下
+        // 🔊 语音 + 🚀 弹窗逻辑：双管齐下
         if (data.length > lastEmailCount && lastEmailCount !== -1) {
+            
+            // 1. 【核心改进】调用浏览器语音合成：直接说话！
+            const msg = new SpeechSynthesisUtterance();
+            msg.text = "您有新的邮件，请注意查收"; // 也可以改成你想听的话
+            msg.lang = "zh-CN"; // 设置中文
+            msg.volume = 1;     // 音量
+            msg.rate = 1;       // 语速
+            window.speechSynthesis.speak(msg);
+
+            // 2. 触发浏览器系统弹窗
+            if (Notification.permission === "granted") {
+                const newMail = data[0];
+                new Notification("📬 筑梦收件箱新邮件！", {
+                    body: `发件人: ${newMail.from}\n主题: ${newMail.subject}`,
+                    icon: "https://roselg.xyz/favicon.ico" 
+                });
+            }
+        }
+        lastEmailCount = data.length;
             
             // 1. 播放声音
             const audio = document.getElementById('yujieSound');
@@ -537,6 +555,7 @@ async function unlockInbox() {
 
 </body>
 </html>
+
 
 
 
