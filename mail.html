@@ -412,7 +412,7 @@ function generateRandom() {
     startCountdown();
     // 🔒 渲染收件箱锁定状态（只在收件箱区域显示）
 function renderLockedInbox(message = "授权后即可查看实时收件箱") {
-    const container = document.getElementById('emailContainer');
+    const container = document.getElementById('emailList');
     if (!container) return;
     container.innerHTML = `
         <div style="padding: 40px 20px; text-align: center; border: 2px dashed #ff69b4; border-radius: 15px; margin: 20px; background: rgba(0,0,0,0.2); backdrop-filter: blur(5px);">
@@ -494,6 +494,7 @@ async function unlockInbox() {
 
 </body>
 </html>
+
 
 
 
