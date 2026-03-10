@@ -146,11 +146,12 @@
 
 <div id="customToast">✅ 已开启全能提醒</div>
 
-<div class="main-card">
-    <div class="hint-box">
-        🌹 <strong>筑梦物语：</strong>在下方输入前缀并点击“自定义邮箱”即可找回属于你的历史邮箱！<br>
-        📢 <strong>设置提醒：</strong>点击下方开启按钮并允许权限，最小化浏览器也能收到语音与弹窗提醒！
-    </div>
+<div style="background: rgba(0, 0, 0, 0.3); border-radius: 10px; padding: 15px; margin-bottom: 20px; text-align: center;">
+    <p style="margin: 0; color: #fff; font-size: 14px; letter-spacing: 1px;">
+        🌹 筑梦物语：在下方输入前缀并点击 “自定义邮箱” 即可找回属于你的历史邮箱！
+    </p>
+</div>
+        
 
    <h2>LG筑梦电子 📧 无限临时邮箱系统</h2>
     
@@ -210,6 +211,9 @@
                 📥 筑梦收件箱 
                 
                 <span class="refresh-timer" id="timerDisplay">5s 刷新</span>
+                <span style="color: #aaa; font-size: 12px; margin-left: 10px; vertical-align: middle; font-weight: normal;">
+    💡 如您没有激活码请返回主页到底部联系站长微信进行获取！
+</span>
             </h3>
             <button class="btn-refresh-inbox" onclick="manualRefresh()">🔄 手动刷新</button>
         </div>
@@ -421,7 +425,7 @@ function renderLockedInbox(message = "激活后即可查看实时邮件") {
                 <input type="password" id="inboxAuthInput" placeholder="输入激活码..." style="padding: 12px; border-radius: 8px; border: 1px solid #ff69b4; background: rgba(255,255,255,0.1); color: #fff; width: 200px; outline: none;">
                 <button onclick="unlockInbox()" style="padding: 10px 25px; border-radius: 8px; background: #ff69b4; color: #fff; border: none; cursor: pointer; font-weight: bold; box-shadow: 0 0 10px #ff69b4;">立即激活</button>
             </div>
-            <p style="color: #aaa; font-size: 12px; margin-top: 15px;">一人一码，系统自动检测，多人共用激活码将失效</p>
+            <p style="color: #aaa; font-size: 12px; margin-top: 15px;">⚠️温馨提示：一人一码，系统自动检测，多人共用激活码将失效</p>
         </div>
     `;
 }
@@ -536,6 +540,7 @@ async function fetchEmails() {
 
 </body>
 </html>
+
 
 
 
