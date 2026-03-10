@@ -11,17 +11,18 @@
             --purple-main: #da70d6; --purple-dark: #b359b0;
         }
 
-        /* --- 玫瑰背景终极强制修复 --- */
-        body {
-            margin: 0;
-            padding: 0;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
-            background: url('https://images.unsplash.com/photo-1518709268805-4e9042af9f23?q=80&w=2000') no-repeat center center fixed !important;
-            background-size: cover !important;
-        }
+      /* --- 绝对属于你的玫瑰背景 --- */
+    body {
+        margin: 0;
+        padding: 0;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        min-height: 100vh;
+        /* 注意这里！必须和你的文件名一模一样，大写的 JPG */
+        background: url('./bg.JPG') no-repeat center center fixed !important;
+        background-size: cover !important;
+    }
         
         /* 如果网页里有其他遮挡层，也强制透明 */
         .main-container, .wrapper, #app {
@@ -307,3 +308,4 @@
 
 </body>
 </html>
+
