@@ -90,9 +90,28 @@
         #customToast { visibility: hidden; min-width: 200px; background-color: rgba(0, 0, 0, 0.85); color: #fff; text-align: center; border-radius: 12px; padding: 18px 30px; position: fixed; z-index: 1000; left: 50%; top: 50%; transform: translate(-50%, -50%); font-size: 16px; font-weight: bold; backdrop-filter: blur(8px); box-shadow: 0 10px 40px rgba(0,0,0,0.4); }
         #customToast.show { visibility: visible; animation: fadeInOut 2.5s; }
         @keyframes fadeInOut { 0% {opacity: 0; transform: translate(-50%, -40%);} 15% {opacity: 1; transform: translate(-50%, -50%);} 85% {opacity: 1; transform: translate(-50%, -50%);} 100% {opacity: 0; transform: translate(-50%, -60%);} }
-    </style>
+     #customToast.show { visibility: visible; animation: fadeInOut 2.5s; }
+    @keyframes fadeInOut { 0% {opacity: 0; transform: translate(-50%, -40%);} 15% {opacity: 1; transform: translate(-50%, -50%);} 85% {opacity: 1; transform: translate(-50%, -50%);} 100% {opacity: 0; transform: translate(-50%, -60%);} }
+    
+    /* 📱 手机端专属适配方案（解决换行和拥挤问题） */
+    @media (max-width: 600px) {
+        /* 1. 缩小邮箱发光大字的尺寸，保证一行显示 */
+        .email-card { font-size: 22px !important; padding: 15px 10px !important; }
+        
+        /* 2. 稍微缩小顶部大标题，看起来更精致 */
+        h2 { font-size: 20px !important; }
+
+        /* 3. 收件箱头部：允许自动换行，增加间距，防止按钮和标签打架 */
+        .inbox-header { flex-wrap: wrap !important; gap: 12px !important; }
+        
+        /* 4. 让收件箱的标签在手机上排布更合理 */
+        .inbox-title { font-size: 18px !important; line-height: 1.8 !important; }
+    }
+
+</style>
 </head>
 <body>
+    
 
 <audio id="yujieSound" src="https://tts.baidu.com/text2audio?lan=zh&ie=UTF-8&spd=5&text=%E6%82%A8%E6%9C%89%E6%96%B0%E7%9A%84%E9%82%AE%E4%BB%B6%EF%BC%8C%E8%AF%B7%E6%B3%A8%E6%84%8F%E6%9F%A5%E6%94%B6" preload="auto"></audio>
 
@@ -361,6 +380,7 @@ function generateRandom() {
 
 </body>
 </html>
+
 
 
 
