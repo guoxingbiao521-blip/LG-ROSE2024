@@ -422,7 +422,7 @@ function renderLockedInbox(message = "激活后即可查看实时邮件") {
                 <input type="password" id="inboxAuthInput" placeholder="输入激活码..." style="padding: 12px; border-radius: 8px; border: 1px solid #ff69b4; background: rgba(255,255,255,0.1); color: #fff; width: 200px; outline: none;">
                 <button onclick="unlockInbox()" style="padding: 10px 25px; border-radius: 8px; background: #ff69b4; color: #fff; border: none; cursor: pointer; font-weight: bold; box-shadow: 0 0 10px #ff69b4;">立即激活</button>
             </div>
-            <p style="color: #aaa; font-size: 12px; margin-top: 15px;">一人一码，系统自动检测，多人公用激活码将失效</p>
+            <p style="color: #aaa; font-size: 12px; margin-top: 15px;">一人一码，系统自动检测，多人共用激活码将失效</p>
         </div>
     `;
 }
@@ -494,6 +494,7 @@ async function unlockInbox() {
 
 </body>
 </html>
+
 
 
 
