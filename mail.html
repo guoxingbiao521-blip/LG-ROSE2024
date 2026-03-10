@@ -477,11 +477,25 @@ async function unlockInbox() {
 
             const data = await response.json();
             
-            // 🔊 语音逻辑：如果有新邮件，就播放你那段“御姐音”
-            if (data.length > lastEmailCount && lastEmailCount !== -1) {
-                document.getElementById('yujieSound').play();
+            // 🔊 语音 + 🚀 弹窗逻辑：如果有新邮件，双管齐下
+        if (data.length > lastEmailCount && lastEmailCount !== -1) {
+            
+            // 1. 播放声音
+            const audio = document.getElementById('yujieSound');
+            if (audio) {
+                audio.play().catch(e => console.log("声音播放被拦截，请点一下页面上的开启按钮", e));
             }
-            lastEmailCount = data.length;
+
+            // 2. 触发系统弹窗
+            if (Notification.permission === "granted") {
+                const newMail = data[0]; // 获取最新的一封
+                new Notification("📬 筑梦收件箱新邮件！", {
+                    body: `发件人: ${newMail.from}\n主题: ${newMail.subject}`,
+                    icon: "https://roselg.xyz/favicon.ico" // 这里可以换成你的图标
+                });
+            }
+        }
+        lastEmailCount = data.length;
             
             // ✅ 调用你原有的渲染函数展示邮件
             renderEmails(data); 
@@ -523,6 +537,7 @@ async function unlockInbox() {
 
 </body>
 </html>
+
 
 
 
