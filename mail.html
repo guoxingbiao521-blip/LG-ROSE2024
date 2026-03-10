@@ -41,21 +41,23 @@
             border-radius: 8px; margin-bottom: 30px; font-size: 14px; text-align: center; line-height: 1.8; 
             border: 1px solid rgba(255, 182, 193, 0.2) !important; 
         }
-        
-       /* ✅ 标题完美居中：让玫瑰花紧贴文字 */
+        /* ✅ 强力中心：利用 Gap 属性实现绝对对称 */
 h2 {
-    display: block !important; /* 从 flex 换回 block */
-    text-align: center !important; /* 核心：让内容水平居中 */
+    display: flex !important;
+    justify-content: center !important; /* 水平绝对居中 */
+    align-items: center !important;    /* 垂直对齐 */
+    gap: 20px !important;              /* 🌹文字🌹 之间的固定间距 */
     width: 100% !important;
-    margin-top: 0;
-    margin-bottom: 30px;
+    margin: 0 auto 30px auto !important;
+    padding: 0 !important;
     
-    /* 保持你的霸气字号和霓虹效果 */
+    /* 保持霸气霓虹效果 */
     font-size: 44px !important; 
-    letter-spacing: 2px !important; /* 稍微缩短间距，显得更精致 */
     font-weight: 900; 
     white-space: nowrap !important;
     color: #ffffff; 
+    /* 修正：letter-spacing 调小一点，防止右侧溢出 */
+    letter-spacing: 1px !important; 
     text-shadow: 
         0 0 3px #ffffff,
         4px 4px 0px #c2185b,
@@ -64,9 +66,14 @@ h2 {
         5px 5px 15px rgba(0,0,0,0.9);
 }
 
-/* 给玫瑰花加点左右边距，别贴字太死 */
-h2::before { content: "🌹"; font-size: 38px; margin-right: 15px; }
-h2::after { content: "🌹"; font-size: 38px; margin-left: 15px; }
+/* 🌹 玫瑰花伪元素：移除所有手动 margin，交给 gap 处理 */
+h2::before, h2::after {
+    content: "🌹" !important;
+    font-size: 38px !important;
+    margin: 0 !important; /* 彻底清除手动间距 */
+    flex-shrink: 0 !important; /* 防止花被挤扁 */
+}
+
         
         .email-card { 
             font-size: 34px; font-weight: bold; color: #ffffff; 
@@ -301,5 +308,6 @@ h2::after { content: "🌹"; font-size: 38px; margin-left: 15px; }
 </script>
 </body>
 </html>
+
 
 
