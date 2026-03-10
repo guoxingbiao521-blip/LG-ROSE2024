@@ -42,28 +42,21 @@
         }
         
      /* ✅ 标题终极进化：3D立体 + 霓虹发光特效 */
+       /* ✅ 标题终极进化：更大尺寸的 3D 立体霓虹字 */
         h2 {
             text-align: center;
             margin-top: 0;
-            /* 字体稍微加大一点，3D效果更震撼 */
-            font-size: 32px !important; 
-            font-weight: 900; /* 最粗字体，增加体积感 */
-            letter-spacing: 2px; /* 字间距拉大，让光芒透出来 */
+            font-size: 40px !important; /* 👈 从 32px 放大到 40px */
+            font-weight: 900; 
+            letter-spacing: 2px; 
             margin-bottom: 30px;
-            
-            /* 核心魔法：多层阴影叠加出的3D光效 */
-            color: #ffffff; /* 字体表面是纯白高光 */
+            color: #ffffff; 
             text-shadow: 
-                /* 第1层：紧贴边缘的亮白色光晕，制造锐利感 */
                 0 0 3px #ffffff,
-                /* 第2层：向右下偏移的深粉色，制造3D厚度感 */
-                3px 3px 0px #c2185b,
-                /* 第3层：中等范围的粉色霓虹光辉 */
+                4px 4px 0px #c2185b, /* 👈 厚度从 3px 加深到 4px 匹配大字体 */
                 0 0 15px #ff69b4,
-                /* 第4层：大范围的粉紫色环境光 */
                 0 0 35px #ff69b4,
-                /* 第5层：最底部的黑色投影，把字从背景上“托”起来 */
-                5px 5px 15px rgba(0,0,0,0.9);
+                6px 6px 15px rgba(0,0,0,0.9);
         }
         
        /* 3. 显示邮箱地址的粉色框：深色黑透 + 霓虹发光字 */
@@ -120,8 +113,13 @@
         /* 1. 缩小邮箱发光大字的尺寸，保证一行显示 */
         .email-card { font-size: 22px !important; padding: 15px 10px !important; }
         
-        /* 2. 稍微缩小顶部大标题，看起来更精致 */
-        h2 { font-size: 20px !important; }
+       /* 2. 手机端标题防换行终极方案 */
+        h2 { 
+            font-size: 4.8vw !important; /* 👈 黑科技：根据手机屏幕宽度自动变大变小 */
+            letter-spacing: 0px !important; /* 手机上取消字间距，挤出空间 */
+            white-space: nowrap !important; /* 👈 死命令：无论如何绝对不允许换行！ */
+            margin-bottom: 20px !important;
+        }
 
         /* 3. 收件箱头部：允许自动换行，增加间距，防止按钮和标签打架 */
         .inbox-header { flex-wrap: wrap !important; gap: 12px !important; }
@@ -402,6 +400,7 @@ function generateRandom() {
 
 </body>
 </html>
+
 
 
 
