@@ -411,7 +411,7 @@ function generateRandom() {
     generateRandom();
     startCountdown();
     // 🔒 渲染收件箱锁定状态（只在收件箱区域显示）
-function renderLockedInbox(message = "授权后即可查看实时收件箱") {
+function renderLockedInbox(message = "激活后即可查看实时收件箱") {
     const container = document.getElementById('emailList');
     if (!container) return;
     container.innerHTML = `
@@ -419,7 +419,7 @@ function renderLockedInbox(message = "授权后即可查看实时收件箱") {
             <div style="font-size: 40px; margin-bottom: 15px;">🔒</div>
             <h3 style="color: #fff; margin-bottom: 20px;">${message}</h3>
             <div style="display: flex; gap: 10px; justify-content: center; flex-wrap: wrap;">
-                <input type="password" id="inboxAuthInput" placeholder="输入授权码..." style="padding: 12px; border-radius: 8px; border: 1px solid #ff69b4; background: rgba(255,255,255,0.1); color: #fff; width: 200px; outline: none;">
+                <input type="password" id="inboxAuthInput" placeholder="输入激活码..." style="padding: 12px; border-radius: 8px; border: 1px solid #ff69b4; background: rgba(255,255,255,0.1); color: #fff; width: 200px; outline: none;">
                 <button onclick="unlockInbox()" style="padding: 10px 25px; border-radius: 8px; background: #ff69b4; color: #fff; border: none; cursor: pointer; font-weight: bold; box-shadow: 0 0 10px #ff69b4;">立即解锁</button>
             </div>
             <p style="color: #aaa; font-size: 12px; margin-top: 15px;">一人一码，异地登录将自动互踢</p>
@@ -430,7 +430,7 @@ function renderLockedInbox(message = "授权后即可查看实时收件箱") {
 // 🔓 执行解锁逻辑
 async function unlockInbox() {
     const code = document.getElementById('inboxAuthInput').value.trim();
-    if(!code) return showToast("⚠️ 请输入授权码");
+    if(!code) return showToast("⚠️ 请输入激活码");
     
     try {
         const response = await fetch('https://guo.roselg.xyz/api/verify', {
@@ -442,7 +442,7 @@ async function unlockInbox() {
         
         if (result.success) {
             localStorage.setItem('authCode', code);
-            showToast("✅ 授权成功");
+            showToast("✅ 激活成功");
             location.reload(); // 刷新网页，收件箱就会变回正常
         } else {
             showToast("❌ " + result.error);
@@ -471,7 +471,7 @@ async function unlockInbox() {
             if (response.status === 401 || response.status === 403) {
                 const errData = await response.json();
                 localStorage.removeItem('authCode'); // 清掉失效的码
-                renderLockedInbox(errData.message || "授权已失效，请重新输入");
+                renderLockedInbox(errData.message || "激活码无效，请重新输入");
                 return;
             }
 
@@ -494,6 +494,7 @@ async function unlockInbox() {
 
 </body>
 </html>
+
 
 
 
