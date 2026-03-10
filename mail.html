@@ -44,13 +44,28 @@
         /* 标题样式 */
         h2 { text-align: center; color: #ff69b4; margin-top: 0; font-size: 28px; letter-spacing: 1px; margin-bottom: 25px; text-shadow: 1px 1px 4px rgba(0,0,0,0.8); } 
         
-        /* 3. 显示邮箱地址的粉色框 */
+       /* 3. 显示邮箱地址的粉色框：深色黑透 + 霓虹发光字 */
         .email-card { 
-            font-size: 32px; font-weight: bold; color: #ffffff; text-shadow: 1px 1px 4px rgba(0,0,0,0.8);
-            margin: 20px 0; padding: 25px; 
+            font-size: 34px; /* 稍微放大一点点，发光更好看 */
+            font-weight: bold; 
+            color: #ffffff; 
+            /* 👇 核心发光魔法：多层光晕叠加 */
+            text-shadow: 
+                0 0 5px #ffffff, 
+                0 0 10px #ff69b4, 
+                0 0 20px #ff69b4, 
+                0 0 40px #d81b60,
+                0 0 80px #d81b60;
+            margin: 20px 0; 
+            padding: 25px; 
             background: rgba(0, 0, 0, 0.3) !important; 
-            border-radius: 16px; border: 2px dashed rgba(255, 105, 180, 0.5) !important; 
-            word-break: break-all; text-align: center; box-shadow: none !important; 
+            border-radius: 16px; 
+            /* 让虚线边框也跟着有一点点发光感 */
+            border: 2px dashed rgba(255, 105, 180, 0.6) !important; 
+            word-break: break-all; 
+            text-align: center; 
+            /* 给整个框框的边缘也加一圈淡淡的粉色光晕 */
+            box-shadow: 0 0 20px rgba(255, 105, 180, 0.2) !important; 
         }
         
         button { font-size: 15px; padding: 12px 24px; cursor: pointer; border: none; border-radius: 12px; color: white; font-weight: bold; display: flex; align-items: center; justify-content: center; gap: 6px; position: relative; transition: all 0.1s; user-select: none; }
@@ -305,6 +320,7 @@
 
 </body>
 </html>
+
 
 
 
