@@ -138,23 +138,22 @@ h2::before, h2::after {
         <button onclick="window.location.href='index.html'" style="flex: 1; height: 45px; background-color: #f06292;">🏠 返回主页</button>
     </div>
    
-    <div class="inbox-card">
-    <div class="inbox-header" style="display: flex; align-items: center; justify-content: space-between; width: 100%;">
-    
-    <div style="display: flex; align-items: center; gap: 10px; flex-shrink: 0;">
-        <h3 class="inbox-title" style="margin: 0;">📥 筑梦收件箱</h3>
-        <span class="refresh-timer" id="timerDisplay">5s 刷新</span>
-    </div>
+    <div class="inbox-header" style="display: flex; align-items: center; justify-content: space-between; gap: 15px; width: 100%; padding: 0 10px; box-sizing: border-box;">
+            
+            <div style="display: flex; align-items: center; gap: 10px; flex-shrink: 0;">
+                <h3 class="inbox-title" style="margin: 0;">📥 筑梦收件箱</h3>
+                <span class="refresh-timer" id="timerDisplay">5s 刷新</span>
+            </div>
 
-    <div style="flex: 1; text-align: center; color: #fff; font-size: 14px; letter-spacing: 1px; padding: 0 20px; white-space: nowrap;">
-        💡 如您没有激活码请返回主页到底部联系站长微信进行获取！
-    </div>
+            <div style="flex: 1; text-align: center; color: #fff; font-size: 14px; letter-spacing: 1px; font-weight: normal; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">
+                💡 如您没有激活码请返回主页到底部联系站长微信进行获取！
+            </div>
 
-    <div style="flex-shrink: 0;">
-        <button class="btn-refresh-inbox" onclick="manualRefresh()">🔄 手动刷新</button>
-    </div>
-    
-</div>
+            <div style="flex-shrink: 0;">
+                <button class="btn-refresh-inbox" onclick="manualRefresh()" style="margin: 0; padding: 8px 16px;">🔄 手动刷新</button>
+            </div>
+            
+        </div>
         <div id="emailList">
             <p style="text-align:center; color:#999; padding-top:80px;">正在连接筑梦电子...</p>
         </div>
@@ -254,7 +253,7 @@ h2::before, h2::after {
             
             if (lastEmailCount !== -1 && data.length > lastEmailCount) {
                 // 语音提醒
-                const msg = new SpeechSynthesisUtterance("主人，您有新的邮件，请注意查收");
+                const msg = new SpeechSynthesisUtterance("您有新的邮件，请注意查收");
                 msg.lang = "zh-CN";
                 window.speechSynthesis.speak(msg);
                 // 弹窗提醒
@@ -272,7 +271,7 @@ h2::before, h2::after {
     function renderEmails(emails) {
         const container = document.getElementById('emailList');
         if (!emails || emails.length === 0) {
-            container.innerHTML = '<p style="text-align:center; color:#999; padding-top:80px;">暂无新邮件</p>';
+            container.innerHTML = '<p style="text-align:center; color:#999; padding-top:80px;">暂无新邮件，筑梦系统将实时获取最新邮件！</p>';
             return;
         }
         container.innerHTML = emails.map(mail => `
@@ -308,6 +307,7 @@ h2::before, h2::after {
 </script>
 </body>
 </html>
+
 
 
 
