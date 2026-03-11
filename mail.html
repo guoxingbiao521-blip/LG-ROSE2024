@@ -200,7 +200,7 @@ h2::before, h2::after {
 
         /* 2. 第一排：邮箱框和随机按钮 */
         .email-card { width: 100% !important; margin: 0 !important; font-size: 20px !important; }
-        .btn-gen { width: 100% !important; background: #ff69b4 !important; color: white !important; margin: 0 !important; height: 45px !important;}
+        .btn-gen { width: 100% !important; background: #ff69b4 !important; color: white !important; margin: 0 !important; height: auto !important;}
 
         /* 3. 第二排：输入框跟按钮排列 (强制排队，解决分家) */
         #customInput { 
@@ -254,7 +254,7 @@ h2::before, h2::after {
 
     <h2>LG筑梦电子 📧 无限临时邮箱系统</h2>
 
-<div class="layout-row" style="display: flex; align-items: center; gap: 15px; margin-bottom: 15px;">
+<div class="layout-row" style="display: flex; align-items: stretch; gap: 15px; margin-bottom: 15px;">
         <div class="email-card" id="emailText" style="flex: 1; margin: 0; display: flex; align-items: center; justify-content: center; padding: 10px;">正在呼唤筑梦电子</div>
         <button class="btn-gen" onclick="generateRandom()" style="margin: 0; width: 115px !important; flex: none !important; white-space: nowrap !important; padding: 0 5px !important; display: flex; align-items: center; justify-content: center;">🔄 随机生成</button>
     </div>
@@ -563,6 +563,7 @@ if (!code) {
 </script>
 </body>
 </html>
+
 
 
 
