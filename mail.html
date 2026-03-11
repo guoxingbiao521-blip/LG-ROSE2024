@@ -435,7 +435,8 @@ if (!code) {
             container.innerHTML = '<p style="text-align:center; color:#999; padding-top:80px;">暂无新邮件，筑梦系统将实时获取最新邮件！</p>';
             return;
         }
-        container.innerHTML = emails.map(mail => `
+       // ✨ 加上 .reverse()，让最新获取的邮件反转到数组最前面
+        container.innerHTML = emails.reverse().map(mail => `
             <div style="background: rgba(30, 30, 35, 0.95); border-radius: 15px; padding: 20px; margin-bottom: 20px; border-left: 5px solid #ff6b81; text-align: left; color:#fff;">
                 <div style="font-size: 13px; color: #ffb8c6;">来自：${mail.from}</div>
                 <div style="font-size: 18px; font-weight: bold; margin: 10px 0;">主题：${mail.subject}</div>
@@ -508,6 +509,7 @@ if (!code) {
 </script>
 </body>
 </html>
+
 
 
 
