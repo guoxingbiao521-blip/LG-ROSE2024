@@ -257,81 +257,37 @@ h2::before, h2::after {
         width: 100% !important;
         box-sizing: border-box !important;
     }
-/* 📱 手机端终极美化 - 增强修复版 V2 */
-@media (max-width: 600px) {
-    /* 1. 全局基础设定 */
-    * { box-sizing: border-box !important; }
-    body { padding: 10px !important; }
+/* --- 保证电脑端依然完美对齐的补丁 --- */
+    .btn-gen { width: 115px !important; flex: none !important; padding: 0 !important; }
+    #customInput { flex: 1 !important; min-width: 0 !important; }
 
-    /* 2. 主卡片与提示框居中修复 */
-    .main-card {
-        width: 100% !important; max-width: 100% !important;
-        padding: 20px 15px !important; margin: 0 auto !important;
-    }
-    .hint-box {
-        width: 100% !important; margin: 0 auto 20px auto !important;
-        padding: 12px 15px !important; font-size: 12px !important;
-    }
-    h2 { font-size: 22px !important; gap: 8px !important; }
+    /* --- 📱 手机端智能排版（彻底解决挤压和竖排） --- */
+    @media (max-width: 600px) {
+        * { box-sizing: border-box !important; }
+        body { padding: 10px !important; }
+        .main-card { width: 100% !important; padding: 20px 15px !important; margin: 0 auto !important; }
+        
+        /* 1. 允许容器在手机上折行，不再硬挤 */
+        .layout-row, .action-row-main, .inbox-header-container { 
+            flex-wrap: wrap !important; height: auto !important; gap: 10px !important; 
+        }
 
-    /* 3. ✨ 修复核心：按钮行布局优化 */
-    .layout-row, .action-row-main {
-        flex-direction: column !important; /* 强制垂直排列 */
-        gap: 10px !important;
-        align-items: stretch !important; /* 拉伸占满宽度 */
-    }
-    
-    /* 邮箱显示框 (第一排) */
-    .email-card { 
-        width: 100% !important; margin: 0 !important; font-size: 20px !important; 
-        order: 1; /* 确保在最上 */
-    }
+        /* 2. 第一排：邮箱框和随机按钮，各自独占一行，霸气宽敞 */
+        .email-card { width: 100% !important; margin: 0 !important; font-size: 20px !important; }
+        .btn-gen { width: 100% !important; background: #ff69b4 !important; color: white !important; margin: 0 !important; height: 45px !important;}
 
-    /* 修复“随机生成”按钮变灰的问题 (第二排) */
-    .btn-gen { 
-        width: 100% !important; margin: 0 !important; padding: 12px 0 !important;
-        background: #ff69b4 !important; /* 🔥 强制找回粉色背景 */
-        color: white !important;
-        order: 2;
-    }
-    
-    /* 输入框 (第三排) */
-    #customInput { 
-        width: 100% !important; margin: 0 !important;
-        order: 3;
-    }
+        /* 3. 第二排：输入框提上来独占一行，两个功能按钮在下方平分天下 */
+        #customInput { width: 100% !important; order: -1 !important; margin-bottom: 5px !important; }
+        .admin-theme { width: 48% !important; padding: 0 !important; font-size: 12px !important; }
+        .custom-theme { width: 48% !important; padding: 0 !important; font-size: 12px !important; margin-left: auto !important; }
 
-    /* 管理和自定义按钮容器 (第四排 - 并列) */
-    .action-row-main {
-        flex-direction: row !important; /* 这一行特殊，要横向排列 */
-        gap: 10px !important;
-        order: 4;
+        /* 4. 彻底修复“竖联”BUG，允许正常换行 */
+        .mobile-hint-text { 
+            width: 100% !important; white-space: normal !important; 
+            display: block !important; margin-top: 10px !important; line-height: 1.5 !important; 
+        }
+        .inbox-header { flex-wrap: wrap !important; }
     }
-    .admin-theme, .custom-theme {
-        width: 100% !important; /* 让 Flex 自动平分 */
-        flex: 1 !important;
-        padding: 0 5px !important; font-size: 13px !important;
-        white-space: nowrap !important;
-    }
-
-    /* 4. ✨ 修复底部“手动刷新”按钮位置 */
-    .inbox-header {
-        display: flex !important;
-        flex-wrap: nowrap !important; /* 强制不换行 */
-        justify-content: space-between !important; /* 两端对齐 */
-        align-items: center !important;
-        gap: 5px !important; /* 缩小间距防止挤爆 */
-    }
-    /* 缩小左侧标题和计时器的字号，给按钮腾地方 */
-    .inbox-header h3 { font-size: 16px !important; }
-    .timer-badge { font-size: 11px !important; padding: 2px 6px !important; }
-    /* 锁定右侧刷新按钮不被挤压 */
-    .inbox-header button {
-        flex-shrink: 0 !important; /* 禁止缩小 */
-        padding: 8px 12px !important; font-size: 12px !important;
-        white-space: nowrap !important;
-    }
-}
     </style>
 </head>
 <body>
@@ -348,22 +304,16 @@ h2::before, h2::after {
 
     <h2>LG筑梦电子 📧 无限临时邮箱系统</h2>
 <div class="layout-row">
-        <div class="email-card" id="emailText" style="margin: 0; flex: 1; display: flex; align-items: center; justify-content: center; padding: 15px 10px;">正在呼唤筑梦电子</div>
-        <button class="btn-gen" onclick="generateRandom()" style="margin: 0; width: 115px !important; flex: none !important; white-space: nowrap !important; padding: 0 5px !important; display: flex; align-items: center; justify-content: center;">🔄 随机生成</button>
+<div class="layout-row" style="display: flex; align-items: center; gap: 15px; margin-bottom: 15px;">
+        <div class="email-card" id="emailText" style="flex: 1; margin: 0; display: flex; align-items: center; justify-content: center; padding: 10px;">正在呼唤筑梦电子</div>
+        <button class="btn-gen" onclick="generateRandom()">🔄 随机生成</button>
     </div>
 
- <div class="action-row-main" style="display: flex; align-items: center; gap: 15px; margin-bottom: 15px;">
-    
-    <a href="https://guoxingbiao521-blip.github.io/lg-admin-tool-202412/" class="btn-clone admin-theme" target="_blank">
-        ⚙️ 站长/代理商管理系统
-    </a>
-    
-    <input type="text" id="customInput" placeholder="请输入邮箱前缀" style="flex: 1.5; min-width: 0; height: 45px;">
-
-    <button onclick="setCustomEmail()" class="btn-clone custom-theme">
-        🛠️ 自定义邮箱
-    </button>
-</div>
+<div class="action-row-main" style="display: flex; align-items: center; gap: 15px; margin-bottom: 15px;">
+        <a href="https://guoxingbiao521-blip.github.io/lg-admin-tool-202412/" class="btn-clone admin-theme" target="_blank">⚙️ 站长/代理商管理系统</a>
+        <input type="text" id="customInput" placeholder="请输入邮箱前缀">
+        <button onclick="setCustomEmail()" class="btn-clone custom-theme">🛠️ 自定义邮箱</button>
+    </div>
    
 
     <div style="display: flex !important; flex-direction: row !important; gap: 10px !important; margin-top: 15px !important; width: 100% !important;">
@@ -663,6 +613,7 @@ if (!code) {
 </script>
 </body>
 </html>
+
 
 
 
