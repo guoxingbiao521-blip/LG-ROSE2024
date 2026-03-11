@@ -5,37 +5,61 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>🌹 LG筑梦电子无限临时邮箱 system 🌹</title>
     <style>
-/* 管理按钮：带文字版 */
-.admin-inline-btn {
-    display: flex; align-items: center; justify-content: center; gap: 4px;
-    width: 75px; height: 45px; background: rgba(10, 10, 15, 0.9);
-    border: 1px solid #00f2ff; border-radius: 10px; color: #00f2ff;
-    text-decoration: none; font-size: 12px; font-weight: bold; flex-shrink: 0;
-    box-shadow: 0 0 10px rgba(0, 242, 255, 0.2);
+/* 基础克隆样式：确保形状跟“复制地址”一模一样 */
+.btn-clone {
+    height: 45px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0 15px;
+    border-radius: 12px; /* 跟下方按钮圆角对齐 */
+    font-size: 13px;
+    font-weight: bold;
+    text-decoration: none;
+    border: none;
+    cursor: pointer;
+    white-space: nowrap;
+    transition: all 0.3s ease;
+    flex: 1; /* 让两个按钮平分除去输入框后的空间 */
 }
 
-/* 找回来的自定义按钮样式 */
-.custom-btn-new {
-    width: 85px; height: 45px; flex-shrink: 0;
-    background: linear-gradient(45deg, #ff3366, #ff00ff);
-    color: white; border: none; border-radius: 10px;
-    font-weight: bold; font-size: 13px; cursor: pointer;
-    box-shadow: 0 4px 12px rgba(255, 0, 255, 0.3);
+/* 管理系统：暗黑赛博主题 + 高亮呼吸感 */
+.admin-theme {
+    background: rgba(10, 10, 15, 0.95);
+    color: #00f2ff;
+    border: 1px solid rgba(0, 242, 255, 0.5);
+    box-shadow: 0 0 10px rgba(0, 242, 255, 0.1);
 }
 
-/* 强制输入框缩短的核心代码 */
+.admin-theme:hover {
+    background: #00f2ff;
+    color: #000;
+    box-shadow: 0 0 20px rgba(0, 242, 255, 0.6);
+    transform: translateY(-2px);
+}
+
+/* 自定义邮箱：粉红主题 (匹配下方按钮) */
+.custom-theme {
+    background: #e91e63; /* 匹配你图中复制地址的颜色 */
+    color: white;
+    box-shadow: 0 4px 12px rgba(233, 30, 99, 0.3);
+}
+
+.custom-theme:hover {
+    filter: brightness(1.1);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 15px rgba(233, 30, 99, 0.4);
+}
+
+/* 强制输入框变短 */
 #customInput {
-    width: auto !important;
-    flex: 1 !important; /* 告诉它只占剩下的空位 */
-    margin: 0 !important;
+    flex: 0.8 !important; /* 降低 flex 权重，让它比按钮还短 */
+    background: rgba(0,0,0,0.3) !important;
+    border: 1px solid rgba(255,255,255,0.1) !important;
+    border-radius: 12px !important;
+    color: #fff !important;
+    padding: 0 10px !important;
 }
-
-/* 适配手机：如果屏幕太窄，把按钮文字藏起来节省空间 */
-@media (max-width: 400px) {
-    .btn-text { display: none; }
-    .admin-inline-btn { width: 45px; }
-}
-
 .portal-icon {
     font-size: 16px;
     filter: drop-shadow(0 0 5px #00f2ff);
@@ -250,15 +274,17 @@ h2::before, h2::after {
         <button class="btn-gen" onclick="generateRandom()" style="margin: 0; flex-shrink: 0; padding: 0 25px;">🔄 随机生成</button>
     </div>
 
-  <div class="input-action-row" style="display: flex; align-items: center; gap: 8px; margin-bottom: 15px; width: 100%;">
+ <div class="action-row-main" style="display: flex; align-items: center; gap: 10px; margin-bottom: 15px;">
     
-    <a href="https://guoxingbiao521-blip.github.io/lg-admin-tool-202412/" class="admin-inline-btn" target="_blank">
-        ⚙️<span class="btn-text">站长/代理商管理系统</span>
+    <a href="https://guoxingbiao521-blip.github.io/lg-admin-tool-202412/" class="btn-clone admin-theme" target="_blank">
+        ⚙️ 站长/代理商管理系统
     </a>
     
-    <input type="text" id="customInput" placeholder="请输入邮箱前缀" style="flex: 1; min-width: 0; height: 45px;">
+    <input type="text" id="customInput" placeholder="请输入邮箱前缀" style="flex: 1.5; min-width: 0; height: 45px;">
 
-    <button onclick="setCustomEmail()" class="custom-btn-new">自定义邮箱</button>
+    <button onclick="setCustomEmail()" class="btn-clone custom-theme">
+        🛠️ 自定义邮箱
+    </button>
 </div>
    
 
@@ -559,6 +585,7 @@ if (!code) {
 </script>
 </body>
 </html>
+
 
 
 
