@@ -1,26 +1,26 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>🌹 LG筑梦电子无限临时邮箱 system 🌹</title>
-    <style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🌹 LG筑梦电子无限临时邮箱 system 🌹</title>
+    <style>
 /* 基础克隆样式：确保形状跟“复制地址”一模一样 */
 .btn-clone {
-    height: 45px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 0 15px;
-    border-radius: 12px; /* 跟下方按钮圆角对齐 */
-    font-size: 13px;
-    font-weight: bold;
-    text-decoration: none;
-    border: none;
-    cursor: pointer;
-    white-space: nowrap;
-    transition: all 0.3s ease;
-    flex: none !important;
+    height: 45px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0 15px;
+    border-radius: 12px; /* 跟下方按钮圆角对齐 */
+    font-size: 13px;
+    font-weight: bold;
+    text-decoration: none;
+    border: none;
+    cursor: pointer;
+    white-space: nowrap;
+    transition: all 0.3s ease;
+    flex: none !important;
 }
 
 /* 管理系统：暗黑赛博主题 + 高亮呼吸感 */
@@ -28,560 +28,598 @@
     background: rgba(10, 10, 15, 0.95);
     color: #00f2ff;
     border: 1px solid rgba(0, 242, 255, 0.5);
-    box-shadow: 0 0 10px rgba(0, 242, 255, 0.1); 
-    width: 140px !important; /* 稍微加宽一点装文字 */
-}
+    box-shadow: 0 0 10px rgba(0, 242, 255, 0.1); width: 135px !important;
+
 .admin-theme:hover {
-    background: #00f2ff;
-    color: #000;
-    box-shadow: 0 0 20px rgba(0, 242, 255, 0.6);
-    transform: translateY(-2px);
+    background: #00f2ff;
+    color: #000;
+    box-shadow: 0 0 20px rgba(0, 242, 255, 0.6);
+    transform: translateY(-2px);
 }
 
 /* 自定义邮箱：粉红主题 (匹配下方按钮) */
 .custom-theme {
-    background: #e91e63;
+    background: #e91e63; /* 匹配你图中复制地址的颜色 */
     color: white;
-    box-shadow: 0 4px 12px rgba(233, 30, 99, 0.3); 
-    width: 115px !important; /* 锁定宽度 */
-    padding: 0 !important; /* 🌟
+    box-shadow: 0 4px 12px rgba(233, 30, 99, 0.3); width: 115px !important;
 }
+
 .custom-theme:hover {
-    filter: brightness(1.1);
-    transform: translateY(-2px);
-    box-shadow: 0 6px 15px rgba(233, 30, 99, 0.4);
+    filter: brightness(1.1);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 15px rgba(233, 30, 99, 0.4);
 }
 
 /* 强制输入框变短 */
 #customInput {
-    flex: 1 !important; /* 占据剩余所有空间，变长 */
-    background: rgba(0,0,0,0.3) !important;
-    border: 1px solid rgba(255,255,255,0.1) !important;
-    border-radius: 12px !important;
-    color: #fff !important;
-    padding: 0 10px !important;
+    flex: 1 !important; /* 占据剩余所有空间，变长 */
+    background: rgba(0,0,0,0.3) !important;
+    border: 1px solid rgba(255,255,255,0.1) !important;
+    border-radius: 12px !important;
+    color: #fff !important;
+    padding: 0 10px !important;
 }
 .portal-icon {
-    font-size: 16px;
-    filter: drop-shadow(0 0 5px #00f2ff);
+    font-size: 16px;
+    filter: drop-shadow(0 0 5px #00f2ff);
 }
 
 /* 针对手机端的优化：如果屏幕太小，只显示图标，不显示文字 */
 @media (max-width: 480px) {
-    .portal-text { display: none; }
-    .admin-portal-btn { padding: 12px; border-radius: 50%; }
+    .portal-text { display: none; }
+    .admin-portal-btn { padding: 12px; border-radius: 50%; }
 }
-        :root { 
-            --rose-main: #ff69b4; --rose-dark: #d81b60; --rose-bg: transparent; --rose-border: #ffb6c1; 
-            --blue-main: #0078D7; --blue-dark: #005a9e; --green-main: #4caf50; --green-dark: #388e3c;
-            --purple-main: #da70d6; --purple-dark: #b359b0;
-        }
+        :root { 
+            --rose-main: #ff69b4; --rose-dark: #d81b60; --rose-bg: transparent; --rose-border: #ffb6c1; 
+            --blue-main: #0078D7; --blue-dark: #005a9e; --green-main: #4caf50; --green-dark: #388e3c;
+            --purple-main: #da70d6; --purple-dark: #b359b0;
+        }
 
-        /* --- 绝对属于你的玫瑰背景 --- */
-        body {
-            margin: 0; padding: 0; display: flex; justify-content: center; align-items: center; min-height: 100vh;
-            background: url('./bg.JPG') no-repeat center center fixed !important;
-            background-size: cover !important;
-        }
-        
-        .main-container, .wrapper, #app { background-color: transparent !important; }
-        
-        /* 1. 最外层的大框：深色黑透 + 10px毛玻璃模糊 */
-        .main-card { 
-            background: rgba(0, 0, 0, 0.45) !important; 
-            padding: 40px; border-radius: 24px; 
-            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5) !important; 
-            display: inline-block; width: 820px; max-width: 95%; 
-            backdrop-filter: blur(10px) !important; 
-            -webkit-backdrop-filter: blur(10px) !important;
-            border: 1px solid rgba(255, 182, 193, 0.3) !important; 
-            position: relative; 
-            text-align: center; /* 确保内部元素居中 */
-        }
-        
-        /* 2. 顶部的提示框 */
-        .hint-box { 
-            background-color: rgba(0, 0, 0, 0.3) !important; 
-            color: #ffffff; text-shadow: 1px 1px 2px rgba(0,0,0,0.8); 
-            padding: 15px 20px; border-left: 5px solid #ff69b4 !important; 
-            border-radius: 8px; margin-bottom: 30px; font-size: 14px; text-align: center; line-height: 1.8; 
-            border: 1px solid rgba(255, 182, 193, 0.2) !important; 
-        }
-        /* ✅ 强力中心：利用 Gap 属性实现绝对对称 */
+        /* --- 绝对属于你的玫瑰背景 --- */
+        body {
+            margin: 0; padding: 0; display: flex; justify-content: center; align-items: center; min-height: 100vh;
+            background: url('./bg.JPG') no-repeat center center fixed !important;
+            background-size: cover !important;
+        }
+        
+        .main-container, .wrapper, #app { background-color: transparent !important; }
+        
+        /* 1. 最外层的大框：深色黑透 + 10px毛玻璃模糊 */
+        .main-card { 
+            background: rgba(0, 0, 0, 0.45) !important; 
+            padding: 40px; border-radius: 24px; 
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5) !important; 
+            display: inline-block; width: 820px; max-width: 95%; 
+            backdrop-filter: blur(10px) !important; 
+            -webkit-backdrop-filter: blur(10px) !important;
+            border: 1px solid rgba(255, 182, 193, 0.3) !important; 
+            position: relative; 
+            text-align: center; /* 确保内部元素居中 */
+        }
+        
+        /* 2. 顶部的提示框 */
+        .hint-box { 
+            background-color: rgba(0, 0, 0, 0.3) !important; 
+            color: #ffffff; text-shadow: 1px 1px 2px rgba(0,0,0,0.8); 
+            padding: 15px 20px; border-left: 5px solid #ff69b4 !important; 
+            border-radius: 8px; margin-bottom: 30px; font-size: 14px; text-align: center; line-height: 1.8; 
+            border: 1px solid rgba(255, 182, 193, 0.2) !important; 
+        }
+        /* ✅ 强力中心：利用 Gap 属性实现绝对对称 */
 h2 {
-    display: flex !important;
-    justify-content: center !important; /* 水平绝对居中 */
-    align-items: center !important;    /* 垂直对齐 */
-    gap: 20px !important;              /* 🌹文字🌹 之间的固定间距 */
-    width: 100% !important;
-    margin: 0 auto 30px auto !important;
-    padding: 0 !important;
-    
-    /* 保持霸气霓虹效果 */
-    font-size: 44px !important; 
-    font-weight: 900; 
-    white-space: nowrap !important;
-    color: #ffffff; 
-    /* 修正：letter-spacing 调小一点，防止右侧溢出 */
-    letter-spacing: 1px !important; 
-    text-shadow: 
-        0 0 3px #ffffff,
-        4px 4px 0px #c2185b,
-        0 0 15px #ff69b4,
-        0 0 35px #ff69b4,
-        5px 5px 15px rgba(0,0,0,0.9);
+    display: flex !important;
+    justify-content: center !important; /* 水平绝对居中 */
+    align-items: center !important;    /* 垂直对齐 */
+    gap: 20px !important;              /* 🌹文字🌹 之间的固定间距 */
+    width: 100% !important;
+    margin: 0 auto 30px auto !important;
+    padding: 0 !important;
+    
+    /* 保持霸气霓虹效果 */
+    font-size: 44px !important; 
+    font-weight: 900; 
+    white-space: nowrap !important;
+    color: #ffffff; 
+    /* 修正：letter-spacing 调小一点，防止右侧溢出 */
+    letter-spacing: 1px !important; 
+    text-shadow: 
+        0 0 3px #ffffff,
+        4px 4px 0px #c2185b,
+        0 0 15px #ff69b4,
+        0 0 35px #ff69b4,
+        5px 5px 15px rgba(0,0,0,0.9);
 }
 
 /* 🌹 玫瑰花伪元素：移除所有手动 margin，交给 gap 处理 */
 h2::before, h2::after {
-    content: "🌹" !important;
-    font-size: 38px !important;
-    margin: 0 !important; /* 彻底清除手动间距 */
-    flex-shrink: 0 !important; /* 防止花被挤扁 */
+    content: "🌹" !important;
+    font-size: 38px !important;
+    margin: 0 !important; /* 彻底清除手动间距 */
+    flex-shrink: 0 !important; /* 防止花被挤扁 */
 }
 
-        
-        .email-card { 
-            font-size: 34px; font-weight: bold; color: #ffffff; 
-            text-shadow: 0 0 5px #ffffff, 0 0 10px #ff69b4, 0 0 20px #ff69b4, 0 0 40px #d81b60;
-            margin: 20px 0; padding: 25px; 
-            background: rgba(0, 0, 0, 0.3) !important; 
-            border-radius: 16px; 
-            border: 2px dashed rgba(255, 105, 180, 0.6) !important; 
-            word-break: break-all; text-align: center; 
-            box-shadow: 0 0 20px rgba(255, 105, 180, 0.2) !important; 
-        }
-        
-        button { font-size: 15px; padding: 12px 24px; cursor: pointer; border: none; border-radius: 12px; color: white; font-weight: bold; display: flex; align-items: center; justify-content: center; gap: 6px; position: relative; transition: all 0.1s; user-select: none; }
-        .btn-custom { background: var(--purple-main); box-shadow: 0 5px 0 var(--purple-dark); }
-        .btn-gen { background: var(--rose-main); box-shadow: 0 5px 0 var(--rose-dark); }
-        .btn-refresh-inbox { background: var(--green-main); box-shadow: 0 4px 0 var(--green-dark); padding: 8px 18px; font-size: 14px; }
-        button:active { transform: translateY(4px) !important; box-shadow: 0 1px 0 rgba(0,0,0,0.2) !important; }
-        .btn-group { display: flex; gap: 15px; justify-content: center; margin-bottom: 25px; flex-wrap: wrap; }
-        
-        input[type="text"] { padding: 12px 15px; font-size: 16px; border: 2px solid rgba(255, 182, 193, 0.5); border-radius: 12px; outline: none; width: 200px; text-align: center; background: rgba(0, 0, 0, 0.5); color: white; }
-        
-        .inbox-card { margin-top: 40px; text-align: left; background: rgba(0, 0, 0, 0.3) !important; padding: 25px; border-radius: 18px; border: 1px solid rgba(255, 182, 193, 0.2) !important; min-height: 300px; }
-        .inbox-header { display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid rgba(255, 182, 193, 0.3); padding-bottom: 15px; margin-bottom: 20px; }
-        .inbox-title { margin: 0; color: #ff69b4; font-size: 22px; text-shadow: 1px 1px 3px rgba(0,0,0,0.8); }
-        .refresh-timer { font-size: 13px; color: #fff; font-weight: normal; margin-left: 5px; background: rgba(0, 0, 0, 0.6); padding: 2px 8px; border-radius: 20px; border: 1px solid rgba(255, 182, 193, 0.5); }
+        
+        .email-card { 
+            font-size: 34px; font-weight: bold; color: #ffffff; 
+            text-shadow: 0 0 5px #ffffff, 0 0 10px #ff69b4, 0 0 20px #ff69b4, 0 0 40px #d81b60;
+            margin: 20px 0; padding: 25px; 
+            background: rgba(0, 0, 0, 0.3) !important; 
+            border-radius: 16px; 
+            border: 2px dashed rgba(255, 105, 180, 0.6) !important; 
+            word-break: break-all; text-align: center; 
+            box-shadow: 0 0 20px rgba(255, 105, 180, 0.2) !important; 
+        }
+        
+        button { font-size: 15px; padding: 12px 24px; cursor: pointer; border: none; border-radius: 12px; color: white; font-weight: bold; display: flex; align-items: center; justify-content: center; gap: 6px; position: relative; transition: all 0.1s; user-select: none; }
+        .btn-custom { background: var(--purple-main); box-shadow: 0 5px 0 var(--purple-dark); }
+        .btn-gen { background: var(--rose-main); box-shadow: 0 5px 0 var(--rose-dark); }
+        .btn-refresh-inbox { background: var(--green-main); box-shadow: 0 4px 0 var(--green-dark); padding: 8px 18px; font-size: 14px; }
+        button:active { transform: translateY(4px) !important; box-shadow: 0 1px 0 rgba(0,0,0,0.2) !important; }
+        .btn-group { display: flex; gap: 15px; justify-content: center; margin-bottom: 25px; flex-wrap: wrap; }
+        
+        input[type="text"] { padding: 12px 15px; font-size: 16px; border: 2px solid rgba(255, 182, 193, 0.5); border-radius: 12px; outline: none; width: 200px; text-align: center; background: rgba(0, 0, 0, 0.5); color: white; }
+        
+        .inbox-card { margin-top: 40px; text-align: left; background: rgba(0, 0, 0, 0.3) !important; padding: 25px; border-radius: 18px; border: 1px solid rgba(255, 182, 193, 0.2) !important; min-height: 300px; }
+        .inbox-header { display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid rgba(255, 182, 193, 0.3); padding-bottom: 15px; margin-bottom: 20px; }
+        .inbox-title { margin: 0; color: #ff69b4; font-size: 22px; text-shadow: 1px 1px 3px rgba(0,0,0,0.8); }
+        .refresh-timer { font-size: 13px; color: #fff; font-weight: normal; margin-left: 5px; background: rgba(0, 0, 0, 0.6); padding: 2px 8px; border-radius: 20px; border: 1px solid rgba(255, 182, 193, 0.5); }
 
-        #customToast { visibility: hidden; min-width: 200px; background-color: rgba(0, 0, 0, 0.85); color: #fff; text-align: center; border-radius: 12px; padding: 18px 30px; position: fixed; z-index: 1000; left: 50%; top: 50%; transform: translate(-50%, -50%); font-size: 16px; font-weight: bold; backdrop-filter: blur(8px); }
-        #customToast.show { visibility: visible; animation: fadeInOut 2.5s; }
-        @keyframes fadeInOut { 0% {opacity: 0;} 15% {opacity: 1;} 85% {opacity: 1;} 100% {opacity: 0;} }
+        #customToast { visibility: hidden; min-width: 200px; background-color: rgba(0, 0, 0, 0.85); color: #fff; text-align: center; border-radius: 12px; padding: 18px 30px; position: fixed; z-index: 1000; left: 50%; top: 50%; transform: translate(-50%, -50%); font-size: 16px; font-weight: bold; backdrop-filter: blur(8px); }
+        #customToast.show { visibility: visible; animation: fadeInOut 2.5s; }
+        @keyframes fadeInOut { 0% {opacity: 0;} 15% {opacity: 1;} 85% {opacity: 1;} 100% {opacity: 0;} }
 /* 把代码贴在这个位置，准没错！ */
-        .layout-row {
-            display: flex;
-            flex-direction: row;
-            gap: 15px;
-            margin-bottom: 15px;
-            width: 100%;
-            align-items: stretch;
-        }
+        .layout-row {
+            display: flex;
+            flex-direction: row;
+            gap: 15px;
+            margin-bottom: 15px;
+            width: 100%;
+            align-items: stretch;
+        }
 
 
-   /* --- 📱 手机端全能适配（合并最终版） --- */
+   /* --- 📱 手机端全能适配（合并最终版） --- */
 @media (max-width: 600px) {
-    /* 1. 原有的标题和卡片缩放 */
-    .email-card { font-size: 22px !important; }
-    h2 { font-size: 4.8vw !important; letter-spacing: 0px !important; white-space: nowrap !important; }
+    /* 1. 原有的标题和卡片缩放 */
+    .email-card { font-size: 22px !important; }
+    h2 { font-size: 4.8vw !important; letter-spacing: 0px !important; white-space: nowrap !important; }
 /* 强制整体居中补丁 */
-    body {
-        display: flex !important;
-        flex-direction: column !important;
-        align-items: center !important; /* 水平居中 */
-        padding: 0 5px !important;
-    }
+    body {
+        display: flex !important;
+        flex-direction: column !important;
+        align-items: center !important; /* 水平居中 */
+        padding: 0 5px !important;
+    }
 .inbox-card, .btn-group, .main-buttons, div[style*="margin-top: 15px"], .layout-row {
-        width: 95% !important;
-        margin-left: auto !important;
-        margin-right: auto !important;
-    }
-    .layout-row {
-        gap: 8px !important;
-    }
-    .layout-row button {
-        padding: 0 12px !important;
-        font-size: 13px !important;
-        white-space: nowrap !important;
-    }
-   
-    /* 2. 核心：强制“自定义”与“随机”按钮并排 */
-    .btn-group {
-        display: flex !important;
-        flex-wrap: nowrap !important;  /* 强制不换行 */
-        gap: 8px !important;          /* 缩小间距 */
-        width: 100% !important;
-        margin-bottom: 15px !important;
-    }
-    .btn-group button {
-        flex: 1 !important;           /* 平分屏幕宽度 */
-        padding: 10px 5px !important;  /* 缩小内边距防止挤爆 */
-        font-size: 13px !important;    /* 缩小字号 */
-        white-space: nowrap !important;
-        justify-content: center !important;
-    }
+        width: 95% !important;
+        margin-left: auto !important;
+        margin-right: auto !important;
+    }
+    .layout-row {
+        gap: 8px !important;
+    }
+    .layout-row button {
+        padding: 0 12px !important;
+        font-size: 13px !important;
+        white-space: nowrap !important;
+    }
+   
+    /* 2. 核心：强制“自定义”与“随机”按钮并排 */
+    .btn-group {
+        display: flex !important;
+        flex-wrap: nowrap !important;  /* 强制不换行 */
+        gap: 8px !important;          /* 缩小间距 */
+        width: 100% !important;
+        margin-bottom: 15px !important;
+    }
+    .btn-group button {
+        flex: 1 !important;           /* 平分屏幕宽度 */
+        padding: 10px 5px !important;  /* 缩小内边距防止挤爆 */
+        font-size: 13px !important;    /* 缩小字号 */
+        white-space: nowrap !important;
+        justify-content: center !important;
+    }
 
-    /* 3. 核心：修复下方“收件箱”头部和提示文字 */
-    .inbox-header-container {
-        flex-wrap: wrap !important;
-        height: auto !important;
-        padding: 10px 5px !important;
-    }
-   .mobile-hint-text {
-        width: 100% !important;
-        order: 3 !important;
-        white-space: normal !important;
-        color: #ffffff !important; 
-        text-shadow: 1px 1px 3px rgba(0,0,0,0.8) !important;
-        font-size: 12px !important;
-        text-align: center !important;
-        margin-top: 12px !important;
-        display: block !important;
-        line-height: 1.6 !important;
-    }
+    /* 3. 核心：修复下方“收件箱”头部和提示文字 */
+    .inbox-header-container {
+        flex-wrap: wrap !important;
+        height: auto !important;
+        padding: 10px 5px !important;
+    }
+   .mobile-hint-text {
+        width: 100% !important;
+        order: 3 !important;
+        white-space: normal !important;
+        color: #ffffff !important; 
+        text-shadow: 1px 1px 3px rgba(0,0,0,0.8) !important;
+        font-size: 12px !important;
+        text-align: center !important;
+        margin-top: 12px !important;
+        display: block !important;
+        line-height: 1.6 !important;
+    }
 } /* 👈 确保这个大括号是 160 行那个，用来关掉 @media 的 */
-    .main-buttons button, div[style*="margin-top: 15px"] button {
-        flex: 1 1 45% !important; 
-        height: 45px !important;
-    }
+    .main-buttons button, div[style*="margin-top: 15px"] button {
+        flex: 1 1 45% !important; 
+        height: 45px !important;
+    }
 
-    /* 5. 输入框宽度适配 */
-    input[type="text"], #customInput {
-        width: 100% !important;
-        box-sizing: border-box !important;
-    }
- 
-    </style>
+    /* 5. 输入框宽度适配 */
+    input[type="text"], #customInput {
+        width: 100% !important;
+        box-sizing: border-box !important;
+    }
+ 
+    </style>
 </head>
 <body>
-
+<a href="https://guoxingbiao521-blip.github.io/lg-admin-tool-202412/" class="admin-portal-btn" target="_blank">
+    <span class="portal-icon">⚙️</span>
+    <span class="portal-text">站长/代理商管理系统</span>
+</a>
 <div id="customToast">✅ 已开启全能提醒</div>
 
 <div class="main-card">
-    
-    <div class="hint-box">
-        <p style="margin: 0; letter-spacing: 1px;">
-            🌹 筑梦独家：在下方输入前缀并点击 “自定义邮箱” 即可重启曾使用过的邮箱进行邮件的接收！
-        </p>
-    </div>
+    
+    <div class="hint-box">
+        <p style="margin: 0; letter-spacing: 1px;">
+            🌹 筑梦独家：在下方输入前缀并点击 “自定义邮箱” 即可重启曾使用过的邮箱进行邮件的接收！
+        </p>
+    </div>
 
-    <h2>LG筑梦电子 📧 无限临时邮箱系统</h2>
+    <h2>LG筑梦电子 📧 无限临时邮箱系统</h2>
 <div class="layout-row">
-        <div class="email-card" id="emailText" style="margin: 0; flex: 1; display: flex; align-items: center; justify-content: center; padding: 15px 10px;">正在呼唤筑梦电子</div>
-        <button class="btn-gen" onclick="generateRandom()" style="margin: 0; flex-shrink: 0; padding: 0; width: 115px !important;">🔄 随机生成</button>
-    </div>
+        <div class="email-card" id="emailText" style="margin: 0; flex: 1; display: flex; align-items: center; justify-content: center; padding: 15px 10px;">正在呼唤筑梦电子</div>
+        <button class="btn-gen" onclick="generateRandom()" style="margin: 0; flex-shrink: 0; padding: 0 25px;">🔄 随机生成</button>
+    </div>
 
-<div class="action-row-main" style="display: flex; align-items: center; gap: 10px; margin-bottom: 15px; width: 100%;">
-    
-    <a href="https://guoxingbiao521-blip.github.io/lg-admin-tool-202412/" class="btn-clone admin-theme" target="_blank">
-        ⚙️ 站长/代理商管理系统
-    </a>
-    
-    <input type="text" id="customInput" placeholder="请输入邮箱前缀" style="flex: 1.5; min-width: 0; height: 45px;">
+ <div class="action-row-main" style="display: flex; align-items: center; gap: 10px; margin-bottom: 15px;">
+    
+    <a href="https://guoxingbiao521-blip.github.io/lg-admin-tool-202412/" class="btn-clone admin-theme" target="_blank">
+        ⚙️ 站长/代理商管理系统
+    </a>
+    
+    <input type="text" id="customInput" placeholder="请输入邮箱前缀" style="flex: 1.5; min-width: 0; height: 45px;">
 
-    <button onclick="setCustomEmail()" class="btn-clone custom-theme">
-        🛠️ 自定义邮箱
-    </button>
+    <button onclick="setCustomEmail()" class="btn-clone custom-theme">
+        🛠️ 自定义邮箱
+    </button>
 </div>
-   
+   
 
-    <div style="display: flex !important; flex-direction: row !important; gap: 10px !important; margin-top: 15px !important; width: 100% !important;">
-        <button onclick="copyEmail()" style="flex: 1; height: 45px; background-color: #e91e63;">📋 复制地址</button>
-        <button onclick="window.location.href='index.html'" style="flex: 1; height: 45px; background-color: #f06292;">🏠 返回主页</button>
-    </div>
-   
-   <div class="inbox-card">
-        
-        <div class="inbox-header inbox-header-container" style="display: flex; align-items: center; justify-content: space-between; gap: 15px; width: 100%; padding: 0 5px; box-sizing: border-box; border-bottom: 1px solid rgba(255, 182, 193, 0.3); padding-bottom: 15px; margin-bottom: 20px;">
-            
-            <div style="display: flex; align-items: center; gap: 10px; flex-shrink: 0;">
-                <h3 class="inbox-title" style="margin: 0;">📥 筑梦收件箱</h3>
-                <span class="refresh-timer" id="timerDisplay">5s 刷新</span>
-            </div>
+    <div style="display: flex !important; flex-direction: row !important; gap: 10px !important; margin-top: 15px !important; width: 100% !important;">
+        <button onclick="copyEmail()" style="flex: 1; height: 45px; background-color: #e91e63;">📋 复制地址</button>
+        <button onclick="window.location.href='index.html'" style="flex: 1; height: 45px; background-color: #f06292;">🏠 返回主页</button>
+    </div>
+   
+   <div class="inbox-card">
+        
+        <div class="inbox-header inbox-header-container" style="display: flex; align-items: center; justify-content: space-between; gap: 15px; width: 100%; padding: 0 5px; box-sizing: border-box; border-bottom: 1px solid rgba(255, 182, 193, 0.3); padding-bottom: 15px; margin-bottom: 20px;">
+            
+            <div style="display: flex; align-items: center; gap: 10px; flex-shrink: 0;">
+                <h3 class="inbox-title" style="margin: 0;">📥 筑梦收件箱</h3>
+                <span class="refresh-timer" id="timerDisplay">5s 刷新</span>
+            </div>
 <div class="mobile-hint-text" style="color: #ffffff !important; text-shadow: 1px 1px 3px rgba(0,0,0,0.8);">
-    💡 如您没有激活码请返回主页到底部联系站长微信获取
+    💡 如您没有激活码请返回主页到底部联系站长微信获取
 </div>
-            
-                
+            
+                
 
-            <div style="flex-shrink: 0;">
-                <button class="btn-refresh-inbox" onclick="manualRefresh()" style="margin: 0; padding: 8px 16px;">🔄 手动刷新</button>
-            </div>
-        </div>
+            <div style="flex-shrink: 0;">
+                <button class="btn-refresh-inbox" onclick="manualRefresh()" style="margin: 0; padding: 8px 16px;">🔄 手动刷新</button>
+            </div>
+        </div>
 
-        <div id="emailList">
-            <p style="text-align:center; color:#999; padding-top:80px;">正在连接筑梦电子...</p>
-        </div>
+        <div id="emailList">
+            <p style="text-align:center; color:#999; padding-top:80px;">正在连接筑梦电子...</p>
+        </div>
 
-    </div> 
+    </div> 
 </div> <script>
-    const API_BASE = "https://guo.roselg.xyz/api/emails";
-    const DOMAIN = "@roselg.xyz";
-    let currentEmail = "";
-    let timeLeft = 5; 
-    let lastEmailCount = -1;
-    let rollInterval;
+    const API_BASE = "https://guo.roselg.xyz/api/emails";
+    const DOMAIN = "@roselg.xyz";
+    let currentEmail = "";
+    let timeLeft = 5; 
+    let lastEmailCount = -1;
+    let rollInterval;
 
-    function showToast(msg) {
-        const toast = document.getElementById("customToast");
-        toast.innerText = msg;
-        toast.className = "show";
-        setTimeout(() => { toast.className = ""; }, 2500);
-    }
+    function showToast(msg) {
+        const toast = document.getElementById("customToast");
+        toast.innerText = msg;
+        toast.className = "show";
+        setTimeout(() => { toast.className = ""; }, 2500);
+    }
 
-    function generateRandom() {
-        const rand = Math.random().toString(36).substring(2, 10);
-        updateDisplay(rand + DOMAIN, true);
-    }
+    function generateRandom() {
+        const rand = Math.random().toString(36).substring(2, 10);
+        updateDisplay(rand + DOMAIN, true);
+    }
 
-  function setCustomEmail() {
-    const val = document.getElementById('customInput').value.trim().toLowerCase().replace(/[^a-z0-9]/g, '');
-    
-    // 1. 如果没填，弹出警告
-    if(!val) return showToast("⚠️ 请先输入自定义邮箱前缀");
-    
-    // 2. 执行原本的更新逻辑
-    updateDisplay(val + DOMAIN, false);
-    
-    // ✨ 3. 加上这一行：成功的心理反馈
-    showToast("✅ 自定义邮箱已激活");
+  function setCustom() {
+    const val = document.getElementById('customInput').value.trim().toLowerCase().replace(/[^a-z0-9]/g, '');
+    
+    // 1. 如果没填，弹出警告
+    if(!val) return showToast("⚠️ 请先输入自定义邮箱前缀");
+    
+    // 2. 执行原本的更新逻辑
+    updateDisplay(val + DOMAIN, false);
+    
+    // ✨ 3. 加上这一行：成功的心理反馈
+    showToast("✅ 自定义邮箱已激活");
 }
 
-    function updateDisplay(email, isRandom = false) {
-        const textElement = document.getElementById('emailText');
-        clearInterval(rollInterval); 
-        if (isRandom) {
-            const chars = 'abcdefghijklmnopqrstuvwxyz0123456789';
-            let iterations = 0;
-            rollInterval = setInterval(() => {
-                let randomPrefix = '';
-                for (let i = 0; i < 8; i++) randomPrefix += chars[Math.floor(Math.random() * chars.length)];
-                textElement.innerText = randomPrefix + DOMAIN;
-                if (++iterations >= 15) {
-                    clearInterval(rollInterval);
-                    finalizeUpdate(email);
-                }
-            }, 40);
-        } else {
-            finalizeUpdate(email);
-        }
-    }
+    function updateDisplay(email, isRandom = false) {
+        const textElement = document.getElementById('emailText');
+        clearInterval(rollInterval); 
+        if (isRandom) {
+            const chars = 'abcdefghijklmnopqrstuvwxyz0123456789';
+            let iterations = 0;
+            rollInterval = setInterval(() => {
+                let randomPrefix = '';
+                for (let i = 0; i < 8; i++) randomPrefix += chars[Math.floor(Math.random() * chars.length)];
+                textElement.innerText = randomPrefix + DOMAIN;
+                if (++iterations >= 15) {
+                    clearInterval(rollInterval);
+                    finalizeUpdate(email);
+                }
+            }, 40);
+        } else {
+            finalizeUpdate(email);
+        }
+    }
 
-    function finalizeUpdate(email) {
-        currentEmail = email;
-        document.getElementById('emailText').innerText = currentEmail;
-        lastEmailCount = -1; 
-        timeLeft = 5; 
-        fetchEmails();
-    }
+    function finalizeUpdate(email) {
+        currentEmail = email;
+        document.getElementById('emailText').innerText = currentEmail;
+        lastEmailCount = -1; 
+        timeLeft = 5; 
+        fetchEmails();
+    }
 
-    function copyEmail() {
-        if(!currentEmail) return;
-        navigator.clipboard.writeText(currentEmail).then(() => showToast("📋 邮箱地址已复制"));
-    }
+    function copyEmail() {
+        if(!currentEmail) return;
+        navigator.clipboard.writeText(currentEmail).then(() => showToast("📋 邮箱地址已复制"));
+    }
 
-    function startCountdown() {
-        setInterval(() => {
-            if (--timeLeft < 0) {
-                fetchEmails();
-                timeLeft = 5;
-            }
-            document.getElementById('timerDisplay').innerText = `${timeLeft}s 刷新`;
-        }, 1000);
-    }
+    function startCountdown() {
+        setInterval(() => {
+            if (--timeLeft < 0) {
+                fetchEmails();
+                timeLeft = 5;
+            }
+            document.getElementById('timerDisplay').innerText = `${timeLeft}s 刷新`;
+        }, 1000);
+    }
 
-    function manualRefresh() {
-        fetchEmails();
-        timeLeft = 5; 
-        showToast("🔄 正在刷新邮件");
-    }
+    function manualRefresh() {
+        fetchEmails();
+        timeLeft = 5; 
+        showToast("🔄 正在刷新邮件");
+    }
 
-   async function fetchEmails() {
+   async function fetchEmails() {
 console.log("🔥 [调试] fetchEmails 函数开始运行了！");
-    if (!currentEmail) return;
+    if (!currentEmail) return;
 
 
 
-    const code = localStorage.getItem('authCode');
+    const code = localStorage.getItem('authCode');
 // 第一步：先去档案库里拿
 let devId = localStorage.getItem('deviceId');
 
 // 这样改能把以前存错的 "null" 彻底清理掉
 if (!devId || devId === "null" || devId === "undefined") {
-    devId = 'dev_' + Math.random().toString(36).substring(2, 10);
-    localStorage.setItem('deviceId', devId);
+    devId = 'dev_' + Math.random().toString(36).substring(2, 10);
+    localStorage.setItem('deviceId', devId);
 }
 // 这样就能保证下面的 fetch 请求发出的绝对不是 "null"
-  
+  
 if (!code) {
-        // 核心修复：如果页面上已经有输入框了，说明你正在打字，直接跳过，不许刷新界面
-        if (!document.getElementById('authInput')) {
-            renderLockedInbox();
-        }
-        return;
-    }
-    
+        // 核心修复：如果页面上已经有输入框了，说明你正在打字，直接跳过，不许刷新界面
+        if (!document.getElementById('authInput')) {
+            renderLockedInbox();
+        }
+        return;
+    }
+    
 
 
 
-    try {
+    try {
 // ✨ 新加的调试代码：在发请求前一秒，把数据打印在控制台
-        console.log("🚀 准备拉取邮件 - 验证码:", code, " | 身份证:", devId);
-        const response = await fetch(`${API_BASE}?address=${currentEmail}&code=${code}&deviceId=${devId}`);
+        console.log("🚀 准备拉取邮件 - 验证码:", code, " | 身份证:", devId);
+        const response = await fetch(`${API_BASE}?address=${currentEmail}&code=${code}&deviceId=${devId}`);
 
-       
-   // --- 处理激活失败 ---
-    if (response.status === 401 || response.status === 403) {
-        const errData = await response.json();
-        localStorage.removeItem('authCode');
+       
+   // --- 处理激活失败 ---
+    if (response.status === 401 || response.status === 403) {
+        const errData = await response.json();
+        localStorage.removeItem('authCode');
 
-        // ✨ 修改这里：把 ❌ 放到最前面，用 + 号把符号和文字接起来
-        renderLockedInbox("❌ " + (errData.message || "激活码无效，请重新输入！"));
-        return;
-    }
+        // ✨ 修改这里：把 ❌ 放到最前面，用 + 号把符号和文字接起来
+        renderLockedInbox("❌ " + (errData.message || "激活码无效，请重新输入！"));
+        return;
+    }
 
-    // --- ✨ 优化后的成功提示：只在第一次进入或刚激活时提示 ---
-    if (response.ok) {
-        // 逻辑：如果这是一个全新的激活操作（比如刚 reload 完），或者系统刚从锁定状态恢复
-        if (!window.hasShownSuccessTip) {
-            showToast("✅ 验证成功！欢迎使用！");
-            window.hasShownSuccessTip = true; // 设为 true，下次自动刷新就不再弹了
-        }
-    }
+    // --- ✨ 优化后的成功提示：只在第一次进入或刚激活时提示 ---
+    if (response.ok) {
+        // 逻辑：如果这是一个全新的激活操作（比如刚 reload 完），或者系统刚从锁定状态恢复
+        if (!window.hasShownSuccessTip) {
+            showToast("✅ 验证成功！欢迎使用！");
+            window.hasShownSuccessTip = true; // 设为 true，下次自动刷新就不再弹了
+        }
+    }
 
-   
-
-
-        const data = await response.json();
+   
 
 
-
-        // 🔊 语音 + 🚀 弹窗逻辑
-
-        if (data.length > lastEmailCount && lastEmailCount !== -1) {
-
-            // 调用浏览器语音
-
-            const msg = new SpeechSynthesisUtterance();
-
-            msg.text = "您有新的邮件，请注意查收";
-
-            msg.lang = "zh-CN";
-
-            window.speechSynthesis.speak(msg);
+        const data = await response.json();
 
 
 
-            // 触发系统弹窗
+        // 🔊 语音 + 🚀 弹窗逻辑
 
-            if (window.Notification && Notification.permission === "granted") {
+        if (data.length > lastEmailCount && lastEmailCount !== -1) {
 
-                const newMail = data[0];
+            // 调用浏览器语音
 
-                new Notification("📬 筑梦收件箱新邮件！", {
+            const msg = new SpeechSynthesisUtterance();
 
-                    body: `发件人: ${newMail.from}\n主题: ${newMail.subject}`,
+            msg.text = "您有新的邮件，请注意查收";
 
-                    icon: "https://roselg.xyz/favicon.ico" 
+            msg.lang = "zh-CN";
 
-                });
+            window.speechSynthesis.speak(msg);
 
-            }
 
-        }
-        
-        lastEmailCount = data.length;
-        
-        // ✅ 运行画图函数
-        if (typeof renderEmails === 'function') {
-            renderEmails(data);
-        }
+
+            // 触发系统弹窗
+
+            if (window.Notification && Notification.permission === "granted") {
+
+                const newMail = data[0];
+
+                new Notification("📬 筑梦收件箱新邮件！", {
+
+                    body: `发件人: ${newMail.from}\n主题: ${newMail.subject}`,
+
+                    icon: "https://roselg.xyz/favicon.ico" 
+
+                });
+
+            }
+
+        }
+        
+        lastEmailCount = data.length;
+        
+        // ✅ 运行画图函数
+        if (typeof renderEmails === 'function') {
+            renderEmails(data);
+        }
 } catch (e) {
-        document.getElementById('emailList').innerHTML = '<p style="color:red; text-align:center; padding-top:50px;">手机端报错: ' + String(e) + '</p>';
-    }
-  
+        document.getElementById('emailList').innerHTML = '<p style="color:red; text-align:center; padding-top:50px;">手机端报错: ' + String(e) + '</p>';
+    }
+  
 }
 
-    function renderEmails(emails) {
-        const container = document.getElementById('emailList');
-        if (!emails || emails.length === 0) {
-            container.innerHTML = '<p style="text-align:center; color:#999; padding-top:80px;">暂无新邮件，筑梦系统将实时获取最新邮件！</p>';
-            return;
-        }
-       // ✨ 加上 .reverse()，让最新获取的邮件反转到数组最前面
-        container.innerHTML = emails.reverse().map(mail => `
-            <div style="background: rgba(30, 30, 35, 0.95); border-radius: 15px; padding: 20px; margin-bottom: 20px; border-left: 5px solid #ff6b81; text-align: left; color:#fff;">
-                <div style="font-size: 13px; color: #ffb8c6;">来自：${mail.from}</div>
-                <div style="font-size: 18px; font-weight: bold; margin: 10px 0;">主题：${mail.subject}</div>
-                <div style="background: #fff; color: #333; padding: 15px; border-radius: 10px;">${mail.html || mail.text}</div>
-            </div>
-        `).join('');
-    }
+    function renderEmails(emails) {
+        const container = document.getElementById('emailList');
+        if (!emails || emails.length === 0) {
+            container.innerHTML = '<p style="text-align:center; color:#999; padding-top:80px;">暂无新邮件，筑梦系统将实时获取最新邮件！</p>';
+            return;
+        }
+       // ✨ 加上 .reverse()，让最新获取的邮件反转到数组最前面
+        container.innerHTML = emails.reverse().map(mail => `
+            <div style="background: rgba(30, 30, 35, 0.95); border-radius: 15px; padding: 20px; margin-bottom: 20px; border-left: 5px solid #ff6b81; text-align: left; color:#fff;">
+                <div style="font-size: 13px; color: #ffb8c6;">来自：${mail.from}</div>
+                <div style="font-size: 18px; font-weight: bold; margin: 10px 0;">主题：${mail.subject}</div>
+                <div style="background: #fff; color: #333; padding: 15px; border-radius: 10px;">${mail.html || mail.text}</div>
+            </div>
+        `).join('');
+    }
 
- function renderLockedInbox(msg = "激活后即可查看实时邮件") {
-        const container = document.getElementById('emailList');
-        if (!container) return;
-        container.innerHTML = `
-            <div style="padding: 40px 20px; text-align: center; border: 2px dashed #ff69b4; border-radius: 15px; margin: 20px; background: transparent;">
-                <div style="font-size: 40px; margin-bottom: 15px;">🔒</div>
-                <h3 style="color: #fff; margin-bottom: 20px;">${msg}</h3>
-                <div style="display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; align-items: center;">
-                    <input type="password" id="authInput" placeholder="输入激活码..." style="padding: 12px; border-radius: 8px; border: 1px solid #ff69b4; background: rgba(255,255,255,0.1); color: #fff; width: 200px; outline: none;">
-                    <button onclick="unlock()" style="padding: 12px 25px; border-radius: 8px; background: #ff69b4; color: #fff; border: none; cursor: pointer; font-weight: bold; box-shadow: 0 0 15px rgba(255,105,180,0.6); white-space: nowrap;">立即激活</button>
-                </div>
-                <p style="color: #aaa; font-size: 12px; margin-top: 15px;">⚠️温馨提醒：一人一码，系统自动检测，多人共用激活码将自动失效！</p>
-            </div>
-        `;
-    }
- async function unlock() {
-    const codeInput = document.getElementById('authInput');
-    const code = codeInput.value.trim();
-    
-    // 1. 基本检查
-    if (!code) return showToast("⚠️ 请输入激活码");
+ function renderLockedInbox(msg = "激活后即可查看实时邮件") {
+        const container = document.getElementById('emailList');
+        if (!container) return;
+        container.innerHTML = `
+            <div style="padding: 40px 20px; text-align: center; border: 2px dashed #ff69b4; border-radius: 15px; margin: 20px; background: transparent;">
+                <div style="font-size: 40px; margin-bottom: 15px;">🔒</div>
+                <h3 style="color: #fff; margin-bottom: 20px;">${msg}</h3>
+                <div style="display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; align-items: center;">
+                    <input type="password" id="authInput" placeholder="输入激活码..." style="padding: 12px; border-radius: 8px; border: 1px solid #ff69b4; background: rgba(255,255,255,0.1); color: #fff; width: 200px; outline: none;">
+                    <button onclick="unlock()" style="padding: 12px 25px; border-radius: 8px; background: #ff69b4; color: #fff; border: none; cursor: pointer; font-weight: bold; box-shadow: 0 0 15px rgba(255,105,180,0.6); white-space: nowrap;">立即激活</button>
+                </div>
+                <p style="color: #aaa; font-size: 12px; margin-top: 15px;">⚠️温馨提醒：一人一码，系统自动检测，多人共用激活码将自动失效！</p>
+            </div>
+        `;
+    }
+ async function unlock() {
+    const codeInput = document.getElementById('authInput');
+    const code = codeInput.value.trim();
+    
+    // 1. 基本检查
+    if (!code) return showToast("⚠️ 请输入激活码");
 
-    // ✨ 核心：激活时必须带上“身份证”，否则服务器没法踢掉旧设备
-    const devId = localStorage.getItem('deviceId');
+    // ✨ 核心：激活时必须带上“身份证”，否则服务器没法踢掉旧设备
+    const devId = localStorage.getItem('deviceId');
 
-    showToast("🔍 正在验证并绑定设备...");
+    showToast("🔍 正在验证并绑定设备...");
 
-    try {
-        // 2. 发送到服务器的验证接口（POST）
-        const response = await fetch(`${API_BASE.replace('emails', 'verify')}`, {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ code: code, deviceId: devId })
-        });
+    try {
+        // 2. 发送到服务器的验证接口（POST）
+        const response = await fetch(`${API_BASE.replace('emails', 'verify')}`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ code: code, deviceId: devId })
+        });
 
-        const data = await response.json();
+        const data = await response.json();
 
-        if (response.ok) {
-            // 3. 验证成功，保存激活码并刷新
-            localStorage.setItem('authCode', code);
-            showToast("✅ 激活成功，欢迎使用");
-            setTimeout(() => {
-                location.reload();
-            }, 800);
-        } else {
-            // 4. 验证失败（比如码写错了）
-            showToast("❌ " + (data.error || "无法激活，激活码无效！"));
-        }
-    } catch (error) {
-        console.error("激活请求失败:", error);
-        showToast("🌐 网络错误，请稍后重试！");
-    }
+        if (response.ok) {
+            // 3. 验证成功，保存激活码并刷新
+            localStorage.setItem('authCode', code);
+            showToast("✅ 激活成功，欢迎使用");
+            setTimeout(() => {
+                location.reload();
+            }, 800);
+        } else {
+            // 4. 验证失败（比如码写错了）
+            showToast("❌ " + (data.error || "无法激活，激活码无效！"));
+        }
+    } catch (error) {
+        console.error("激活请求失败:", error);
+        showToast("🌐 网络错误，请稍后重试！");
+    }
 }
 
-    // 初始化
-    if (!localStorage.getItem('deviceId')) localStorage.setItem('deviceId', 'dev_' + Math.random().toString(36).substring(2, 10));
-    if (window.Notification) {
-    Notification.requestPermission().catch(e => console.log("弹窗权限被忽略"));
+    // 初始化
+    if (!localStorage.getItem('deviceId')) localStorage.setItem('deviceId', 'dev_' + Math.random().toString(36).substring(2, 10));
+    if (window.Notification) {
+    Notification.requestPermission().catch(e => console.log("弹窗权限被忽略"));
 }
-    generateRandom();
-    startCountdown();
+    generateRandom();
+    startCountdown();
 </script>
 </body>
 </html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
