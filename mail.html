@@ -246,8 +246,8 @@ h2::before, h2::after {
 // 第一步：先去档案库里拿
 let devId = localStorage.getItem('deviceId');
 
-// 第二步：如果拿出来是空的(null)，现场立刻造一个并存起来
-if (!devId) {
+// 这样改能把以前存错的 "null" 彻底清理掉
+if (!devId || devId === "null" || devId === "undefined") {
     devId = 'dev_' + Math.random().toString(36).substring(2, 10);
     localStorage.setItem('deviceId', devId);
 }
@@ -265,7 +265,8 @@ if (!code) {
 
 
     try {
-
+// ✨ 新加的调试代码：在发请求前一秒，把数据打印在控制台
+        console.log("🚀 准备拉取邮件 - 验证码:", code, " | 身份证:", devId);
         const response = await fetch(`${API_BASE}?address=${currentEmail}&code=${code}&deviceId=${devId}`);
 
        
@@ -400,6 +401,7 @@ if (!code) {
 </script>
 </body>
 </html>
+
 
 
 
