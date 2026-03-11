@@ -257,52 +257,80 @@ h2::before, h2::after {
         width: 100% !important;
         box-sizing: border-box !important;
     }
- /* 📱 手机端终极美化与居中修复 */
+/* 📱 手机端终极美化 - 增强修复版 V2 */
 @media (max-width: 600px) {
-    /* 1. 全局防溢出：强制所有盒子的内边距向内挤压，绝对不许撑破屏幕 */
+    /* 1. 全局基础设定 */
     * { box-sizing: border-box !important; }
-    
     body { padding: 10px !important; }
 
-    /* 2. 修复主卡片偏移：限制最大宽度为 100%，并在手机上完美居中 */
+    /* 2. 主卡片与提示框居中修复 */
     .main-card {
-        width: 100% !important;
-        max-width: 100% !important;
-        padding: 20px 15px !important;
-        margin: 0 auto !important;
+        width: 100% !important; max-width: 100% !important;
+        padding: 20px 15px !important; margin: 0 auto !important;
     }
-
-    /* 3. 修复顶部“筑梦独家”提示框偏右的问题 */
     .hint-box {
-        width: 100% !important;
-        margin: 0 auto 20px auto !important;
-        padding: 12px 15px !important;
-        font-size: 12px !important;
-        line-height: 1.6 !important;
+        width: 100% !important; margin: 0 auto 20px auto !important;
+        padding: 12px 15px !important; font-size: 12px !important;
     }
+    h2 { font-size: 22px !important; gap: 8px !important; }
 
-    /* 4. 标题字号缩小，防止“临时邮箱系统”几个字折行 */
-    h2 { font-size: 20px !important; gap: 5px !important; }
-    h2::before, h2::after { font-size: 18px !important; }
-
-    /* 5. ✨ 核心布局优化：让拥挤的按钮智能换行（变成现代 App 风格） */
+    /* 3. ✨ 修复核心：按钮行布局优化 */
     .layout-row, .action-row-main {
-        flex-wrap: wrap !important; /* 允许折行，不再硬挤 */
+        flex-direction: column !important; /* 强制垂直排列 */
         gap: 10px !important;
+        align-items: stretch !important; /* 拉伸占满宽度 */
     }
     
-    /* 第一排：邮箱显示框独占一行，随机按钮跟在下方 */
-    .email-card { width: 100% !important; flex: 1 1 100% !important; font-size: 24px !important; margin: 0 !important; }
-    .btn-gen { width: 100% !important; flex: 1 1 100% !important; margin: 0 !important; }
-    
-    /* 第二排：输入框提上来独占一行，管理和自定义按钮在下方平分 */
-    #customInput { width: 100% !important; flex: 1 1 100% !important; order: -1; margin-bottom: 5px !important; }
-    .admin-theme { width: 48% !important; flex: 1 !important; padding: 0 5px !important; font-size: 12px !important; }
-    .custom-theme { width: 48% !important; flex: 1 !important; padding: 0 5px !important; font-size: 12px !important; }
+    /* 邮箱显示框 (第一排) */
+    .email-card { 
+        width: 100% !important; margin: 0 !important; font-size: 20px !important; 
+        order: 1; /* 确保在最上 */
+    }
 
-    /* 6. 修复底部锁定状态下的输入框和按钮溢出 */
-    #authInput { width: 100% !important; margin-bottom: 10px !important; }
-    .inbox-card div[style*="justify-content: center"] { flex-wrap: wrap !important; }
+    /* 修复“随机生成”按钮变灰的问题 (第二排) */
+    .btn-gen { 
+        width: 100% !important; margin: 0 !important; padding: 12px 0 !important;
+        background: #ff69b4 !important; /* 🔥 强制找回粉色背景 */
+        color: white !important;
+        order: 2;
+    }
+    
+    /* 输入框 (第三排) */
+    #customInput { 
+        width: 100% !important; margin: 0 !important;
+        order: 3;
+    }
+
+    /* 管理和自定义按钮容器 (第四排 - 并列) */
+    .action-row-main {
+        flex-direction: row !important; /* 这一行特殊，要横向排列 */
+        gap: 10px !important;
+        order: 4;
+    }
+    .admin-theme, .custom-theme {
+        width: 100% !important; /* 让 Flex 自动平分 */
+        flex: 1 !important;
+        padding: 0 5px !important; font-size: 13px !important;
+        white-space: nowrap !important;
+    }
+
+    /* 4. ✨ 修复底部“手动刷新”按钮位置 */
+    .inbox-header {
+        display: flex !important;
+        flex-wrap: nowrap !important; /* 强制不换行 */
+        justify-content: space-between !important; /* 两端对齐 */
+        align-items: center !important;
+        gap: 5px !important; /* 缩小间距防止挤爆 */
+    }
+    /* 缩小左侧标题和计时器的字号，给按钮腾地方 */
+    .inbox-header h3 { font-size: 16px !important; }
+    .timer-badge { font-size: 11px !important; padding: 2px 6px !important; }
+    /* 锁定右侧刷新按钮不被挤压 */
+    .inbox-header button {
+        flex-shrink: 0 !important; /* 禁止缩小 */
+        padding: 8px 12px !important; font-size: 12px !important;
+        white-space: nowrap !important;
+    }
 }
     </style>
 </head>
@@ -635,6 +663,7 @@ if (!code) {
 </script>
 </body>
 </html>
+
 
 
 
