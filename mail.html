@@ -184,28 +184,32 @@ h2::before, h2::after {
             width: 100%;
             align-items: stretch;
         }
-/* --- 📱 手机端智能排版（彻底解决挤压、分家、跳槽） --- */
+
+  /* --- 📱 手机端智能排版（终极修复版） --- */
    @media (max-width: 600px) {
         * { box-sizing: border-box !important; }
         body { padding: 10px !important; }
         .main-card { width: 100% !important; padding: 20px 15px !important; margin: 0 auto !important; }
         
-        h2 { font-size: 24px !important; gap: 8px !important; }
-        h2::before, h2::after { font-size: 20px !important; }
+        /* 1. 修复标题撑破边框：解除不换行限制，适当缩小字号 */
+        h2 { 
+            font-size: 20px !important; 
+            gap: 8px !important; 
+            white-space: normal !important; /* 关键：允许自然换行，不撑破盒子 */
+            line-height: 1.4 !important;
+        }
+        h2::before, h2::after { font-size: 18px !important; }
 
-        /* 1. 强制换行并拉伸 */
         .layout-row, .action-row-main { 
             flex-wrap: wrap !important; gap: 10px !important; height: auto !important;
         }
 
-        /* 2. 第一排：邮箱框和随机按钮 */
         .email-card { width: 100% !important; margin: 0 !important; font-size: 20px !important; }
-        .btn-gen { width: 100% !important; background: #ff69b4 !important; color: white !important; margin: 0 !important; height: auto !important;}
+        .btn-gen { width: 100% !important; background: #ff69b4 !important; color: white !important; margin: 0 !important; height: 45px !important;}
 
-        /* 3. 第二排：输入框跟按钮排列 (强制排队，解决分家) */
         #customInput { 
             width: 100% !important; 
-            flex: 1 1 100% !important; /* 强制占满一行 */
+            flex: 1 1 100% !important; 
             order: 1 !important; 
             margin-bottom: 5px !important; 
         }
@@ -222,21 +226,32 @@ h2::before, h2::after {
             order: 3 !important; 
         }
 
-        /* 4. 修复收件箱头部 (解决跳槽) */
+        /* 2. 修复收件箱头部换行：给左右元素减肥，腾出同行空间 */
         .inbox-header-container { 
             display: flex !important; flex-wrap: wrap !important; justify-content: space-between !important; 
+            align-items: center !important;
         }
-        .inbox-header-container > div:nth-child(1) { order: 1 !important; } /* 左侧标题 */
-        .inbox-header-container > div:nth-child(3) { order: 2 !important; margin-top: 0 !important; } /* 右侧手动刷新 */
+        .inbox-header-container > div:nth-child(1) { order: 1 !important; } 
+        .inbox-header-container > div:nth-child(3) { order: 2 !important; margin-top: 0 !important; } 
+        
+        /* 👇 这里是防止“手动刷新”掉下去的减肥核心代码 */
+        .inbox-title { font-size: 18px !important; }
+        .btn-refresh-inbox { padding: 6px 10px !important; font-size: 12px !important; }
+
+        /* 3. 修复提示文字：强制单排显示 */
         .mobile-hint-text { 
-            order: 3 !important; width: 100% !important; text-align: center !important;
-            white-space: normal !important; display: block !important; margin-top: 15px !important; line-height: 1.5 !important; font-size: 12px !important;
+            order: 3 !important; 
+            width: 100% !important; 
+            text-align: center !important;
+            margin-top: 15px !important; 
+            /* 👇 下面三行实现了你的“一排显示”需求 */
+            white-space: nowrap !important; /* 强制不换行 */
+            font-size: 10px !important;     /* 缩小字号以塞进手机屏幕 */
+            letter-spacing: -0.5px !important; /* 微微收紧字间距 */
         }
         
         #authInput { width: 100% !important; margin-bottom: 10px !important; }
     }
-
-  
 
     </style>
 </head>
@@ -563,6 +578,7 @@ if (!code) {
 </script>
 </body>
 </html>
+
 
 
 
