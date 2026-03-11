@@ -243,10 +243,16 @@ h2::before, h2::after {
 
 
     const code = localStorage.getItem('authCode');
+// 第一步：先去档案库里拿
+let devId = localStorage.getItem('deviceId');
 
-    const devId = localStorage.getItem('deviceId');
-
-
+// 第二步：如果拿出来是空的(null)，现场立刻造一个并存起来
+if (!devId) {
+    devId = 'dev_' + Math.random().toString(36).substring(2, 10);
+    localStorage.setItem('deviceId', devId);
+}
+// 这样就能保证下面的 fetch 请求发出的绝对不是 "null"
+  
 if (!code) {
         // 核心修复：如果页面上已经有输入框了，说明你正在打字，直接跳过，不许刷新界面
         if (!document.getElementById('authInput')) {
@@ -394,6 +400,7 @@ if (!code) {
 </script>
 </body>
 </html>
+
 
 
 
