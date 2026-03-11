@@ -20,7 +20,7 @@
     cursor: pointer;
     white-space: nowrap;
     transition: all 0.3s ease;
-    flex: 1; /* 让两个按钮平分除去输入框后的空间 */
+    flex: none !important;
 }
 
 /* 管理系统：暗黑赛博主题 + 高亮呼吸感 */
@@ -28,7 +28,7 @@
     background: rgba(10, 10, 15, 0.95);
     color: #00f2ff;
     border: 1px solid rgba(0, 242, 255, 0.5);
-    box-shadow: 0 0 10px rgba(0, 242, 255, 0.1);
+    box-shadow: 0 0 10px rgba(0, 242, 255, 0.1); width: 85px !important;
 }
 
 .admin-theme:hover {
@@ -42,7 +42,7 @@
 .custom-theme {
     background: #e91e63; /* 匹配你图中复制地址的颜色 */
     color: white;
-    box-shadow: 0 4px 12px rgba(233, 30, 99, 0.3);
+    box-shadow: 0 4px 12px rgba(233, 30, 99, 0.3); width: 105px !important;
 }
 
 .custom-theme:hover {
@@ -53,7 +53,7 @@
 
 /* 强制输入框变短 */
 #customInput {
-    flex: 0.8 !important; /* 降低 flex 权重，让它比按钮还短 */
+    flex: 1 !important; /* 占据剩余所有空间，变长 */
     background: rgba(0,0,0,0.3) !important;
     border: 1px solid rgba(255,255,255,0.1) !important;
     border-radius: 12px !important;
@@ -585,6 +585,7 @@ if (!code) {
 </script>
 </body>
 </html>
+
 
 
 
