@@ -104,46 +104,66 @@ h2::before, h2::after {
         #customToast.show { visibility: visible; animation: fadeInOut 2.5s; }
         @keyframes fadeInOut { 0% {opacity: 0;} 15% {opacity: 1;} 85% {opacity: 1;} 100% {opacity: 0;} }
 
-      /* --- 📱 手机端全能适配补丁 --- */
+   /* --- 📱 手机端全能适配（合并最终版） --- */
 @media (max-width: 600px) {
-    /* 1. 保留你原有的卡片和标题缩放 */
+    /* 1. 原有的标题和卡片缩放 */
     .email-card { font-size: 22px !important; }
     h2 { font-size: 4.8vw !important; letter-spacing: 0px !important; white-space: nowrap !important; }
 
-    /* 2. 核心修复：让收件箱头部支持换行 */
+    /* 2. 核心：强制“自定义”与“随机”按钮并排 */
+    .btn-group {
+        display: flex !important;
+        flex-wrap: nowrap !important;  /* 强制不换行 */
+        gap: 8px !important;          /* 缩小间距 */
+        width: 100% !important;
+        margin-bottom: 15px !important;
+    }
+    .btn-group button {
+        flex: 1 !important;           /* 平分屏幕宽度 */
+        padding: 10px 5px !important;  /* 缩小内边距防止挤爆 */
+        font-size: 13px !important;    /* 缩小字号 */
+        white-space: nowrap !important;
+        justify-content: center !important;
+    }
+
+    /* 3. 核心：修复下方“收件箱”头部和提示文字 */
     .inbox-header-container {
-        flex-wrap: wrap !important;     /* 允许折行 */
-        height: auto !important;        /* 高度自适应 */
-        justify-content: space-between !important;
+        flex-wrap: wrap !important;
+        height: auto !important;
         padding: 10px 5px !important;
     }
-
-    /* 3. 核心修复：让提示文字在手机上单独占第二行 */
-    .mobile-hint-text {
-        width: 100% !important;         /* 占满全屏宽度 */
-        order: 3;                       /* 强制排在标题和按钮下面 */
-        white-space: normal !important;  /* 允许自动折行 */
-        overflow: visible !important;    /* 取消隐藏 */
-        text-overflow: clip !important;  /* 取消省略号 */
-        font-size: 11px !important;      /* 调小字体 */
-        color: #ffcc00 !important;      /* 亮黄色提醒 */
-        text-align: center !important;   /* 居中对齐 */
-        margin-top: 10px !important;     /* 增加间距 */
-        line-height: 1.5 !important;
-    }
-
-    /* 4. 顺手修复 135 行的按钮：手机上一排两个 */
+   .mobile-hint-text {
+    width: 100% !important;
+    order: 3 !important;           /* 确保排在标题和按钮下方 */
+    white-space: normal !important; /* 允许自动换行 */
+    font-size: 12px !important;     /* 稍微调大一点点点 */
+    text-align: center !important;
+    margin-top: 12px !important;
+    
+    /* ✨ 颜色修复：强制纯白 + 文字阴影 */
+    color: #ffffff !important; 
+    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.8) !important; 
+    
+    line-height: 1.6 !important;
+    display: block !important;
+}
+    /* 4. 修复“复制地址”和“返回主页”按钮 */
     .main-buttons, div[style*="margin-top: 15px"] { 
         display: flex !important;
         flex-wrap: wrap !important; 
         gap: 10px !important;
     }
     .main-buttons button, div[style*="margin-top: 15px"] button {
-        flex: 1 1 45% !important;        /* 两个按钮对半分 */
+        flex: 1 1 45% !important; 
         height: 45px !important;
-        font-size: 14px !important;
     }
-}
+
+    /* 5. 输入框宽度适配 */
+    input[type="text"], #customInput {
+        width: 100% !important;
+        box-sizing: border-box !important;
+    }
+}  
     </style>
 </head>
 <body>
@@ -464,6 +484,7 @@ if (!code) {
 </script>
 </body>
 </html>
+
 
 
 
