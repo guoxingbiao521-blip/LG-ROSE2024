@@ -133,26 +133,18 @@ h2::before, h2::after {
         padding: 10px 5px !important;
     }
    .mobile-hint-text {
-    width: 100% !important;
-    order: 3 !important;           /* 确保排在标题和按钮下方 */
-    white-space: normal !important; /* 允许自动换行 */
-    font-size: 12px !important;     /* 稍微调大一点点点 */
-    text-align: center !important;
-    margin-top: 12px !important;
-    
-    /* ✨ 颜色修复：强制纯白 + 文字阴影 */
-    color: #ffffff !important; 
-    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.8) !important; 
-    
-    line-height: 1.6 !important;
-    display: block !important;
-}
-    /* 4. 修复“复制地址”和“返回主页”按钮 */
-    .main-buttons, div[style*="margin-top: 15px"] { 
-        display: flex !important;
-        flex-wrap: wrap !important; 
-        gap: 10px !important;
+        width: 100% !important;
+        order: 3 !important;
+        white-space: normal !important;
+        color: #ffffff !important; 
+        text-shadow: 1px 1px 3px rgba(0,0,0,0.8) !important;
+        font-size: 12px !important;
+        text-align: center !important;
+        margin-top: 12px !important;
+        display: block !important;
+        line-height: 1.6 !important;
     }
+} /* 👈 确保这个大括号是 160 行那个，用来关掉 @media 的 */
     .main-buttons button, div[style*="margin-top: 15px"] button {
         flex: 1 1 45% !important; 
         height: 45px !important;
@@ -201,7 +193,7 @@ h2::before, h2::after {
                 <h3 class="inbox-title" style="margin: 0;">📥 筑梦收件箱</h3>
                 <span class="refresh-timer" id="timerDisplay">5s 刷新</span>
             </div>
-<div class="mobile-hint-text">
+<div class="mobile-hint-text" style="color: #ffffff !important; text-shadow: 1px 1px 3px rgba(0,0,0,0.8);">
     💡 如您没有激活码请返回主页到底部联系站长微信获取
 </div>
             
@@ -484,6 +476,7 @@ if (!code) {
 </script>
 </body>
 </html>
+
 
 
 
