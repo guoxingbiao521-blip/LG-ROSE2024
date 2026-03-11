@@ -28,7 +28,7 @@
     background: rgba(10, 10, 15, 0.95);
     color: #00f2ff;
     border: 1px solid rgba(0, 242, 255, 0.5);
-    box-shadow: 0 0 10px rgba(0, 242, 255, 0.1); 
+    box-shadow: 0 5px 0 #008899 !important;
     /* 👇 新增下面这三行 */
     width: 150px !important; 
     flex: none !important; 
@@ -508,7 +508,7 @@ if (!code) {
                 <h3 style="color: #fff; margin-bottom: 20px;">${msg}</h3>
                 <div style="display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; align-items: center;">
                     <input type="password" id="authInput" placeholder="输入激活码..." style="padding: 12px; border-radius: 8px; border: 1px solid #ff69b4; background: rgba(255,255,255,0.1); color: #fff; width: 200px; outline: none;">
-                    <button onclick="unlock()" style="padding: 12px 25px; border-radius: 8px; background: #ff69b4; color: #fff; border: none; cursor: pointer; font-weight: bold; box-shadow: 0 0 15px rgba(255,105,180,0.6); white-space: nowrap;">立即激活</button>
+                    <button onclick="unlock()" style="padding: 12px 25px; border-radius: 8px; background: #ff69b4; color: #fff; border: none; cursor: pointer; font-weight: bold; box-shadow: 0 5px 0 #c2185b; white-space: nowrap;">立即激活</button>
                 </div>
                 <p style="color: #aaa; font-size: 12px; margin-top: 15px;">⚠️温馨提醒：一人一码，系统自动检测，多人共用激活码将自动失效！</p>
             </div>
@@ -563,6 +563,7 @@ if (!code) {
 </script>
 </body>
 </html>
+
 
 
 
