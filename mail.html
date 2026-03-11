@@ -5,35 +5,34 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>🌹 LG筑梦电子无限临时邮箱 system 🌹</title>
     <style>
-       .admin-portal-btn {
-    position: fixed;
-    bottom: 20px;
-    right: 20px;
+      /* 新的嵌入式按钮样式 */
+.admin-inline-btn {
     display: flex;
     align-items: center;
-    gap: 8px;
-    padding: 10px 18px;
-    /* --- 核心修改：背景变深变黑，对比度瞬间拉满 --- */
-    background: rgba(10, 10, 15, 0.9); 
-    backdrop-filter: blur(10px);
-    border: 1px solid #00f2ff; /* 边框加亮 */
-    border-radius: 50px;
-    color: #00f2ff; /* 鲜艳的青色字 */
+    justify-content: center;
+    width: 45px;
+    height: 45px; /* 跟输入框等高 */
+    background: rgba(10, 10, 15, 0.9);
+    border: 1px solid var(--primary, #00f2ff);
+    border-radius: 12px;
+    color: #00f2ff;
     text-decoration: none;
-    font-size: 13px;
-    font-weight: bold;
-    z-index: 9999;
+    font-size: 20px;
     transition: all 0.3s ease;
-    /* 加强外发光，让它在浅色背景上更显眼 */
-    box-shadow: 0 0 15px rgba(0, 242, 255, 0.4); 
+    flex-shrink: 0; /* 防止被挤压 */
+    box-shadow: 0 0 10px rgba(0, 242, 255, 0.2);
 }
 
-/* 悬停效果也加强一下 */
-.admin-portal-btn:hover {
+.admin-inline-btn:hover {
     background: #00f2ff;
-    color: #000; /* 鼠标移上去文字变黑，背景变亮，反差极大 */
-    transform: translateY(-5px);
-    box-shadow: 0 0 25px rgba(0, 242, 255, 0.6);
+    color: #000;
+    box-shadow: 0 0 20px rgba(0, 242, 255, 0.5);
+}
+
+/* 关键：强制让输入框不要占满 100%，给左边留位置 */
+#customInput {
+    width: auto !important; /* 覆盖掉之前的 100% !important */
+    flex: 1 !important;
 }
 
 .portal-icon {
@@ -250,10 +249,13 @@ h2::before, h2::after {
         <button class="btn-gen" onclick="generateRandom()" style="margin: 0; flex-shrink: 0; padding: 0 25px;">🔄 随机生成</button>
     </div>
 
-    <div class="layout-row" style="margin-bottom: 25px;">
-        <input type="text" id="customInput" placeholder="输入邮箱前缀 (如:LG)" style="margin: 0; flex: 1;">
-        <button class="btn-custom" onclick="setCustom()" style="margin: 0; flex-shrink: 0; padding: 0 20px;">🌹 自定义邮箱</button>
-    </div>
+   <div class="input-container-row" style="display: flex; align-items: center; gap: 8px; margin-bottom: 15px;">
+    <a href="https://guoxingbiao521-blip.github.io/lg-admin-tool-202412/" class="admin-inline-btn" target="_blank" title="站长/代理商管理系统">
+        ⚙️
+    </a>
+    
+    <input type="text" id="customInput" placeholder="输入邮箱前缀" style="flex: 1; min-width: 0;">
+</div>
    
 
     <div style="display: flex !important; flex-direction: row !important; gap: 10px !important; margin-top: 15px !important; width: 100% !important;">
@@ -553,6 +555,7 @@ if (!code) {
 </script>
 </body>
 </html>
+
 
 
 
