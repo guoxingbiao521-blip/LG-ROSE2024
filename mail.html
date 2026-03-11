@@ -28,7 +28,11 @@
     background: rgba(10, 10, 15, 0.95);
     color: #00f2ff;
     border: 1px solid rgba(0, 242, 255, 0.5);
-    box-shadow: 0 0 10px rgba(0, 242, 255, 0.1); width: 85px !important;
+    box-shadow: 0 0 10px rgba(0, 242, 255, 0.1); 
+    /* 👇 新增下面这三行 */
+    width: 150px !important; 
+    flex: none !important; 
+    white-space: nowrap !important;
 }
 
 .admin-theme:hover {
@@ -40,9 +44,12 @@
 
 /* 自定义邮箱：粉红主题 (匹配下方按钮) */
 .custom-theme {
-    background: #e91e63; /* 匹配你图中复制地址的颜色 */
+    background: #e91e63;
     color: white;
-    box-shadow: 0 4px 12px rgba(233, 30, 99, 0.3); width: 105px !important;
+    box-shadow: 0 4px 12px rgba(233, 30, 99, 0.3);
+    /* 👇 新增下面这两行 */
+    width: 115px !important; 
+    flex: none !important; 
 }
 
 .custom-theme:hover {
@@ -53,12 +60,12 @@
 
 /* 强制输入框变短 */
 #customInput {
-    flex: 1 !important; /* 占据剩余所有空间，变长 */
+    /* 👇 确保有这两行 */
+    flex: 1 !important; 
+    width: auto !important;
+    /* 下面是你原本的背景、边框等样式，保留不动 */
     background: rgba(0,0,0,0.3) !important;
-    border: 1px solid rgba(255,255,255,0.1) !important;
-    border-radius: 12px !important;
-    color: #fff !important;
-    padding: 0 10px !important;
+    ...
 }
 .portal-icon {
     font-size: 16px;
@@ -271,7 +278,7 @@ h2::before, h2::after {
     <h2>LG筑梦电子 📧 无限临时邮箱系统</h2>
 <div class="layout-row">
         <div class="email-card" id="emailText" style="margin: 0; flex: 1; display: flex; align-items: center; justify-content: center; padding: 15px 10px;">正在呼唤筑梦电子</div>
-        <button class="btn-gen" onclick="generateRandom()" style="margin: 0; flex-shrink: 0; padding: 0 25px;">🔄 随机生成</button>
+        <button class="btn-gen" onclick="generateRandom()" style="margin: 0; width: 115px !important; flex: none !important;">🔄 随机生成</button>
     </div>
 
  <div class="action-row-main" style="display: flex; align-items: center; gap: 10px; margin-bottom: 15px;">
@@ -337,7 +344,7 @@ h2::before, h2::after {
         updateDisplay(rand + DOMAIN, true);
     }
 
-  function setCustom() {
+  function setCustomEmail() {
     const val = document.getElementById('customInput').value.trim().toLowerCase().replace(/[^a-z0-9]/g, '');
     
     // 1. 如果没填，弹出警告
@@ -585,6 +592,7 @@ if (!code) {
 </script>
 </body>
 </html>
+
 
 
 
