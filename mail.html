@@ -181,11 +181,18 @@ h2::before, h2::after {
         updateDisplay(rand + DOMAIN, true);
     }
 
-    function setCustom() {
-        const val = document.getElementById('customInput').value.trim().toLowerCase().replace(/[^a-z0-9]/g, '');
-        if(!val) return showToast("⚠️ 请输入前缀");
-        updateDisplay(val + DOMAIN, false);
-    }
+  function setCustom() {
+    const val = document.getElementById('customInput').value.trim().toLowerCase().replace(/[^a-z0-9]/g, '');
+    
+    // 1. 如果没填，弹出警告
+    if(!val) return showToast("⚠️ 请先输入前缀");
+    
+    // 2. 执行原本的更新逻辑
+    updateDisplay(val + DOMAIN, false);
+    
+    // ✨ 3. 加上这一行：成功的心理反馈
+    showToast("✅ 自定义邮箱已激活");
+}
 
     function updateDisplay(email, isRandom = false) {
         const textElement = document.getElementById('emailText');
@@ -421,6 +428,7 @@ if (!code) {
 </script>
 </body>
 </html>
+
 
 
 
