@@ -375,20 +375,40 @@ if (!code) {
  async function unlock() {
     const codeInput = document.getElementById('authInput');
     const code = codeInput.value.trim();
-
-    // 1. 基本检查：不能为空
+    
+    // 1. 基本检查
     if (!code) return showToast("⚠️ 请输入激活码");
 
-    // 2. 方案 B 的精髓：不管输入什么，先存起来并刷新页面
-    // 剩下的验证交给服务器处理（就是你之前发的那段 401/403 逻辑）
-    localStorage.setItem('authCode', code);
-    
-    showToast("⚙️ 正在验证激活码...");
-    
-    // 延迟 1 秒刷新，给用户看一眼提示
-    setTimeout(() => {
-        location.reload();
-    }, 1000);
+    // ✨ 核心：激活时必须带上“身份证”，否则服务器没法踢掉旧设备
+    const devId = localStorage.getItem('deviceId');
+
+    showToast("🔍 正在验证并绑定设备...");
+
+    try {
+        // 2. 发送到服务器的验证接口（POST）
+        const response = await fetch(`${API_BASE.replace('emails', 'verify')}`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ code: code, deviceId: devId })
+        });
+
+        const data = await response.json();
+
+        if (response.ok) {
+            // 3. 验证成功，保存激活码并刷新
+            localStorage.setItem('authCode', code);
+            showToast("✅ 激活成功，欢迎使用");
+            setTimeout(() => {
+                location.reload();
+            }, 800);
+        } else {
+            // 4. 验证失败（比如码写错了）
+            showToast("❌ " + (data.error || "无法激活，激活码无效！"));
+        }
+    } catch (error) {
+        console.error("激活请求失败:", error);
+        showToast("🌐 网络错误，请稍后重试！");
+    }
 }
 
     // 初始化
@@ -401,6 +421,7 @@ if (!code) {
 </script>
 </body>
 </html>
+
 
 
 
