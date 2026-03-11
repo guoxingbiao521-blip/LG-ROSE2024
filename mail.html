@@ -185,25 +185,34 @@ h2::before, h2::after {
             align-items: stretch;
         }
 
-/* --- 📱 手机端智能排版（网格布局终极修复版） --- */
+/* --- 📱 手机端智能排版（全机型尺寸终极适配版） --- */
    @media (max-width: 600px) {
         * { box-sizing: border-box !important; }
         body { padding: 10px !important; }
-        .main-card { width: 100% !important; padding: 20px 15px !important; margin: 0 auto !important; }
+        .main-card { width: 100% !important; padding: 20px 10px !important; margin: 0 auto !important; }
         
-        /* --- 🎯 修复 1：大标题强制单排，精致缩放 --- */
+        /* 大标题强制单排 */
         h2 { 
-            font-size: 15px !important; /* 缩小字号以适应小屏幕 */
+            font-size: 15px !important; 
             gap: 5px !important; 
-            white-space: nowrap !important; /* 重新加上强制不换行 */
+            white-space: nowrap !important; 
         }
         h2::before, h2::after { font-size: 15px !important; }
 
         .layout-row, .action-row-main { 
-            flex-wrap: wrap !important; gap: 10px !important; height: auto !important;
+            flex-wrap: wrap !important; gap: 8px !important; height: auto !important;
         }
 
-        .email-card { width: 100% !important; margin: 0 !important; font-size: 20px !important; }
+        /* --- 🎯 修复 1：邮箱地址框换行问题 --- */
+        .email-card { 
+            width: 100% !important; 
+            margin: 0 !important; 
+            /* 核心黑科技 clamp：字号最小 14px，优先跟随屏幕比例(4.5vw)，最大 18px */
+            font-size: clamp(14px, 4.5vw, 18px) !important; 
+            white-space: nowrap !important; /* 绝对不许换行 */
+            padding: 10px 5px !important; /* 减少内边距，给文字腾出更多空间 */
+            overflow: hidden !important; 
+        }
         .btn-gen { width: 100% !important; background: #ff69b4 !important; color: white !important; margin: 0 !important; height: 45px !important;}
 
         #customInput { 
@@ -225,43 +234,49 @@ h2::before, h2::after {
             order: 3 !important; 
         }
 
-        /* --- 🎯 修复 2：收件箱区域换用无敌的 Grid 网格布局 --- */
+        /* --- 🎯 修复 2 & 3：收件箱、倒计时换行问题 --- */
         .inbox-header-container { 
             display: grid !important; 
-            grid-template-columns: 1fr auto !important; /* 把空间严格切成左右两块 */
-            row-gap: 15px !important; /* 上下两排的间距 */
+            grid-template-columns: 1fr auto !important; 
+            row-gap: 12px !important; 
+            column-gap: 5px !important; /* 左右两块的间距缩小，防挤压 */
             align-items: center !important;
             padding-bottom: 10px !important;
         }
-        /* 左上：强行锁死收件箱标题在第一排左侧 */
+        /* 左上：收件箱标题 + 倒计时 */
         .inbox-header-container > div:nth-child(1) { 
             grid-column: 1 / 2 !important; 
             grid-row: 1 !important; 
+            display: flex !important; 
+            flex-wrap: nowrap !important; /* 核心：内部元素强制同行 */
+            align-items: center !important;
+            gap: 5px !important; /* 缩小标题和倒计时的间距 */
         } 
-        /* 右上：强行锁死手动刷新按钮在第一排右侧 */
+        /* 右上：手动刷新 */
         .inbox-header-container > div:nth-child(3) { 
             grid-column: 2 / 3 !important; 
             grid-row: 1 !important; 
             margin-top: 0 !important; 
         } 
-        /* 下方：强行锁死提示文字在第二排，且单行显示 */
+        /* 下方：提示文字 */
         .mobile-hint-text { 
-            grid-column: 1 / 3 !important; /* 横跨左右两列 */
-            grid-row: 2 !important; /* 滚去第二排 */
+            grid-column: 1 / 3 !important; 
+            grid-row: 2 !important; 
             width: 100% !important; 
             text-align: center !important;
             margin-top: 0 !important; 
-            white-space: nowrap !important; /* 强制单行显示 */
-            font-size: 10px !important; /* 缩小一丢丢以保证装得下 */
+            white-space: nowrap !important; 
+            font-size: 10px !important; 
             letter-spacing: -0.5px !important; 
         }
         
-        .inbox-title { font-size: 16px !important; }
-        .btn-refresh-inbox { padding: 6px 12px !important; font-size: 12px !important; margin: 0 !important; }
+        /* 给所有容易“作妖”的文本加上“护身符”：缩小字号 + 强制不换行 */
+        .inbox-title { font-size: 14px !important; white-space: nowrap !important; margin: 0 !important; }
+        .refresh-timer { font-size: 11px !important; white-space: nowrap !important; padding: 2px 5px !important; margin: 0 !important; }
+        .btn-refresh-inbox { padding: 6px 10px !important; font-size: 12px !important; margin: 0 !important; white-space: nowrap !important; }
 
         #authInput { width: 100% !important; margin-bottom: 10px !important; }
     }
-
     </style>
 </head>
 <body>
@@ -587,6 +602,7 @@ if (!code) {
 </script>
 </body>
 </html>
+
 
 
 
