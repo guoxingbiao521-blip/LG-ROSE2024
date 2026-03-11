@@ -109,7 +109,19 @@ h2::before, h2::after {
     /* 1. 原有的标题和卡片缩放 */
     .email-card { font-size: 22px !important; }
     h2 { font-size: 4.8vw !important; letter-spacing: 0px !important; white-space: nowrap !important; }
+/* 强制整体居中补丁 */
+    body {
+        display: flex !important;
+        flex-direction: column !important;
+        align-items: center !important; /* 水平居中 */
+        padding: 0 5px !important;
+    }
 
+    .inbox-card, .btn-group, .main-buttons, div[style*="margin-top: 15px"] {
+        width: 95% !important;        /* 宽度占满但留点缝 */
+        margin-left: auto !important;  /* 左右 auto 是居中神技 */
+        margin-right: auto !important;
+    }
     /* 2. 核心：强制“自定义”与“随机”按钮并排 */
     .btn-group {
         display: flex !important;
@@ -476,6 +488,7 @@ if (!code) {
 </script>
 </body>
 </html>
+
 
 
 
