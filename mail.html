@@ -104,11 +104,46 @@ h2::before, h2::after {
         #customToast.show { visibility: visible; animation: fadeInOut 2.5s; }
         @keyframes fadeInOut { 0% {opacity: 0;} 15% {opacity: 1;} 85% {opacity: 1;} 100% {opacity: 0;} }
 
-        @media (max-width: 600px) {
-            .email-card { font-size: 22px !important; }
-            h2 { font-size: 4.8vw !important; letter-spacing: 0px !important; white-space: nowrap !important; }
-            .inbox-header { flex-wrap: wrap !important; gap: 12px !important; }
-        }
+      /* --- 📱 手机端全能适配补丁 --- */
+@media (max-width: 600px) {
+    /* 1. 保留你原有的卡片和标题缩放 */
+    .email-card { font-size: 22px !important; }
+    h2 { font-size: 4.8vw !important; letter-spacing: 0px !important; white-space: nowrap !important; }
+
+    /* 2. 核心修复：让收件箱头部支持换行 */
+    .inbox-header-container {
+        flex-wrap: wrap !important;     /* 允许折行 */
+        height: auto !important;        /* 高度自适应 */
+        justify-content: space-between !important;
+        padding: 10px 5px !important;
+    }
+
+    /* 3. 核心修复：让提示文字在手机上单独占第二行 */
+    .mobile-hint-text {
+        width: 100% !important;         /* 占满全屏宽度 */
+        order: 3;                       /* 强制排在标题和按钮下面 */
+        white-space: normal !important;  /* 允许自动折行 */
+        overflow: visible !important;    /* 取消隐藏 */
+        text-overflow: clip !important;  /* 取消省略号 */
+        font-size: 11px !important;      /* 调小字体 */
+        color: #ffcc00 !important;      /* 亮黄色提醒 */
+        text-align: center !important;   /* 居中对齐 */
+        margin-top: 10px !important;     /* 增加间距 */
+        line-height: 1.5 !important;
+    }
+
+    /* 4. 顺手修复 135 行的按钮：手机上一排两个 */
+    .main-buttons, div[style*="margin-top: 15px"] { 
+        display: flex !important;
+        flex-wrap: wrap !important; 
+        gap: 10px !important;
+    }
+    .main-buttons button, div[style*="margin-top: 15px"] button {
+        flex: 1 1 45% !important;        /* 两个按钮对半分 */
+        height: 45px !important;
+        font-size: 14px !important;
+    }
+}
     </style>
 </head>
 <body>
@@ -140,16 +175,17 @@ h2::before, h2::after {
    
    <div class="inbox-card">
         
-        <div class="inbox-header" style="display: flex; align-items: center; justify-content: space-between; gap: 15px; width: 100%; padding: 0 5px; box-sizing: border-box; border-bottom: 1px solid rgba(255, 182, 193, 0.3); padding-bottom: 15px; margin-bottom: 20px;">
+        <div class="inbox-header inbox-header-container" style="display: flex; align-items: center; justify-content: space-between; gap: 15px; width: 100%; padding: 0 5px; box-sizing: border-box; border-bottom: 1px solid rgba(255, 182, 193, 0.3); padding-bottom: 15px; margin-bottom: 20px;">
             
             <div style="display: flex; align-items: center; gap: 10px; flex-shrink: 0;">
                 <h3 class="inbox-title" style="margin: 0;">📥 筑梦收件箱</h3>
                 <span class="refresh-timer" id="timerDisplay">5s 刷新</span>
             </div>
-
-            <div style="flex: 1; text-align: center; color: #fff; font-size: 14px; letter-spacing: 1px; font-weight: normal; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">
-                💡 如您没有激活码请返回主页到底部联系站长微信获取
-            </div>
+<div class="mobile-hint-text">
+    💡 如您没有激活码请返回主页到底部联系站长微信获取
+</div>
+            
+                
 
             <div style="flex-shrink: 0;">
                 <button class="btn-refresh-inbox" onclick="manualRefresh()" style="margin: 0; padding: 8px 16px;">🔄 手动刷新</button>
@@ -428,6 +464,7 @@ if (!code) {
 </script>
 </body>
 </html>
+
 
 
 
