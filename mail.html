@@ -46,7 +46,7 @@
 .custom-theme {
     background: #e91e63;
     color: white;
-    box-shadow: 0 4px 12px rgba(233, 30, 99, 0.3);
+    box-shadow: 0 5px 0 var(--rose-dark) !important;
     /* 👇 新增下面这两行 */
     width: 115px !important; 
     flex: none !important; 
@@ -267,8 +267,8 @@ h2::before, h2::after {
    
 
     <div style="display: flex !important; flex-direction: row !important; gap: 10px !important; margin-top: 15px !important; width: 100% !important;">
-        <button onclick="copyEmail()" style="flex: 1; height: 45px; background-color: #e91e63;">📋 复制地址</button>
-        <button onclick="window.location.href='index.html'" style="flex: 1; height: 45px; background-color: #f06292;">🏠 返回主页</button>
+        <button onclick="copyEmail()" style="flex: 1; height: 45px; background-color: #e91e63;; box-shadow: 0 5px 0 #c2185b;">📋 复制地址</button>
+        <button onclick="window.location.href='index.html'" style="flex: 1; height: 45px; background-color: #f06292;; box-shadow: 0 5px 0 #c2185b;">🏠 返回主页</button>
     </div>
    
    <div class="inbox-card">
@@ -563,6 +563,7 @@ if (!code) {
 </script>
 </body>
 </html>
+
 
 
 
