@@ -276,6 +276,16 @@ h2::before, h2::after {
         .btn-refresh-inbox { padding: 6px 10px !important; font-size: 12px !important; margin: 0 !important; white-space: nowrap !important; }
 
         #authInput { width: 100% !important; margin-bottom: 10px !important; }
+       /* --- 🎯 修复：底部三个操作按钮文字换行 --- */
+        button[onclick="copyEmail()"], 
+        button[onclick="clearEmails()"], 
+        button[onclick*="index.html"] {
+            font-size: 11px !important; /* 缩小字号，给文字腾地方 */
+            padding: 0 2px !important; /* 极限压缩左右内边距，去掉多余留白 */
+            white-space: nowrap !important; /* 强制绝对不换行，打死不换 */
+            letter-spacing: -0.5px !important; /* 字间距稍微收缩一点点 */
+            overflow: hidden !important; /* 配合不换行，防止撑爆边框 */
+        }
     }
     </style>
 </head>
@@ -610,6 +620,7 @@ if (!code) {
 </script>
 </body>
 </html>
+
 
 
 
