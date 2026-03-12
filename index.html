@@ -853,6 +853,74 @@ header nav{
     border-color: #ff2b86 !important;
     box-shadow: 0 12px 25px rgba(0, 0, 0, 0.3), 0 0 15px rgba(255, 43, 134, 0.4) !important;
 }
+    /* ============================================
+   🔥 筑梦 VIP 站：纯净白霜玻璃 + 家族化手机端适配
+   ============================================ */
+
+/* 🎯 1. 材质进化：纯净白霜玻璃（彻底去除黑底） */
+.hero, .section-card, .dialog, .intro-text, .svc, .qrbox {
+    background: rgba(255, 255, 255, 0.05) !important; 
+    backdrop-filter: blur(30px) !important;     
+    -webkit-backdrop-filter: blur(30px) !important;
+    border: 1px solid rgba(255, 255, 255, 0.2) !important;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2) !important;
+}
+
+/* 🎯 2. 按钮动效注入 */
+.btn.primary { transition: all 0.3s ease !important; }
+.btn.primary:hover {
+    filter: brightness(1.2) !important;
+    transform: translateY(-3px) !important;
+    box-shadow: 0 8px 20px rgba(255, 43, 134, 0.5) !important;
+}
+.iconbtn { transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275) !important; }
+.iconbtn:hover {
+    background: rgba(255, 255, 255, 0.15) !important;
+    filter: brightness(1.4) !important;
+    transform: translateY(-8px) scale(1.08) !important;
+    border-color: #ff2b86 !important;
+    box-shadow: 0 12px 25px rgba(0, 0, 0, 0.3), 0 0 15px rgba(255, 43, 134, 0.4) !important;
+}
+
+/* 🎯 3. 手机端逻辑重构（完美复刻邮箱系统排版规则） */
+@media (max-width: 600px) {
+    /* 顶栏三段式折叠为两段，域名居中 */
+    header {
+        grid-template-columns: 1fr 1fr !important;
+        grid-template-areas: "brand nav" "center center" !important;
+        border-radius: 18px !important;
+    }
+    header .brand { grid-area: brand !important; }
+    header nav { grid-area: nav !important; }
+    .navcenter { 
+        grid-area: center !important; 
+        margin: 6px auto 0 !important; 
+        width: 100% !important; 
+        justify-content: center !important;
+    }
+
+    /* 🚨 核心逻辑：大屏幕的 4列/6列，在手机上全部强制变为 2 列整齐堆叠 */
+    .slogan-row, .cta, .svc-grid, .media-grid, .video-grid, .contact-row {
+        grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+        gap: 8px !important;
+    }
+
+    /* 优先级置顶：“立即联系”横跨整行，排在最上面 */
+    .cta .btn.primary {
+        grid-column: 1 / -1 !important;
+        order: -1 !important;
+        padding: 16px !important;
+        font-size: 15px !important;
+    }
+
+    /* 介绍板块上下堆叠 */
+    .intro-grid { grid-template-columns: 1fr !important; }
+    
+    /* 底部 6 大联系按钮尺寸微调，适合双手拇指按压 */
+    .iconbtn { min-height: 95px !important; padding: 10px !important; }
+    .iconimg { width: 34px !important; height: 34px !important; }
+    .iconlabel { font-size: 13px !important; }
+}
   </style>
 </head>
 
