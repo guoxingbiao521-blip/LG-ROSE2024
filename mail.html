@@ -305,10 +305,11 @@ h2::before, h2::after {
     </div>
    
 
-    <div style="display: flex !important; flex-direction: row !important; gap: 10px !important; margin-top: 15px !important; width: 100% !important;">
-        <button onclick="copyEmail()" style="flex: 1; height: 45px; background-color: #e91e63;; box-shadow: 0 5px 0 #c2185b;">📋 复制地址</button>
-        <button onclick="window.location.href='index.html'" style="flex: 1; height: 45px; background-color: #f06292;; box-shadow: 0 5px 0 #c2185b;">🏠 返回主页</button>
-    </div>
+  <div style="display: flex !important; flex-direction: row !important; gap: 10px !important; margin-top: 15px !important; width: 100% !important;">
+    <button onclick="copyEmail()" style="flex: 1; height: 45px; background-color: #e91e63; box-shadow: 0 5px 0 #c2185b;">📋 复制地址</button>
+    <button onclick="clearEmails()" style="flex: 1; height: 45px; background-color: #d81b60; box-shadow: 0 5px 0 #ad1457;">🗑️ 清空邮件</button>
+    <button onclick="window.location.href='index.html'" style="flex: 1; height: 45px; background-color: #f06292; box-shadow: 0 5px 0 #c2185b;">🏠 返回主页</button>
+</div>
    
    <div class="inbox-card">
         
@@ -340,6 +341,7 @@ h2::before, h2::after {
     let currentEmail = "";
     let timeLeft = 5; 
     let lastEmailCount = -1;
+    let ignoredEmailsCount = 0; // 记录被清理掉的邮件数量
     let rollInterval;
 
     function showToast(msg) {
@@ -399,7 +401,12 @@ h2::before, h2::after {
         if(!currentEmail) return;
         navigator.clipboard.writeText(currentEmail).then(() => showToast("📋 邮箱地址已复制"));
     }
-
+function clearEmails() {
+            if (lastEmailCount <= 0) return showToast("📭 当前没有邮件可清理");
+            ignoredEmailsCount = lastEmailCount; // 把目前已有的邮件全部拉黑隐藏
+            renderEmails([]); // 瞬间清空画面上的邮件列表
+            showToast("🗑️ 邮箱已清理，等待新邮件...");
+        }
     function startCountdown() {
         setInterval(() => {
             if (--timeLeft < 0) {
@@ -509,13 +516,14 @@ if (!code) {
             }
 
         }
-        
         lastEmailCount = data.length;
         
-        // ✅ 运行画图函数
+        // 👇 过滤掉被清理的邮件，只渲染新收到的邮件
+        const visibleEmails = data.slice(ignoredEmailsCount); 
         if (typeof renderEmails === 'function') {
-            renderEmails(data);
+            renderEmails(visibleEmails);
         }
+      
 } catch (e) {
         document.getElementById('emailList').innerHTML = '<p style="color:red; text-align:center; padding-top:50px;">手机端报错: ' + String(e) + '</p>';
     }
@@ -602,6 +610,7 @@ if (!code) {
 </script>
 </body>
 </html>
+
 
 
 
