@@ -14,8 +14,15 @@
         body {
             margin: 0; padding: 0;
             font-family: 'Segoe UI', system-ui, sans-serif;
-            background: url('bg2.jpg') no-repeat center center fixed;
-            background-size: cover;
+            
+            /* --- 🎨 注入背景图：精准匹配大写 JPG --- */
+            background-color: #0a0a0c !important; 
+            background-image: url('./bg2.JPG') !important; /* ⚠️ 已修正为大写 ⚠️ */
+            background-repeat: no-repeat !important;
+            background-position: center center !important;
+            background-attachment: fixed !important;
+            background-size: cover !important;
+            
             color: #fff;
             display: flex; justify-content: center; align-items: center;
             min-height: 100vh;
@@ -32,16 +39,26 @@
             text-align: center;
         }
 
-        .title-3d-full {
-            font-size: 24px; font-weight: 900;
-            margin-bottom: 35px; line-height: 1.4;
-            color: var(--primary);
-            text-shadow: 
-                0 1px 0 #008a91, 0 2px 0 #00767c, 
-                0 3px 0 #006267, 0 4px 0 #004e52,
-                0 5px 0 #b300b3, 0 6px 0 #8a008a,
-                0 7px 0 #660066, 0 8px 15px rgba(0,0,0,0.6);
-            display: flex; flex-direction: column; align-items: center; gap: 10px;
+        /* --- 💎 修正：标题强制一行 + 渐变恢复 --- */
+        .title-container {
+            display: flex !important;
+            flex-direction: row !important; /* ⚠️ 强制水平排版 ⚠️ */
+            justify-content: center;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 30px;
+            width: 100%;
+        }
+
+        .title-text {
+            font-size: 24px;
+            font-weight: 900;
+            /* 恢复你满意的渐变色 */
+            background: linear-gradient(to right, var(--primary), var(--accent)) !important;
+            -webkit-background-clip: text !important;
+            -webkit-text-fill-color: transparent !important;
+            /* 强化 3D 阴影 */
+            filter: drop-shadow(0 1px 0 #008a91) drop-shadow(0 2px 0 #8a008a) drop-shadow(0 4px 5px rgba(0,0,0,0.5));
         }
 
         .input-group { margin-bottom: 20px; text-align: left; }
@@ -53,8 +70,7 @@
             border: 1px solid rgba(255, 255, 255, 0.2) !important;
             border-radius: 12px; color: #fff; font-size: 16px; outline: none;
         }
-        input::placeholder { color: #888 !important; opacity: 1; }
-        input:focus { border-color: var(--primary) !important; background: rgba(255, 255, 255, 0.15) !important; }
+        input::placeholder { color: #aaa !important; opacity: 1; } /* 调亮占位符 */
 
         .btn-gen-3d {
             width: 100%; padding: 16px; margin-top: 10px; border: none;
@@ -63,10 +79,7 @@
             color: #000 !important; transition: 0.1s;
             box-shadow: 0 5px 0 #b300b3, 0 8px 15px rgba(0, 0, 0, 0.4);
         }
-        .btn-gen-3d:active { 
-            transform: translateY(3px);
-            box-shadow: 0 2px 0 #b300b3, 0 4px 8px rgba(0, 0, 0, 0.3);
-        }
+        .btn-gen-3d:active { transform: translateY(3px); box-shadow: 0 2px 0 #b300b3, 0 4px 8px rgba(0, 0, 0, 0.3); }
 
         .nav-group { display: flex; gap: 12px; margin-top: 15px; }
         .btn-nav-3d {
@@ -76,10 +89,7 @@
             background: #ff69b4 !important;
             box-shadow: 0 4px 0 #d1448b, 0 6px 10px rgba(0, 0, 0, 0.3);
         }
-        .btn-nav-3d:active {
-            transform: translateY(2px);
-            box-shadow: 0 2px 0 #d1448b, 0 3px 5px rgba(0, 0, 0, 0.2);
-        }
+        .btn-nav-3d:active { transform: translateY(2px); box-shadow: 0 2px 0 #d1448b, 0 3px 5px rgba(0, 0, 0, 0.2); }
 
         .result-wrapper { margin-top: 30px; position: relative; }
         textarea {
@@ -115,15 +125,15 @@
 <body>
 
     <div class="container">
-        <div class="title-3d-full">
-            <span>LG筑梦电子</span>
-            <div style="display: flex; align-items: center; gap: 10px;">
-                <svg viewBox="0 0 24 24" style="width: 32px; height: 32px; fill: none; stroke: var(--primary); stroke-width: 1.5; animation: glow 2s infinite alternate;">
-                    <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
-                    <polyline points="22,6 12,13 2,6"></polyline>
-                </svg>
-                <span style="color: var(--accent);">临时邮箱激活码系统</span>
-            </div>
+        <div class="title-container">
+            <span class="title-text">LG筑梦电子</span>
+            
+            <svg viewBox="0 0 24 24" style="width: 32px; height: 32px; fill: none; stroke: var(--primary); stroke-width: 1.5; animation: glow 2s infinite alternate;">
+                <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
+                <polyline points="22,6 12,13 2,6"></polyline>
+            </svg>
+
+            <span class="title-text">激活码系统</span>
         </div>
         
         <div class="input-group">
@@ -159,6 +169,7 @@
     </div>
 
     <script>
+        /* 核心逻辑保持不变 */
         function showModal(msg) {
             document.getElementById('modalMsg').innerText = msg;
             document.getElementById('customModal').style.display = 'flex';
