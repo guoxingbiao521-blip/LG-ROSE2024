@@ -814,6 +814,43 @@ header nav{
         grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
       }
     }
+    /* ============================================
+   筑梦 VIP 站：深色容器 + 按钮动效优化
+   ============================================ */
+
+/* 🎯 第一部分：统一所有容器透明度（对齐邮箱系统大背景卡片） */
+.hero, .section-card, .dialog, .intro-text, .svc, .qrbox {
+    background: rgba(0, 0, 0, 0.65) !important; /* 深度黑色，确保文字清晰 */
+    backdrop-filter: blur(12px) !important;     /* 高级磨砂感 */
+    -webkit-backdrop-filter: blur(12px) !important;
+    border: 1px solid rgba(255, 255, 255, 0.1) !important;
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5) !important;
+}
+
+/* 🎯 第二部分：仅“立即联系”按钮悬停动态 */
+/* 逻辑：只针对带 .primary 类的按钮，不影响展品、业务、邮箱按钮 */
+.btn.primary {
+    transition: all 0.3s ease !important;
+}
+
+.btn.primary:hover {
+    filter: brightness(1.2) !important; /* 变亮 */
+    transform: translateY(-3px) !important; /* 上浮 */
+    box-shadow: 0 10px 25px rgba(255, 43, 134, 0.6) !important; /* 粉色发光 */
+}
+
+/* 🎯 第三部分：底部六大联系方式按钮悬停动态 */
+.iconbtn {
+    transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275) !important;
+}
+
+.iconbtn:hover {
+    background: rgba(255, 255, 255, 0.15) !important; /* 背景微亮 */
+    filter: brightness(1.3) !important; /* 图标变亮 */
+    transform: translateY(-8px) scale(1.05) !important; /* 弹跳式上浮并微放大 */
+    border-color: var(--rose) !important; /* 边框变红 */
+    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.6), 0 0 15px rgba(255, 43, 134, 0.4) !important;
+}
   </style>
 </head>
 
