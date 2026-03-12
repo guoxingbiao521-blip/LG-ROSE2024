@@ -6,23 +6,21 @@
     <title>LG筑梦电子 - 临时邮箱激活码系统</title>
     <style>
         :root {
-            --primary: #00f2ff;
-            --accent: #ff00ff;
-            --card-bg: rgba(0, 0, 0, 0.7);
+            --primary: #00f2ff; /* 蓝 */
+            --accent: #ff00ff;  /* 粉 */
+            --card-bg: rgba(0, 0, 0, 0.75);
         }
 
         body {
             margin: 0; padding: 0;
             font-family: 'Segoe UI', system-ui, sans-serif;
-            
-            /* --- 🎨 注入背景图：精准匹配大写 JPG --- */
+            /* 背景图设置保持不变 */
             background-color: #0a0a0c !important; 
-            background-image: url('./bg2.JPG') !important; /* ⚠️ 已修正为大写 ⚠️ */
+            background-image: url('./bg2.JPG') !important;
             background-repeat: no-repeat !important;
             background-position: center center !important;
             background-attachment: fixed !important;
             background-size: cover !important;
-            
             color: #fff;
             display: flex; justify-content: center; align-items: center;
             min-height: 100vh;
@@ -35,53 +33,87 @@
             background: var(--card-bg) !important;
             backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
             border-radius: 24px; border: 1px solid rgba(255, 255, 255, 0.1);
-            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.6);
+            box-shadow: 0 30px 60px rgba(0, 0, 0, 0.7);
             text-align: center;
         }
 
-        /* --- 💎 修正：标题强制一行 + 渐变恢复 --- */
+        /* --- 💎 修复重点1&2：标题文字恢复 + 分离式3D色彩 --- */
         .title-container {
             display: flex !important;
-            flex-direction: row !important; /* ⚠️ 强制水平排版 ⚠️ */
-            justify-content: center;
-            align-items: center;
-            gap: 10px;
-            margin-bottom: 30px;
-            width: 100%;
+            flex-direction: row !important;
+            justify-content: center; align-items: center;
+            gap: 10px; margin-bottom: 35px; width: 100%;
         }
-
-        .title-text {
-            font-size: 24px;
-            font-weight: 900;
-            /* 恢复你满意的渐变色 */
-            background: linear-gradient(to right, var(--primary), var(--accent)) !important;
-            -webkit-background-clip: text !important;
-            -webkit-text-fill-color: transparent !important;
-            /* 强化 3D 阴影 */
-            filter: drop-shadow(0 1px 0 #008a91) drop-shadow(0 2px 0 #8a008a) drop-shadow(0 4px 5px rgba(0,0,0,0.5));
+        /* 左侧蓝色 3D */
+        .title-blue-3d {
+            font-size: 24px; font-weight: 900;
+            color: var(--primary); /* 恢复原蓝色 */
+            /* 蓝色系 3D 阴影 */
+            text-shadow: 0 1px 0 #008a91, 0 2px 0 #00767c, 0 3px 0 #006267, 0 4px 10px rgba(0,242,255,0.5);
+        }
+        /* 右侧粉紫渐变 3D */
+        .title-pink-3d {
+            font-size: 24px; font-weight: 900;
+            background: linear-gradient(to right, #ff00ff, #ff77ff); /* 恢复原渐变 */
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+            /* 渐变文字必须用 filter 做 3D */
+            filter: drop-shadow(0 1px 0 #b300b3) drop-shadow(0 2px 0 #8a008a) drop-shadow(0 4px 6px rgba(255,0,255,0.4));
         }
 
         .input-group { margin-bottom: 20px; text-align: left; }
         label { display: block; font-size: 13px; color: #bbb; margin-bottom: 8px; font-weight: bold; }
-        
         input {
             width: 100%; padding: 15px; box-sizing: border-box;
             background: rgba(255, 255, 255, 0.1) !important;
             border: 1px solid rgba(255, 255, 255, 0.2) !important;
             border-radius: 12px; color: #fff; font-size: 16px; outline: none;
         }
-        input::placeholder { color: #aaa !important; opacity: 1; } /* 调亮占位符 */
+        input::placeholder { color: #aaa !important; opacity: 1; }
 
-        .btn-gen-3d {
-            width: 100%; padding: 16px; margin-top: 10px; border: none;
-            border-radius: 12px; font-weight: bold; cursor: pointer;
+        /* --- 主按钮 3D 样式 (通用) --- */
+        .btn-3d-style {
+            border: none; border-radius: 12px; font-weight: bold; cursor: pointer;
             background: linear-gradient(45deg, var(--primary), var(--accent)) !important;
             color: #000 !important; transition: 0.1s;
-            box-shadow: 0 5px 0 #b300b3, 0 8px 15px rgba(0, 0, 0, 0.4);
+            box-shadow: 0 4px 0 #b300b3, 0 6px 15px rgba(0, 0, 0, 0.4);
         }
-        .btn-gen-3d:active { transform: translateY(3px); box-shadow: 0 2px 0 #b300b3, 0 4px 8px rgba(0, 0, 0, 0.3); }
+        .btn-3d-style:active { transform: translateY(2px); box-shadow: 0 2px 0 #b300b3, 0 3px 8px rgba(0, 0, 0, 0.3); }
 
-        .nav-group { display: flex; gap: 12px; margin-top: 15px; }
+        .btn-gen-3d { width: 100%; padding: 16px; margin-top: 10px; }
+
+        /* --- 💎 修复重点3：中间黑框样式重构 (对标图3) + 文字居中 --- */
+        .result-wrapper { margin-top: 35px; position: relative; }
+        textarea {
+            width: 100%; height: 140px; box-sizing: border-box;
+            /* 毛玻璃 + 发光边框 */
+            background: rgba(255, 255, 255, 0.05) !important;
+            backdrop-filter: blur(15px); -webkit-backdrop-filter: blur(15px);
+            border: 1px solid var(--accent) !important; /* 粉色边框 */
+            border-radius: 16px;
+            color: var(--primary); /* 激活码用蓝色显示更科幻 */
+            padding: 45px 20px 20px 20px; /* 顶部留空给按钮 */
+            font-family: monospace; resize: none; outline: none;
+            font-size: 14px;
+            box-shadow: inset 0 0 20px rgba(255, 0, 255, 0.1); /* 内部微光 */
+            /* 文字绝对居中 */
+            text-align: center;
+            display: flex; flex-direction: column; justify-content: center; /*对于多行文本的垂直居中优化*/
+            line-height: 1.5;
+        }
+        /* 针对 placeholder 的居中优化 */
+        textarea::placeholder {
+            color: rgba(255,255,255,0.5) !important;
+            line-height: 80px; /* 使得占位符大致垂直居中 */
+        }
+
+        /* --- 💎 修复重点4：“一键复制”按钮 3D 化 --- */
+        .copy-btn {
+            position: absolute; top: -15px; right: 15px; /* 调整位置到框线层 */
+            padding: 8px 15px; font-size: 12px; width: auto !important;
+            z-index: 20;
+        }
+
+        .nav-group { display: flex; gap: 12px; margin-top: 25px; }
         .btn-nav-3d {
             flex: 1; padding: 12px; border: none; border-radius: 10px;
             color: white !important; font-weight: bold; font-size: 14px;
@@ -91,49 +123,33 @@
         }
         .btn-nav-3d:active { transform: translateY(2px); box-shadow: 0 2px 0 #d1448b, 0 3px 5px rgba(0, 0, 0, 0.2); }
 
-        .result-wrapper { margin-top: 30px; position: relative; }
-        textarea {
-            width: 100%; height: 120px; box-sizing: border-box;
-            background: rgba(0,0,0,0.6) !important; border: 1px solid #444 !important;
-            border-radius: 12px; color: #0f0; padding: 15px; font-family: monospace; resize: none; outline: none;
-        }
-        .copy-btn {
-            position: absolute; top: 10px; right: 10px;
-            background: rgba(255, 255, 255, 0.2); padding: 5px 12px;
-            font-size: 11px; color: #fff; border: none; border-radius: 6px; cursor: pointer; width: auto !important;
+        /* --- 💎 修复重点5：底部提示文字高亮 --- */
+        .status {
+            font-size: 12px; margin-top: 25px; line-height: 1.5;
+            color: #ff69b4; /* 采用粉色高亮 */
+            font-weight: bold;
+            text-shadow: 0 0 10px rgba(255, 105, 180, 0.3);
         }
 
-        .status { font-size: 11px; color: #999; margin-top: 25px; line-height: 1.5; }
-
-        #customModal {
-            display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0,0,0,0.85); backdrop-filter: blur(10px);
-            z-index: 9999; justify-content: center; align-items: center;
-        }
-        .modal-content {
-            background: #1a1a1e; border: 1px solid var(--primary);
-            padding: 30px; border-radius: 20px; width: 280px; text-align: center;
-        }
+        /* 弹窗样式保持不变 */
+        #customModal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.85); backdrop-filter: blur(10px); z-index: 9999; justify-content: center; align-items: center; }
+        .modal-content { background: #1a1a1e; border: 1px solid var(--primary); padding: 30px; border-radius: 20px; width: 280px; text-align: center; }
         .modal-btn { margin-top: 20px; background: var(--primary); color: #000; border: none; padding: 10px 30px; border-radius: 8px; font-weight: bold; cursor: pointer; }
-
-        @keyframes glow {
-            from { filter: brightness(1) drop-shadow(0 0 2px var(--primary)); }
-            to { filter: brightness(1.5) drop-shadow(0 0 8px var(--primary)); }
-        }
+        @keyframes glow { from { filter: brightness(1) drop-shadow(0 0 2px var(--primary)); } to { filter: brightness(1.5) drop-shadow(0 0 8px var(--primary)); } }
     </style>
 </head>
 <body>
 
     <div class="container">
         <div class="title-container">
-            <span class="title-text">LG筑梦电子</span>
+            <span class="title-blue-3d">LG筑梦电子</span>
             
             <svg viewBox="0 0 24 24" style="width: 32px; height: 32px; fill: none; stroke: var(--primary); stroke-width: 1.5; animation: glow 2s infinite alternate;">
                 <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
                 <polyline points="22,6 12,13 2,6"></polyline>
             </svg>
 
-            <span class="title-text">激活码系统</span>
+            <span class="title-pink-3d">临时邮箱激活码系统</span>
         </div>
         
         <div class="input-group">
@@ -146,81 +162,24 @@
             <input type="number" id="count" value="1">
         </div>
 
-        <button class="btn-gen-3d" onclick="generate()">⚡ 激活码生成</button>
+        <button class="btn-gen-3d btn-3d-style" onclick="generate()">⚡ 激活码生成</button>
+
+        <div class="result-wrapper">
+            <textarea id="result" readonly placeholder="激活码将在此处居中显示..."></textarea>
+            <button class="copy-btn btn-3d-style" onclick="copyAll()">一键复制</button>
+        </div>
 
         <div class="nav-group">
             <button onclick="window.location.href='../mail.html'" class="btn-nav-3d">📧 返回邮箱</button>
             <button onclick="window.location.href='../index.html'" class="btn-nav-3d">🏠 返回主页</button>
         </div>
 
-        <div class="result-wrapper">
-            <textarea id="result" readonly placeholder="激活码将在此处显示..."></textarea>
-            <button class="copy-btn" onclick="copyAll()">一键复制</button>
-        </div>
-
         <div class="status">💡 如需开通生成权限，请返回主页底部联系站长微信获取代理</div>
     </div>
 
-    <div id="customModal">
-        <div class="modal-content">
-            <p id="modalMsg" style="margin:0; color:#fff; line-height:1.6;"></p>
-            <button class="modal-btn" onclick="closeModal()">确定</button>
-        </div>
-    </div>
-
+    <div id="customModal"><div class="modal-content"><p id="modalMsg" style="margin:0; color:#fff; line-height:1.6;"></p><button class="modal-btn" onclick="closeModal()">确定</button></div></div>
     <script>
-        /* 核心逻辑保持不变 */
-        function showModal(msg) {
-            document.getElementById('modalMsg').innerText = msg;
-            document.getElementById('customModal').style.display = 'flex';
-        }
-        function closeModal() {
-            document.getElementById('customModal').style.display = 'none';
-        }
-
-        async function generate() {
-            const secret = document.getElementById('secret').value;
-            const count = document.getElementById('count').value;
-            const btn = document.querySelector('button[onclick="generate()"]');
-            const resultArea = document.getElementById('result');
-
-            if(!secret) {
-                showModal('⚠️ 请输入站长/代理商管理密码！');
-                return;
-            }
-
-            btn.innerText = '正在生成激活码...';
-            
-            try {
-                const response = await fetch('https://guo.roselg.xyz/api/admin/generate_codes', {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ secret, count })
-                });
-                const data = await response.json();
-                if(data.codes && data.codes.length > 0) {
-                    resultArea.value = data.codes.join('\n');
-                } else {
-                    showModal('❌ 失败：' + (data.error || '密码不对或系统故障'));
-                }
-            } catch (err) {
-                showModal('🚫 无法连接服务器，请检查后端状态');
-            } finally {
-                btn.innerText = '⚡ 激活码生成';
-            }
-        }
-
-        function copyAll() {
-            const area = document.getElementById('result');
-            if(!area.value || area.value === '激活码将在此处显示...') {
-                showModal('❌ 还没有激活码可以复制哦');
-                return;
-            }
-            area.select();
-            area.setSelectionRange(0, 99999);
-            document.execCommand('copy');
-            showModal('📋 激活码已全部存入剪贴板！');
-        }
+        function showModal(msg){document.getElementById('modalMsg').innerText=msg;document.getElementById('customModal').style.display='flex';}function closeModal(){document.getElementById('customModal').style.display='none';}async function generate(){const secret=document.getElementById('secret').value;const count=document.getElementById('count').value;const btn=document.querySelector('button[onclick="generate()"]');const resultArea=document.getElementById('result');if(!secret){showModal('⚠️ 请输入站长/代理商管理密码！');return;}btn.innerText='正在生成激活码...';try{const response=await fetch('https://guo.roselg.xyz/api/admin/generate_codes',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({secret,count})});const data=await response.json();if(data.codes&&data.codes.length>0){resultArea.value=data.codes.join('\n');}else{showModal('❌ 失败：'+(data.error||'密码不对或系统故障'));}}catch(err){showModal('🚫 无法连接服务器，请检查后端状态');}finally{btn.innerText='⚡ 激活码生成';}}function copyAll(){const area=document.getElementById('result');if(!area.value||area.value.includes('将在此处居中显示')){showModal('❌ 还没有激活码可以复制哦');return;}area.select();area.setSelectionRange(0,99999);document.execCommand('copy');showModal('📋 激活码已全部存入剪贴板！');}
     </script>
 </body>
 </html>
