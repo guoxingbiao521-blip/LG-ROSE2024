@@ -8,8 +8,8 @@
         :root {
             --primary: #00f2ff;
             --accent: #ff00ff;
-            /* 2. 容器高通透：调低了透明度，背景图现在能完美透过来 */
-            --card-bg: rgba(0, 0, 0, 0.4); 
+            /* 2. 极限透明度：把透明度降到 0.15，让背景图最大程度透显 */
+            --card-bg: rgba(0, 0, 0, 0.15); 
         }
 
         body {
@@ -31,13 +31,14 @@
             position: relative; z-index: 10;
             width: 90%; max-width: 450px; padding: 40px;
             background: var(--card-bg) !important;
-            backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); /* 适度毛玻璃，保证背景透视 */
-            border-radius: 24px; border: 1px solid rgba(255, 255, 255, 0.1);
-            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.6);
+            /* 降低毛玻璃模糊度，让背景更清晰 */
+            backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); 
+            border-radius: 24px; border: 1px solid rgba(255, 255, 255, 0.15);
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.5);
             text-align: center;
         }
 
-        /* 1. 标题分色保留 + 增加厚重 3D 立体阴影 */
+        /* 标题分色保留 + 3D 立体阴影 */
         .title-container {
             display: flex !important;
             flex-direction: row !important;
@@ -47,16 +48,14 @@
         
         .title-left-3d {
             font-size: 24px; font-weight: 900;
-            color: var(--primary); /* 保留纯蓝色 */
-            /* 叠加蓝色 3D 厚度阴影 */
+            color: var(--primary); 
             text-shadow: 0 1px 0 #008a91, 0 2px 0 #00767c, 0 3px 0 #006267, 0 4px 5px rgba(0,0,0,0.5);
         }
 
         .title-right-3d {
             font-size: 24px; font-weight: 900;
-            background: linear-gradient(to right, var(--primary), var(--accent)); /* 保留原渐变 */
+            background: linear-gradient(to right, var(--primary), var(--accent)); 
             -webkit-background-clip: text; -webkit-text-fill-color: transparent;
-            /* 叠加粉紫渐变色系的 3D 厚度阴影 (渐变字必须用 filter) */
             filter: drop-shadow(0 1px 0 #b300b3) drop-shadow(0 2px 0 #8a008a) drop-shadow(0 3px 0 #660066) drop-shadow(0 4px 5px rgba(0,0,0,0.5));
         }
 
@@ -71,47 +70,49 @@
         }
         input::placeholder { color: #aaa !important; opacity: 1; }
 
-        /* 5. 隐形式滚动条：全局极其细微、半透明的高端悬浮样式 */
-        ::-webkit-scrollbar { width: 5px; height: 5px; }
-        ::-webkit-scrollbar-track { background: transparent; }
-        ::-webkit-scrollbar-thumb { background: rgba(255, 255, 255, 0.15); border-radius: 5px; }
-        ::-webkit-scrollbar-thumb:hover { background: rgba(255, 255, 255, 0.3); }
-
-        /* 隐藏数量框的上下箭头，但鼠标悬浮时微微可见（隐形式） */
+        /* 1. 彻底隐藏数量框的上下箭头，保持和文本域右侧统一干净 */
         input[type="number"]::-webkit-inner-spin-button,
         input[type="number"]::-webkit-outer-spin-button {
-            opacity: 0; transition: opacity 0.3s;
+            -webkit-appearance: none;
+            margin: 0;
         }
-        input[type="number"]:hover::-webkit-inner-spin-button { opacity: 0.5; }
+        input[type="number"] {
+            -moz-appearance: textfield;
+        }
 
-        /* 3. 并排按钮组容器 */
+        /* 全局细微滚动条样式 (文本域溢出时显示) */
+        ::-webkit-scrollbar { width: 5px; height: 5px; }
+        ::-webkit-scrollbar-track { background: transparent; }
+        ::-webkit-scrollbar-thumb { background: rgba(255, 255, 255, 0.2); border-radius: 5px; }
+        ::-webkit-scrollbar-thumb:hover { background: rgba(255, 255, 255, 0.4); }
+
         .action-btn-group {
             display: flex; gap: 12px; margin-top: 25px;
         }
 
-        /* 3. 统一的主动作按钮 3D 样式（生成和复制共用） */
         .btn-main-3d {
             padding: 16px; border: none; border-radius: 12px; font-weight: bold; font-size: 15px;
             cursor: pointer; transition: 0.1s; display: flex; justify-content: center; align-items: center;
             background: linear-gradient(45deg, var(--primary), var(--accent)) !important;
-            color: #000 !important; /* 保持原有的黑色字体 */
+            color: #000 !important; 
             box-shadow: 0 4px 0 #b300b3, 0 6px 15px rgba(0, 0, 0, 0.4);
         }
         .btn-main-3d:active { transform: translateY(3px); box-shadow: 0 1px 0 #b300b3, 0 3px 8px rgba(0, 0, 0, 0.3); }
         
-        .btn-gen { flex: 1; } /* 生成按钮自动伸缩 */
-        .btn-copy { width: 100px; } /* 一键复制按钮固定长度，腾出位置 */
+        .btn-gen { flex: 1; } 
+        .btn-copy { width: 100px; } 
 
         .result-wrapper { margin-top: 25px; position: relative; }
         
-        /* 6. 文本域居中显示 */
+        /* 3. 激活码显示框：文字居中 + 粗体 */
         textarea {
             width: 100%; height: 120px; box-sizing: border-box;
-            background: rgba(0,0,0,0.5) !important; border: 1px solid rgba(255, 255, 255, 0.1) !important;
+            background: rgba(0,0,0,0.3) !important; /* 内部框稍微深一点点衬托绿色字体 */
+            border: 1px solid rgba(255, 255, 255, 0.1) !important;
             border-radius: 12px; color: #0f0; 
-            /* 靠 Padding 配合 text-align 实现多行/单行绝对居中 */
-            padding: 40px 20px; text-align: center; line-height: 1.5;
+            padding: 30px 20px; text-align: center; line-height: 1.8;
             font-family: monospace; resize: none; outline: none;
+            font-weight: bold; /* 激活码变为粗体 */
         }
 
         .nav-group { display: flex; gap: 12px; margin-top: 25px; }
@@ -124,17 +125,30 @@
         }
         .btn-nav-3d:active { transform: translateY(2px); box-shadow: 0 2px 0 #d1448b, 0 3px 5px rgba(0, 0, 0, 0.2); }
 
-        /* 4. 底部提示语样式（同步导航按钮的白字、加粗，但保留原先较小的字号） */
         .status { 
             font-size: 11px; margin-top: 25px; line-height: 1.5; 
-            color: white; /* 和导航按钮文字同色 */
-            font-weight: bold; /* 和导航按钮同粗细 */
+            color: white; font-weight: bold; 
         }
 
-        /* 弹窗层样式保持不变 */
-        #customModal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.85); backdrop-filter: blur(10px); z-index: 9999; justify-content: center; align-items: center; }
-        .modal-content { background: #1a1a1e; border: 1px solid var(--primary); padding: 30px; border-radius: 20px; width: 280px; text-align: center; }
-        .modal-btn { margin-top: 20px; background: var(--primary); color: #000; border: none; padding: 10px 30px; border-radius: 8px; font-weight: bold; cursor: pointer; }
+        /* 4. 全新轻提示 (Toast) 样式 - 绝对居中 */
+        #toast {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%); /* 绝对居中核心 */
+            background: rgba(20, 20, 25, 0.95); /* 深色半透明 */
+            color: #fff;
+            padding: 16px 32px;
+            border-radius: 12px;
+            border: 1px solid rgba(0, 242, 255, 0.4);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.6);
+            z-index: 9999;
+            font-size: 14px;
+            font-weight: bold;
+            text-align: center;
+            white-space: nowrap; /* 保持提示语在一行 */
+        }
 
         @keyframes glow {
             from { filter: brightness(1) drop-shadow(0 0 2px var(--primary)); }
@@ -183,20 +197,23 @@
         <div class="status">💡 如需开通生成权限，请返回主页底部联系站长微信获取代理</div>
     </div>
 
-    <div id="customModal">
-        <div class="modal-content">
-            <p id="modalMsg" style="margin:0; color:#fff; line-height:1.6;"></p>
-            <button class="modal-btn" onclick="closeModal()">确定</button>
-        </div>
-    </div>
+    <div id="toast"></div>
 
     <script>
-        function showModal(msg) {
-            document.getElementById('modalMsg').innerText = msg;
-            document.getElementById('customModal').style.display = 'flex';
-        }
-        function closeModal() {
-            document.getElementById('customModal').style.display = 'none';
+        // 4. 新的轻提示逻辑：居中显示，3秒后自动消失
+        let toastTimeout;
+        function showToast(msg) {
+            const toast = document.getElementById('toast');
+            toast.innerText = msg;
+            toast.style.display = 'block';
+            
+            // 清除之前的定时器，防止连续点击导致闪烁
+            if(toastTimeout) clearTimeout(toastTimeout);
+            
+            // 3秒后自动隐藏
+            toastTimeout = setTimeout(() => {
+                toast.style.display = 'none';
+            }, 3000);
         }
 
         async function generate() {
@@ -206,7 +223,7 @@
             const resultArea = document.getElementById('result');
 
             if(!secret) {
-                showModal('⚠️ 请输入站长/代理商管理密码！');
+                showToast('⚠️ 请输入站长/代理商管理密码！');
                 return;
             }
 
@@ -222,12 +239,13 @@
                 const data = await response.json();
                 
                 if(data.codes && data.codes.length > 0) {
-                    resultArea.value = data.codes.join('\n');
+                    // 3. 核心修改：用多个空格拼接取代换行符 (\n)，实现多排多列的自动换行方阵居中
+                    resultArea.value = data.codes.join('   '); 
                 } else {
-                    showModal('❌ 失败：' + (data.error || '密码不对或系统故障'));
+                    showToast('❌ 失败：' + (data.error || '密码不对或系统故障'));
                 }
             } catch (err) {
-                showModal('🚫 无法连接服务器，请检查后端状态');
+                showToast('🚫 无法连接服务器，请检查后端状态');
             } finally {
                 btn.innerText = '⚡ 激活码生成';
             }
@@ -236,13 +254,13 @@
         function copyAll() {
             const area = document.getElementById('result');
             if(!area.value || area.value === '激活码将在此处显示...') {
-                showModal('❌ 还没有激活码可以复制哦');
+                showToast('❌ 还没有激活码可以复制哦');
                 return;
             }
             area.select();
             area.setSelectionRange(0, 99999);
             document.execCommand('copy');
-            showModal('📋 激活码已全部存入剪贴板！');
+            showToast('📋 激活码已全部存入剪贴板！');
         }
     </script>
 </body>
