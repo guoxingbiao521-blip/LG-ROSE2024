@@ -814,22 +814,22 @@ header nav{
         grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
       }
     }
-   /* ============================================
-   筑梦 VIP 站：高级磨砂透明玻璃方案
+ /* ============================================
+   筑梦 VIP 站：纯净空气磨砂玻璃方案（无黑色）
    ============================================ */
 
-/* 🎯 第一部分：容器进化为“微透磨砂玻璃” */
+/* 🎯 第一部分：彻底去除黑色，改为纯净白霜磨砂 */
 .hero, .section-card, .dialog, .intro-text, .svc, .qrbox {
-    /* 1. 降低黑色浓度，保持通透感 */
-    background: rgba(0, 0, 0, 0.35) !important; 
+    /* 1. 彻底去掉黑色，改为极淡的白霜，只为了抓取光影 */
+    background: rgba(255, 255, 255, 0.05) !important; 
     
-    /* 2. 核心：极高模糊度。这是保证文字清晰的秘诀，背景越乱，模糊要越高 */
-    backdrop-filter: blur(25px) !important;     
-    -webkit-backdrop-filter: blur(25px) !important;
+    /* 2. 核心：超强模糊，这是保证透明又不乱的关键 */
+    backdrop-filter: blur(30px) !important;     
+    -webkit-backdrop-filter: blur(30px) !important;
     
-    /* 3. 增加轻微的亮色边框，定义容器边缘 */
-    border: 1px solid rgba(255, 255, 255, 0.15) !important;
-    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.3) !important;
+    /* 3. 增强玻璃质感边框 */
+    border: 1px solid rgba(255, 255, 255, 0.2) !important;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2) !important;
 }
 
 /* 🎯 第二部分：仅“立即联系”按钮悬停动态 */
@@ -847,11 +847,11 @@ header nav{
     transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275) !important;
 }
 .iconbtn:hover {
-    background: rgba(255, 255, 255, 0.12) !important;
+    background: rgba(255, 255, 255, 0.15) !important;
     filter: brightness(1.4) !important;
     transform: translateY(-8px) scale(1.08) !important;
     border-color: #ff2b86 !important;
-    box-shadow: 0 12px 25px rgba(0, 0, 0, 0.5), 0 0 15px rgba(255, 43, 134, 0.4) !important;
+    box-shadow: 0 12px 25px rgba(0, 0, 0, 0.3), 0 0 15px rgba(255, 43, 134, 0.4) !important;
 }
   </style>
 </head>
