@@ -88,7 +88,6 @@
         ::-webkit-scrollbar-thumb { background: rgba(255, 255, 255, 0.25); border-radius: 6px; }
         ::-webkit-scrollbar-thumb:hover { background: rgba(255, 255, 255, 0.4); }
 
-        /* 🚀 按钮基础样式：增加 transition 确保动效丝滑 */
         .action-btn-group { display: flex; gap: 12px; margin-top: 25px; }
         .btn-main-3d {
             padding: 16px; border: none; border-radius: 12px; font-weight: bold; font-size: 15px;
@@ -98,7 +97,6 @@
             box-shadow: 0 4px 0 #b300b3, 0 6px 15px rgba(0, 0, 0, 0.4);
         }
 
-        /* ✨ 主按钮悬停效果：同步自定义邮箱动态 */
         .btn-main-3d:hover {
             filter: brightness(1.1);
             transform: translateY(-2px);
@@ -147,7 +145,6 @@
         }
         .code-tag:active { transform: scale(0.95); }
 
-        /* 🚀 导航按钮基础样式 */
         .nav-group { display: flex; gap: 12px; margin-top: 25px; }
         .btn-nav-3d {
             flex: 1; padding: 12px; border: none; border-radius: 10px;
@@ -157,7 +154,6 @@
             box-shadow: 0 4px 0 #d1448b, 0 6px 10px rgba(0, 0, 0, 0.3);
         }
 
-        /* ✨ 导航按钮悬停效果：同步动态响应 */
         .btn-nav-3d:hover {
             filter: brightness(1.1);
             transform: translateY(-2px);
@@ -177,12 +173,57 @@
             text-align: center; white-space: nowrap; 
         }
 
-        @media (max-width: 480px) {
-            .container { padding: 30px 20px; width: 92%; }
-            .title-left-3d, .title-right-3d { font-size: 18px; } 
-            .action-btn-group, .nav-group { flex-wrap: nowrap !important; gap: 8px; }
-            .btn-main-3d, .btn-nav-3d { white-space: nowrap !important; padding: 14px 5px !important; font-size: 13px !important; }
-            .btn-copy { width: auto; padding: 14px 10px !important; }
+        /* 🔥 【完美手机端适配】规则完全同步邮箱系统逻辑 */
+        @media (max-width: 600px) {
+            * { box-sizing: border-box !important; }
+            body { padding: 10px !important; }
+            
+            /* 1. 容器宽度拉满 */
+            .container { 
+                width: 100% !important; 
+                padding: 25px 15px !important; 
+                border-radius: 18px !important;
+            }
+
+            /* 2. 标题大幅缩小，防止溢出 (16px) */
+            .title-left-3d, .title-right-3d { 
+                font-size: 16px !important; 
+                letter-spacing: 0.5px !important; 
+                white-space: nowrap !important;
+            }
+            .title-container svg { width: 24px !important; height: 24px !important; }
+
+            /* 3. 按钮组变更为“换行堆叠” */
+            .action-btn-group, .nav-group { 
+                flex-wrap: wrap !important; 
+                gap: 8px !important; 
+            }
+
+            /* 4. 按钮尺寸微调与排序 */
+            .btn-main-3d, .btn-nav-3d { 
+                flex: 1 1 45% !important; /* 一行排两个 */
+                padding: 12px 5px !important; 
+                font-size: 12px !important; 
+                white-space: nowrap !important;
+            }
+
+            /* 5. 生成按钮独占第一行，增强点击欲望 */
+            .btn-gen { 
+                flex: 1 1 100% !important; 
+                order: 1 !important; 
+                font-size: 14px !important;
+            }
+            .btn-copy { order: 2 !important; }
+
+            /* 6. 激活码结果框文字微调 */
+            .result-box-style span, .code-tag { font-size: 13px !important; }
+            
+            /* 7. 提示文字极限压缩，防止撑开页面 */
+            .single-copy-hint, .status { 
+                font-size: 10px !important; 
+                letter-spacing: -0.5px !important;
+                line-height: 1.3 !important;
+            }
         }
 
         @keyframes glow {
@@ -236,6 +277,7 @@
     <div id="toast"></div>
 
     <script>
+        // JS 逻辑保持不变...
         let toastTimeout;
         let globalCodes = []; 
 
