@@ -322,11 +322,19 @@ h2::before, h2::after {
             order: 2 !important; 
         }
 
-        /* 邮件正文：排在最下面 */
+       /* 1. 核心修复：限制正文高度，防止无限拉长 */
         .mail-content-hd {
-            order: 3 !important;
+            order: 3 !important; /* 👉 仅仅加上这一行让正文排在最后不被遮挡 */
+            max-height: 380px !important; /* 👉 恢复你的高度限制 */
+            overflow-y: auto !important;  /* 👉 恢复你的内部滑动条 */
+            padding: 12px !important;
             margin-top: 10px !important;
-            padding: 10px !important;
+            border-radius: 12px !important;
+            border: 1px solid rgba(255, 255, 255, 0.1) !important;
+            background: #f8f9fa !important; 
+            font-size: 14px !important;
+            line-height: 1.6 !important;
+            max-width: 100% !important;
         }
         
         /* 稍微压小一点主题文字，防止在手机上换行太难看 */
@@ -888,15 +896,15 @@ function renderEmails(emails) {
     if (window.Notification) {
         Notification.requestPermission().catch(e => console.log("弹窗权限被忽略"));
     }
-    // 🧠 实时监控前缀输入框，非法字符立马拦截并提示
+   // 🧠 实时监控前缀输入框（恢复大写权限，并全量开放 RFC 标准允许的所有邮箱符号）
     document.getElementById('customInput').addEventListener('input', function(e) {
         const originalVal = this.value;
-        // 强制转为小写，并过滤掉所有非字母和数字的字符
-        const newVal = originalVal.toLowerCase().replace(/[^a-z0-9]/g, '');
+        // 核心修复：允许大小写字母、数字，以及所有符合国际标准的特殊符号，仅拦截中文和非法空格等
+        const newVal = originalVal.replace(/[^a-zA-Z0-9!#$%&'*+\-\/=?^_`{|}~.]/g, '');
         
         if (originalVal !== newVal) {
-            this.value = newVal; // 瞬间把非法字符“吃掉”
-            showToast("⚠️ 邮箱前缀只能输入字母和数字！"); // 立马提示
+            this.value = newVal; 
+            showToast("⚠️ 只能输入字母、数字和合法的邮箱符号哦！"); 
         }
     });
     generateRandom();
@@ -904,6 +912,7 @@ function renderEmails(emails) {
 </script>
 </body>
 </html>
+
 
 
 
