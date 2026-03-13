@@ -1047,33 +1047,38 @@ function renderEmails(emails) {
         const vCode = getSmartVCode(mail.html, mail.text);
         let content = mail.html || mail.text;
         
-        // 🎯 修复 1 & 2：恢复无痕点击复制，并强制宽度100%从而实现绝对居中！
+        // 🎯 修复1 & 2：加上 window. 恢复无痕点击复制，并用 div 强制将其独立一行绝对居中！
         if (vCode) {
             const regex = new RegExp(vCode, 'g');
-            // 注意这里：用 display:block 和 width:100% 强行撑开一行让它居中，绝不改它的字体和颜色
-            content = content.replace(regex, `<span onclick="copyToClipboard('${vCode}', '✅ 验证码 ${vCode} 已复制'); event.stopPropagation();" style="display: block; width: 100%; text-align: center; margin: 20px 0; cursor: pointer;">${vCode}</span>`);
+            content = content.replace(regex, `<div style="display: block; width: 100%; text-align: center; margin: 15px 0;"><span onclick="window.copyToClipboard('${vCode}', '✅ 验证码 ${vCode} 已复制'); event.stopPropagation();" style="cursor: pointer;">${vCode}</span></div>`);
         }
 
-        // 🎯 修复 3：去除内联样式里对颜色和字体的污染，还原本真！
         document.getElementById('modalEmailContent').innerHTML = `
             <div class="mail-meta-group" style="padding: 15px; border-bottom: 1px solid rgba(255,255,255,0.1);">
                 <div class="meta-item" style="color:rgba(255,255,255,0.8); margin-bottom: 4px;">👤 发件：${mail.from}</div>
                 <div class="meta-item" style="color:rgba(255,255,255,0.8); margin-bottom: 4px;">📅 时间：${timeString}</div>
                 <div class="subject-item" style="font-size: 16px; color: #fff; margin-top: 8px !important; font-weight: bold;">📑 主题：${mail.subject}</div>
             </div>
-            <div class="mail-content-hd" style="border:none; padding:10px 0; margin-top:10px;">
+            <div class="mail-content-hd">
                 ${content}
             </div>
         `;
 
-        const modals = document.querySelectorAll('.email-modal-overlay');
-        modals.forEach(m => {
-            if (m.parentNode !== document.body) document.body.appendChild(m);
-            m.style.display = 'flex';
-        });
+        const modal = document.getElementById('emailDetailModal');
+        if (modal.parentNode !== document.body) {
+            document.body.appendChild(modal);
+        }
+        modal.style.display = 'flex';
         
         document.body.classList.add('no-scroll'); 
         document.body.classList.add('hide-ui-for-modal'); 
+    };
+
+    // 🚀 修复3：恢复最干脆、最稳妥的关闭逻辑
+    window.closeEmailModal = function() {
+        document.getElementById('emailDetailModal').style.display = 'none';
+        document.body.classList.remove('no-scroll'); 
+        document.body.classList.remove('hide-ui-for-modal'); 
     };
    
 </script>
@@ -1089,6 +1094,7 @@ function renderEmails(emails) {
 </div>
 </body>
 </html>
+
 
 
 
