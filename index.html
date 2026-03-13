@@ -135,16 +135,16 @@
       background: rgba(255,255,255,.04);
       transition: transform .15s ease, background .15s ease, border-color .15s ease;
     }
-  /* ==========================================
-   🚀 终极 Header 响应式布局 (完美适配所有屏幕)
+/* ==========================================
+   🚀 终极响应式 Header (彻底解决错位、靠边、显示不全)
    ========================================== */
 header {
-  display: flex !important;
-  flex-wrap: wrap; /* 核心魔法：允许内部大块在空间不足时自动换行 */
-  align-items: center;
+  display: grid !important;
+  grid-template-columns: auto auto auto;
   justify-content: space-between;
+  align-items: center;
   gap: 12px;
-  padding: 10px 14px;
+  padding: 12px 16px;
   border-radius: 999px;
   backdrop-filter: blur(14px);
   -webkit-backdrop-filter: blur(14px);
@@ -155,62 +155,88 @@ header {
   margin: 10px auto 22px;
 }
 
-/* 左侧品牌：禁止换行，保持宽度 */
-header .brand {
-  flex: 0 0 auto;
-  white-space: nowrap;
-}
+header .brand { margin: 0; white-space: nowrap; }
 
-/* 中间访问量：绝对禁止换行（修复“量”字掉落） */
 .navcenter {
   display: flex;
-  align-items: baseline;
+  align-items: center;
+  justify-content: center;
   gap: 8px;
   padding: 8px 18px;
   border-radius: 999px;
   border: 1px solid rgba(255,255,255,.16);
   background: linear-gradient(135deg, rgba(255,255,255,.10), rgba(255,255,255,.04));
-  box-shadow: 0 18px 55px rgba(0,0,0,.35), 0 0 22px rgba(62,166,255,.20), 0 0 22px rgba(255,43,134,.18);
-  white-space: nowrap !important; /* 🎯 核心修复：绝对禁止内部文字换行 */
-  flex: 0 0 auto;
-  margin: 0 auto;
+  box-shadow: 0 8px 25px rgba(0,0,0,.25);
+  white-space: nowrap !important; /* 彻底禁止文字换行掉落 */
+  margin: 0;
 }
-.navcenter-domain { font-weight: 1000; font-size: 16px; letter-spacing: .6px; color: rgba(255,255,255,.98); text-shadow: 0 0 16px rgba(143,244,255,.35), 0 0 18px rgba(255,43,134,.18); }
-.navcenter-label { font-weight: 1000; font-size: 16px; color: rgba(233,238,255,.92); }
-.navcenter-count { font-weight: 1100; font-size: 18px; color: #ffffff; text-shadow: 0 0 18px rgba(62,166,255,.35), 0 0 22px rgba(255,43,134,.22); }
+.navcenter-domain { font-weight: 1000; font-size: 15px; color: rgba(255,255,255,.98); }
+.navcenter-label { font-weight: 1000; font-size: 14px; color: rgba(233,238,255,.92); }
+.navcenter-count { font-weight: 1100; font-size: 16px; color: #ffffff; }
 .navcenter-sep { opacity: .75; font-weight: 900; }
 
-/* 右侧导航栏：绝对禁止换行，支持手指横向滑动 */
 header nav {
   display: flex;
-  flex-wrap: nowrap !important; /* 🎯 核心修复：禁止按钮垂直挤成一坨 */
+  flex-wrap: nowrap;
   gap: 8px;
-  flex: 1 1 auto;
-  justify-content: flex-end; /* PC端靠右排 */
-  overflow-x: auto; /* 空间不够时，允许手指左右滑动 */
-  -webkit-overflow-scrolling: touch;
-  scrollbar-width: none;
+  margin: 0;
 }
-header nav::-webkit-scrollbar { display: none; /* 隐藏丑陋的滚动条 */ }
-.navpill { white-space: nowrap; flex: 0 0 auto; }
+.navpill { white-space: nowrap; }
 
-/* 📱 平板与折叠屏适配 (宽窄适中时：变成优雅的两行) */
+/* 📱 平板与折叠屏适配 (变两行，导航绝对居中，解决偏向一边) */
 @media (max-width: 1050px) {
-  header { border-radius: 24px; }
-  .navcenter { margin: 0 0 0 auto; } /* 访问量挤到右边，和品牌左右对称 */
+  header {
+    grid-template-columns: 1fr 1fr;
+    grid-template-areas:
+      "brand navcenter"
+      "nav nav";
+    row-gap: 16px;
+    border-radius: 24px;
+  }
+  header .brand { grid-area: brand; justify-self: start; }
+  .navcenter { grid-area: navcenter; justify-self: end; }
   header nav {
-    width: 100%; /* 导航条下放成独立第二行，占满宽度 */
-    justify-content: flex-start; /* 靠左排列，方便滑动 */
-    padding-top: 4px;
+    grid-area: nav;
+    justify-self: center; /* 解决四分五裂，绝对居中 */
+    flex-wrap: wrap; /* 允许折叠屏下按需换行 */
+    justify-content: center;
   }
 }
 
-/* 📱 手机端适配 (极窄屏幕时：变成紧凑的垂直排版) */
-@media (max-width: 600px) {
-  header { flex-direction: column; align-items: center; }
-  .navcenter { margin: 0 auto; }
-  .navcenter-domain, .navcenter-label { font-size: 14px; }
-  .navcenter-count { font-size: 16px; }
+/* 📱 手机端适配 (变三行，全部绝对居中，按钮变田字格，解决显示不全) */
+@media (max-width: 650px) {
+  header {
+    grid-template-columns: 1fr;
+    grid-template-areas:
+      "brand"
+      "navcenter"
+      "nav";
+    row-gap: 12px;
+    justify-items: center; /* 整体强制居中 */
+  }
+  header .brand { grid-area: brand; justify-self: center; }
+  .navcenter {
+    grid-area: navcenter;
+    justify-self: center;
+    width: 100%;
+    max-width: 340px; 
+    padding: 6px 10px;
+  }
+  /* 手机端字体微微缩小，防止撑爆 */
+  .navcenter-domain { font-size: 13px; }
+  .navcenter-label { font-size: 13px; }
+  .navcenter-count { font-size: 14px; }
+  
+  header nav {
+    grid-area: nav;
+    flex-wrap: wrap; /* 放弃左右滑动，改为两排，全部可见 */
+    justify-content: center;
+    width: 100%;
+  }
+  .navpill { 
+    flex: 1 1 40%; /* 核心魔法：让四个按钮在手机上变成 2x2 等宽田字格 */
+    text-align: center; 
+  }
 }
 
     .navpill:hover{
