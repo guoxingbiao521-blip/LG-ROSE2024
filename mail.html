@@ -197,7 +197,7 @@ body::before {
         background-image: url('./iphoneemail.jpg') !important;
     }
 }
-       
+        
         
         .main-container, .wrapper, #app { background-color: transparent !important; }
         
@@ -555,7 +555,7 @@ h2::before, h2::after {
     transform: translateY(-2px);
     box-shadow: 0 6px 15px rgba(233, 30, 99, 0.4);
 }
-       /* ==========================================
+        /* ==========================================
    📱 手机端专属：邮件接收居中正方形弹窗
    ========================================== */
 .mail-modal-overlay {
@@ -605,7 +605,7 @@ h2::before, h2::after {
     border: 4px solid rgba(0,0,0,0.2);
 }
         /* =======================================
-           🚀 手机端沉浸式详情框（全设备自适应）
+            🚀 手机端沉浸式详情框（全设备自适应）
            ======================================= */
         .email-modal-overlay {
             position: fixed;
@@ -716,24 +716,18 @@ h2::before, h2::after {
     }
 
     // 🚀 核心校验正则：
-    // 允许：大小写字母、数字、点(.)、下划线(_)、中划线(-)、加号(+)
-    // 如果包含除此之外的任何字符（包括中文、空格、特殊符号），则匹配失败
     const validRegex = /^[a-zA-Z0-9._+-]+$/;
 
     if (!validRegex.test(val)) {
         showToast("❌ 不合法邮箱前缀（仅限字母、数字及 . _ - +）");
-        // 建议：清空非法输入或标红（可选）
-        // inputEl.value = ""; 
         return; 
     }
 
-    // 检查点号位置（可选的深度校验：点号不能在开头或结尾）
     if (val.startsWith('.') || val.endsWith('.')) {
         showToast("❌ 点号不能放在邮箱开头或结尾");
         return;
     }
 
-    // 校验通过，执行后续逻辑
     updateDisplay(val + DOMAIN, false);
     showToast("✅ 自定义邮箱已激活");
 }
@@ -769,21 +763,14 @@ h2::before, h2::after {
 
     function copyEmail() {
         if(!currentEmail) return;
-        // ✅ 统一调用带“安全网”的 copyToClipboard
         window.copyToClipboard(currentEmail, "📋 邮箱地址已复制");
     }
 
-    // 🔥 【完美时间戳清理法】：终于能用上你后端加的 timestamp 了！
     function clearEmails() {
         if (!fullServerEmails || fullServerEmails.length === 0) return showToast("📭 当前没有邮件可清理");
-        
-        // 找到当前拉取到的所有邮件里最大的时间戳
         const maxTimestamp = Math.max(...fullServerEmails.map(m => m.timestamp || 0));
         const cutoffTime = maxTimestamp > 0 ? maxTimestamp : Date.now();
-        
-        // 划定红线存起来
         localStorage.setItem('clearTime_' + currentEmail, cutoffTime);
-        
         renderEmails([]); 
         showToast("🗑️ 邮箱已清理，等待新邮件...");
     }
@@ -806,70 +793,48 @@ h2::before, h2::after {
 
     async function fetchEmails() {
         if (!currentEmail) return;
-
         const code = localStorage.getItem('authCode');
         let devId = localStorage.getItem('deviceId');
-
         if (!devId || devId === "null" || devId === "undefined") {
             devId = 'dev_' + Math.random().toString(36).substring(2, 10);
             localStorage.setItem('deviceId', devId);
         }
-        
         if (!code) {
-            if (!document.getElementById('authInput')) {
-                renderLockedInbox();
-            }
+            if (!document.getElementById('authInput')) renderLockedInbox();
             return;
         }
 
         try {
             const response = await fetch(`${API_BASE}?address=${currentEmail}&code=${code}&deviceId=${devId}`);
-
             if (response.status === 401 || response.status === 403) {
-                const errData = await response.json();
                 localStorage.removeItem('authCode');
-                renderLockedInbox("❌ " + (errData.message || "激活码无效，请重新输入！"));
+                renderLockedInbox("❌ 激活码无效，请重新输入！");
                 return;
             }
-
-            if (response.ok) {
-                if (!window.hasShownSuccessTip) {
-                    showToast("✅ 验证成功！欢迎使用！");
-                    window.hasShownSuccessTip = true; 
-                }
-            }
-
             const data = await response.json();
             fullServerEmails = data;
 
-            // 提取红线时间
             let cutoffTime = parseInt(localStorage.getItem('clearTime_' + currentEmail) || '0');
-            
-            // 🔥 根据你后端的 timestamp 进行完美过滤
             const visibleEmails = data.filter(mail => {
-                if (mail.timestamp) {
-                    return mail.timestamp > cutoffTime;
-                }
+                if (mail.timestamp) return mail.timestamp > cutoffTime;
                 return true; 
             });
 
-          if (visibleEmails.length > lastEmailCount && lastEmailCount !== -1) {
-               // 🎯 修复：增加安全检测，如果手机不支持语音，直接跳过，不报错
+            // 🎯 修复：先渲染数据，确保 window.currentVisibleEmails 被赋值
+            if (typeof renderEmails === 'function') {
+                renderEmails(visibleEmails);
+            }
+
+            // 🎯 然后再执行语音播报和自动弹窗逻辑
             if (visibleEmails.length > lastEmailCount && lastEmailCount !== -1) {
                 try {
-                    // 检查浏览器是否支持语音功能
                     if (typeof window.SpeechSynthesisUtterance !== 'undefined' && window.speechSynthesis) {
-                        const msg = new SpeechSynthesisUtterance();
-                        msg.text = "您有新的邮件，请注意查收";
+                        const msg = new SpeechSynthesisUtterance("您有新的邮件,请注意查收！");
                         msg.lang = "zh-CN";
                         window.speechSynthesis.speak(msg);
                     }
-                } catch (speechError) {
-                    // 如果语音报错，只在后台记录，不让它弹到屏幕上吓唬人
-                    console.log("语音播报功能不可用，已自动忽略");
-                }
+                } catch (speechError) { console.log("语音播报不可用"); }
 
-                // 原有的桌面通知逻辑保留
                 if (window.Notification && Notification.permission === "granted") {
                     const newMail = visibleEmails[0];
                     if(newMail) {
@@ -879,76 +844,53 @@ h2::before, h2::after {
                         });
                     }
                 }
+
+                // 如果是手机端，收到新邮件直接弹窗显示
+                if (window.innerWidth <= 650) {
+                    openEmailModal(0, "刚刚"); 
+                }
             }
-         // 🔥 新增：如果是手机端，收到新邮件直接弹窗显示
-        if (window.innerWidth <= 650 && visibleEmails.length > lastEmailCount && lastEmailCount !== -1) {
-            // 🎯 这里的函数名一定要改成 openEmailModal，否则手机端会再次出现红字报错！
-            openEmailModal(0, "刚刚"); 
-        }
             lastEmailCount = visibleEmails.length;
-            
-            if (typeof renderEmails === 'function') {
-                renderEmails(visibleEmails);
-            }
           
         } catch (e) {
-            document.getElementById('emailList').innerHTML = '<p style="color:red; text-align:center; padding-top:50px;">手机端报错: ' + String(e) + '</p>';
+            document.getElementById('emailList').innerHTML = '<p style="color:red; text-align:center; padding-top:50px;">系统繁忙: ' + String(e) + '</p>';
         }
     }
 
-// 🧠 筑梦大脑 V5.0：全自动特征识别验证码
     function getSmartVCode(html, text) {
         const cleanText = (html || text || "").replace(/<[^>]*>/g, ' ');
-        // 排除掉常见的年份和干扰项
         const commonGarbage = ['2024','2025','2026','DESIGN','LIMITLESS','CREATIVITY','SUPPORT'];
-        
-        // 抓取所有 4-8 位的字母数字组合
         const candidates = cleanText.match(/\b[A-Z0-9]{4,8}\b/g) || [];
-        
-        // 过滤掉垃圾信息
         const filtered = candidates.filter(c => !commonGarbage.includes(c.toUpperCase()));
-        
         if (filtered.length === 0) return null;
-
-        // 核心排序逻辑：验证码通常具备高熵特性
         return filtered.sort((a, b) => {
-            // 1. 优先选包含字母和数字混合的 (如 UXUNZG)
             const aHasAlpha = /[A-Z]/.test(a), aHasNum = /\d/.test(a);
             const bHasAlpha = /[A-Z]/.test(b), bHasNum = /\d/.test(b);
             if ((aHasAlpha && aHasNum) && !(bHasAlpha && bHasNum)) return -1;
             if (!(aHasAlpha && aHasNum) && (bHasAlpha && bHasNum)) return 1;
-            
-            // 2. 优先选 6 位的 (最常见的验证码长度)
             if (a.length === 6 && b.length !== 6) return -1;
             if (a.length !== 6 && b.length === 6) return 1;
-
             return 0;
         })[0];
     }
 
 function renderEmails(emails) {
-        window.currentVisibleEmails = emails; 
+        // 🎯 修复：使用解构翻转，确保索引绝对匹配最新邮件
+        window.currentVisibleEmails = [...emails].reverse(); 
         const container = document.getElementById('emailList');
         if (!emails || emails.length === 0) {
             container.innerHTML = '<p style="text-align:center; color:#999; padding-top:80px;">暂无新邮件，筑梦系统将实时获取最新邮件！</p>';
             return;
         }
 
-        container.innerHTML = emails.reverse().map((mail, index) => {
+        container.innerHTML = window.currentVisibleEmails.map((mail, index) => {
             let timeString = "时间未知";
             if(mail.timestamp) {
                 const d = new Date(mail.timestamp);
-                const Y = d.getFullYear();
-                const M = (d.getMonth() + 1).toString().padStart(2, '0');
-                const D = d.getDate().toString().padStart(2, '0');
-                const h = d.getHours().toString().padStart(2, '0');
-                const m = d.getMinutes().toString().padStart(2, '0');
-                const s = d.getSeconds().toString().padStart(2, '0');
-                timeString = `${Y}-${M}-${D} ${h}:${m}:${s}`;
+                timeString = `${d.getFullYear()}-${(d.getMonth()+1).toString().padStart(2,'0')}-${d.getDate().toString().padStart(2,'0')} ${d.getHours().toString().padStart(2,'0')}:${d.getMinutes().toString().padStart(2,'0')}:${d.getSeconds().toString().padStart(2,'0')}`;
             }
             const vCode = getSmartVCode(mail.html, mail.text);
             
-            // 这里 100% 维持你给我的原始结构
             return `
             <div class="mail-item-box" onclick="openEmailModal(${index}, '${timeString}')" style="cursor: pointer;">
                 ${vCode ? `
@@ -964,52 +906,29 @@ function renderEmails(emails) {
                 <div class="mail-content-hd">
                     ${mail.html || mail.text}
                 </div>
-            </div>
-            `;
+            </div>`;
         }).join('');
     }
-  // 🔥 修复2：全平台兼容的终极复制逻辑
+
     window.copyToClipboard = function(text, msg) {
         if (navigator.clipboard && window.isSecureContext) {
-            navigator.clipboard.writeText(text).then(() => {
-                showToast(msg);
-            }).catch(() => {
-                fallbackCopy(text, msg);
-            });
-        } else {
-            fallbackCopy(text, msg);
-        }
+            navigator.clipboard.writeText(text).then(() => { showToast(msg); }).catch(() => { fallbackCopy(text, msg); });
+        } else { fallbackCopy(text, msg); }
     };
 
-    // 专治各种不服的备用复制方案
     function fallbackCopy(text, msg) {
         const textArea = document.createElement("textarea");
         textArea.value = text;
-        // 极其重要：防止手机屏幕乱跳
-        textArea.style.position = "fixed";
-        textArea.style.top = "-9999px";
-        textArea.style.left = "-9999px";
+        textArea.style.position = "fixed"; textArea.style.top = "-9999px";
         document.body.appendChild(textArea);
-        
-        // 核心修复：兼容 iOS 和安卓微信的特殊选中逻辑
         if (navigator.userAgent.match(/ipad|iphone|mac/i)) {
             const range = document.createRange();
             range.selectNodeContents(textArea);
             const selection = window.getSelection();
-            selection.removeAllRanges();
-            selection.addRange(range);
+            selection.removeAllRanges(); selection.addRange(range);
             textArea.setSelectionRange(0, 999999);
-        } else {
-            textArea.select();
-        }
-
-        try {
-            const successful = document.execCommand('copy');
-            if(successful) showToast(msg);
-            else showToast("❌ 复制失败，请手动长按文字复制");
-        } catch (err) {
-            showToast("❌ 浏览器不支持，请手动长按复制");
-        }
+        } else { textArea.select(); }
+        try { if(document.execCommand('copy')) showToast(msg); } catch (err) {}
         document.body.removeChild(textArea);
     }
     
@@ -1024,94 +943,66 @@ function renderEmails(emails) {
                     <input type="password" id="authInput" placeholder="输入激活码..." style="padding: 12px; border-radius: 8px; border: 1px solid #ff69b4; background: rgba(255,255,255,0.1); color: #fff; width: 200px; outline: none;">
                     <button onclick="unlock()" class="btn-unlock-logic" style="padding: 12px 25px; border-radius: 8px; background: #ff69b4; color: #fff; border: none; cursor: pointer; font-weight: bold; box-shadow: 0 5px 0 #c2185b; white-space: nowrap;">立即激活</button>
                 </div>
-                <p style="color: #aaa; font-size: 12px; margin-top: 15px;">⚠️温馨提醒：一人一码，系统自动检测，多人共用激活码将自动失效！</p>
-            </div>
-        `;
+            </div>`;
     }
 
     async function unlock() {
         const codeInput = document.getElementById('authInput');
         const code = codeInput.value.trim();
-        
         if (!code) return showToast("⚠️ 请输入激活码");
-
         const devId = localStorage.getItem('deviceId');
-        showToast("🔍 正在验证并绑定设备...");
-
         try {
             const response = await fetch(`${API_BASE.replace('emails', 'verify')}`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ code: code, deviceId: devId })
             });
-
             const data = await response.json();
-
             if (response.ok) {
                 localStorage.setItem('authCode', code);
-                showToast("✅ 激活成功，欢迎使用");
-                setTimeout(() => {
-                    location.reload();
-                }, 800);
-            } else {
-                showToast("❌ " + (data.error || "无法激活，激活码无效！"));
-            }
-        } catch (error) {
-            console.error("激活请求失败:", error);
-            showToast("🌐 网络错误，请稍后重试！");
-        }
+                showToast("✅ 激活成功");
+                setTimeout(() => { location.reload(); }, 800);
+            } else { showToast("❌ " + (data.error || "激活码无效！")); }
+        } catch (error) { showToast("🌐 网络错误"); }
     }
 
     if (!localStorage.getItem('deviceId')) localStorage.setItem('deviceId', 'dev_' + Math.random().toString(36).substring(2, 10));
-    if (window.Notification) {
-        Notification.requestPermission().catch(e => console.log("弹窗权限被忽略"));
-    }
-   // 🧠 实时监控前缀输入框（恢复大写权限，并全量开放 RFC 标准允许的所有邮箱符号）
+    if (window.Notification) Notification.requestPermission();
+    
     document.getElementById('customInput').addEventListener('input', function(e) {
         const originalVal = this.value;
-        // 核心修复：允许大小写字母、数字，以及所有符合国际标准的特殊符号，仅拦截中文和非法空格等
         const newVal = originalVal.replace(/[^a-zA-Z0-9!#$%&'*+\-\/=?^_`{|}~.]/g, '');
-        
-        if (originalVal !== newVal) {
-            this.value = newVal; 
-            showToast("⚠️ 只能输入字母、数字和合法的邮箱符号哦！"); 
-        }
+        if (originalVal !== newVal) { this.value = newVal; showToast("⚠️ 只能输入合法的邮箱前缀哦！"); }
     });
+
     generateRandom();
     startCountdown();
-// 🚀 Step 3：打开沉浸式详情弹窗
+
     window.openEmailModal = function(index, timeString) {
         const mail = window.currentVisibleEmails[index];
+        if(!mail) return;
         const vCode = getSmartVCode(mail.html, mail.text);
         let content = mail.html || mail.text;
-        
-        // 抓取正文验证码并高亮（点击即复制）
         if (vCode) {
             const regex = new RegExp(vCode, 'g');
             content = content.replace(regex, `<span class="magic-vcode-click" onclick="copyToClipboard('${vCode}', '✅ 验证码 ${vCode} 已复制'); event.stopPropagation();">${vCode}</span>`);
         }
-
         document.getElementById('modalEmailContent').innerHTML = `
             <div style="background: rgba(0,242,255,0.08); border: 1px dashed rgba(0,242,255,0.4); padding: 12px; border-radius: 12px; color: #00f2ff; font-size: 13px; text-align: center; margin-bottom: 20px; font-weight: bold;">
                 💡 提示：点击正文中的验证码即可直接复制
             </div>
-
             <div class="mail-meta-group" style="margin-bottom: 20px; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 15px;">
                 <div class="meta-item" style="opacity: 0.8; margin-bottom: 5px;">👤 发件：${mail.from}</div>
                 <div class="meta-item" style="opacity: 0.8; margin-bottom: 5px;">📅 时间：${timeString}</div>
                 <div class="subject-item" style="font-size: 18px; color: #fff; margin-top: 8px !important; font-weight: bold;">📑 主题：${mail.subject}</div>
             </div>
-
-            <div class="mail-content-hd" style="border:none; padding:0; background:transparent !important; color:#eee !important; font-size: 15px; line-height: 1.6; transform: none !important; filter: none !important;">
+            <div class="mail-content-hd" style="border:none; padding:0; background:transparent !important; color:#eee !important; font-size: 15px; line-height: 1.6;">
                 ${content}
-            </div>
-        `;
-
+            </div>`;
         document.getElementById('emailDetailModal').style.display = 'flex';
-        document.body.classList.add('no-scroll'); // 彻底锁死底层滑动
+        document.body.classList.add('no-scroll');
     };
 
-    // 🚀 关闭详情弹窗
     window.closeEmailModal = function() {
         document.getElementById('emailDetailModal').style.display = 'none';
         document.body.classList.remove('no-scroll'); 
@@ -1127,26 +1018,5 @@ function renderEmails(emails) {
         <div id="modalEmailContent"></div>
     </div>
 </div>
-    <div id="emailDetailModal" class="email-modal-overlay">
-    <div class="email-modal-box">
-        <div class="modal-header-row">
-            <span style="color: #ff69b4; font-weight: bold;">📬 邮件详情</span>
-            <button class="modal-close-btn" onclick="closeEmailModal()">✖ 关闭</button>
-        </div>
-        <div id="modalEmailContent"></div>
-    </div>
-</div>
 </body>
 </html>
-
-
-
-
-
-
-
-
-
-
-
-
