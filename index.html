@@ -47,29 +47,55 @@
 
     *{box-sizing:border-box}
     html{scroll-behavior:smooth}
-  /* --- 1. 修改 body 背景 --- */
-    body {
-      margin:0;
-      font-family: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "PingFang SC", "Microsoft Yahei", "Noto Sans CJK SC", sans-serif;
-      color:var(--text);
+ /* ==========================================
+   1. 基础网页容器设置 (清爽干净)
+   ========================================== */
+body {
+  margin: 0;
+  font-family: ui-sans-serif, system-ui, -apple-system, sans-serif;
+  color: var(--text);
+  min-height: 100vh;
+  overflow-x: hidden;
+  /* ⚠️ 注意：这里不再写 background，交给了下面的底幕 */
+}
 
-      /* 核心修改：移除所有渐变代码，替换为你的图片 zb.JPG */
-      background: url('./zb.jpg') no-repeat center center fixed !important;
-      background-size: cover !important; /* 方案 2 核心：全屏覆盖 */
+/* ==========================================
+   2. 终极背景黑科技：独立底幕 
+   (完美绕过苹果iOS的滚动放大Bug)
+   ========================================== */
+body::before {
+  content: "";
+  position: fixed; /* 核心：把幕布死死钉在屏幕上 */
+  inset: 0;        /* 铺满全屏，相当于 top:0; left:0; right:0; bottom:0; */
+  z-index: -1;     /* 垫在所有内容的最后面 */
+  pointer-events: none; /* 防止挡住网页按钮的点击 */
+  
+  /* 统一的显示规则：铺满、居中、不重复 */
+  background-size: cover !important;
+  background-position: center center !important;
+  background-repeat: no-repeat !important;
 
-      min-height:100vh;
-      overflow-x:hidden;
-    }
+  /* 💻 默认加载：电脑大屏壁纸 */
+  background-image: url('./zb.jpg') !important; 
+}
 
-    /* --- 2. 禁用 body::before 的渐变光晕（防止遮挡图片） --- */
-    body::before {
-      content: "";
-      position: fixed;
-      inset: 0;
-      pointer-events: none;
-      z-index: -1;
-      background: none !important; /* 彻底清除代码生成的彩色光晕 */
-    }
+/* ==========================================
+   3. 📱 平板与折叠屏专属壁纸 (宽度 <= 1050px 触发)
+   ========================================== */
+@media (max-width: 1050px) {
+  body::before {
+    background-image: url('./zbipad.jpg') !important;
+  }
+}
+
+/* ==========================================
+   4. 📱 手机竖屏专属壁纸 (宽度 <= 650px 触发)
+   ========================================== */
+@media (max-width: 650px) {
+  body::before {
+    background-image: url('./zbipone.jpg') !important;
+  }
+}
     .wrap{
       width:min(1180px, calc(100% - 36px));
       margin:0 auto;
