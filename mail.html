@@ -854,30 +854,37 @@ h2::before, h2::after {
             });
 
           if (visibleEmails.length > lastEmailCount && lastEmailCount !== -1) {
-                // 🔥 修复1：增加安全检测，防止手机端报错卡死
-                if (typeof window.SpeechSynthesisUtterance !== 'undefined' && window.speechSynthesis) {
-                    try {
+               // 🎯 修复：增加安全检测，如果手机不支持语音，直接跳过，不报错
+            if (visibleEmails.length > lastEmailCount && lastEmailCount !== -1) {
+                try {
+                    // 检查浏览器是否支持语音功能
+                    if (typeof window.SpeechSynthesisUtterance !== 'undefined' && window.speechSynthesis) {
                         const msg = new SpeechSynthesisUtterance();
                         msg.text = "您有新的邮件，请注意查收";
                         msg.lang = "zh-CN";
                         window.speechSynthesis.speak(msg);
-                    } catch (e) { console.log("语音播报被浏览器拦截"); }
+                    }
+                } catch (speechError) {
+                    // 如果语音报错，只在后台记录，不让它弹到屏幕上吓唬人
+                    console.log("语音播报功能不可用，已自动忽略");
                 }
 
+                // 原有的桌面通知逻辑保留
                 if (window.Notification && Notification.permission === "granted") {
-                    const newMail = visibleEmails[0]; 
+                    const newMail = visibleEmails[0];
                     if(newMail) {
                         new Notification("📬 筑梦收件箱新邮件！", {
                             body: `发件人: ${newMail.from}\n主题: ${newMail.subject}`,
-                            icon: "https://roselg.xyz/favicon.ico" 
+                            icon: "https://roselg.xyz/favicon.ico"
                         });
                     }
                 }
             }
-            // 🔥 新增：如果是手机端（屏幕宽度<=650），收到新邮件直接弹窗居中显示！
-                if (window.innerWidth <= 650 && visibleEmails.length > 0) {
-                    showMobileMailModal(visibleEmails[0]);
-                }
+         // 🔥 新增：如果是手机端，收到新邮件直接弹窗显示
+        if (window.innerWidth <= 650 && visibleEmails.length > lastEmailCount && lastEmailCount !== -1) {
+            // 🎯 这里的函数名一定要改成 openEmailModal，否则手机端会再次出现红字报错！
+            openEmailModal(0, "刚刚"); 
+        }
             lastEmailCount = visibleEmails.length;
             
             if (typeof renderEmails === 'function') {
@@ -1131,6 +1138,7 @@ function renderEmails(emails) {
 </div>
 </body>
 </html>
+
 
 
 
