@@ -659,28 +659,34 @@ h2::before, h2::after {
         /* 锁死底层滑动 */
         .no-scroll { overflow: hidden !important; height: 100vh !important; }
 
-      /* 🎯 恢复原版：只给一个干净的白底容器，绝对不写 color 和 font */
-        .mail-content-hd {
-            background: #ffffff !important; 
+    /* 🎯 修复1：主页列表（电脑/手机）的预览框，确保白底黑字，强制可见 */
+        .mail-item-box .mail-content-hd {
+            background: #ffffff !important;
+            color: #222222 !important; /* 强制列表里显示黑字，防止看不清内容 */
             padding: 15px !important;
-            margin: 0 10px 10px 10px !important;
+            margin-top: 15px !important;
             border-radius: 12px !important;
-            flex: 1; 
-            overflow-y: auto !important; 
-            -webkit-overflow-scrolling: touch;
-            border: none !important;
-        }
-        
-        /* 强制图片自适应，不变形 */
-        .mail-content-hd img, .mail-content-hd table {
-            max-width: 100% !important; 
-            height: auto !important;
+            border: 1px solid rgba(0,0,0,0.1) !important;
+            display: block !important;
+            transform: none !important;
+            filter: none !important;
         }
 
+        /* 🎯 修复2：详情弹窗里的邮件正文，高清、原貌、不碰字体颜色 */
+        #modalEmailContent .mail-content-hd {
+            background: #ffffff !important;
+            color: initial !important; /* 撤销强制颜色，让原邮件原本的颜色生效 */
+            padding: 15px !important;
+            margin: 0 !important;
+            border-radius: 12px !important;
+            overflow-y: auto !important;
+        }
+
+        /* 🎯 修复3：强制图片、表格、框架自适应，防止撑爆框 */
         .mail-content-hd img, 
         .mail-content-hd table,
         .mail-content-hd iframe {
-            max-width: 100% !important; /* 强制商业图片不超出边界 */
+            max-width: 100% !important;
             height: auto !important;
             box-sizing: border-box !important;
         }
@@ -1046,25 +1052,27 @@ function renderEmails(emails) {
 // 🚀 Step 3：打开沉浸式详情弹窗
     window.openEmailModal = function(index, timeString) {
         if (window.innerWidth > 1050) return; 
+
         const mail = window.currentVisibleEmails[index];
         if(!mail) return;
         const vCode = getSmartVCode(mail.html, mail.text);
         let content = mail.html || mail.text;
         
+        // 🎯 修复：验证码【绝对居中】+【原汁原味字体】+【点击立即复制】
         if (vCode) {
-            // 🎯 核心逻辑：用一个透明的 table 包裹验证码，既能强制居中，又绝对不影响字体
+            // 使用 table 居中法，这是在 HTML 邮件里强制居中的“万能药”，且不破坏字体
             const centerWrapper = `
                 <table width="100%" border="0" cellspacing="0" cellpadding="0" style="margin: 20px 0;">
                     <tr>
                         <td align="center">
-                            <span style="cursor: pointer; display: inline-block; font-family: inherit !important; font-size: inherit !important; color: inherit !important;" 
+                            <span style="cursor: pointer; display: inline-block; font-family: inherit !important; font-size: inherit !important; color: inherit !important; border-bottom: 2px dashed #ff69b4; padding-bottom: 2px;" 
                                   onclick="window.copyToClipboard('${vCode}', '✅ 验证码 ${vCode} 已复制'); event.stopPropagation();">
                                 ${vCode}
                             </span>
                         </td>
                     </tr>
                 </table>`;
-            // 只替换第一个匹配到的验证码，防止破坏其他隐藏代码
+            // 精准替换正文中的验证码
             content = content.replace(vCode, centerWrapper);
         }
 
@@ -1079,17 +1087,12 @@ function renderEmails(emails) {
             </div>
         `;
 
-        // 暴力开启 & 关闭逻辑（解决 ID 重复问题）
+        // 统一弹窗显隐逻辑
         document.querySelectorAll('.email-modal-overlay').forEach(m => {
             if (m.parentNode !== document.body) document.body.appendChild(m);
             m.style.display = 'flex';
         });
         document.body.classList.add('no-scroll', 'hide-ui-for-modal'); 
-    };
-
-    window.closeEmailModal = function() {
-        document.querySelectorAll('.email-modal-overlay').forEach(m => m.style.display = 'none');
-        document.body.classList.remove('no-scroll', 'hide-ui-for-modal'); 
     };
    
 </script>
@@ -1105,6 +1108,7 @@ function renderEmails(emails) {
 </div>
 </body>
 </html>
+
 
 
 
