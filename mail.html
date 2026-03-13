@@ -645,20 +645,31 @@ h2::before, h2::after {
         .mail-item-box .mail-content-hd * {
             color: #222222 !important; /* 强制预览框里的所有文字变深色，防止白底白字 */
         } 
-        /* 🎯 优化3：强制预览界面的邮件内容绝对居中 */
+       /* 🎯 优化3：强制预览界面的邮件内容绝对居中（多端通杀版） */
         .mail-item-box .mail-content-hd {
             display: flex !important;
             flex-direction: column !important;
-            align-items: center !important; /* 让内部的图片、表格等大块头强行居中 */
-            text-align: center !important;  /* 让普通文本强行居中 */
-            overflow-x: hidden !important;  /* 防止内容太宽撑破白框 */
+            align-items: center !important;
+            text-align: center !important;
+            overflow-x: hidden !important; 
         }
 
-        .mail-item-box .mail-content-hd table,
-        .mail-item-box .mail-content-hd img,
-        .mail-item-box .mail-content-hd div {
-            margin-left: auto !important;
-            margin-right: auto !important; /* 物理居中双重保险 */
+        /* 👑 专门针对手机端的“全员强行居中”核武器 */
+        @media (max-width: 650px) {
+            .mail-item-box .mail-content-hd * {
+                text-align: center !important;  /* 穿透所有原邮件标签，强行居中文字 */
+                margin-left: auto !important;
+                margin-right: auto !important;
+                float: none !important;         /* 废除所有靠左/靠右浮动 */
+                align-self: center !important;
+            }
+            
+            .mail-item-box .mail-content-hd img,
+            .mail-item-box .mail-content-hd table {
+                max-width: 100% !important;     /* 防止大图撑破屏幕 */
+                width: auto !important;
+                height: auto !important;
+            }
         }
   </style>
 </head>
@@ -1099,6 +1110,7 @@ content = content.replace(safeRegex, safeInlineHighlight);
 </div>
 </body>
 </html>
+
 
 
 
