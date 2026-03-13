@@ -1047,10 +1047,11 @@ function renderEmails(emails) {
         const vCode = getSmartVCode(mail.html, mail.text);
         let content = mail.html || mail.text;
         
-        // 🎯 修复1 & 2：加上 window. 恢复无痕点击复制，并用 div 强制将其独立一行绝对居中！
+        // 🎯 修复：100% 还原原邮件字体 + 强制居中 + 恢复复制
         if (vCode) {
             const regex = new RegExp(vCode, 'g');
-            content = content.replace(regex, `<div style="display: block; width: 100%; text-align: center; margin: 15px 0;"><span onclick="window.copyToClipboard('${vCode}', '✅ 验证码 ${vCode} 已复制'); event.stopPropagation();" style="cursor: pointer;">${vCode}</span></div>`);
+            // 这里我们不加任何字体控制，只用 text-align 让它在这一行居中显示
+            content = content.replace(regex, `<div style="text-align: center; width: 100%; margin: 10px 0;"><span onclick="window.copyToClipboard('${vCode}', '✅ 验证码 ${vCode} 已复制'); event.stopPropagation();" style="cursor: pointer; font: inherit; color: inherit;">${vCode}</span></div>`);
         }
 
         document.getElementById('modalEmailContent').innerHTML = `
@@ -1073,13 +1074,6 @@ function renderEmails(emails) {
         document.body.classList.add('no-scroll'); 
         document.body.classList.add('hide-ui-for-modal'); 
     };
-
-    // 🚀 修复3：恢复最干脆、最稳妥的关闭逻辑
-    window.closeEmailModal = function() {
-        document.getElementById('emailDetailModal').style.display = 'none';
-        document.body.classList.remove('no-scroll'); 
-        document.body.classList.remove('hide-ui-for-modal'); 
-    };
    
 </script>
 
@@ -1094,6 +1088,7 @@ function renderEmails(emails) {
 </div>
 </body>
 </html>
+
 
 
 
