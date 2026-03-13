@@ -604,8 +604,8 @@ h2::before, h2::after {
     padding: 12px; border-radius: 12px; font-size: 14px;
     border: 4px solid rgba(0,0,0,0.2);
 }
-        /* =======================================
-            🚀 手机端沉浸式详情框（全设备自适应）
+      /* =======================================
+           🚀 手机端沉浸式详情框（全设备自适应 & 限制 2/3 高度）
            ======================================= */
         .email-modal-overlay {
             position: fixed;
@@ -619,7 +619,9 @@ h2::before, h2::after {
             background: rgba(15, 15, 20, 0.98);
             border: 1px solid rgba(255, 105, 180, 0.5);
             border-radius: 24px; width: 92%; max-width: 600px;
-            max-height: 85vh; display: flex; flex-direction: column;
+            /* 🎯 核心修复 1：严格限制高度为屏幕的三分之二 (66vh)，不论横竖屏/平板都生效 */
+            max-height: 66vh; 
+            display: flex; flex-direction: column;
             box-shadow: 0 20px 80px rgba(0, 0, 0, 0.8);
         }
 
@@ -634,6 +636,20 @@ h2::before, h2::after {
             cursor: pointer;
             padding: 0 4px;
         }
+
+        /* 🎯 核心修复 2：强制邮件内部的所有巨无霸图片、表格自适应缩小，绝不撑爆屏幕 */
+        .mail-content-hd img, 
+        .mail-content-hd table, 
+        .mail-content-hd iframe {
+            max-width: 100% !important;
+            height: auto !important;
+            box-sizing: border-box !important;
+        }
+        .mail-content-hd {
+            word-wrap: break-word !important;
+            word-break: break-all !important;
+            overflow-x: auto !important;
+        } 
   </style>
 </head>
 <body>
@@ -708,26 +724,42 @@ h2::before, h2::after {
 
   function setCustomEmail() {
     const inputEl = document.getElementById('customInput');
-    let val = inputEl.value.trim(); // 仅去除首尾空格
+    let val = inputEl.value.trim(); 
     
     if(!val) {
         showToast("⚠️ 请先输入邮箱前缀");
         return;
     }
 
-    // 🚀 核心校验正则：
-    const validRegex = /^[a-zA-Z0-9._+-]+$/;
+    /* 🚀 第二道防线：点击生成时的“结构合法性”国际标准检测 */
 
+    // 1. 基础防护：完全对齐你底部的 RFC 国际标准符号库
+    // 允许：大小写字母、数字，以及所有符合国际标准的特殊符号
+    const validRegex = /^[a-zA-Z0-9!#$%&'*+\-\/=?^_`{|}~.]+$/;
     if (!validRegex.test(val)) {
-        showToast("❌ 不合法邮箱前缀（仅限字母、数字及 . _ - +）");
+        showToast("❌ 包含非法字符，请检查输入！");
         return; 
     }
 
-    if (val.startsWith('.') || val.endsWith('.')) {
-        showToast("❌ 点号不能放在邮箱开头或结尾");
+    // 2. 核心拦截：必须包含至少一个字母或数字（彻底杜绝纯符号，如 "---" 或 "..."）
+    if (!/[a-zA-Z0-9]/.test(val)) {
+        showToast("❌ 邮箱名不能全是符号，必须包含字母或数字");
         return;
     }
 
+    // 3. 规范拦截：不能以符号开头或结尾（国际互联网 RFC 标准强制要求）
+    if (/^[^a-zA-Z0-9]|[^a-zA-Z0-9]$/.test(val)) {
+        showToast("❌ 邮箱名必须以字母或数字作为开头和结尾");
+        return;
+    }
+
+    // 4. 严谨拦截：RFC 标准规定邮箱名不能包含连续的点号 (例如 a..b)
+    if (/\.\./.test(val)) {
+        showToast("❌ 邮箱名不能包含连续的点号(.)");
+        return;
+    }
+
+    // 检测全部通过，激活邮箱
     updateDisplay(val + DOMAIN, false);
     showToast("✅ 自定义邮箱已激活");
 }
@@ -1020,3 +1052,4 @@ function renderEmails(emails) {
 </div>
 </body>
 </html>
+
