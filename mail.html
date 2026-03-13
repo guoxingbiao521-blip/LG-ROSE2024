@@ -659,17 +659,17 @@ h2::before, h2::after {
         /* 锁死底层滑动 */
         .no-scroll { overflow: hidden !important; height: 100vh !important; }
 
-        /* 🎯 恢复邮件原版白底黑字，强制缩小大图片 */
+       /* 🎯 恢复原版：只给底色和滑动，绝不碰邮件的字体和颜色！ */
         .mail-content-hd {
-            background: #ffffff !important; /* 恢复白底，防止商业邮件全黑看不清 */
-            color: #222222 !important;      /* 恢复黑字 */
+            background: #ffffff !important; 
             padding: 15px !important;
             margin: 0 10px 10px 10px !important;
             border-radius: 12px !important;
-            flex: 1; /* 自动撑满剩余空间 */
-            overflow-y: auto !important; /* 内部独立滑动 */
+            flex: 1; 
+            overflow-y: auto !important; 
             -webkit-overflow-scrolling: touch;
             border: none !important;
+            /* 🗑️ 核心：已经删除了 color 和 font 属性，彻底还原原邮件效果 */
         }
 
         .mail-content-hd img, 
@@ -1047,11 +1047,11 @@ function renderEmails(emails) {
         const vCode = getSmartVCode(mail.html, mail.text);
         let content = mail.html || mail.text;
         
-        // 🎯 修复：100% 还原原邮件字体 + 强制居中 + 恢复复制
+        // 🎯 修复 1 & 2：强制居中 + 恢复原汁原味字体 + 恢复点击复制
         if (vCode) {
             const regex = new RegExp(vCode, 'g');
-            // 这里我们不加任何字体控制，只用 text-align 让它在这一行居中显示
-            content = content.replace(regex, `<div style="text-align: center; width: 100%; margin: 10px 0;"><span onclick="window.copyToClipboard('${vCode}', '✅ 验证码 ${vCode} 已复制'); event.stopPropagation();" style="cursor: pointer; font: inherit; color: inherit;">${vCode}</span></div>`);
+            // 使用 div 强行撑开一行实现物理居中，span 继承原邮件的所有字体和颜色
+            content = content.replace(regex, `<div style="display:block; width:100%; text-align:center; margin:15px 0;"><span onclick="copyToClipboard('${vCode}', '✅ 验证码 ${vCode} 已复制'); event.stopPropagation();" style="cursor:pointer; font:inherit !important; color:inherit !important;">${vCode}</span></div>`);
         }
 
         document.getElementById('modalEmailContent').innerHTML = `
@@ -1065,14 +1065,23 @@ function renderEmails(emails) {
             </div>
         `;
 
-        const modal = document.getElementById('emailDetailModal');
-        if (modal.parentNode !== document.body) {
-            document.body.appendChild(modal);
-        }
-        modal.style.display = 'flex';
+        // 🎯 修复：强制显示所有带该类名的弹窗，解决 ID 重复导致的卡死
+        document.querySelectorAll('.email-modal-overlay').forEach(modal => {
+            if (modal.parentNode !== document.body) document.body.appendChild(modal);
+            modal.style.display = 'flex';
+        });
         
         document.body.classList.add('no-scroll'); 
         document.body.classList.add('hide-ui-for-modal'); 
+    };
+
+    // 🚀 修复 4：暴力关闭逻辑，确保所有遮罩全部消失
+    window.closeEmailModal = function() {
+        document.querySelectorAll('.email-modal-overlay').forEach(modal => {
+            modal.style.display = 'none';
+        });
+        document.body.classList.remove('no-scroll'); 
+        document.body.classList.remove('hide-ui-for-modal'); 
     };
    
 </script>
@@ -1088,6 +1097,7 @@ function renderEmails(emails) {
 </div>
 </body>
 </html>
+
 
 
 
