@@ -1033,16 +1033,18 @@ window.closeEmailModal = function() {
             </div>
         `;
 
-        // 2. 居中高亮且可点击的验证码方块
+    // 2. 居中高亮且可点击的验证码方块（终极强制居中版）
         const centerWrapper = `
-            <div style="display: block; width: 100%; text-align: center; margin: 25px 0; clear: both;">
-                <span style="display: inline-block; cursor: pointer; color: #ff69b4 !important; font-size: 28px !important; font-weight: 900 !important; border: 2px dashed #ff69b4; border-radius: 8px; padding: 10px 25px; background: rgba(255,105,180,0.05); letter-spacing: 2px; transition: transform 0.1s;" 
+            <br style="clear: both;" />
+            <div style="display: flex !important; justify-content: center !important; align-items: center !important; width: 100% !important; margin: 20px 0 !important; box-sizing: border-box !important;">
+                <div style="display: inline-block !important; cursor: pointer; color: #ff69b4 !important; font-size: 28px !important; font-weight: 900 !important; border: 2px dashed #ff69b4 !important; border-radius: 8px !important; padding: 10px 25px !important; background: rgba(255,105,180,0.05) !important; letter-spacing: 2px !important; text-align: center !important; margin: 0 auto !important;" 
                       onclick="window.copyToClipboard('${vCode}', '✅ 验证码 ${vCode} 已复制'); event.stopPropagation();"
                       onmousedown="this.style.transform='scale(0.95)'" 
                       onmouseup="this.style.transform='scale(1)'">
                     ${vCode}
-                </span>
+                </div>
             </div>
+            <br style="clear: both;" />
         `;
         // 3. 安全替换
         const safeRegex = new RegExp('(?<![#a-zA-Z0-9])' + vCode + '(?![a-zA-Z0-9])');
@@ -1083,6 +1085,7 @@ window.closeEmailModal = function() {
 </div>
 </body>
 </html>
+
 
 
 
