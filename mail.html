@@ -605,51 +605,61 @@ h2::before, h2::after {
     border: 4px solid rgba(0,0,0,0.2);
 }
       /* =======================================
-           🚀 手机端沉浸式详情框（全设备自适应 & 限制 2/3 高度）
+           🚀 手机端沉浸式详情框（绝对居中 + 2/3面积 + 高清原画）
            ======================================= */
         .email-modal-overlay {
             position: fixed;
-            top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0, 0, 0, 0.9); /* 足够暗，突出内容 */
-            backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
-            z-index: 99999; display: none; justify-content: center; align-items: center;
+            top: 0; left: 0; width: 100vw; height: 100vh;
+            background: rgba(0, 0, 0, 0.75); /* 纯净半透明黑，去掉模糊滤镜，透出清晰壁纸 */
+            z-index: 99999;
+            display: none; 
+            justify-content: center; /* 🎯 绝对水平居中 */
+            align-items: center;     /* 🎯 绝对垂直居中 */
         }
 
         .email-modal-box {
-            background: rgba(15, 15, 20, 0.98);
-            border: 1px solid rgba(255, 105, 180, 0.5);
-            border-radius: 24px; width: 92%; max-width: 600px;
-            /* 🎯 核心修复 1：严格限制高度为屏幕的三分之二 (66vh)，不论横竖屏/平板都生效 */
-            max-height: 66vh; 
+            background: rgba(20, 20, 25, 0.98);
+            border: 2px solid #ff69b4;
+            border-radius: 20px; 
+            /* 🎯 核心修复：宽85vw，高60vh，整体面积严格控制在整个屏幕的 2/3 以内 */
+            width: 85vw; 
+            height: 60vh; 
+            max-width: 500px;
             display: flex; flex-direction: column;
-            box-shadow: 0 20px 80px rgba(0, 0, 0, 0.8);
+            box-shadow: 0 10px 50px rgba(0,0,0,0.9);
+            overflow: hidden; /* 防止内部结构超出圆角 */
         }
 
-        /* 锁死底层滑动的大招 */
+        /* 🎯 杀手锏：隐藏底层 UI 的魔法类（除了壁纸和弹窗，其他瞬间消失） */
+        body.hide-ui-for-modal > *:not(#emailDetailModal):not(#customToast):not(style):not(script) {
+            opacity: 0 !important;
+            visibility: hidden !important;
+            transition: opacity 0.2s ease;
+        }
+
+        /* 锁死底层滑动 */
         .no-scroll { overflow: hidden !important; height: 100vh !important; }
 
-        /* 验证码高亮（正文内点击） */
-        .magic-vcode-click {
-            color: #00f2ff !important;
-            font-weight: 900 !important;
-            text-decoration: underline dashed #00f2ff !important;
-            cursor: pointer;
-            padding: 0 4px;
+        /* 🎯 恢复邮件原版白底黑字，强制缩小大图片 */
+        .mail-content-hd {
+            background: #ffffff !important; /* 恢复白底，防止商业邮件全黑看不清 */
+            color: #222222 !important;      /* 恢复黑字 */
+            padding: 15px !important;
+            margin: 0 10px 10px 10px !important;
+            border-radius: 12px !important;
+            flex: 1; /* 自动撑满剩余空间 */
+            overflow-y: auto !important; /* 内部独立滑动 */
+            -webkit-overflow-scrolling: touch;
+            border: none !important;
         }
 
-        /* 🎯 核心修复 2：强制邮件内部的所有巨无霸图片、表格自适应缩小，绝不撑爆屏幕 */
         .mail-content-hd img, 
-        .mail-content-hd table, 
+        .mail-content-hd table,
         .mail-content-hd iframe {
-            max-width: 100% !important;
+            max-width: 100% !important; /* 强制商业图片不超出边界 */
             height: auto !important;
             box-sizing: border-box !important;
         }
-        .mail-content-hd {
-            word-wrap: break-word !important;
-            word-break: break-all !important;
-            overflow-x: auto !important;
-        } 
   </style>
 </head>
 <body>
@@ -1009,36 +1019,52 @@ function renderEmails(emails) {
 
     generateRandom();
     startCountdown();
-
+// 🚀 Step 3：打开沉浸式详情弹窗
     window.openEmailModal = function(index, timeString) {
+        // 🎯 修复1：电脑端（屏幕宽度>1050）点击绝对不弹窗
+        if (window.innerWidth > 1050) return; 
+
         const mail = window.currentVisibleEmails[index];
         if(!mail) return;
         const vCode = getSmartVCode(mail.html, mail.text);
         let content = mail.html || mail.text;
+        
+        // 抓取正文验证码并高亮（优化为青色底黑字，小巧不破坏原邮件排版）
         if (vCode) {
             const regex = new RegExp(vCode, 'g');
-            content = content.replace(regex, `<span class="magic-vcode-click" onclick="copyToClipboard('${vCode}', '✅ 验证码 ${vCode} 已复制'); event.stopPropagation();">${vCode}</span>`);
+            content = content.replace(regex, `<span class="magic-vcode-click" style="background:#00f2ff; color:#000; padding:2px 6px; border-radius:6px; font-weight:bold; cursor:pointer;" onclick="copyToClipboard('${vCode}', '✅ 验证码 ${vCode} 已复制'); event.stopPropagation();">${vCode}</span>`);
         }
+
         document.getElementById('modalEmailContent').innerHTML = `
-            <div style="background: rgba(0,242,255,0.08); border: 1px dashed rgba(0,242,255,0.4); padding: 12px; border-radius: 12px; color: #00f2ff; font-size: 13px; text-align: center; margin-bottom: 20px; font-weight: bold;">
+            <div style="background: rgba(0,242,255,0.08); border: 1px dashed rgba(0,242,255,0.4); padding: 10px; border-radius: 10px; color: #00f2ff; font-size: 13px; text-align: center; margin: 15px 15px 0 15px; font-weight: bold;">
                 💡 提示：点击正文中的验证码即可直接复制
             </div>
-            <div class="mail-meta-group" style="margin-bottom: 20px; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 15px;">
-                <div class="meta-item" style="opacity: 0.8; margin-bottom: 5px;">👤 发件：${mail.from}</div>
-                <div class="meta-item" style="opacity: 0.8; margin-bottom: 5px;">📅 时间：${timeString}</div>
-                <div class="subject-item" style="font-size: 18px; color: #fff; margin-top: 8px !important; font-weight: bold;">📑 主题：${mail.subject}</div>
+            <div class="mail-meta-group" style="padding: 15px; border-bottom: 1px solid rgba(255,255,255,0.1);">
+                <div class="meta-item" style="color:rgba(255,255,255,0.8); margin-bottom: 4px;">👤 发件：${mail.from}</div>
+                <div class="meta-item" style="color:rgba(255,255,255,0.8); margin-bottom: 4px;">📅 时间：${timeString}</div>
+                <div class="subject-item" style="font-size: 16px; color: #fff; margin-top: 8px !important; font-weight: bold;">📑 主题：${mail.subject}</div>
             </div>
-            <div class="mail-content-hd" style="border:none; padding:0; background:transparent !important; color:#eee !important; font-size: 15px; line-height: 1.6;">
+            <div class="mail-content-hd">
                 ${content}
-            </div>`;
+            </div>
+        `;
+
         document.getElementById('emailDetailModal').style.display = 'flex';
-        document.body.classList.add('no-scroll');
+        
+        // 🎯 触发网页 UI 瞬间隐身术
+        document.body.classList.add('no-scroll'); 
+        document.body.classList.add('hide-ui-for-modal'); 
     };
 
+    // 🚀 关闭详情弹窗
     window.closeEmailModal = function() {
         document.getElementById('emailDetailModal').style.display = 'none';
+        
+        // 🎯 瞬间恢复网页原本的 UI
         document.body.classList.remove('no-scroll'); 
+        document.body.classList.remove('hide-ui-for-modal'); 
     };
+   
 </script>
 
 <div id="emailDetailModal" class="email-modal-overlay">
@@ -1052,4 +1078,5 @@ function renderEmails(emails) {
 </div>
 </body>
 </html>
+
 
