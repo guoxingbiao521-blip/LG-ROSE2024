@@ -618,78 +618,50 @@ h2::before, h2::after {
     padding: 12px; border-radius: 12px; font-size: 14px;
     border: 4px solid rgba(0,0,0,0.2);
 }
-      /* =======================================
-           🚀 手机端沉浸式详情框（绝对居中 + 2/3面积 + 高清原画）
-           ======================================= */
-        .email-modal-overlay {
-            position: fixed;
-            top: 0; left: 0; width: 100vw; height: 100vh;
-            background: rgba(0, 0, 0, 0.75); /* 纯净半透明黑，去掉模糊滤镜，透出清晰壁纸 */
-            z-index: 99999;
-            display: none; 
-            justify-content: center; /* 🎯 绝对水平居中 */
-            align-items: center;     /* 🎯 绝对垂直居中 */
-        }
+     // 🚀 Step 3：打开沉浸式详情弹窗（原位居中替换版）
+window.openEmailModal = function(index, timeString) {
+    if (window.innerWidth > 1050) return; 
 
-        .email-modal-box {
-            background: rgba(20, 20, 25, 0.98);
-            border: 2px solid #ff69b4;
-            border-radius: 20px; 
-            /* 🎯 核心修复：宽85vw，高60vh，整体面积严格控制在整个屏幕的 2/3 以内 */
-            width: 85vw; 
-            height: 60vh; 
-            max-width: 500px;
-            display: flex; flex-direction: column;
-            box-shadow: 0 10px 50px rgba(0,0,0,0.9);
-            overflow: hidden; /* 防止内部结构超出圆角 */
-        }
+    const mail = window.currentVisibleEmails[index];
+    if(!mail) return;
+    const vCode = getSmartVCode(mail.html, mail.text);
+    let content = mail.html || mail.text;
+    
+    // 🎯 修复3 & 4：在原位置强行居中，并确保点击复制100%生效
+    if (vCode) {
+        // 使用 div 强制独占一行并绝对居中，给文字加上明显的点击反馈样式
+        const centerWrapper = `
+            <div style="display: block; width: 100%; text-align: center; margin: 20px 0;">
+                <span style="display: inline-block; cursor: pointer; color: #ff69b4 !important; font-size: 28px !important; font-weight: 900 !important; border: 2px dashed #ff69b4; border-radius: 8px; padding: 10px 25px; background: rgba(255,105,180,0.05); letter-spacing: 2px;" 
+                      onclick="window.copyToClipboard('${vCode}', '✅ 验证码 ${vCode} 已复制'); event.stopPropagation();"
+                      onmousedown="this.style.transform='scale(0.95)'" 
+                      onmouseup="this.style.transform='scale(1)'">
+                    ${vCode}
+                </span>
+            </div>
+        `;
+        // 原位替换原邮件中的验证码
+        content = content.replace(vCode, centerWrapper);
+    }
 
-       /* 🎯 杀手锏（安全修复版）：精准隐藏主卡片和底部按钮，绝不误伤弹窗！ */
-        body.hide-ui-for-modal .main-card,
-        body.hide-ui-for-modal > div[style*="flex-direction: row"] {
-            opacity: 0 !important;
-            visibility: hidden !important;
-        }
+    document.getElementById('modalEmailContent').innerHTML = `
+        <div class="mail-meta-group" style="padding: 15px; border-bottom: 1px solid rgba(255,255,255,0.1);">
+            <div class="meta-item" style="color:rgba(255,255,255,0.8); margin-bottom: 4px;">👤 发件：${mail.from}</div>
+            <div class="meta-item" style="color:rgba(255,255,255,0.8); margin-bottom: 4px;">📅 时间：${timeString}</div>
+            <div class="subject-item" style="font-size: 16px; color: #fff; margin-top: 8px !important; font-weight: bold;">📑 主题：${mail.subject}</div>
+        </div>
+        <div class="mail-content-hd">
+            ${content}
+        </div>
+    `;
 
-        /* 🎯 强行保命符：打破隐形限制，确保弹窗无论放在哪都强制现身！ */
-        #emailDetailModal {
-            visibility: visible !important;
-            opacity: 1 !important;
-        }
-        /* 锁死底层滑动 */
-        .no-scroll { overflow: hidden !important; height: 100vh !important; }
-
-    /* 🎯 修复1：主页列表（电脑/手机）的预览框，确保白底黑字，强制可见 */
-        .mail-item-box .mail-content-hd {
-            background: #ffffff !important;
-            color: #222222 !important; /* 强制列表里显示黑字，防止看不清内容 */
-            padding: 15px !important;
-            margin-top: 15px !important;
-            border-radius: 12px !important;
-            border: 1px solid rgba(0,0,0,0.1) !important;
-            display: block !important;
-            transform: none !important;
-            filter: none !important;
-        }
-
-        /* 🎯 修复2：详情弹窗里的邮件正文，高清、原貌、不碰字体颜色 */
-        #modalEmailContent .mail-content-hd {
-            background: #ffffff !important;
-            color: initial !important; /* 撤销强制颜色，让原邮件原本的颜色生效 */
-            padding: 15px !important;
-            margin: 0 !important;
-            border-radius: 12px !important;
-            overflow-y: auto !important;
-        }
-
-        /* 🎯 修复3：强制图片、表格、框架自适应，防止撑爆框 */
-        .mail-content-hd img, 
-        .mail-content-hd table,
-        .mail-content-hd iframe {
-            max-width: 100% !important;
-            height: auto !important;
-            box-sizing: border-box !important;
-        }
+    // 统一弹窗显隐逻辑
+    document.querySelectorAll('.email-modal-overlay').forEach(m => {
+        if (m.parentNode !== document.body) document.body.appendChild(m);
+        m.style.display = 'flex';
+    });
+    document.body.classList.add('no-scroll', 'hide-ui-for-modal'); 
+};
   </style>
 </head>
 <body>
@@ -1050,6 +1022,14 @@ function renderEmails(emails) {
     generateRandom();
     startCountdown();
 // 🚀 Step 3：打开沉浸式详情弹窗
+    // 🚀 修复1：添加丢失的关闭弹窗指令
+window.closeEmailModal = function() {
+    document.querySelectorAll('.email-modal-overlay').forEach(m => {
+        m.style.display = 'none';
+    });
+    // 解除页面底层的滑动锁定
+    document.body.classList.remove('no-scroll', 'hide-ui-for-modal');
+};
     window.openEmailModal = function(index, timeString) {
         if (window.innerWidth > 1050) return; 
 
@@ -1108,6 +1088,7 @@ function renderEmails(emails) {
 </div>
 </body>
 </html>
+
 
 
 
