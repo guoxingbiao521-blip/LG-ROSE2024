@@ -294,7 +294,7 @@ h2::before, h2::after {
         .inbox-title { margin: 0; color: #ff69b4; font-size: 22px; text-shadow: 1px 1px 3px rgba(0,0,0,0.8); }
         .refresh-timer { font-size: 13px; color: #fff; font-weight: normal; margin-left: 5px; background: rgba(0, 0, 0, 0.6); padding: 2px 8px; border-radius: 20px; border: 1px solid rgba(255, 182, 193, 0.5); }
 
-        #customToast { visibility: hidden; min-width: 200px; background-color: rgba(0, 0, 0, 0.85); color: #fff; text-align: center; border-radius: 12px; padding: 18px 30px; position: fixed; z-index: 1000; left: 50%; top: 50%; transform: translate(-50%, -50%); font-size: 16px; font-weight: bold; backdrop-filter: blur(8px); }
+        #customToast { visibility: hidden; min-width: 200px; background-color: rgba(0, 0, 0, 0.85); color: #fff; text-align: center; border-radius: 12px; padding: 18px 30px; position: fixed; z-index: 999999 !important; left: 50%; top: 50%; transform: translate(-50%, -50%); font-size: 16px; font-weight: bold; backdrop-filter: blur(8px); }
         #customToast.show { visibility: visible; animation: fadeInOut 2.5s; }
         @keyframes fadeInOut { 0% {opacity: 0;} 15% {opacity: 1;} 85% {opacity: 1;} 100% {opacity: 0;} }
 
@@ -618,50 +618,32 @@ h2::before, h2::after {
     padding: 12px; border-radius: 12px; font-size: 14px;
     border: 4px solid rgba(0,0,0,0.2);
 }
-     // 🚀 Step 3：打开沉浸式详情弹窗（原位居中替换版）
-window.openEmailModal = function(index, timeString) {
-    if (window.innerWidth > 1050) return; 
-
-    const mail = window.currentVisibleEmails[index];
-    if(!mail) return;
-    const vCode = getSmartVCode(mail.html, mail.text);
-    let content = mail.html || mail.text;
+   
     
-    // 🎯 修复3 & 4：在原位置强行居中，并确保点击复制100%生效
-    if (vCode) {
-        // 使用 div 强制独占一行并绝对居中，给文字加上明显的点击反馈样式
-        const centerWrapper = `
-            <div style="display: block; width: 100%; text-align: center; margin: 20px 0;">
-                <span style="display: inline-block; cursor: pointer; color: #ff69b4 !important; font-size: 28px !important; font-weight: 900 !important; border: 2px dashed #ff69b4; border-radius: 8px; padding: 10px 25px; background: rgba(255,105,180,0.05); letter-spacing: 2px;" 
-                      onclick="window.copyToClipboard('${vCode}', '✅ 验证码 ${vCode} 已复制'); event.stopPropagation();"
-                      onmousedown="this.style.transform='scale(0.95)'" 
-                      onmouseup="this.style.transform='scale(1)'">
-                    ${vCode}
-                </span>
-            </div>
-        `;
-        // 原位替换原邮件中的验证码
-        content = content.replace(vCode, centerWrapper);
-    }
+   /* 🎯 修复2：详情弹窗里的邮件正文，恢复标准原貌 */
+        #modalEmailContent .mail-content-hd {
+            background: #ffffff !important;
+            color: #222222 !important; /* 强制深色文字，防止看不清 */
+            font-size: 16px !important; /* 🔑 核心：强制标准 16px 大小，彻底打破 14px 封印 */
+            line-height: 1.6 !important; 
+            font-family: 'Segoe UI', system-ui, sans-serif !important; /* 强制恢复标准阅读字体 */
+            padding: 15px !important;
+            margin: 0 !important;
+            border-radius: 12px !important;
+            overflow-y: auto !important;
+        }
 
-    document.getElementById('modalEmailContent').innerHTML = `
-        <div class="mail-meta-group" style="padding: 15px; border-bottom: 1px solid rgba(255,255,255,0.1);">
-            <div class="meta-item" style="color:rgba(255,255,255,0.8); margin-bottom: 4px;">👤 发件：${mail.from}</div>
-            <div class="meta-item" style="color:rgba(255,255,255,0.8); margin-bottom: 4px;">📅 时间：${timeString}</div>
-            <div class="subject-item" style="font-size: 16px; color: #fff; margin-top: 8px !important; font-weight: bold;">📑 主题：${mail.subject}</div>
-        </div>
-        <div class="mail-content-hd">
-            ${content}
-        </div>
-    `;
-
-    // 统一弹窗显隐逻辑
-    document.querySelectorAll('.email-modal-overlay').forEach(m => {
-        if (m.parentNode !== document.body) document.body.appendChild(m);
-        m.style.display = 'flex';
-    });
-    document.body.classList.add('no-scroll', 'hide-ui-for-modal'); 
-};
+        /* 🎯 强行保底：限制图片不撑爆屏幕 */
+        .mail-content-hd img {
+            max-width: 100% !important;
+            height: auto !important;
+            box-sizing: border-box !important;
+        } 
+          /* 🎯 优化1：解决未打开弹窗前，列表里的邮件预览看不清（强制黑字） */
+        .mail-item-box .mail-content-hd,
+        .mail-item-box .mail-content-hd * {
+            color: #222222 !important; /* 强制预览框里的所有文字变深色，防止白底白字 */
+        }                                                                                         
   </style>
 </head>
 <body>
@@ -1030,50 +1012,63 @@ window.closeEmailModal = function() {
     // 解除页面底层的滑动锁定
     document.body.classList.remove('no-scroll', 'hide-ui-for-modal');
 };
-    window.openEmailModal = function(index, timeString) {
-        if (window.innerWidth > 1050) return; 
+   window.openEmailModal = function(index, timeString) {
+    if (window.innerWidth > 1050) return; 
 
-        const mail = window.currentVisibleEmails[index];
-        if(!mail) return;
-        const vCode = getSmartVCode(mail.html, mail.text);
-        let content = mail.html || mail.text;
-        
-        // 🎯 修复：验证码【绝对居中】+【原汁原味字体】+【点击立即复制】
-        if (vCode) {
-            // 使用 table 居中法，这是在 HTML 邮件里强制居中的“万能药”，且不破坏字体
-            const centerWrapper = `
-                <table width="100%" border="0" cellspacing="0" cellpadding="0" style="margin: 20px 0;">
-                    <tr>
-                        <td align="center">
-                            <span style="cursor: pointer; display: inline-block; font-family: inherit !important; font-size: inherit !important; color: inherit !important; border-bottom: 2px dashed #ff69b4; padding-bottom: 2px;" 
-                                  onclick="window.copyToClipboard('${vCode}', '✅ 验证码 ${vCode} 已复制'); event.stopPropagation();">
-                                ${vCode}
-                            </span>
-                        </td>
-                    </tr>
-                </table>`;
-            // 精准替换正文中的验证码
-            content = content.replace(vCode, centerWrapper);
-        }
+    const mail = window.currentVisibleEmails[index];
+    if(!mail) return;
+    const vCode = getSmartVCode(mail.html, mail.text);
+    let content = mail.html || mail.text;
+    
+    let hintHtml = ''; // 准备一个空的提示语变量
 
-        document.getElementById('modalEmailContent').innerHTML = `
-            <div class="mail-meta-group" style="padding: 15px; border-bottom: 1px solid rgba(255,255,255,0.1);">
-                <div class="meta-item" style="color:rgba(255,255,255,0.8); margin-bottom: 4px;">👤 发件：${mail.from}</div>
-                <div class="meta-item" style="color:rgba(255,255,255,0.8); margin-bottom: 4px;">📅 时间：${timeString}</div>
-                <div class="subject-item" style="font-size: 16px; color: #fff; margin-top: 8px !important; font-weight: bold;">📑 主题：${mail.subject}</div>
-            </div>
-            <div class="mail-content-hd">
-                ${content}
+    // 🎯 修复：验证码【绝对居中】+【点击立即复制】+【顶部提示语】
+    if (vCode) {
+        // 1. 生成弹窗最上方的专属提示语（带图标、粉色边框、居中）
+        hintHtml = `
+            <div style="text-align: center; margin: 10px 0 5px 0;">
+                <span style="display: inline-block; background: rgba(255,105,180,0.1); color: #ff69b4; padding: 8px 18px; border-radius: 20px; font-size: 13px; font-weight: bold; border: 1px dashed #ff69b4; letter-spacing: 1px;">
+                    💡 点击下方验证码即可直接复制
+                </span>
             </div>
         `;
 
-        // 统一弹窗显隐逻辑
-        document.querySelectorAll('.email-modal-overlay').forEach(m => {
-            if (m.parentNode !== document.body) document.body.appendChild(m);
-            m.style.display = 'flex';
-        });
-        document.body.classList.add('no-scroll', 'hide-ui-for-modal'); 
-    };
+        // 2. 居中高亮且可点击的验证码方块
+        const centerWrapper = `
+            <div style="display: block; width: 100%; text-align: center; margin: 25px 0; clear: both;">
+                <span style="display: inline-block; cursor: pointer; color: #ff69b4 !important; font-size: 28px !important; font-weight: 900 !important; border: 2px dashed #ff69b4; border-radius: 8px; padding: 10px 25px; background: rgba(255,105,180,0.05); letter-spacing: 2px; transition: transform 0.1s;" 
+                      onclick="window.copyToClipboard('${vCode}', '✅ 验证码 ${vCode} 已复制'); event.stopPropagation();"
+                      onmousedown="this.style.transform='scale(0.95)'" 
+                      onmouseup="this.style.transform='scale(1)'">
+                    ${vCode}
+                </span>
+            </div>
+        `;
+        // 3. 安全替换
+        const safeRegex = new RegExp('(?<![#a-zA-Z0-9])' + vCode + '(?![a-zA-Z0-9])');
+        content = content.replace(safeRegex, centerWrapper);
+    }
+
+    // 将提示语 hintHtml 放在 modalEmailContent 的最顶端！
+    document.getElementById('modalEmailContent').innerHTML = `
+        ${hintHtml}
+        <div class="mail-meta-group" style="padding: 15px; border-bottom: 1px solid rgba(255,255,255,0.1);">
+            <div class="meta-item" style="color:rgba(255,255,255,0.8); margin-bottom: 4px;">👤 发件：${mail.from}</div>
+            <div class="meta-item" style="color:rgba(255,255,255,0.8); margin-bottom: 4px;">📅 时间：${timeString}</div>
+            <div class="subject-item" style="font-size: 16px; color: #fff; margin-top: 8px !important; font-weight: bold;">📑 主题：${mail.subject}</div>
+        </div>
+        <div class="mail-content-hd">
+            ${content}
+        </div>
+    `;
+
+    // 统一弹窗显隐逻辑
+    document.querySelectorAll('.email-modal-overlay').forEach(m => {
+        if (m.parentNode !== document.body) document.body.appendChild(m);
+        m.style.display = 'flex';
+    });
+    document.body.classList.add('no-scroll', 'hide-ui-for-modal'); 
+};
    
 </script>
 
@@ -1088,6 +1083,7 @@ window.closeEmailModal = function() {
 </div>
 </body>
 </html>
+
 
 
 
