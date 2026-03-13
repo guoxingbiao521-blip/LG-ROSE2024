@@ -1052,13 +1052,13 @@ function renderEmails(emails) {
         const vCode = getSmartVCode(mail.html, mail.text);
         let content = mail.html || mail.text;
         
-        // 🎯 修复2：剥离花哨高亮，原汁原味保留原样！附加无痕点击复制功能，并强制在其所在位置居中
+        // 🎯 修复 1 & 2：恢复无痕复制 + 强制独立居中显示
         if (vCode) {
             const regex = new RegExp(vCode, 'g');
-            content = content.replace(regex, `<span onclick="copyToClipboard('${vCode}', '✅ 验证码 ${vCode} 已复制'); event.stopPropagation();" style="display: block; text-align: center; margin: 10px 0; cursor: pointer;">${vCode}</span>`);
+            // 用一个 100% 宽度的 div 强行把它包裹起来并居中，同时加上虚线下划线提示可点击
+            content = content.replace(regex, `<div style="display: block; width: 100%; text-align: center; margin: 20px 0;"><span onclick="window.copyToClipboard('${vCode}', '✅ 验证码 ${vCode} 已复制'); event.stopPropagation();" style="cursor: pointer; border-bottom: 2px dashed #ff69b4; padding-bottom: 2px;">${vCode}</span></div>`);
         }
 
-        // 🎯 修复3：撤销“单独提到上方”的鸡肋提示，保持邮件原貌整洁
         document.getElementById('modalEmailContent').innerHTML = `
             <div class="mail-meta-group" style="padding: 15px; border-bottom: 1px solid rgba(255,255,255,0.1);">
                 <div class="meta-item" style="color:rgba(255,255,255,0.8); margin-bottom: 4px;">👤 发件：${mail.from}</div>
@@ -1070,14 +1070,25 @@ function renderEmails(emails) {
             </div>
         `;
 
-        const modal = document.getElementById('emailDetailModal');
-        if (modal.parentNode !== document.body) {
-            document.body.appendChild(modal);
-        }
-        modal.style.display = 'flex';
+        // 打开弹窗：为了防止多个重复的 HTML 结构，使用 class 遍历打开
+        const modals = document.querySelectorAll('.email-modal-overlay');
+        modals.forEach(m => {
+            if (m.parentNode !== document.body) document.body.appendChild(m);
+            m.style.display = 'flex';
+        });
         
         document.body.classList.add('no-scroll'); 
         document.body.classList.add('hide-ui-for-modal'); 
+    };
+
+    // 🚀 修复 3：无敌关闭函数（强制关掉页面上所有的弹窗和遮罩）
+    window.closeEmailModal = function() {
+        const modals = document.querySelectorAll('.email-modal-overlay');
+        modals.forEach(m => {
+            m.style.display = 'none';
+        });
+        document.body.classList.remove('no-scroll'); 
+        document.body.classList.remove('hide-ui-for-modal'); 
     };
    
 </script>
@@ -1093,6 +1104,7 @@ function renderEmails(emails) {
 </div>
 </body>
 </html>
+
 
 
 
