@@ -567,7 +567,8 @@ h2::before, h2::after {
 
     function copyEmail() {
         if(!currentEmail) return;
-        navigator.clipboard.writeText(currentEmail).then(() => showToast("📋 邮箱地址已复制"));
+        // ✅ 统一调用带“安全网”的 copyToClipboard
+        window.copyToClipboard(currentEmail, "📋 邮箱地址已复制");
     }
 
     // 🔥 【完美时间戳清理法】：终于能用上你后端加的 timestamp 了！
@@ -859,6 +860,7 @@ function renderEmails(emails) {
 </script>
 </body>
 </html>
+
 
 
 
