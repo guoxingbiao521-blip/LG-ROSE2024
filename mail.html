@@ -682,16 +682,7 @@ h2::before, h2::after {
                 height: auto !important;
             }
         }
-    /* 🎯 优化4：电脑端和手机端按钮文字智能切换 */
-        .btn-text-pc { display: inline-block; } /* 默认显示电脑版文字 */
-        .btn-text-mb { display: none; }         /* 默认隐藏手机版文字 */
-
-        /* 当屏幕变小（手机/平板）时，触发魔法 */
-        @media (max-width: 1050px) {
-            .btn-text-pc { display: none !important; }             /* 藏起电脑版文字 */
-            .btn-text-mb { display: inline-block !important; }     /* 显示手机版直观验证码 */
-            .vcode-btn-admin-clone { padding: 0 10px !important; } /* 稍微调整下手机端按钮边距 */
-        }
+    
   </style>
 </head>
 <body>
@@ -969,8 +960,7 @@ function renderEmails(emails) {
            <div class="mail-item-box" onclick="openEmailModal(${index}, '${timeString}')" style="cursor: pointer;">
                 ${vCode ? `
                 <button onclick="copyToClipboard('${vCode}', '✅ 验证码 ${vCode} 已复制'); event.stopPropagation();" class="vcode-btn-admin-clone">
-                    <span class="btn-text-pc">⚡ 一键复制验证码</span>
-                    <span class="btn-text-mb">⚡ 复制: <span style="background: #e91e63; color: #fff; padding: 2px 8px; border-radius: 6px; margin-left: 4px;">${vCode}</span></span>
+                    ⚡ 一键复制验证码
                 </button>
                 ` : ''}
                 <div class="mail-meta-group">
@@ -1132,6 +1122,7 @@ content = content.replace(safeRegex, safeInlineHighlight);
 </div>
 </body>
 </html>
+
 
 
 
