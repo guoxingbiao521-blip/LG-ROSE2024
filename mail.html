@@ -604,6 +604,36 @@ h2::before, h2::after {
     padding: 12px; border-radius: 12px; font-size: 14px;
     border: 4px solid rgba(0,0,0,0.2);
 }
+        /* =======================================
+           🚀 手机端沉浸式详情框（全设备自适应）
+           ======================================= */
+        .email-modal-overlay {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0, 0, 0, 0.9); /* 足够暗，突出内容 */
+            backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+            z-index: 99999; display: none; justify-content: center; align-items: center;
+        }
+
+        .email-modal-box {
+            background: rgba(15, 15, 20, 0.98);
+            border: 1px solid rgba(255, 105, 180, 0.5);
+            border-radius: 24px; width: 92%; max-width: 600px;
+            max-height: 85vh; display: flex; flex-direction: column;
+            box-shadow: 0 20px 80px rgba(0, 0, 0, 0.8);
+        }
+
+        /* 锁死底层滑动的大招 */
+        .no-scroll { overflow: hidden !important; height: 100vh !important; }
+
+        /* 验证码高亮（正文内点击） */
+        .magic-vcode-click {
+            color: #00f2ff !important;
+            font-weight: 900 !important;
+            text-decoration: underline dashed #00f2ff !important;
+            cursor: pointer;
+            padding: 0 4px;
+        }
   </style>
 </head>
 <body>
@@ -1042,43 +1072,52 @@ function renderEmails(emails) {
     });
     generateRandom();
     startCountdown();
-    // 📱 手机端正方形弹窗的独立控制逻辑
-    function showMobileMailModal(mail) {
-        const modal = document.getElementById('mobileMailModal');
-        const vcodeEl = document.getElementById('modalVcode');
-        const contentEl = document.getElementById('modalMailContent');
-        
-        // 提取验证码
+// 🚀 Step 3：打开沉浸式详情弹窗
+    window.openEmailModal = function(index, timeString) {
+        const mail = window.currentVisibleEmails[index];
         const vCode = getSmartVCode(mail.html, mail.text);
+        let content = mail.html || mail.text;
         
+        // 抓取正文验证码并高亮（点击即复制）
         if (vCode) {
-            vcodeEl.style.display = 'block';
-            vcodeEl.innerText = vCode;
-            // 点击直接调用复制函数
-            vcodeEl.onclick = function() {
-                copyToClipboard(vCode, '✅ 验证码 ' + vCode + ' 已复制');
-            };
-        } else {
-            vcodeEl.style.display = 'none'; // 没抓到验证码就隐藏这个印章
+            const regex = new RegExp(vCode, 'g');
+            content = content.replace(regex, `<span class="magic-vcode-click" onclick="copyToClipboard('${vCode}', '✅ 验证码 ${vCode} 已复制'); event.stopPropagation();">${vCode}</span>`);
         }
-        
-        // 填充邮件正文
-        contentEl.innerHTML = mail.html || mail.text;
-        // 显示弹窗
-        modal.style.display = 'flex';
-    }
 
-    // 关闭弹窗
-    function closeMailModal() {
-        document.getElementById('mobileMailModal').style.display = 'none';
-    }
+        document.getElementById('modalEmailContent').innerHTML = `
+            <div style="background: rgba(0,242,255,0.08); border: 1px dashed rgba(0,242,255,0.4); padding: 12px; border-radius: 12px; color: #00f2ff; font-size: 13px; text-align: center; margin-bottom: 20px; font-weight: bold;">
+                💡 提示：点击正文中的验证码即可直接复制
+            </div>
+
+            <div class="mail-meta-group" style="margin-bottom: 20px; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 15px;">
+                <div class="meta-item" style="opacity: 0.8; margin-bottom: 5px;">👤 发件：${mail.from}</div>
+                <div class="meta-item" style="opacity: 0.8; margin-bottom: 5px;">📅 时间：${timeString}</div>
+                <div class="subject-item" style="font-size: 18px; color: #fff; margin-top: 8px !important; font-weight: bold;">📑 主题：${mail.subject}</div>
+            </div>
+
+            <div class="mail-content-hd" style="border:none; padding:0; background:transparent !important; color:#eee !important; font-size: 15px; line-height: 1.6; transform: none !important; filter: none !important;">
+                ${content}
+            </div>
+        `;
+
+        document.getElementById('emailDetailModal').style.display = 'flex';
+        document.body.classList.add('no-scroll'); // 彻底锁死底层滑动
+    };
+
+    // 🚀 关闭详情弹窗
+    window.closeEmailModal = function() {
+        document.getElementById('emailDetailModal').style.display = 'none';
+        document.body.classList.remove('no-scroll'); 
+    };
 </script>
-    <div id="mobileMailModal" class="mail-modal-overlay">
-    <div class="mail-modal-box">
-        <button class="mail-modal-close" onclick="closeMailModal()">×</button>
-        <div class="mail-modal-hint">💡 点击验证码即可直接复制</div>
-        <div class="mail-modal-vcode" id="modalVcode"></div>
-        <div class="mail-modal-content" id="modalMailContent"></div>
+
+<div id="emailDetailModal" class="email-modal-overlay">
+    <div class="email-modal-box">
+        <div class="modal-header-row">
+            <span style="color: #ff69b4; font-weight: bold;">📬 邮件详情</span>
+            <button class="modal-close-btn" onclick="closeEmailModal()">✖ 关闭</button>
+        </div>
+        <div id="modalEmailContent"></div>
     </div>
 </div>
     <div id="emailDetailModal" class="email-modal-overlay">
@@ -1092,6 +1131,7 @@ function renderEmails(emails) {
 </div>
 </body>
 </html>
+
 
 
 
