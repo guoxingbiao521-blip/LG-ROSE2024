@@ -298,6 +298,34 @@ h2::before, h2::after {
             letter-spacing: -0.5px !important; 
             overflow: hidden !important; 
         }
+       /* 🔥 修复3：手机端邮件卡片重新排版 */
+        .mail-item-box { 
+            padding: 15px !important; 
+        }
+        
+        /* 废除绝对定位，改为上方占满宽度的块状按钮 */
+        .vcode-btn-admin-clone {
+            position: relative !important;
+            top: 0 !important; 
+            right: 0 !important;
+            width: 100% !important;
+            margin-bottom: 15px !important;
+            height: 42px !important;
+            font-size: 14px !important;
+            box-shadow: 0 4px 0 #008899 !important;
+        }
+
+        /* 优化主题字体大小，防止撑爆 */
+        .subject-item { 
+            font-size: 15px !important; 
+            margin-top: 5px !important; 
+            word-break: break-word !important; 
+        }
+
+        /* 优化正文框边距 */
+        .mail-content-hd {
+            padding: 10px !important;
+        }
     }
 /* 邮件卡片基础 */
 .mail-item-box {
@@ -622,11 +650,16 @@ h2::before, h2::after {
                 return true; 
             });
 
-            if (visibleEmails.length > lastEmailCount && lastEmailCount !== -1) {
-                const msg = new SpeechSynthesisUtterance();
-                msg.text = "您有新的邮件，请注意查收";
-                msg.lang = "zh-CN";
-                window.speechSynthesis.speak(msg);
+          if (visibleEmails.length > lastEmailCount && lastEmailCount !== -1) {
+                // 🔥 修复1：增加安全检测，防止手机端报错卡死
+                if (typeof window.SpeechSynthesisUtterance !== 'undefined' && window.speechSynthesis) {
+                    try {
+                        const msg = new SpeechSynthesisUtterance();
+                        msg.text = "您有新的邮件，请注意查收";
+                        msg.lang = "zh-CN";
+                        window.speechSynthesis.speak(msg);
+                    } catch (e) { console.log("语音播报被浏览器拦截"); }
+                }
 
                 if (window.Notification && Notification.permission === "granted") {
                     const newMail = visibleEmails[0]; 
@@ -723,23 +756,50 @@ function renderEmails(emails) {
             `;
         }).join('');
     }
-    // 修复点击逻辑：确保全局可用，且带 Toast 弹出
+  // 🔥 修复2：全平台兼容的终极复制逻辑
     window.copyToClipboard = function(text, msg) {
-        if (!navigator.clipboard) {
-            // 备用方案
-            const textArea = document.createElement("textarea");
-            textArea.value = text;
-            document.body.appendChild(textArea);
-            textArea.select();
-            document.execCommand('copy');
-            document.body.removeChild(textArea);
-            showToast(msg);
-        } else {
+        if (navigator.clipboard && window.isSecureContext) {
             navigator.clipboard.writeText(text).then(() => {
                 showToast(msg);
+            }).catch(() => {
+                fallbackCopy(text, msg);
             });
+        } else {
+            fallbackCopy(text, msg);
         }
     };
+
+    // 专治各种不服的备用复制方案
+    function fallbackCopy(text, msg) {
+        const textArea = document.createElement("textarea");
+        textArea.value = text;
+        // 极其重要：防止手机屏幕乱跳
+        textArea.style.position = "fixed";
+        textArea.style.top = "-9999px";
+        textArea.style.left = "-9999px";
+        document.body.appendChild(textArea);
+        
+        // 核心修复：兼容 iOS 和安卓微信的特殊选中逻辑
+        if (navigator.userAgent.match(/ipad|iphone|mac/i)) {
+            const range = document.createRange();
+            range.selectNodeContents(textArea);
+            const selection = window.getSelection();
+            selection.removeAllRanges();
+            selection.addRange(range);
+            textArea.setSelectionRange(0, 999999);
+        } else {
+            textArea.select();
+        }
+
+        try {
+            const successful = document.execCommand('copy');
+            if(successful) showToast(msg);
+            else showToast("❌ 复制失败，请手动长按文字复制");
+        } catch (err) {
+            showToast("❌ 浏览器不支持，请手动长按复制");
+        }
+        document.body.removeChild(textArea);
+    }
     
     function renderLockedInbox(msg = "激活后即可查看实时邮件") {
         const container = document.getElementById('emailList');
@@ -799,5 +859,6 @@ function renderEmails(emails) {
 </script>
 </body>
 </html>
+
 
 
