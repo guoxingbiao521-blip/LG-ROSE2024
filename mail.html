@@ -5,6 +5,87 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>🌹 LG筑梦电子无限临时邮箱 system 🌹</title>
     <style>
+        /* =======================================
+           🚀 终极沉浸式邮件弹窗样式 
+           ======================================= */
+        /* 弹窗遮罩：极暗底色，解决安卓滑动 Bug 的第一道防线 */
+        .email-modal-overlay {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0, 0, 0, 0.88); /* 极暗遮罩，只透出微弱背景 */
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
+            z-index: 99999;
+            display: none; /* 默认隐藏 */
+            justify-content: center;
+            align-items: center;
+            overscroll-behavior: none; /* 阻止滑动穿透 */
+        }
+
+        /* 弹窗核心框 */
+        .email-modal-box {
+            background: rgba(15, 15, 20, 0.95);
+            border: 2px solid rgba(255, 105, 180, 0.6);
+            border-radius: 20px;
+            width: 92%;
+            max-width: 650px;
+            max-height: 85vh; /* 保证框不会超出屏幕 */
+            display: flex;
+            flex-direction: column;
+            box-shadow: 0 0 50px rgba(255, 105, 180, 0.3);
+            animation: modalPop 0.3s cubic-bezier(0.18, 0.89, 0.32, 1.28); /* Q弹动画 */
+        }
+
+        @keyframes modalPop {
+            0% { transform: scale(0.8); opacity: 0; }
+            100% { transform: scale(1); opacity: 1; }
+        }
+
+        .modal-header-row {
+            display: flex; justify-content: space-between; align-items: center;
+            padding: 15px 20px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            background: rgba(255, 255, 255, 0.03);
+            border-radius: 20px 20px 0 0;
+        }
+
+        .modal-close-btn {
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255,255,255,0.2);
+            color: white; padding: 6px 14px; border-radius: 8px;
+            cursor: pointer; font-weight: bold; margin: 0; box-shadow: none;
+        }
+        .modal-close-btn:hover { background: #ff69b4; border-color: #ff69b4; }
+
+        /* 内部滚动区域（只有这里能滑） */
+        #modalEmailContent {
+            padding: 20px;
+            overflow-y: auto;
+            -webkit-overflow-scrolling: touch;
+        }
+
+        /* 🚀 邮件正文里可点击的验证码（取代了原本的独立按钮） */
+        .magic-vcode-click {
+            background: #00f2ff !important;
+            color: #000 !important;
+            padding: 4px 10px !important;
+            border-radius: 8px !important;
+            cursor: pointer;
+            font-weight: 1000 !important;
+            display: inline-block;
+            box-shadow: 0 0 15px rgba(0, 242, 255, 0.6) !important;
+            text-decoration: none !important;
+            margin: 0 4px;
+            transition: transform 0.1s;
+        }
+        .magic-vcode-click:active { transform: scale(0.9); }
+
+        /* 彻底解决安卓底层滑动的核心大招 */
+        .no-scroll {
+            overflow: hidden !important;
+            height: 100vh !important;
+            touch-action: none;
+        }
 .btn-clone {
     height: 45px;
     display: flex;
@@ -809,13 +890,14 @@ h2::before, h2::after {
     }
 
 function renderEmails(emails) {
+        window.currentVisibleEmails = emails; 
         const container = document.getElementById('emailList');
         if (!emails || emails.length === 0) {
             container.innerHTML = '<p style="text-align:center; color:#999; padding-top:80px;">暂无新邮件，筑梦系统将实时获取最新邮件！</p>';
             return;
         }
 
-        container.innerHTML = emails.reverse().map(mail => {
+        container.innerHTML = emails.reverse().map((mail, index) => {
             let timeString = "时间未知";
             if(mail.timestamp) {
                 const d = new Date(mail.timestamp);
@@ -827,23 +909,21 @@ function renderEmails(emails) {
                 const s = d.getSeconds().toString().padStart(2, '0');
                 timeString = `${Y}-${M}-${D} ${h}:${m}:${s}`;
             }
-
             const vCode = getSmartVCode(mail.html, mail.text);
-
+            
+            // 这里 100% 维持你给我的原始结构
             return `
-            <div class="mail-item-box">
+            <div class="mail-item-box" onclick="openEmailModal(${index}, '${timeString}')" style="cursor: pointer;">
                 ${vCode ? `
-                <button onclick="copyToClipboard('${vCode}', '✅ 验证码 ${vCode} 已复制')" class="vcode-btn-admin-clone">
+                <button onclick="copyToClipboard('${vCode}', '✅ 验证码 ${vCode} 已复制'); event.stopPropagation();" class="vcode-btn-admin-clone">
                     ⚡ 一键复制验证码
                 </button>
                 ` : ''}
-
                 <div class="mail-meta-group">
                     <div class="meta-item">👤 发件：${mail.from}</div>
                     <div class="meta-item">📅 时间：${timeString}</div>
                     <div class="subject-item">📑 主题：${mail.subject}</div>
-                </div>
-                
+                </div>                
                 <div class="mail-content-hd">
                     ${mail.html || mail.text}
                 </div>
@@ -1001,8 +1081,18 @@ function renderEmails(emails) {
         <div class="mail-modal-content" id="modalMailContent"></div>
     </div>
 </div>
+    <div id="emailDetailModal" class="email-modal-overlay">
+    <div class="email-modal-box">
+        <div class="modal-header-row">
+            <span style="color: #ff69b4; font-weight: bold;">📬 邮件详情</span>
+            <button class="modal-close-btn" onclick="closeEmailModal()">✖ 关闭</button>
+        </div>
+        <div id="modalEmailContent"></div>
+    </div>
+</div>
 </body>
 </html>
+
 
 
 
