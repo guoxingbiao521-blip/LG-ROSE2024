@@ -1032,18 +1032,20 @@ window.closeEmailModal = function() {
                 </span>
             </div>
         `;
-// 2. 居中高亮且可点击的验证码方块（终极强制置顶居中版）
+// 2. 居中高亮验证码（重型坦克版：强制换行+绝对居中）
         const centerWrapper = `
-            <div style="display: block !important; clear: both !important; width: 100% !important; height: 10px !important;"></div>
-            <div style="display: flex !important; justify-content: center !important; align-items: center !important; width: 100% !important; margin: 25px 0 !important; position: relative !important; z-index: 9999 !important; pointer-events: auto !important;">
-                <div style="display: inline-block !important; cursor: pointer !important; color: #ff69b4 !important; font-size: 32px !important; font-weight: 900 !important; border: 2px dashed #ff69b4 !important; border-radius: 12px !important; padding: 12px 30px !important; background: #fff !important; box-shadow: 0 4px 15px rgba(255,105,180,0.2) !important; letter-spacing: 3px !important; text-align: center !important; transition: transform 0.1s !important; -webkit-appearance: none !important;" 
-                      onclick="window.copyToClipboard('${vCode}', '✅ 验证码 ${vCode} 已复制'); event.stopPropagation();"
-                      onmousedown="this.style.transform='scale(0.95)'" 
-                      onmouseup="this.style.transform='scale(1)'">
-                    ${vCode}
-                </div>
-            </div>
-            <div style="display: block !important; clear: both !important; width: 100% !important; height: 10px !important;"></div>
+            <table width="100%" border="0" cellspacing="0" cellpadding="0" style="width: 100% !important; margin: 30px 0 !important; border-collapse: collapse !important; clear: both !important; float: none !important;">
+                <tr>
+                    <td align="center" style="text-align: center !important; padding: 10px 0 !important;">
+                        <div style="display: inline-block !important; cursor: pointer !important; color: #ff69b4 !important; font-size: 32px !important; font-weight: 900 !important; border: 2px dashed #ff69b4 !important; border-radius: 12px !important; padding: 15px 35px !important; background: #ffffff !important; box-shadow: 0 4px 20px rgba(255,105,180,0.25) !important; letter-spacing: 3px !important; text-align: center !important; margin: 0 auto !important; transition: transform 0.1s !important;" 
+                             onclick="window.copyToClipboard('${vCode}', '✅ 验证码 ${vCode} 已复制'); event.stopPropagation();"
+                             onmousedown="this.style.transform='scale(0.95)'" 
+                             onmouseup="this.style.transform='scale(1)'">
+                            ${vCode}
+                        </div>
+                    </td>
+                </tr>
+            </table>
         `;
     
         // 3. 安全替换
@@ -1085,6 +1087,7 @@ window.closeEmailModal = function() {
 </div>
 </body>
 </html>
+
 
 
 
