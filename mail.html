@@ -630,13 +630,18 @@ h2::before, h2::after {
             overflow: hidden; /* 防止内部结构超出圆角 */
         }
 
-        /* 🎯 杀手锏：隐藏底层 UI 的魔法类（除了壁纸和弹窗，其他瞬间消失） */
-        body.hide-ui-for-modal > *:not(#emailDetailModal):not(#customToast):not(style):not(script) {
+       /* 🎯 杀手锏（安全修复版）：精准隐藏主卡片和底部按钮，绝不误伤弹窗！ */
+        body.hide-ui-for-modal .main-card,
+        body.hide-ui-for-modal > div[style*="flex-direction: row"] {
             opacity: 0 !important;
             visibility: hidden !important;
-            transition: opacity 0.2s ease;
         }
 
+        /* 🎯 强行保命符：打破隐形限制，确保弹窗无论放在哪都强制现身！ */
+        #emailDetailModal {
+            visibility: visible !important;
+            opacity: 1 !important;
+        }
         /* 锁死底层滑动 */
         .no-scroll { overflow: hidden !important; height: 100vh !important; }
 
@@ -1078,5 +1083,6 @@ function renderEmails(emails) {
 </div>
 </body>
 </html>
+
 
 
