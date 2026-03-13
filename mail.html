@@ -49,13 +49,32 @@
             border-radius: 20px 20px 0 0;
         }
 
+    /* 🎯 修复1：3D 立体 Q弹关闭按钮，匹配主页风格 */
         .modal-close-btn {
-            background: rgba(255, 255, 255, 0.1);
-            border: 1px solid rgba(255,255,255,0.2);
-            color: white; padding: 6px 14px; border-radius: 8px;
-            cursor: pointer; font-weight: bold; margin: 0; box-shadow: none;
+            background-color: #d81b60; /* 玫瑰红主题色 */
+            border: none;
+            color: white; 
+            padding: 8px 16px; 
+            border-radius: 12px;
+            cursor: pointer; 
+            font-weight: bold; 
+            margin: 0; 
+            box-shadow: 0 5px 0 #ad1457; /* 3D 立体底部阴影 */
+            transition: all 0.1s ease;
+            font-size: 14px;
+            display: flex;
+            align-items: center;
+            gap: 5px;
         }
-        .modal-close-btn:hover { background: #ff69b4; border-color: #ff69b4; }
+        .modal-close-btn:hover { 
+            filter: brightness(1.1);
+            transform: translateY(-2px);
+            box-shadow: 0 7px 15px rgba(216, 27, 96, 0.4), 0 5px 0 #ad1457; 
+        }
+        .modal-close-btn:active {
+            transform: translateY(4px) !important;
+            box-shadow: 0 1px 0 #ad1457 !important; /* 点击时的真实下压回弹 */
+        }
 
         /* 内部滚动区域（只有这里能滑） */
         #modalEmailContent {
@@ -1026,7 +1045,6 @@ function renderEmails(emails) {
     startCountdown();
 // 🚀 Step 3：打开沉浸式详情弹窗
     window.openEmailModal = function(index, timeString) {
-        // 🎯 修复1：电脑端（屏幕宽度>1050）点击绝对不弹窗
         if (window.innerWidth > 1050) return; 
 
         const mail = window.currentVisibleEmails[index];
@@ -1034,16 +1052,14 @@ function renderEmails(emails) {
         const vCode = getSmartVCode(mail.html, mail.text);
         let content = mail.html || mail.text;
         
-        // 抓取正文验证码并高亮（优化为青色底黑字，小巧不破坏原邮件排版）
+        // 🎯 修复2：剥离花哨高亮，原汁原味保留原样！附加无痕点击复制功能，并强制在其所在位置居中
         if (vCode) {
             const regex = new RegExp(vCode, 'g');
-            content = content.replace(regex, `<span class="magic-vcode-click" style="background:#00f2ff; color:#000; padding:2px 6px; border-radius:6px; font-weight:bold; cursor:pointer;" onclick="copyToClipboard('${vCode}', '✅ 验证码 ${vCode} 已复制'); event.stopPropagation();">${vCode}</span>`);
+            content = content.replace(regex, `<span onclick="copyToClipboard('${vCode}', '✅ 验证码 ${vCode} 已复制'); event.stopPropagation();" style="display: block; text-align: center; margin: 10px 0; cursor: pointer;">${vCode}</span>`);
         }
 
+        // 🎯 修复3：撤销“单独提到上方”的鸡肋提示，保持邮件原貌整洁
         document.getElementById('modalEmailContent').innerHTML = `
-            <div style="background: rgba(0,242,255,0.08); border: 1px dashed rgba(0,242,255,0.4); padding: 10px; border-radius: 10px; color: #00f2ff; font-size: 13px; text-align: center; margin: 15px 15px 0 15px; font-weight: bold;">
-                💡 提示：点击正文中的验证码即可直接复制
-            </div>
             <div class="mail-meta-group" style="padding: 15px; border-bottom: 1px solid rgba(255,255,255,0.1);">
                 <div class="meta-item" style="color:rgba(255,255,255,0.8); margin-bottom: 4px;">👤 发件：${mail.from}</div>
                 <div class="meta-item" style="color:rgba(255,255,255,0.8); margin-bottom: 4px;">📅 时间：${timeString}</div>
@@ -1054,20 +1070,14 @@ function renderEmails(emails) {
             </div>
         `;
 
-        document.getElementById('emailDetailModal').style.display = 'flex';
+        const modal = document.getElementById('emailDetailModal');
+        if (modal.parentNode !== document.body) {
+            document.body.appendChild(modal);
+        }
+        modal.style.display = 'flex';
         
-        // 🎯 触发网页 UI 瞬间隐身术
         document.body.classList.add('no-scroll'); 
         document.body.classList.add('hide-ui-for-modal'); 
-    };
-
-    // 🚀 关闭详情弹窗
-    window.closeEmailModal = function() {
-        document.getElementById('emailDetailModal').style.display = 'none';
-        
-        // 🎯 瞬间恢复网页原本的 UI
-        document.body.classList.remove('no-scroll'); 
-        document.body.classList.remove('hide-ui-for-modal'); 
     };
    
 </script>
@@ -1083,6 +1093,7 @@ function renderEmails(emails) {
 </div>
 </body>
 </html>
+
 
 
 
