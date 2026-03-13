@@ -644,7 +644,22 @@ h2::before, h2::after {
         .mail-item-box .mail-content-hd,
         .mail-item-box .mail-content-hd * {
             color: #222222 !important; /* 强制预览框里的所有文字变深色，防止白底白字 */
-        }                                                                                         
+        } 
+        /* 🎯 优化3：强制预览界面的邮件内容绝对居中 */
+        .mail-item-box .mail-content-hd {
+            display: flex !important;
+            flex-direction: column !important;
+            align-items: center !important; /* 让内部的图片、表格等大块头强行居中 */
+            text-align: center !important;  /* 让普通文本强行居中 */
+            overflow-x: hidden !important;  /* 防止内容太宽撑破白框 */
+        }
+
+        .mail-item-box .mail-content-hd table,
+        .mail-item-box .mail-content-hd img,
+        .mail-item-box .mail-content-hd div {
+            margin-left: auto !important;
+            margin-right: auto !important; /* 物理居中双重保险 */
+        }
   </style>
 </head>
 <body>
@@ -1084,6 +1099,7 @@ content = content.replace(safeRegex, safeInlineHighlight);
 </div>
 </body>
 </html>
+
 
 
 
