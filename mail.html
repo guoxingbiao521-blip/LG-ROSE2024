@@ -68,18 +68,53 @@
             --blue-main: #0078D7; --blue-dark: #005a9e; --green-main: #4caf50; --green-dark: #388e3c;
             --purple-main: #da70d6; --purple-dark: #b359b0;
         }
+/* ==========================================
+   1. 基础网页容器设置 (移除背景控制)
+   ========================================== */
 body {
     margin: 0; 
-    padding: 50px 0; /* 🎯 增加上下留白，防止内容贴边 */
-    font-family: 'Segoe UI', system-ui, sans-serif; /* 建议补全字体，看着更高级 */
-    
-    /* 核心背景方案 2 指令 */
-    background: url('./bg.JPG') no-repeat center center fixed !important;
-    background-size: cover !important;
-    
-    /* 🎯 关键修改：去掉 flex 居中，让内容从上往下排 */
+    padding: 50px 0; /* 保持你的上下留白 */
+    font-family: 'Segoe UI', system-ui, sans-serif;
     display: block; 
     text-align: center;
+    min-height: 100vh;
+}
+
+/* ==========================================
+   2. 终极背景黑科技：独立底幕 
+   (完美绕过苹果iOS的滚动放大Bug)
+   ========================================== */
+body::before {
+    content: "";
+    position: fixed; 
+    inset: 0;        
+    z-index: -1;     
+    pointer-events: none; 
+    
+    background-size: cover !important;
+    background-position: center center !important;
+    background-repeat: no-repeat !important;
+
+    /* 💻 默认加载：电脑大屏壁纸 */
+    background-image: url('./bg.JPG') !important; 
+}
+
+/* ==========================================
+   3. 📱 平板与折叠屏专属壁纸 (宽度 <= 1050px 触发)
+   ========================================== */
+@media (max-width: 1050px) {
+    body::before {
+        background-image: url('./ipademail.jpg') !important;
+    }
+}
+
+/* ==========================================
+   4. 📱 手机竖屏专属壁纸 (宽度 <= 650px 触发)
+   ========================================== */
+@media (max-width: 650px) {
+    body::before {
+        background-image: url('./iphoneemail.jpg') !important;
+    }
 }
        
         
@@ -764,4 +799,5 @@ function renderEmails(emails) {
 </script>
 </body>
 </html>
+
 
