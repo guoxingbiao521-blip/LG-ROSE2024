@@ -11,19 +11,57 @@
             --card-bg: rgba(0, 0, 0, 0.15); 
         }
 
+      /* ==========================================
+           1. 基础容器设置 (保留 flex 居中，剥离背景)
+           ========================================== */
         body {
             margin: 0; padding: 0;
             font-family: 'Segoe UI', system-ui, sans-serif;
-            background-color: #0a0a0c !important; 
-            background-image: url('./bg2.JPG') !important;
-            background-repeat: no-repeat !important;
-            background-position: center center !important;
-            background-attachment: fixed !important;
-            background-size: cover !important;
             color: #fff;
-            display: flex; justify-content: center; align-items: center;
+            
+            /* 保持激活码卡片在屏幕正中间 */
+            display: flex; 
+            justify-content: center; 
+            align-items: center;
             min-height: 100vh;
             overflow-y: auto;
+        }
+
+        /* ==========================================
+           2. 终极背景幕布 (彻底解决 iOS 放大 Bug)
+           ========================================== */
+        body::before {
+            content: "";
+            position: fixed;
+            inset: 0;
+            z-index: -1;
+            pointer-events: none;
+            
+            background-color: #0a0a0c !important;
+            background-size: cover !important;
+            background-position: center center !important;
+            background-repeat: no-repeat !important;
+
+            /* 💻 默认加载：电脑大屏壁纸 */
+            background-image: url('./bg2.JPG') !important; 
+        }
+
+        /* ==========================================
+           3. 📱 平板与折叠屏专属壁纸
+           ========================================== */
+        @media (max-width: 1050px) {
+            body::before {
+                background-image: url('./ipadadmin.jpg') !important;
+            }
+        }
+
+        /* ==========================================
+           4. 📱 手机竖屏专属壁纸
+           ========================================== */
+        @media (max-width: 600px) {
+            body::before {
+                background-image: url('./iphoneadmin.jpg') !important;
+            }
         }
 
         .container {
