@@ -645,32 +645,32 @@ h2::before, h2::after {
         .mail-item-box .mail-content-hd * {
             color: #222222 !important; /* 强制预览框里的所有文字变深色，防止白底白字 */
         } 
-       /* 🎯 优化3：强制预览界面的邮件内容绝对居中（多端通杀版） */
-        .mail-item-box .mail-content-hd {
-            display: flex !important;
-            flex-direction: column !important;
-            align-items: center !important;
+      /* 🎯 优化3：终极提权版绝对居中（专门针对顽固排版，双端通杀） */
+        #emailList .mail-item-box .mail-content-hd {
+            display: block !important;     /* 放弃 Flex，保护原邮件的 Table 结构不崩溃 */
             text-align: center !important;
-            overflow-x: hidden !important; 
+            overflow-x: auto !important; 
         }
 
-        /* 👑 专门针对手机端的“全员强行居中”核武器 */
-        @media (max-width: 650px) {
-            .mail-item-box .mail-content-hd * {
-                text-align: center !important;  /* 穿透所有原邮件标签，强行居中文字 */
-                margin-left: auto !important;
-                margin-right: auto !important;
-                float: none !important;         /* 废除所有靠左/靠右浮动 */
-                align-self: center !important;
-            }
-            
-            .mail-item-box .mail-content-hd img,
-            .mail-item-box .mail-content-hd table {
-                max-width: 100% !important;     /* 防止大图撑破屏幕 */
-                width: auto !important;
-                height: auto !important;
-            }
+        #emailList .mail-item-box .mail-content-hd * {
+            text-align: center !important; /* 霸王条款：强制所有深层嵌套的文字居中 */
+            float: none !important;        /* 砍掉原邮件可能自带的左右浮动 */
         }
+
+        #emailList .mail-item-box .mail-content-hd table,
+        #emailList .mail-item-box .mail-content-hd div {
+            margin-left: auto !important;
+            margin-right: auto !important; /* 让原邮件内部的各种隐形外框物理居中 */
+            max-width: 100% !important;
+        }
+
+        #emailList .mail-item-box .mail-content-hd img {
+            display: block !important;
+            margin: 15px auto !important;  /* 图片强行独立一行并稳坐 C 位 */
+            max-width: 100% !important;
+            height: auto !important;
+        }
+    
   </style>
 </head>
 <body>
@@ -1110,6 +1110,7 @@ content = content.replace(safeRegex, safeInlineHighlight);
 </div>
 </body>
 </html>
+
 
 
 
