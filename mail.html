@@ -1046,10 +1046,10 @@ window.closeEmailModal = function() {
                 </div>
             `;
 
-            // 3. 🌟 原邮件正文里的验证码只做温柔的高亮，不再强行居中破坏它的原结构
-            const safeInlineHighlight = `<span style="background: rgba(255,105,180,0.1) !important; color: #ff69b4 !important; font-weight: bold !important; padding: 2px 6px !important; border-radius: 4px !important; border-bottom: 2px solid #ff69b4 !important;">${vCode}</span>`;
-            const safeRegex = new RegExp('(?<![#a-zA-Z0-9])' + vCode + '(?![a-zA-Z0-9])', 'g');
-            content = content.replace(safeRegex, safeInlineHighlight);
+           // 3. 🌟 原邮件正文里的验证码只做温柔的高亮 (全面兼容所有老旧手机版)
+const safeInlineHighlight = `<span style="background: rgba(255,105,180,0.1) !important; color: #ff69b4 !important; font-weight: bold !important; padding: 2px 6px !important; border-radius: 4px !important; border-bottom: 2px solid #ff69b4 !important;">${vCode}</span>`;
+const safeRegex = new RegExp('\\b' + vCode + '\\b', 'g'); // 🔑 核心修复：换成最稳定的 \b 语法
+content = content.replace(safeRegex, safeInlineHighlight);
         }
 
         // 4. 组装弹窗：把巨型验证码框放在白底正文的最前面！
@@ -1084,6 +1084,7 @@ window.closeEmailModal = function() {
 </div>
 </body>
 </html>
+
 
 
 
