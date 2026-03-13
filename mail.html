@@ -527,20 +527,15 @@ h2::before, h2::after {
     border-bottom: none !important; 
     padding-bottom: 0px !important;
 }
+/* 🎯 核心2：紧接着加上这段，这是为了防止巨无霸图片撑爆你的弹窗 */
+        .mail-content-hd img, 
+        .mail-content-hd table,
+        .mail-content-hd iframe {
+            max-width: 100% !important; /* 强制所有图片、表格最大宽度只能是手机屏幕宽度 */
+            height: auto !important;    /* 高度按比例自动缩放，绝对不变形 */
+            box-sizing: border-box !important;
+        }
 
-/* 2. 邮件正文高清修复：去掉 transform 缩放，保证 100% 清晰度 */
-.mail-content-hd {
-    background: #ffffff !important;
-    color: #222 !important;
-    padding: 15px;
-    border-radius: 12px;
-    margin-top: 15px;
-    border: 4px solid rgba(0,0,0,0.3);
-    overflow-x: auto;
-    /* 核心修复：强制禁止缩放和滤镜，确保不模糊 */
-    transform: none !important;
-    filter: none !important;
-}
 /* --- 统一添加的悬停动态效果 --- */
 
 /* 1. 随机生成按钮 */
@@ -1052,25 +1047,25 @@ function renderEmails(emails) {
         const vCode = getSmartVCode(mail.html, mail.text);
         let content = mail.html || mail.text;
         
-        // 🎯 修复 1 & 2：恢复无痕复制 + 强制独立居中显示
+        // 🎯 修复 1 & 2：恢复无痕点击复制，并强制宽度100%从而实现绝对居中！
         if (vCode) {
             const regex = new RegExp(vCode, 'g');
-            // 用一个 100% 宽度的 div 强行把它包裹起来并居中，同时加上虚线下划线提示可点击
-            content = content.replace(regex, `<div style="display: block; width: 100%; text-align: center; margin: 20px 0;"><span onclick="window.copyToClipboard('${vCode}', '✅ 验证码 ${vCode} 已复制'); event.stopPropagation();" style="cursor: pointer; border-bottom: 2px dashed #ff69b4; padding-bottom: 2px;">${vCode}</span></div>`);
+            // 注意这里：用 display:block 和 width:100% 强行撑开一行让它居中，绝不改它的字体和颜色
+            content = content.replace(regex, `<span onclick="copyToClipboard('${vCode}', '✅ 验证码 ${vCode} 已复制'); event.stopPropagation();" style="display: block; width: 100%; text-align: center; margin: 20px 0; cursor: pointer;">${vCode}</span>`);
         }
 
+        // 🎯 修复 3：去除内联样式里对颜色和字体的污染，还原本真！
         document.getElementById('modalEmailContent').innerHTML = `
             <div class="mail-meta-group" style="padding: 15px; border-bottom: 1px solid rgba(255,255,255,0.1);">
                 <div class="meta-item" style="color:rgba(255,255,255,0.8); margin-bottom: 4px;">👤 发件：${mail.from}</div>
                 <div class="meta-item" style="color:rgba(255,255,255,0.8); margin-bottom: 4px;">📅 时间：${timeString}</div>
                 <div class="subject-item" style="font-size: 16px; color: #fff; margin-top: 8px !important; font-weight: bold;">📑 主题：${mail.subject}</div>
             </div>
-            <div class="mail-content-hd">
+            <div class="mail-content-hd" style="border:none; padding:10px 0; margin-top:10px;">
                 ${content}
             </div>
         `;
 
-        // 打开弹窗：为了防止多个重复的 HTML 结构，使用 class 遍历打开
         const modals = document.querySelectorAll('.email-modal-overlay');
         modals.forEach(m => {
             if (m.parentNode !== document.body) document.body.appendChild(m);
@@ -1079,16 +1074,6 @@ function renderEmails(emails) {
         
         document.body.classList.add('no-scroll'); 
         document.body.classList.add('hide-ui-for-modal'); 
-    };
-
-    // 🚀 修复 3：无敌关闭函数（强制关掉页面上所有的弹窗和遮罩）
-    window.closeEmailModal = function() {
-        const modals = document.querySelectorAll('.email-modal-overlay');
-        modals.forEach(m => {
-            m.style.display = 'none';
-        });
-        document.body.classList.remove('no-scroll'); 
-        document.body.classList.remove('hide-ui-for-modal'); 
     };
    
 </script>
@@ -1104,6 +1089,7 @@ function renderEmails(emails) {
 </div>
 </body>
 </html>
+
 
 
 
