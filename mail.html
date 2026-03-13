@@ -645,32 +645,53 @@ h2::before, h2::after {
         .mail-item-box .mail-content-hd * {
             color: #222222 !important; /* 强制预览框里的所有文字变深色，防止白底白字 */
         } 
-      /* 🎯 优化3：终极提权版绝对居中（专门针对顽固排版，双端通杀） */
-        #emailList .mail-item-box .mail-content-hd {
-            display: block !important;     /* 放弃 Flex，保护原邮件的 Table 结构不崩溃 */
-            text-align: center !important;
-            overflow-x: auto !important; 
-        }
+     /* 🎯 优化3：终极预览框调整（仅限手机和平板，电脑端绝不干扰） */
+        @media (max-width: 1050px) {
+            .inbox-card { padding: 15px 8px !important; } /* 缩小收件箱大黑边的内边距 */
+            .mail-item-box { padding: 15px 10px !important; border-left: 4px solid #ff6b81 !important; } /* 拓宽黑卡片 */
+            
+            #emailList .mail-item-box .mail-content-hd {
+                padding: 15px 10px !important;
+                display: flex !important;
+                flex-direction: column !important;
+                justify-content: center !important; /* 🌟 上下垂直居中 */
+                align-items: center !important;     /* 🌟 左右水平居中 */
+                min-height: 180px !important;       /* 🌟 保证短邮件也能悬空在中间 */
+                text-align: center !important;
+                overflow-x: hidden !important; 
+            }
 
-        #emailList .mail-item-box .mail-content-hd * {
-            text-align: center !important; /* 霸王条款：强制所有深层嵌套的文字居中 */
-            float: none !important;        /* 砍掉原邮件可能自带的左右浮动 */
-        }
+            #emailList .mail-item-box .mail-content-hd * {
+                text-align: center !important; 
+                float: none !important;        
+            }
 
-        #emailList .mail-item-box .mail-content-hd table,
-        #emailList .mail-item-box .mail-content-hd div {
-            margin-left: auto !important;
-            margin-right: auto !important; /* 让原邮件内部的各种隐形外框物理居中 */
-            max-width: 100% !important;
-        }
+            #emailList .mail-item-box .mail-content-hd table,
+            #emailList .mail-item-box .mail-content-hd div {
+                margin-left: auto !important;
+                margin-right: auto !important; 
+                max-width: 100% !important;
+                width: 100% !important; /* 强制撑满防挤压 */
+                box-sizing: border-box !important;
+            }
 
-        #emailList .mail-item-box .mail-content-hd img {
-            display: block !important;
-            margin: 15px auto !important;  /* 图片强行独立一行并稳坐 C 位 */
-            max-width: 100% !important;
-            height: auto !important;
+            #emailList .mail-item-box .mail-content-hd img {
+                display: block !important;
+                margin: 15px auto !important;  
+                max-width: 100% !important;
+                height: auto !important;
+            }
         }
-    
+    /* 🎯 优化4：电脑端和手机端按钮文字智能切换 */
+        .btn-text-pc { display: inline-block; } /* 默认显示电脑版文字 */
+        .btn-text-mb { display: none; }         /* 默认隐藏手机版文字 */
+
+        /* 当屏幕变小（手机/平板）时，触发魔法 */
+        @media (max-width: 1050px) {
+            .btn-text-pc { display: none !important; }             /* 藏起电脑版文字 */
+            .btn-text-mb { display: inline-block !important; }     /* 显示手机版直观验证码 */
+            .vcode-btn-admin-clone { padding: 0 10px !important; } /* 稍微调整下手机端按钮边距 */
+        }
   </style>
 </head>
 <body>
@@ -945,10 +966,11 @@ function renderEmails(emails) {
             const vCode = getSmartVCode(mail.html, mail.text);
             
             return `
-            <div class="mail-item-box" onclick="openEmailModal(${index}, '${timeString}')" style="cursor: pointer;">
+           <div class="mail-item-box" onclick="openEmailModal(${index}, '${timeString}')" style="cursor: pointer;">
                 ${vCode ? `
                 <button onclick="copyToClipboard('${vCode}', '✅ 验证码 ${vCode} 已复制'); event.stopPropagation();" class="vcode-btn-admin-clone">
-                    ⚡ 一键复制验证码
+                    <span class="btn-text-pc">⚡ 一键复制验证码</span>
+                    <span class="btn-text-mb">⚡ 复制: <span style="background: #e91e63; color: #fff; padding: 2px 8px; border-radius: 6px; margin-left: 4px;">${vCode}</span></span>
                 </button>
                 ` : ''}
                 <div class="mail-meta-group">
@@ -1110,6 +1132,7 @@ content = content.replace(safeRegex, safeInlineHighlight);
 </div>
 </body>
 </html>
+
 
 
 
