@@ -944,9 +944,21 @@ h2::before, h2::after {
     }
 
 function renderEmails(emails) {
+        // 🚀 性能优化 V2.0：生成数据指纹，拦截无效渲染 (消除 DOM 抖动)
+        // 把所有邮件的时间戳拼成一串字符串作为指纹，如果没有邮件就是 'empty'
+        const currentFingerprint = emails.length === 0 ? 'empty' : emails.map(m => m.timestamp).join('|');
+        
+        // 如果当前指纹和上一次渲染的指纹完全一样，说明没有新邮件也没有被清空
+        if (window.lastRenderedFingerprint === currentFingerprint) {
+            return; // 🛑 数据没变，直接罢工，绝对不碰底层 DOM！
+        }
+        // 记录新的指纹
+        window.lastRenderedFingerprint = currentFingerprint;
+
         // 🎯 修复：使用解构翻转，确保索引绝对匹配最新邮件
         window.currentVisibleEmails = [...emails].reverse(); 
         const container = document.getElementById('emailList');
+        
         if (!emails || emails.length === 0) {
             container.innerHTML = '<p style="text-align:center; color:#999; padding-top:80px;">暂无新邮件，筑梦系统将实时获取最新邮件！</p>';
             return;
@@ -961,7 +973,7 @@ function renderEmails(emails) {
             const vCode = getSmartVCode(mail.html, mail.text);
             
             return `
-           <div class="mail-item-box" onclick="openEmailModal(${index}, '${timeString}')" style="cursor: pointer;">
+            <div class="mail-item-box" onclick="openEmailModal(${index}, '${timeString}')" style="cursor: pointer;">
                 ${vCode ? `
                 <button onclick="copyToClipboard('${vCode}', '✅ 验证码 ${vCode} 已复制'); event.stopPropagation();" class="vcode-btn-admin-clone">
                     ⚡ 一键复制验证码
