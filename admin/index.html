@@ -371,52 +371,64 @@
             if(globalCodes.length === 0) { showToast('❌ 还没有激活码可以复制哦'); return; }
             copyTextToClipboard(globalCodes.join('\n'), '📋 激活码已全部存入剪贴板！');
         }
-
-        // 🌟 新增：获取激活码记录的模拟函数 (后端写好后，替换掉这里的 setTimeout)
+// --- 🏆 第三步：前端拉取真实数据 ---
         function fetchLogs() {
             const secret = document.getElementById('secret').value;
-            if(!secret) { showToast('⚠️ 查询激活码数据前，请先输入管理密码！'); return; }
+            if(!secret) { 
+                showToast('⚠️ 刷新数据前，请先输入管理密码！'); 
+                return; 
+            }
 
             const tbody = document.getElementById('logTableBody');
-            tbody.innerHTML = '<tr><td colspan="6" style="padding: 30px; color: #00f2ff;">正在从服务器查询激活码最新数据...</td></tr>';
-            
-            // 模拟网络延迟和假数据 (等你后端写好接口，就用 fetch 替换这里)
-            setTimeout(() => {
-                const dummyData = [
-                    { code: "A4SFA6", firstUse: "2026-03-14 10:00", expire: "29天 14小时", used: 12, left: "无限", status: "active" },
-                    { code: "ROSE99", firstUse: "尚未激活", expire: "无限", used: 0, left: 50, status: "active" },
-                    { code: "X9F2B1", firstUse: "2026-03-10 15:30", expire: "已过期", used: 50, left: 0, status: "expired" },
-                    { code: "K8M4N9", firstUse: "2026-03-14 11:20", expire: "无限", used: 5, left: 45, status: "active" }
-                ];
+            tbody.innerHTML = '<tr><td colspan="7" style="padding: 40px; color: #fff; font-size: 14px; font-weight: bold; text-align: center;">✨ 正在从服务器同步激活码账本...</td></tr>';
 
-              let html = '';
-                dummyData.forEach(item => {
-                    const statusHtml = item.status === 'active' 
-                        ? '<span class="status-badge status-active">🟢 生效中</span>' 
-                        : '<span class="status-badge status-expired">🔴 已失效</span>';
-                   // 🌟 终极配色："尚未激活" 用耀眼亮金色，"已过期" 保持纯红发光
-                 // 🌟 终极配色 + 操作按钮组合
-                    html += `
-                    <tr>
-                        <td style="font-weight: bold; color: #ff69b4; font-size: 14px; text-shadow: 0 2px 5px rgba(0,0,0,1);">${item.code}</td>
-                        <td style="color: ${item.firstUse === '尚未激活' ? '#ffd700' : '#ffffff'}; font-weight: ${item.firstUse === '尚未激活' ? 'bold' : 'normal'}; text-shadow: ${item.firstUse === '尚未激活' ? '0 0 8px #ffd700, 0 2px 5px rgba(0,0,0,1)' : '0 2px 5px rgba(0,0,0,1)'};">${item.firstUse}</td>
-                        <td style="color: ${item.expire === '已过期' ? '#ff0000' : '#00f2ff'}; font-weight: bold; text-shadow: ${item.expire === '已过期' ? '0 0 10px #ff0000, 0 2px 5px rgba(0,0,0,1)' : '0 2px 5px rgba(0,0,0,1)'};">${item.expire}</td>
-                        <td style="color: #ffffff; font-weight: bold; font-size: 14px; text-shadow: 0 2px 5px rgba(0,0,0,1);">${item.used}</td>
-                        <td style="color: #ffffff; font-weight: bold; font-size: 14px; text-shadow: 0 2px 5px rgba(0,0,0,1);">${item.left}</td>
-                        <td>${statusHtml}</td>
+            // 🌟 核心连接：请求真实的后端接口
+            fetch(`/api/admin/get_codes?secret=${secret}`)
+                .then(response => {
+                    if (!response.ok) throw new Error('密码错误或请求失败');
+                    return response.json();
+                })
+                .then(data => {
+                    // 如果账本是空的
+                    if(data.length === 0) {
+                        tbody.innerHTML = '<tr><td colspan="7" style="padding: 30px; color: #999; text-align: center;">暂无激活码数据</td></tr>';
+                        return;
+                    }
+
+                    let html = '';
+                    // 循环把后端发来的真实数据画到表格里
+                    data.forEach(item => {
+                        // 动态判断状态徽章该显示什么颜色
+                        let statusHtml = '';
+                        if (item.status === 'active') statusHtml = '<span class="status-badge status-active">🟢 生效中</span>';
+                        else if (item.status === 'suspended') statusHtml = '<span class="status-badge" style="background: rgba(255, 165, 0, 0.2); color: #ffa500; border: 1px solid #ffa500;">🟡 已停用</span>';
+                        else statusHtml = '<span class="status-badge status-expired">🔴 已失效</span>';
                         
-                        <td>
-                            <button class="action-btn-sm btn-renew" onclick="openRenewModal('${item.code}')">续费</button>
-                            <button class="action-btn-sm btn-suspend" onclick="toggleSuspend('${item.code}')">停用</button>
-                            <button class="action-btn-sm btn-delete" onclick="deleteCode('${item.code}')">删除</button>
-                        </td>
-                    </tr>`;
-                 
+                        html += `
+                        <tr>
+                            <td style="font-weight: bold; color: #ff69b4; font-size: 14px; text-shadow: 0 2px 5px rgba(0,0,0,1);">${item.code}</td>
+                            <td style="color: ${item.firstUse === '尚未激活' ? '#ffd700' : '#ffffff'}; font-weight: ${item.firstUse === '尚未激活' ? 'bold' : 'normal'}; text-shadow: 0 2px 5px rgba(0,0,0,1);">${item.firstUse}</td>
+                            <td style="color: ${item.expire === '已过期' ? '#ff0000' : '#00f2ff'}; font-weight: bold; text-shadow: 0 2px 5px rgba(0,0,0,1);">${item.expire}</td>
+                            <td style="color: #ffffff; font-weight: bold; font-size: 14px; text-shadow: 0 2px 5px rgba(0,0,0,1);">${item.used}</td>
+                            <td style="color: #ffffff; font-weight: bold; font-size: 14px; text-shadow: 0 2px 5px rgba(0,0,0,1);">${item.left}</td>
+                            <td>${statusHtml}</td>
+                            <td>
+                                <button class="action-btn-sm btn-renew" onclick="openRenewModal('${item.code}')">续费</button>
+                                <button class="action-btn-sm btn-suspend" onclick="toggleSuspend('${item.code}')">${item.status === 'suspended' ? '启用' : '停用'}</button>
+                                <button class="action-btn-sm btn-delete" onclick="deleteCode('${item.code}')">删除</button>
+                            </td>
+                        </tr>`;
+                    });
+                    
+                    tbody.innerHTML = html;
+                    showToast('✅ 数据同步成功！');
+                })
+                .catch(err => {
+                    showToast(`❌ 获取失败: ${err.message}`);
+                    tbody.innerHTML = `<tr><td colspan="7" style="padding: 30px; color: #ff4d4f; text-align: center;">❌ 无法拉取数据：${err.message}</td></tr>`;
                 });
-                tbody.innerHTML = html;
-                showToast('✅ 激活码数据查询成功！');
-            }, 800); // 假装延迟 0.8 秒
         }
+      
     </script>
     <div id="renewModal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.7); backdrop-filter: blur(5px); z-index: 99999; justify-content: center; align-items: center;">
         <div style="background: rgba(20, 20, 25, 0.95); border: 1px solid rgba(0, 242, 255, 0.4); border-radius: 16px; padding: 25px; width: 90%; max-width: 350px; text-align: left; box-shadow: 0 10px 40px rgba(0,0,0,0.8);">
