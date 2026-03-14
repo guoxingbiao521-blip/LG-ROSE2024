@@ -1027,19 +1027,30 @@ function renderEmails(emails) {
             </div>`;
     }
 
-    async function unlock() {
-        const codeInput = document.getElementById('authInput');
-        const code = codeInput.value.trim();
-        if (!code) return showToast("⚠️ 请输入激活码");
-        const devId = localStorage.getItem('deviceId');
-        try {
-            const response = await fetch(`${API_BASE.replace('emails', 'verify')}`, {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ code: code, deviceId: devId })
-            });
-            const data = await response.json();
-            if (response.ok) {
+async function unlock() {
+    const codeInput = document.getElementById('authInput');
+    // 🌟 修复 1：这里加上了读取输入框逻辑
+    const code = codeInput.value.trim(); 
+    
+    if (!code) return showToast("⚠️ 请输入激活码");
+    
+    const devId = localStorage.getItem('deviceId');
+    
+    try {
+        const response = await fetch(`${API_BASE.replace('emails', 'verify')}`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            // 🌟 修复 2：这里必须带上 address 参数！
+            body: JSON.stringify({ 
+                code: code, 
+                deviceId: devId,
+                address: currentEmail 
+            })
+        });
+        
+        const data = await response.json();
+        
+        if (response.ok) {
             localStorage.setItem('authCode', code);
             if (data.isAdmin) {
                 showToast(`👑 欢迎归来，站长！\n----------------\n🔥 核心特权已全部解锁\n🚀 正在载入最高管理系统...`);
