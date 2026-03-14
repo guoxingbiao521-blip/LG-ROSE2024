@@ -356,10 +356,10 @@
         // 🌟 新增：获取激活码记录的模拟函数 (后端写好后，替换掉这里的 setTimeout)
         function fetchLogs() {
             const secret = document.getElementById('secret').value;
-            if(!secret) { showToast('⚠️ 刷新数据前，请先输入管理密码！'); return; }
+            if(!secret) { showToast('⚠️ 查询数据前，请先输入管理密码！'); return; }
 
             const tbody = document.getElementById('logTableBody');
-            tbody.innerHTML = '<tr><td colspan="6" style="padding: 30px; color: #00f2ff;">正在从服务器拉取最新数据...</td></tr>';
+            tbody.innerHTML = '<tr><td colspan="6" style="padding: 30px; color: #00f2ff;">正在从服务器查询激活码最新数据...</td></tr>';
             
             // 模拟网络延迟和假数据 (等你后端写好接口，就用 fetch 替换这里)
             setTimeout(() => {
@@ -370,24 +370,25 @@
                     { code: "K8M4N9", firstUse: "2026-03-14 11:20", expire: "无限", used: 5, left: 45, status: "active" }
                 ];
 
-                let html = '';
+              let html = '';
                 dummyData.forEach(item => {
                     const statusHtml = item.status === 'active' 
                         ? '<span class="status-badge status-active">🟢 生效中</span>' 
                         : '<span class="status-badge status-expired">🔴 已失效</span>';
                     
+                    // 🌟 修复："尚未激活" 改为半透明白色，"已过期" 改为亮红色
                     html += `
                     <tr>
-                        <td style="font-weight: bold; color: #ff69b4;">${item.code}</td>
-                        <td style="color: ${item.firstUse === '尚未激活' ? '#999' : '#fff'};">${item.firstUse}</td>
-                        <td style="color: ${item.expire === '已过期' ? '#f00' : '#00f2ff'};">${item.expire}</td>
+                        <td style="font-weight: bold; color: #ff69b4; font-size: 14px;">${item.code}</td>
+                        <td style="color: ${item.firstUse === '尚未激活' ? 'rgba(255,255,255,0.6)' : '#fff'};">${item.firstUse}</td>
+                        <td style="color: ${item.expire === '已过期' ? '#ff4d4f' : '#00f2ff'}; font-weight: ${item.expire === '已过期' ? 'bold' : 'normal'};">${item.expire}</td>
                         <td>${item.used}</td>
                         <td>${item.left}</td>
                         <td>${statusHtml}</td>
                     </tr>`;
                 });
                 tbody.innerHTML = html;
-                showToast('✅ 数据拉取成功！');
+                showToast('✅ 激活码数据查询成功！');
             }, 800); // 假装延迟 0.8 秒
         }
     </script>
