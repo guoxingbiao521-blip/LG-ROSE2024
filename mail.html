@@ -645,42 +645,46 @@ h2::before, h2::after {
         .mail-item-box .mail-content-hd * {
             color: #222222 !important; /* 强制预览框里的所有文字变深色，防止白底白字 */
         } 
-     /* 🎯 优化3：终极预览框调整（仅限手机和平板，电脑端绝不干扰） */
+    /* 🎯 优化3：终极预览框调整（电脑+手机 双端通杀居中） */
+        
+        /* 1. 仅限手机/平板缩窄黑边，不影响电脑端原本的宽大比例 */
         @media (max-width: 1050px) {
-            .inbox-card { padding: 15px 8px !important; } /* 缩小收件箱大黑边的内边距 */
-            .mail-item-box { padding: 15px 10px !important; border-left: 4px solid #ff6b81 !important; } /* 拓宽黑卡片 */
-            
-            #emailList .mail-item-box .mail-content-hd {
-                padding: 15px 10px !important;
-                display: flex !important;
-                flex-direction: column !important;
-                justify-content: center !important; /* 🌟 上下垂直居中 */
-                align-items: center !important;     /* 🌟 左右水平居中 */
-                min-height: 180px !important;       /* 🌟 保证短邮件也能悬空在中间 */
-                text-align: center !important;
-                overflow-x: hidden !important; 
-            }
+            .inbox-card { padding: 15px 8px !important; } 
+            .mail-item-box { padding: 15px 10px !important; border-left: 4px solid #ff6b81 !important; } 
+            #emailList .mail-item-box .mail-content-hd { padding: 15px 10px !important; }
+        }
 
-            #emailList .mail-item-box .mail-content-hd * {
-                text-align: center !important; 
-                float: none !important;        
-            }
+        /* 2. 核心：释放出来的居中魔法（电脑和手机都会强制居中！） */
+        #emailList .mail-item-box .mail-content-hd {
+            display: flex !important;
+            flex-direction: column !important;
+            justify-content: center !important; /* 上下垂直居中 */
+            align-items: center !important;     /* 左右水平居中 */
+            min-height: 180px !important;       /* 保证短邮件也能悬空在中间 */
+            text-align: center !important;
+            overflow-x: hidden !important; 
+        }
 
-            #emailList .mail-item-box .mail-content-hd table,
-            #emailList .mail-item-box .mail-content-hd div {
-                margin-left: auto !important;
-                margin-right: auto !important; 
-                max-width: 100% !important;
-                width: 100% !important; /* 强制撑满防挤压 */
-                box-sizing: border-box !important;
-            }
+        #emailList .mail-item-box .mail-content-hd * {
+            text-align: center !important; 
+            float: none !important;        
+        }
 
-            #emailList .mail-item-box .mail-content-hd img {
-                display: block !important;
-                margin: 15px auto !important;  
-                max-width: 100% !important;
-                height: auto !important;
-            }
+        #emailList .mail-item-box .mail-content-hd table,
+        #emailList .mail-item-box .mail-content-hd div {
+            margin-left: auto !important;
+            margin-right: auto !important; 
+            max-width: 100% !important;
+            width: 100% !important; /* 强制撑满防挤压 */
+            box-sizing: border-box !important;
+        }
+
+        #emailList .mail-item-box .mail-content-hd img {
+            display: block !important;
+            margin: 15px auto !important;  
+            max-width: 100% !important;
+            height: auto !important;
+        }
         }
     
   </style>
