@@ -186,10 +186,15 @@
         }
         .btn-renew { background: rgba(0, 242, 255, 0.15); color: #00f2ff; border: 1px solid rgba(0, 242, 255, 0.5); }
         .btn-renew:hover { background: rgba(0, 242, 255, 0.4); box-shadow: 0 0 8px rgba(0,242,255,0.6); transform: scale(1.05); }
+        /* 🌟 停用(橙色) 与 启用(绿色) 动态切换 */
         .btn-suspend { background: rgba(255, 165, 0, 0.15); color: #ffa500; border: 1px solid rgba(255, 165, 0, 0.5); }
         .btn-suspend:hover { background: rgba(255, 165, 0, 0.4); box-shadow: 0 0 8px rgba(255,165,0,0.6); transform: scale(1.05); }
-        .btn-delete { background: rgba(255, 0, 0, 0.15); color: #ff4d4f; border: 1px solid rgba(255, 0, 0, 0.5); }
-        .btn-delete:hover { background: rgba(255, 0, 0, 0.4); box-shadow: 0 0 8px rgba(255,0,0,0.6); transform: scale(1.05); }
+        .btn-enable { background: rgba(0, 255, 0, 0.15); color: #00ff00; border: 1px solid rgba(0, 255, 0, 0.5); }
+        .btn-enable:hover { background: rgba(0, 255, 0, 0.4); box-shadow: 0 0 8px rgba(0,255,0,0.6); transform: scale(1.05); }
+
+        /* 🌟 删除按钮加深为大红色，字体粗细与其他按钮保持一致 */
+        .btn-delete { background: rgba(255, 0, 0, 0.2); color: #ff0000; border: 1px solid #ff0000; }
+        .btn-delete:hover { background: rgba(255, 0, 0, 0.4); box-shadow: 0 0 8px rgba(255,0,0,0.8); transform: scale(1.05); }
     </style>
 </head>
 <body>
@@ -408,15 +413,17 @@
                             <td style="color: #ffffff; font-weight: bold; font-size: 14px; text-shadow: 0 2px 5px rgba(0,0,0,1);">${item.left}</td>
                             <td>${statusHtml}</td>
                             <td>
-                                <button class="action-btn-sm btn-renew" onclick="openRenewModal('${item.code}')">续费</button>
-                                <button class="action-btn-sm btn-suspend" onclick="toggleSuspend('${item.code}')">${item.status === 'suspended' ? '启用' : '停用'}</button>
-                                <button class="action-btn-sm btn-delete" onclick="deleteCode('${item.code}')">删除</button>
-                            </td>
-                        </tr>`;
-                    });
-                    
-                    tbody.innerHTML = html;
-                    showToast('✅ 激活码查询成功！');
+                               <button class="action-btn-sm btn-renew" onclick="openRenewModal('${item.code}')">续费</button>
+                            ${item.status === 'suspended' 
+                                ? `<button class="action-btn-sm btn-enable" onclick="toggleSuspend('${item.code}', 'active')">启用</button>` 
+                                : `<button class="action-btn-sm btn-suspend" onclick="toggleSuspend('${item.code}', 'suspended')">停用</button>`}
+                            <button class="action-btn-sm btn-delete" onclick="deleteCode('${item.code}')">删除</button>
+                        </td>
+                    </tr>`;
+                });
+                
+                tbody.innerHTML = html;
+                // 删除了原来的 showToast，防止覆盖
                 })
                 .catch(err => {
                     showToast(`❌ ${err.message}`);
@@ -459,7 +466,16 @@
             </div>
         </div>
     </div>
-
+<div id="suspendModal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.7); backdrop-filter: blur(5px); z-index: 99999; justify-content: center; align-items: center;">
+        <div style="background: rgba(20, 20, 25, 0.95); border: 1px solid rgba(255, 165, 0, 0.5); border-radius: 16px; padding: 25px; width: 90%; max-width: 320px; text-align: center; box-shadow: 0 10px 40px rgba(255,165,0,0.3);">
+            <h3 id="suspendTitle" style="color: #ffa500; margin-top: 0; margin-bottom: 15px; text-shadow: 0 2px 5px rgba(0,0,0,0.8);">⚠️ 状态切换确认</h3>
+            <p style="color: #fff; font-size: 14px; margin-bottom: 20px; line-height: 1.6;">确定要 <span id="suspendActionText" style="font-weight:bold; color:#ffa500; font-size:16px;"></span> 激活码<br><span id="suspendCodeText" style="color: #ff69b4; font-weight: bold; font-size: 18px; display: inline-block; margin: 10px 0;"></span><br>吗？</p>
+            <div style="display: flex; gap: 10px;">
+                <button onclick="closeSuspendModal()" style="flex: 1; padding: 12px; border: none; border-radius: 10px; color: white; font-weight: bold; cursor: pointer; background: rgba(255,255,255,0.15); transition: 0.2s;">取消</button>
+                <button id="suspendConfirmBtn" onclick="submitSuspend()" style="flex: 1; padding: 12px; border: none; border-radius: 10px; color: #000; font-weight: bold; cursor: pointer; background: linear-gradient(45deg, #ffa500, #ff8c00); box-shadow: 0 4px 0 #cc7000; transition: 0.2s;">✅ 确认</button>
+            </div>
+        </div>
+    </div>
 <script>
         // --- 站长核心操作函数 ---
 
@@ -501,21 +517,57 @@
             .catch(err => alert('请求出错: ' + err.message));
         }
 
-        // 2. 停用相关
-        function toggleSuspend(code) {
+    // 🌟 升级版：停用/启用相关逻辑 (带动态变色弹窗)
+        let currentSuspendCode = '';
+        let currentSuspendAction = ''; // 用来记下到底是要停用还是启用
+
+        // 动作1：点击表格里的按钮时，呼出弹窗并变色
+        function toggleSuspend(code, action) {
+            currentSuspendCode = code;
+            currentSuspendAction = action;
+            
+            // 魔法变色逻辑：如果是停用就变橙色，启用就变绿色
+            const isSuspend = action === 'suspended';
+            const color = isSuspend ? '#ffa500' : '#00ff00';
+            const text = isSuspend ? '停用' : '启用';
+
+            // 把字和颜色塞进弹窗里
+            document.getElementById('suspendCodeText').innerText = code;
+            document.getElementById('suspendActionText').innerText = text;
+            document.getElementById('suspendActionText').style.color = color;
+            document.getElementById('suspendTitle').style.color = color;
+            document.getElementById('suspendTitle').innerText = isSuspend ? '⚠️ 停用确认' : '✅ 启用确认';
+            
+            // 连底下的确认按钮也跟着变色
+            const btn = document.getElementById('suspendConfirmBtn');
+            btn.style.background = isSuspend ? 'linear-gradient(45deg, #ffa500, #ff8c00)' : 'linear-gradient(45deg, #00ff00, #00cc00)';
+            btn.style.boxShadow = isSuspend ? '0 4px 0 #cc7000' : '0 4px 0 #009900';
+
+            // 显示弹窗
+            document.getElementById('suspendModal').style.display = 'flex';
+        }
+
+        // 动作2：点“取消”关掉弹窗
+        function closeSuspendModal() {
+            document.getElementById('suspendModal').style.display = 'none';
+        }
+
+        // 动作3：点“确认”，正式向服务器发射指令
+        function submitSuspend() {
             const secret = document.getElementById('secret').value;
             if (!secret) return alert('请先输入管理密码！');
             
             fetch(`https://guo.roselg.xyz/api/admin/toggle_status`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ secret, code })
+                body: JSON.stringify({ secret, code: currentSuspendCode })
             })
             .then(res => res.json())
             .then(data => {
                 if (data.success) {
-                    showToast(data.newStatus === 'suspended' ? `🛑 激活码 ${code} 已强制停用！` : `✅ 激活码 ${code} 已恢复生效！`);
-                    fetchLogs();
+                    showToast(data.newStatus === 'suspended' ? `🛑 激活码 ${currentSuspendCode} 已强制停用！` : `✅ 激活码 ${currentSuspendCode} 已恢复生效！`);
+                    closeSuspendModal(); // 关掉弹窗
+                    fetchLogs();         // 刷新表格
                 } else {
                     alert('操作失败: ' + data.error);
                 }
