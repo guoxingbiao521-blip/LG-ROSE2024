@@ -190,6 +190,82 @@
         .btn-suspend:hover { background: rgba(255, 165, 0, 0.4); box-shadow: 0 0 8px rgba(255,165,0,0.6); transform: scale(1.05); }
         .btn-delete { background: rgba(255, 0, 0, 0.15); color: #ff4d4f; border: 1px solid rgba(255, 0, 0, 0.5); }
         .btn-delete:hover { background: rgba(255, 0, 0, 0.4); box-shadow: 0 0 8px rgba(255,0,0,0.6); transform: scale(1.05); }
+        // --- 1. 续费/修改 激活码逻辑 ---
+        function openRenewModal(code) {
+            const secret = document.getElementById('adminSecret').value;
+            if (!secret) return alert('请先输入站长密码！');
+
+            const addDays = prompt(`【修改有效期】\n请输入要给激活码 [ ${code} ] 增加的天数：\n(提示：输入负数如 -5 就是扣除天数，不改请填 0)`, "30");
+            if (addDays === null) return; // 用户点了取消
+            
+            const addUsage = prompt(`【修改次数】\n请输入要给该激活码增加的使用次数：\n(提示：输入负数就是扣除次数，不改请填 0)`, "0");
+            if (addUsage === null) return;
+
+            // 发送给后端续费接口
+            fetch(`/api/admin/renew_code`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ secret: secret, code: code, addDays: addDays, addUsage: addUsage })
+            })
+            .then(res => res.json())
+            .then(data => {
+                if (data.success) {
+                    showToast('✅ 修改成功！');
+                    fetchLogs(); // 修改成功后，自动刷新表格数据
+                } else {
+                    alert('操作失败: ' + data.error);
+                }
+            })
+            .catch(err => alert('请求出错: ' + err.message));
+        }
+
+        // --- 2. 停用/恢复 激活码逻辑 ---
+        function toggleSuspend(code) {
+            const secret = document.getElementById('adminSecret').value;
+            if (!secret) return alert('请先输入站长密码！');
+
+            if (!confirm(`确定要 封禁 / 解封 激活码 [ ${code} ] 吗？`)) return;
+            
+            fetch(`/api/admin/toggle_status`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ secret: secret, code: code })
+            })
+            .then(res => res.json())
+            .then(data => {
+                if (data.success) {
+                    showToast(data.newStatus === 'suspended' ? '🚫 该码已被封禁' : '✅ 该码已恢复生效');
+                    fetchLogs();
+                } else {
+                    alert('操作失败: ' + data.error);
+                }
+            })
+            .catch(err => alert('请求出错: ' + err.message));
+        }
+
+        // --- 3.彻底删除 激活码逻辑 ---
+        function deleteCode(code) {
+            const secret = document.getElementById('adminSecret').value;
+            if (!secret) return alert('请先输入站长密码！');
+
+            if (!confirm(`⚠️ 严重警告：确定要彻底删除激活码 [ ${code} ] 吗？\n删除后不可恢复，用户的设备也会瞬间掉线！`)) return;
+            
+            fetch(`/api/admin/delete_code`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ secret: secret, code: code })
+            })
+            .then(res => res.json())
+            .then(data => {
+                if (data.success) {
+                    showToast('🗑️ 激活码已灰飞烟灭！');
+                    fetchLogs();
+                } else {
+                    alert('操作失败: ' + data.error);
+                }
+            })
+            .catch(err => alert('请求出错: ' + err.message));
+        }
     </style>
 </head>
 <body>
