@@ -245,9 +245,16 @@
     </div>
 
     <div class="container log-container">
-        <div class="title-container" style="margin-bottom: 15px;">
+       <div class="title-container" style="margin-bottom: 15px;">
             <span class="title-left-3d" style="font-size: 20px; color: #fff; text-shadow: 0 1px 0 #999, 0 2px 5px rgba(0,0,0,0.5);">📊 激活码状态数据板</span>
-            <button class="btn-main-3d" onclick="fetchLogs()" style="padding: 8px 16px; font-size: 13px; height: 36px; box-shadow: 0 3px 0 #b300b3; width: auto; flex: none;">🔄 查询数据</button>
+            
+            <div style="display: flex; gap: 10px; align-items: center;">
+                <div style="position: relative;">
+                    <span style="position: absolute; left: 10px; top: 50%; transform: translateY(-50%); font-size: 14px; opacity: 0.8;">🔍</span>
+                    <input type="text" id="searchInput" placeholder="搜索激活码..." onkeyup="searchCodes()" style="width: 140px; height: 36px; padding: 0 10px 0 32px; border-radius: 10px; background: rgba(0,0,0,0.4); color: #00f2ff; border: 1px solid rgba(0, 242, 255, 0.4); font-size: 13px; font-weight: bold; outline: none; transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); box-sizing: border-box;" onfocus="this.style.borderColor='#ff00ff'; this.style.boxShadow='0 0 10px rgba(255,0,255,0.4)'; this.style.width='180px'; this.style.background='rgba(0,0,0,0.6)';" onblur="this.style.borderColor='rgba(0, 242, 255, 0.4)'; this.style.boxShadow='none'; this.style.width='140px'; this.style.background='rgba(0,0,0,0.4)';">
+                </div>
+                <button class="btn-main-3d" onclick="fetchLogs()" style="padding: 0 16px; font-size: 13px; height: 36px; box-shadow: 0 3px 0 #b300b3; width: auto; flex: none; display: flex; align-items: center; justify-content: center;">🔄 查询数据</button>
+            </div>
         </div>
         
         <div class="table-responsive">
@@ -489,6 +496,29 @@
             const usage = document.getElementById('renewUsage').value; 
             showToast(`✅ 激活码 ${code} 权限修改成功！`);
             closeRenewModal();
+        }
+        // 🌟 新增：前端实时搜索过滤功能 (无需经过后端，瞬间筛选)
+        function searchCodes() {
+            const input = document.getElementById('searchInput').value.toUpperCase(); // 转大写，忽略大小写
+            const tbody = document.getElementById('logTableBody');
+            const rows = tbody.getElementsByTagName('tr');
+
+            // 遍历当前表格里的所有数据行
+            for (let i = 0; i < rows.length; i++) {
+                // 排除掉那些没有数据的提示行 (提示行只有1个合并的td)
+                if (rows[i].getElementsByTagName('td').length <= 1) continue; 
+
+                const codeCell = rows[i].getElementsByTagName('td')[0]; // 获取第一列：激活码
+                if (codeCell) {
+                    const codeText = codeCell.textContent || codeCell.innerText;
+                    // 如果输入的字母在激活码里能找到，就显示这一行；找不到，就隐藏
+                    if (codeText.toUpperCase().indexOf(input) > -1) {
+                        rows[i].style.display = "";
+                    } else {
+                        rows[i].style.display = "none";
+                    }
+                }
+            }
         }
     </script>
 </body>
