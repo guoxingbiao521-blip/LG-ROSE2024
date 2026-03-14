@@ -475,6 +475,7 @@
             document.getElementById('renewModal').style.display = 'none';
         }
 
+        // 1. 提交续费/修改
         function submitRenew() {
             const secret = document.getElementById('secret').value;
             if (!secret) return alert('请先输入管理密码！');
@@ -482,7 +483,8 @@
             const addDays = document.getElementById('renewDays').value || 0; 
             const addUsage = document.getElementById('renewUsage').value || 0; 
 
-            fetch(`/api/admin/renew_code`, {
+            // 🌟 修正：使用完整域名，直达后端 3000 端口
+            fetch(`https://guo.roselg.xyz/api/admin/renew_code`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ secret, code, addDays, addUsage })
@@ -490,22 +492,22 @@
             .then(res => res.json())
             .then(data => {
                 if (data.success) {
-                    showToast(`✅ 激活码 ${code} 权限修改成功！`);
+                    showToast(`✅ 权限修改成功！`);
                     closeRenewModal();
                     fetchLogs(); 
                 } else {
-                    alert('操作失败: ' + data.error);
+                    alert('失败: ' + data.error);
                 }
             })
             .catch(err => alert('请求出错: ' + err.message));
         }
 
-        // 2. 停用相关
+        // 2. 切换停用状态
         function toggleSuspend(code) {
             const secret = document.getElementById('secret').value;
             if (!secret) return alert('请先输入管理密码！');
             
-            fetch(`/api/admin/toggle_status`, {
+            fetch(`https://guo.roselg.xyz/api/admin/toggle_status`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ secret, code })
@@ -513,10 +515,44 @@
             .then(res => res.json())
             .then(data => {
                 if (data.success) {
-                    showToast(data.newStatus === 'suspended' ? `🛑 激活码 ${code} 已强制停用！` : `✅ 激活码 ${code} 已恢复生效！`);
+                    showToast(data.newStatus === 'suspended' ? `🛑 已停用` : `✅ 已恢复`);
                     fetchLogs();
                 } else {
-                    alert('操作失败: ' + data.error);
+                    alert('失败: ' + data.error);
+                }
+            })
+            .catch(err => alert('请求出错: ' + err.message));
+        }
+
+        // 3. 删除逻辑相关函数
+        let currentDeleteCode = ''; 
+        function deleteCode(code) {
+            currentDeleteCode = code;
+            document.getElementById('deleteCodeText').innerText = code;
+            document.getElementById('deleteModal').style.display = 'flex';
+        }
+
+        function closeDeleteModal() {
+            document.getElementById('deleteModal').style.display = 'none';
+        }
+
+        function submitDelete() {
+            const secret = document.getElementById('secret').value;
+            if (!secret) return alert('请先输入管理密码！');
+
+            fetch(`https://guo.roselg.xyz/api/admin/delete_code`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ secret, code: currentDeleteCode })
+            })
+            .then(res => res.json())
+            .then(data => {
+                if (data.success) {
+                    showToast(`🗑️ 已彻底删除！`);
+                    closeDeleteModal();
+                    fetchLogs();
+                } else {
+                    alert('失败: ' + data.error);
                 }
             })
             .catch(err => alert('请求出错: ' + err.message));
