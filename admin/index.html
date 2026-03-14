@@ -145,12 +145,14 @@
         }
         .log-table { width: 100%; border-collapse: collapse; text-align: center; }
         .log-table th { padding: 14px; border-bottom: 2px solid rgba(0, 242, 255, 0.4); color: var(--primary); font-size: 13px; white-space: nowrap; background: rgba(0,0,0,0.3); }
-        .log-table td { padding: 14px; border-bottom: 1px dashed rgba(255, 255, 255, 0.1); color: #fff; font-size: 13px; white-space: nowrap; }
+     /* 🌟 提亮全局文字，加上黑色背景阴影防隐形 */
+        .log-table td { padding: 14px; border-bottom: 1px dashed rgba(255, 255, 255, 0.1); color: #fff; font-size: 13px; white-space: nowrap; text-shadow: 0 1px 3px rgba(0,0,0,0.9); }
         .log-table tbody tr:hover { background: rgba(255, 105, 180, 0.15); }
         
-        .status-badge { padding: 4px 8px; border-radius: 6px; font-size: 11px; font-weight: bold; }
-        .status-active { background: rgba(0, 255, 0, 0.15); color: #0f0; border: 1px solid #0f0; }
-        .status-expired { background: rgba(255, 0, 0, 0.15); color: #f00; border: 1px solid #f00; }
+        /* 🌟 提亮状态徽章的对比度 */
+        .status-badge { padding: 4px 8px; border-radius: 6px; font-size: 11px; font-weight: bold; text-shadow: 0 1px 2px rgba(0,0,0,0.8); }
+        .status-active { background: rgba(0, 255, 0, 0.2); color: #00ff00; border: 1px solid rgba(0, 255, 0, 0.5); }
+        .status-expired { background: rgba(255, 0, 0, 0.2); color: #ff4d4f; border: 1px solid rgba(255, 0, 0, 0.5); }
 
         #toast {
             display: none; position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); 
