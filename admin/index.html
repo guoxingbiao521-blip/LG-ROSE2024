@@ -434,19 +434,41 @@
             </div>
         </div>
     </div>
-
+<div id="deleteModal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.7); backdrop-filter: blur(5px); z-index: 99999; justify-content: center; align-items: center;">
+        <div style="background: rgba(20, 20, 25, 0.95); border: 1px solid rgba(255, 0, 0, 0.5); border-radius: 16px; padding: 25px; width: 90%; max-width: 320px; text-align: center; box-shadow: 0 10px 40px rgba(255,0,0,0.3);">
+            <h3 style="color: #ff4d4f; margin-top: 0; margin-bottom: 15px; text-shadow: 0 2px 5px rgba(0,0,0,0.8);">⚠️ 危险操作确认</h3>
+            <p style="color: #fff; font-size: 14px; margin-bottom: 20px; line-height: 1.6;">您确定要彻底删除该激活码<br><span id="deleteCodeText" style="color: #ff69b4; font-weight: bold; font-size: 18px; display: inline-block; margin: 10px 0; text-shadow: 0 2px 5px rgba(0,0,0,1);"></span><br>吗？删除后将无法恢复！</p>
+            <div style="display: flex; gap: 10px;">
+                <button onclick="closeDeleteModal()" style="flex: 1; padding: 12px; border: none; border-radius: 10px; color: white; font-weight: bold; cursor: pointer; background: rgba(255,255,255,0.15); transition: 0.2s;">取消</button>
+                <button onclick="submitDelete()" style="flex: 1; padding: 12px; border: none; border-radius: 10px; color: #fff; font-weight: bold; cursor: pointer; background: linear-gradient(45deg, #ff0000, #b30000); box-shadow: 0 4px 0 #660000; transition: 0.2s;">🗑️ 确认删除</button>
+            </div>
+        </div>
+    </div>
     <script>
         // 停用按钮
         function toggleSuspend(code) {
             // 这里以后负责向服务器发送停用指令
             showToast(`🛑 激活码 ${code} 已强制停用！`);
         }
-        // 删除按钮
+      // 🌟 删除按钮逻辑更新
+        let currentDeleteCode = ''; // 专门用来记住现在要删哪个码
+
         function deleteCode(code) {
-            if(confirm(`⚠️ 危险操作：\n您确定要彻底删除激活码 ${code} 吗？\n删除后将无法恢复！`)) {
-                // 这里以后负责向服务器发送删除指令
-                showToast(`🗑️ 激活码 ${code} 已被永久删除！`);
-            }
+            currentDeleteCode = code; // 把要删的码存起来
+            document.getElementById('deleteCodeText').innerText = code; // 把码显示在弹窗中心
+            document.getElementById('deleteModal').style.display = 'flex'; // 呼出绝美弹窗
+        }
+
+        // 关闭删除弹窗
+        function closeDeleteModal() {
+            document.getElementById('deleteModal').style.display = 'none';
+        }
+
+        // 确认提交删除
+        function submitDelete() {
+            // 这里以后负责向服务器发送删除指令
+            showToast(`🗑️ 激活码 ${currentDeleteCode} 已被永久删除！`);
+            closeDeleteModal(); // 关掉弹窗
         }
         // 打开续费弹窗
         function openRenewModal(code) {
