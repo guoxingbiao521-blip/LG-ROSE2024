@@ -460,7 +460,7 @@
         </div>
     </div>
 
-    <script>
+<script>
         // --- 站长核心操作函数 ---
 
         // 1. 续费相关
@@ -475,7 +475,6 @@
             document.getElementById('renewModal').style.display = 'none';
         }
 
-        // 1. 提交续费/修改
         function submitRenew() {
             const secret = document.getElementById('secret').value;
             if (!secret) return alert('请先输入管理密码！');
@@ -483,7 +482,7 @@
             const addDays = document.getElementById('renewDays').value || 0; 
             const addUsage = document.getElementById('renewUsage').value || 0; 
 
-            // 🌟 修正：使用完整域名，直达后端 3000 端口
+            // 🌟 核心：完整域名直达后端
             fetch(`https://guo.roselg.xyz/api/admin/renew_code`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
@@ -492,17 +491,17 @@
             .then(res => res.json())
             .then(data => {
                 if (data.success) {
-                    showToast(`✅ 权限修改成功！`);
+                    showToast(`✅ 激活码 ${code} 权限修改成功！`);
                     closeRenewModal();
                     fetchLogs(); 
                 } else {
-                    alert('失败: ' + data.error);
+                    alert('操作失败: ' + data.error);
                 }
             })
             .catch(err => alert('请求出错: ' + err.message));
         }
 
-        // 2. 切换停用状态
+        // 2. 停用相关
         function toggleSuspend(code) {
             const secret = document.getElementById('secret').value;
             if (!secret) return alert('请先输入管理密码！');
@@ -515,17 +514,17 @@
             .then(res => res.json())
             .then(data => {
                 if (data.success) {
-                    showToast(data.newStatus === 'suspended' ? `🛑 已停用` : `✅ 已恢复`);
+                    showToast(data.newStatus === 'suspended' ? `🛑 激活码 ${code} 已强制停用！` : `✅ 激活码 ${code} 已恢复生效！`);
                     fetchLogs();
                 } else {
-                    alert('失败: ' + data.error);
+                    alert('操作失败: ' + data.error);
                 }
             })
             .catch(err => alert('请求出错: ' + err.message));
         }
 
-        // 3. 删除逻辑相关函数
-        let currentDeleteCode = ''; 
+        // 3. 删除相关
+        let currentDeleteCode = '';
         function deleteCode(code) {
             currentDeleteCode = code;
             document.getElementById('deleteCodeText').innerText = code;
@@ -548,40 +547,6 @@
             .then(res => res.json())
             .then(data => {
                 if (data.success) {
-                    showToast(`🗑️ 已彻底删除！`);
-                    closeDeleteModal();
-                    fetchLogs();
-                } else {
-                    alert('失败: ' + data.error);
-                }
-            })
-            .catch(err => alert('请求出错: ' + err.message));
-        }
-
-        // 3. 删除相关
-        let currentDeleteCode = '';
-        function deleteCode(code) {
-            currentDeleteCode = code;
-            document.getElementById('deleteCodeText').innerText = code;
-            document.getElementById('deleteModal').style.display = 'flex';
-        }
-
-        function closeDeleteModal() {
-            document.getElementById('deleteModal').style.display = 'none';
-        }
-
-        function submitDelete() {
-            const secret = document.getElementById('secret').value;
-            if (!secret) return alert('请先输入管理密码！');
-
-            fetch(`/api/admin/delete_code`, {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ secret, code: currentDeleteCode })
-            })
-            .then(res => res.json())
-            .then(data => {
-                if (data.success) {
                     showToast(`🗑️ 激活码 ${currentDeleteCode} 已被永久删除！`);
                     closeDeleteModal();
                     fetchLogs();
@@ -592,7 +557,7 @@
             .catch(err => alert('请求出错: ' + err.message));
         }
 
-        // 搜索功能
+        // 4. 搜索功能
         function searchCodes() {
             const input = document.getElementById('searchInput').value.toUpperCase();
             const tbody = document.getElementById('logTableBody');
