@@ -425,7 +425,7 @@
                 })
                 .catch(err => {
                     showToast(`❌ 获取失败: ${err.message}`);
-                    tbody.innerHTML = `<tr><td colspan="7" style="padding: 30px; color: #ff4d4f; text-align: center;">❌ 无法激活码状态：${err.message}</td></tr>`;
+                    tbody.innerHTML = `<tr><td colspan="7" style="padding: 30px; color: #999; text-align: center;">密码错误！，请输入有效密码</td></tr>`;
                 });
         }
       
