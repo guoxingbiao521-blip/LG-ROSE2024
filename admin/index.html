@@ -254,7 +254,7 @@
                 <tbody id="logTableBody">
     <tr>
         <td colspan="6" style="padding: 40px; color: #fff; font-size: 14px; font-weight: bold; letter-spacing: 1px; text-shadow: 0 2px 5px rgba(0,0,0,0.9), 0 0 10px rgba(0, 242, 255, 0.3);">
-            ✨ 请点击右上角“刷新数据”获取最新记录...
+            ✨ 请点击右上角“查询数据”获取最新激活码记录...
         </td>
     </tr>
 </tbody>
@@ -356,7 +356,7 @@
         // 🌟 新增：获取激活码记录的模拟函数 (后端写好后，替换掉这里的 setTimeout)
         function fetchLogs() {
             const secret = document.getElementById('secret').value;
-            if(!secret) { showToast('⚠️ 查询数据前，请先输入管理密码！'); return; }
+            if(!secret) { showToast('⚠️ 查询激活码数据前，请先输入管理密码！'); return; }
 
             const tbody = document.getElementById('logTableBody');
             tbody.innerHTML = '<tr><td colspan="6" style="padding: 30px; color: #00f2ff;">正在从服务器查询激活码最新数据...</td></tr>';
@@ -375,17 +375,20 @@
                     const statusHtml = item.status === 'active' 
                         ? '<span class="status-badge status-active">🟢 生效中</span>' 
                         : '<span class="status-badge status-expired">🔴 已失效</span>';
-                    
-                    // 🌟 修复："尚未激活" 改为半透明白色，"已过期" 改为亮红色
+                    // 🌟 修复："尚未激活" 改为纯白加粗防隐身，"已过期" 改为纯红发光特效
                     html += `
                     <tr>
-                        <td style="font-weight: bold; color: #ff69b4; font-size: 14px;">${item.code}</td>
-                        <td style="color: ${item.firstUse === '尚未激活' ? 'rgba(255,255,255,0.6)' : '#fff'};">${item.firstUse}</td>
-                        <td style="color: ${item.expire === '已过期' ? '#ff4d4f' : '#00f2ff'}; font-weight: ${item.expire === '已过期' ? 'bold' : 'normal'};">${item.expire}</td>
-                        <td>${item.used}</td>
-                        <td>${item.left}</td>
+                        <td style="font-weight: bold; color: #ff69b4; font-size: 14px; text-shadow: 0 2px 5px rgba(0,0,0,1);">${item.code}</td>
+                        
+                        <td style="color: #ffffff; font-weight: ${item.firstUse === '尚未激活' ? 'bold' : 'normal'}; text-shadow: 0 2px 5px rgba(0,0,0,1);">${item.firstUse}</td>
+                        
+                        <td style="color: ${item.expire === '已过期' ? '#ff0000' : '#00f2ff'}; font-weight: bold; text-shadow: ${item.expire === '已过期' ? '0 0 10px #ff0000, 0 2px 5px rgba(0,0,0,1)' : '0 2px 5px rgba(0,0,0,1)'};">${item.expire}</td>
+                        
+                        <td style="color: #ffffff; font-weight: bold; font-size: 14px; text-shadow: 0 2px 5px rgba(0,0,0,1);">${item.used}</td>
+                        <td style="color: #ffffff; font-weight: bold; font-size: 14px; text-shadow: 0 2px 5px rgba(0,0,0,1);">${item.left}</td>
                         <td>${statusHtml}</td>
                     </tr>`;
+                 
                 });
                 tbody.innerHTML = html;
                 showToast('✅ 激活码数据查询成功！');
