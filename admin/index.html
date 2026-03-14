@@ -423,13 +423,12 @@
                     tbody.innerHTML = html;
                     showToast('✅ 激活码查询成功！');
                 })
-                .catch(error => {
-    // 1. 照常弹出错误提示框
-    showToast('❌ ' + error.message); 
-    
-    // 2. 把表格恢复成查询前的默认状态（不显示那串丑陋的红字了）
-    tbody.innerHTML = '<tr><td colspan="7" style="padding: 30px; color: #999; text-align: center;">请在此输入正确的站长密码并点击查询</td></tr>';
-});;
+ .catch(err => {
+    // 1. 正常弹窗报错
+    showToast(`❌ ${err.message}`);
+    // 2. 核心：把表格瞬间恢复成查询前存下来的旧样子！没有任何变化！
+    tbody.innerHTML = oldHTML; 
+});
         }
       
     </script>
