@@ -491,9 +491,9 @@ tbody.innerHTML = '<tr><td colspan="7" style="...">✨ 正在查询激活码状�
                             <td style="color: #ffffff; font-weight: bold; font-size: 14px; text-shadow: 0 2px 5px rgba(0,0,0,1);">${item.left}</td>
                             <td>${statusHtml}</td>
                             <td>
-                                <button class="action-btn-sm btn-renew" onclick="openRenewModal('${item.code}')">续费</button>
-                                <button class="action-btn-sm btn-suspend" onclick="toggleSuspend('${item.code}')">${item.status === 'suspended' ? '启用' : '停用'}</button>
-                                <button class="action-btn-sm btn-delete" onclick="deleteCode('${item.code}')">删除</button>
+                                <button class="..." onclick="openRenewModal('${log.code}')">续费</button>
+<button class="..." onclick="toggleSuspend('${log.code}')">停用</button>
+<button class="..." onclick="deleteCode('${log.code}')">删除</button>
                             </td>
                         </tr>`;
                     });
