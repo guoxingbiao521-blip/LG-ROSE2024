@@ -378,10 +378,12 @@
                 showToast('⚠️ 查询激活码状态前，请先输入管理密码！'); 
                 return; 
             }
-
-            const tbody = document.getElementById('logTableBody');
-            tbody.innerHTML = '<tr><td colspan="7" style="padding: 40px; color: #fff; font-size: 14px; font-weight: bold; text-align: center;">✨ 正在查询激活码状态...</td></tr>';
-
+const tbody = document.getElementById('logTableBody');
+// 👇 在382行下面，紧接着加这一行：把表格现在的样子存下来
+const oldHTML = tbody.innerHTML; 
+// 下面这行是你原有的，保持不变
+tbody.innerHTML = '<tr><td colspan="7" style="...">✨ 正在查询激活码状态...</td></tr>';
+           
             // 🌟 核心连接：请求真实的后端接口
             fetch(`https://guo.roselg.xyz/api/admin/get_codes?secret=${secret}`)
                 .then(response => {
