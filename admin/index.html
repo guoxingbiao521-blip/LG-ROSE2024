@@ -253,7 +253,7 @@
                     <span style="position: absolute; left: 10px; top: 50%; transform: translateY(-50%); font-size: 14px; opacity: 0.8;">🔍</span>
                     <input type="text" id="searchInput" placeholder="搜索激活码..." onkeyup="searchCodes()" style="width: 140px; height: 36px; padding: 0 10px 0 32px; border-radius: 10px; background: rgba(0,0,0,0.4); color: #00f2ff; border: 1px solid rgba(0, 242, 255, 0.4); font-size: 13px; font-weight: bold; outline: none; transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); box-sizing: border-box;" onfocus="this.style.borderColor='#ff00ff'; this.style.boxShadow='0 0 10px rgba(255,0,255,0.4)'; this.style.width='180px'; this.style.background='rgba(0,0,0,0.6)';" onblur="this.style.borderColor='rgba(0, 242, 255, 0.4)'; this.style.boxShadow='none'; this.style.width='140px'; this.style.background='rgba(0,0,0,0.4)';">
                 </div>
-                <button class="btn-main-3d" onclick="fetchLogs()" style="padding: 0 16px; font-size: 13px; height: 36px; box-shadow: 0 3px 0 #b300b3; width: auto; flex: none; display: flex; align-items: center; justify-content: center;">🔄 查询数据</button>
+                <button class="btn-main-3d" onclick="fetchLogs()" style="padding: 0 16px; font-size: 13px; height: 36px; box-shadow: 0 3px 0 #b300b3; width: auto; flex: none; display: flex; align-items: center; justify-content: center;">🔄 查询激活码状态</button>
             </div>
         </div>
         
@@ -273,7 +273,7 @@
                 <tbody id="logTableBody">
     <tr>
         <td colspan="7" style="padding: 40px; color: #fff; font-size: 14px; font-weight: bold; letter-spacing: 1px; text-shadow: 0 2px 5px rgba(0,0,0,0.9), 0 0 10px rgba(0, 242, 255, 0.3);">
-            ✨ 请点击右上角“查询数据”获取最新激活码记录...
+            ✨ 请点击右上角“查询激活码状态”获取最新激活码记录...
         </td>
     </tr>
 </tbody>
@@ -375,7 +375,7 @@
         function fetchLogs() {
             const secret = document.getElementById('secret').value;
             if(!secret) { 
-                showToast('⚠️ 刷新数据前，请先输入管理密码！'); 
+                showToast('⚠️ 查询激活码状态前，请先输入管理密码！'); 
                 return; 
             }
 
@@ -425,7 +425,7 @@
                 })
                 .catch(err => {
                     showToast(`❌ 获取失败: ${err.message}`);
-                    tbody.innerHTML = `<tr><td colspan="7" style="padding: 30px; color: #ff4d4f; text-align: center;">❌ 无法拉取数据：${err.message}</td></tr>`;
+                    tbody.innerHTML = `<tr><td colspan="7" style="padding: 30px; color: #ff4d4f; text-align: center;">❌ 无法激活码状态：${err.message}</td></tr>`;
                 });
         }
       
