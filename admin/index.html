@@ -152,7 +152,7 @@
         /* 🌟 提亮状态徽章的对比度 */
         .status-badge { padding: 4px 8px; border-radius: 6px; font-size: 11px; font-weight: bold; text-shadow: 0 1px 2px rgba(0,0,0,0.8); }
         .status-active { background: rgba(0, 255, 0, 0.2); color: #00ff00; border: 1px solid rgba(0, 255, 0, 0.5); }
-        .status-expired { background: rgba(255, 0, 0, 0.2); color: #ff4d4f; border: 1px solid rgba(255, 0, 0, 0.5); }
+        .status-expired { background: rgba(255, 0, 0, 0.15); color: #ff0000; border: 1px solid #ff0000; text-shadow: 0 0 5px rgba(255,0,0,0.8); }
 
         #toast {
             display: none; position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); 
@@ -375,12 +375,12 @@
                     const statusHtml = item.status === 'active' 
                         ? '<span class="status-badge status-active">🟢 生效中</span>' 
                         : '<span class="status-badge status-expired">🔴 已失效</span>';
-                    // 🌟 修复："尚未激活" 改为纯白加粗防隐身，"已过期" 改为纯红发光特效
+                   // 🌟 终极配色："尚未激活" 用耀眼亮金色，"已过期" 保持纯红发光
                     html += `
                     <tr>
                         <td style="font-weight: bold; color: #ff69b4; font-size: 14px; text-shadow: 0 2px 5px rgba(0,0,0,1);">${item.code}</td>
                         
-                        <td style="color: #ffffff; font-weight: ${item.firstUse === '尚未激活' ? 'bold' : 'normal'}; text-shadow: 0 2px 5px rgba(0,0,0,1);">${item.firstUse}</td>
+                        <td style="color: ${item.firstUse === '尚未激活' ? '#ffd700' : '#ffffff'}; font-weight: ${item.firstUse === '尚未激活' ? 'bold' : 'normal'}; text-shadow: ${item.firstUse === '尚未激活' ? '0 0 8px #ffd700, 0 2px 5px rgba(0,0,0,1)' : '0 2px 5px rgba(0,0,0,1)'};">${item.firstUse}</td>
                         
                         <td style="color: ${item.expire === '已过期' ? '#ff0000' : '#00f2ff'}; font-weight: bold; text-shadow: ${item.expire === '已过期' ? '0 0 10px #ff0000, 0 2px 5px rgba(0,0,0,1)' : '0 2px 5px rgba(0,0,0,1)'};">${item.expire}</td>
                         
