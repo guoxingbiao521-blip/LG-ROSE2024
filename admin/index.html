@@ -272,6 +272,7 @@
                         <th>已用次数</th>
                         <th>剩余次数</th>
                         <th>当前状态</th>
+                        <th>设备数</th>
                         <th>操作</th> 
                     </tr>
                 </thead>
@@ -376,7 +377,7 @@
             copyTextToClipboard(globalCodes.join('\n'), '📋 激活码已全部存入剪贴板！');
         }
 
-        function fetchLogs() {
+       function fetchLogs() {
             const secret = document.getElementById('secret').value;
             if(!secret) { 
                 showToast('⚠️ 查询激活码状态前，请先输入管理密码！'); 
@@ -384,7 +385,7 @@
             }
             const tbody = document.getElementById('logTableBody');
             const oldHTML = tbody.innerHTML; 
-            tbody.innerHTML = '<tr><td colspan="7">✨ 正在查询激活码状态...</td></tr>';
+            tbody.innerHTML = '<tr><td colspan="8">✨ 正在查询激活码状态...</td></tr>';
             
             fetch(`https://guo.roselg.xyz/api/admin/get_codes?secret=${secret}`)
                 .then(response => {
@@ -393,17 +394,33 @@
                 })
                 .then(data => {
                     if(data.length === 0) {
-                        tbody.innerHTML = '<tr><td colspan="7" style="padding: 30px; color: #999; text-align: center;">暂无激活码数据</td></tr>';
+                        tbody.innerHTML = '<tr><td colspan="8" style="padding: 30px; color: #999; text-align: center;">暂无激活码数据</td></tr>';
                         return;
                     }
 
                     let html = '';
                     data.forEach(item => {
+                        // 🌟 核心 1：风险等级颜色逻辑 (4个等级)
+                        let deviceColor = "#00ff00"; // 默认：3台以内 绿色
+                        let fontWeight = "bold";
+                        let textShadow = "0 1px 3px rgba(0,0,0,0.8)";
+
+                        if (item.deviceCount >= 10) {
+                            deviceColor = "#ff0000"; // 🔴 等级 4：10台或以上 大红色
+                            fontWeight = "900";
+                            textShadow = "0 0 10px rgba(255,0,0,0.8), 0 1px 5px #000"; // 增加红光特效
+                        } else if (item.deviceCount >= 5) {
+                            deviceColor = "#cd7f32"; // 🟠 等级 3：5-10台 黄褐色
+                        } else if (item.deviceCount > 3) {
+                            deviceColor = "#ffff00"; // 🟡 等级 2：3-5台 黄色
+                        }
+
                         let statusHtml = '';
                         if (item.status === 'active') statusHtml = '<span class="status-badge status-active">🟢 生效中</span>';
                         else if (item.status === 'suspended') statusHtml = '<span class="status-badge" style="background: rgba(255, 165, 0, 0.2); color: #ffa500; border: 1px solid #ffa500;">🟡 已停用</span>';
                         else statusHtml = '<span class="status-badge status-expired">🔴 已失效</span>';
                         
+                        // 🌟 核心 2：渲染表格行，加入“设备数”列
                         html += `
                         <tr>
                             <td style="font-weight: bold; color: #ff69b4; font-size: 14px; text-shadow: 0 2px 5px rgba(0,0,0,1);">${item.code}</td>
@@ -412,18 +429,22 @@
                             <td style="color: #ffffff; font-weight: bold; font-size: 14px; text-shadow: 0 2px 5px rgba(0,0,0,1);">${item.used}</td>
                             <td style="color: #ffffff; font-weight: bold; font-size: 14px; text-shadow: 0 2px 5px rgba(0,0,0,1);">${item.left}</td>
                             <td>${statusHtml}</td>
+                            
+                            <td style="font-weight: ${fontWeight}; color: ${deviceColor}; text-shadow: ${textShadow}; font-size: 15px;">
+                                ${item.deviceCount || 0} 台
+                            </td>
+
                             <td>
-                               <button class="action-btn-sm btn-renew" onclick="openRenewModal('${item.code}')">续费</button>
-                            ${item.status === 'suspended' 
-                                ? `<button class="action-btn-sm btn-enable" onclick="toggleSuspend('${item.code}', 'active')">启用</button>` 
-                                : `<button class="action-btn-sm btn-suspend" onclick="toggleSuspend('${item.code}', 'suspended')">停用</button>`}
-                            <button class="action-btn-sm btn-delete" onclick="deleteCode('${item.code}')">删除</button>
-                        </td>
-                    </tr>`;
-                });
-                
-                tbody.innerHTML = html;
-                // 删除了原来的 showToast，防止覆盖
+                                <button class="action-btn-sm btn-renew" onclick="openRenewModal('${item.code}')">续费</button>
+                                ${item.status === 'suspended' 
+                                    ? `<button class="action-btn-sm btn-enable" onclick="toggleSuspend('${item.code}', 'active')">启用</button>` 
+                                    : `<button class="action-btn-sm btn-suspend" onclick="toggleSuspend('${item.code}', 'suspended')">停用</button>`}
+                                <button class="action-btn-sm btn-delete" onclick="deleteCode('${item.code}')">删除</button>
+                            </td>
+                        </tr>`;
+                    });
+                    
+                    tbody.innerHTML = html;
                 })
                 .catch(err => {
                     showToast(`❌ ${err.message}`);
