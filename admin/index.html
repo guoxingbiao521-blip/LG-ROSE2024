@@ -380,7 +380,7 @@
             }
 
             const tbody = document.getElementById('logTableBody');
-            tbody.innerHTML = '<tr><td colspan="7" style="padding: 40px; color: #fff; font-size: 14px; font-weight: bold; text-align: center;">✨ 正在从服务器同步激活码账本...</td></tr>';
+            tbody.innerHTML = '<tr><td colspan="7" style="padding: 40px; color: #fff; font-size: 14px; font-weight: bold; text-align: center;">✨ 正在查询激活码状态...</td></tr>';
 
             // 🌟 核心连接：请求真实的后端接口
             fetch(`https://guo.roselg.xyz/api/admin/get_codes?secret=${secret}`)
