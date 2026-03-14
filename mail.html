@@ -1040,13 +1040,20 @@ function renderEmails(emails) {
             });
             const data = await response.json();
             if (response.ok) {
-                localStorage.setItem('authCode', code);
-                showToast("✅ 激活成功");
-                setTimeout(() => { location.reload(); }, 800);
-            } else { showToast("❌ " + (data.error || "激活码无效！")); }
-        } catch (error) { showToast("🌐 网络错误"); }
+            localStorage.setItem('authCode', code);
+            if (data.isAdmin) {
+                showToast(`👑 欢迎归来，站长！\n----------------\n🔥 核心特权已全部解锁\n🚀 正在载入最高管理系统...`);
+            } else {
+                showToast(`✅ 激活成功！\n----------------\n🔋 剩余次数：${data.leftUsage}\n⏳ 剩余时间：${data.expireMsg}`);
+            }
+            setTimeout(() => location.reload(), 2500);
+        } else {
+            showToast("❌ " + (data.error || "激活码无效！"));
+        }
+    } catch (error) {
+        showToast("🌐 网络错误");
     }
-
+}
     if (!localStorage.getItem('deviceId')) localStorage.setItem('deviceId', 'dev_' + Math.random().toString(36).substring(2, 10));
     if (window.Notification) Notification.requestPermission();
     
