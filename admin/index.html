@@ -179,6 +179,17 @@
             from { filter: brightness(1) drop-shadow(0 0 2px var(--primary)); }
             to { filter: brightness(1.5) drop-shadow(0 0 8px var(--primary)); }
         }
+        /* 🌟 新增：表格行内操作按钮样式 */
+        .action-btn-sm {
+            padding: 5px 8px; border: none; border-radius: 6px; font-size: 11px; font-weight: bold; 
+            cursor: pointer; transition: all 0.2s; margin: 0 2px; white-space: nowrap;
+        }
+        .btn-renew { background: rgba(0, 242, 255, 0.15); color: #00f2ff; border: 1px solid rgba(0, 242, 255, 0.5); }
+        .btn-renew:hover { background: rgba(0, 242, 255, 0.4); box-shadow: 0 0 8px rgba(0,242,255,0.6); transform: scale(1.05); }
+        .btn-suspend { background: rgba(255, 165, 0, 0.15); color: #ffa500; border: 1px solid rgba(255, 165, 0, 0.5); }
+        .btn-suspend:hover { background: rgba(255, 165, 0, 0.4); box-shadow: 0 0 8px rgba(255,165,0,0.6); transform: scale(1.05); }
+        .btn-delete { background: rgba(255, 0, 0, 0.15); color: #ff4d4f; border: 1px solid rgba(255, 0, 0, 0.5); }
+        .btn-delete:hover { background: rgba(255, 0, 0, 0.4); box-shadow: 0 0 8px rgba(255,0,0,0.6); transform: scale(1.05); }
     </style>
 </head>
 <body>
@@ -249,11 +260,12 @@
                         <th>已用次数</th>
                         <th>剩余次数</th>
                         <th>当前状态</th>
+                        <th>操作</th> 
                     </tr>
                 </thead>
                 <tbody id="logTableBody">
     <tr>
-        <td colspan="6" style="padding: 40px; color: #fff; font-size: 14px; font-weight: bold; letter-spacing: 1px; text-shadow: 0 2px 5px rgba(0,0,0,0.9), 0 0 10px rgba(0, 242, 255, 0.3);">
+        <td colspan="7" style="padding: 40px; color: #fff; font-size: 14px; font-weight: bold; letter-spacing: 1px; text-shadow: 0 2px 5px rgba(0,0,0,0.9), 0 0 10px rgba(0, 242, 255, 0.3);">
             ✨ 请点击右上角“查询数据”获取最新激活码记录...
         </td>
     </tr>
@@ -376,23 +388,85 @@
                         ? '<span class="status-badge status-active">🟢 生效中</span>' 
                         : '<span class="status-badge status-expired">🔴 已失效</span>';
                    // 🌟 终极配色："尚未激活" 用耀眼亮金色，"已过期" 保持纯红发光
+                 // 🌟 终极配色 + 操作按钮组合
                     html += `
                     <tr>
                         <td style="font-weight: bold; color: #ff69b4; font-size: 14px; text-shadow: 0 2px 5px rgba(0,0,0,1);">${item.code}</td>
-                        
                         <td style="color: ${item.firstUse === '尚未激活' ? '#ffd700' : '#ffffff'}; font-weight: ${item.firstUse === '尚未激活' ? 'bold' : 'normal'}; text-shadow: ${item.firstUse === '尚未激活' ? '0 0 8px #ffd700, 0 2px 5px rgba(0,0,0,1)' : '0 2px 5px rgba(0,0,0,1)'};">${item.firstUse}</td>
-                        
                         <td style="color: ${item.expire === '已过期' ? '#ff0000' : '#00f2ff'}; font-weight: bold; text-shadow: ${item.expire === '已过期' ? '0 0 10px #ff0000, 0 2px 5px rgba(0,0,0,1)' : '0 2px 5px rgba(0,0,0,1)'};">${item.expire}</td>
-                        
                         <td style="color: #ffffff; font-weight: bold; font-size: 14px; text-shadow: 0 2px 5px rgba(0,0,0,1);">${item.used}</td>
                         <td style="color: #ffffff; font-weight: bold; font-size: 14px; text-shadow: 0 2px 5px rgba(0,0,0,1);">${item.left}</td>
                         <td>${statusHtml}</td>
+                        
+                        <td>
+                            <button class="action-btn-sm btn-renew" onclick="openRenewModal('${item.code}')">续费</button>
+                            <button class="action-btn-sm btn-suspend" onclick="toggleSuspend('${item.code}')">停用</button>
+                            <button class="action-btn-sm btn-delete" onclick="deleteCode('${item.code}')">删除</button>
+                        </td>
                     </tr>`;
                  
                 });
                 tbody.innerHTML = html;
                 showToast('✅ 激活码数据查询成功！');
             }, 800); // 假装延迟 0.8 秒
+        }
+    </script>
+    <div id="renewModal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.7); backdrop-filter: blur(5px); z-index: 99999; justify-content: center; align-items: center;">
+        <div style="background: rgba(20, 20, 25, 0.95); border: 1px solid rgba(0, 242, 255, 0.4); border-radius: 16px; padding: 25px; width: 90%; max-width: 350px; text-align: left; box-shadow: 0 10px 40px rgba(0,0,0,0.8);">
+            <h3 style="color: #00f2ff; margin-top: 0; margin-bottom: 20px; text-align: center; text-shadow: 0 2px 5px rgba(0,0,0,0.8);">⚙️ 激活码属性设置</h3>
+            <div style="margin-bottom: 15px;">
+                <label style="font-size: 12px; color: #aaa; margin-bottom: 5px; display: block;">当前调整激活码：</label>
+                <input type="text" id="renewCodeText" disabled style="width: 100%; padding: 10px; border-radius: 8px; border: 1px solid rgba(255,105,180,0.5); background: rgba(255,255,255,0.05) !important; color: #ff69b4; text-align: center; font-weight: bold; box-sizing: border-box;">
+            </div>
+            <div style="display: flex; gap: 10px; margin-bottom: 25px;">
+                <div style="flex: 1;">
+                    <label style="font-size: 12px; color: #fff; margin-bottom: 5px; display: block;">增加天数</label>
+                    <input type="number" id="renewDays" placeholder="留空不改" style="width: 100%; padding: 10px; border-radius: 8px; background: rgba(0,0,0,0.5); color: #fff; border: 1px solid rgba(0, 242, 255, 0.5); outline: none; text-align: center; box-sizing: border-box;">
+                </div>
+                <div style="flex: 1;">
+                    <label style="font-size: 12px; color: #fff; margin-bottom: 5px; display: block;">增加次数</label>
+                    <input type="number" id="renewUsage" placeholder="留空不改" style="width: 100%; padding: 10px; border-radius: 8px; background: rgba(0,0,0,0.5); color: #fff; border: 1px solid rgba(0, 242, 255, 0.5); outline: none; text-align: center; box-sizing: border-box;">
+                </div>
+            </div>
+            <div style="display: flex; gap: 10px;">
+                <button onclick="closeRenewModal()" style="flex: 1; padding: 12px; border: none; border-radius: 10px; color: white; font-weight: bold; cursor: pointer; background: rgba(255,255,255,0.15); transition: 0.2s;">取消</button>
+                <button onclick="submitRenew()" style="flex: 1; padding: 12px; border: none; border-radius: 10px; color: #000; font-weight: bold; cursor: pointer; background: linear-gradient(45deg, #00f2ff, #ff00ff); box-shadow: 0 4px 0 #b300b3; transition: 0.2s;">✅ 确认保存</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // 停用按钮
+        function toggleSuspend(code) {
+            // 这里以后负责向服务器发送停用指令
+            showToast(`🛑 激活码 ${code} 已强制停用！`);
+        }
+        // 删除按钮
+        function deleteCode(code) {
+            if(confirm(`⚠️ 危险操作：\n您确定要彻底删除激活码 ${code} 吗？\n删除后将无法恢复！`)) {
+                // 这里以后负责向服务器发送删除指令
+                showToast(`🗑️ 激活码 ${code} 已被永久删除！`);
+            }
+        }
+        // 打开续费弹窗
+        function openRenewModal(code) {
+            document.getElementById('renewCodeText').value = code;
+            document.getElementById('renewDays').value = '';
+            document.getElementById('renewUsage').value = '';
+            document.getElementById('renewModal').style.display = 'flex';
+        }
+        // 关闭弹窗
+        function closeRenewModal() {
+            document.getElementById('renewModal').style.display = 'none';
+        }
+        // 提交续费数据
+        function submitRenew() {
+            const code = document.getElementById('renewCodeText').value;
+            // 获取你填写的天数和次数，以后将这俩参数发给后端
+            const days = document.getElementById('renewDays').value; 
+            const usage = document.getElementById('renewUsage').value; 
+            showToast(`✅ 激活码 ${code} 权限修改成功！`);
+            closeRenewModal();
         }
     </script>
 </body>
