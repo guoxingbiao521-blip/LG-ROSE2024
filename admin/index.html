@@ -385,7 +385,7 @@
             // 🌟 核心连接：请求真实的后端接口
             fetch(`https://guo.roselg.xyz/api/admin/get_codes?secret=${secret}`)
                 .then(response => {
-                    if (!response.ok) throw new Error('密码错误或请求失败');
+                    if (!response.ok) throw new Error('密码错误，无法查询！');
                     return response.json();
                 })
                 .then(data => {
@@ -425,7 +425,7 @@
                 })
                 .catch(err => {
                     showToast(`❌ 获取失败: ${err.message}`);
-                    tbody.innerHTML = `<tr><td colspan="7" style="padding: 30px; color: #999; text-align: center;">密码错误！，请输入有效密码</td></tr>`;
+                    tbody.innerHTML = `<tr><td colspan="7" style="padding: 30px; color: #999; text-align: center;">密码错误，无法查询！</td></tr>`;
                 });
         }
       
