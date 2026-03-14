@@ -38,7 +38,43 @@
 
         @media (max-width: 1050px) { body::before { background-image: url('./ipadadmin.jpg') !important; } }
         @media (max-width: 600px) { body::before { background-image: url('./iphoneadmin.jpg') !important; } }
+/* 🌟 针对手机竖屏的精准调优 */
+@media (max-width: 600px) {
+    /* 1. 让数据板的标题栏从“横排”变“竖排” */
+    .log-container .title-container {
+        flex-direction: column !important; 
+        align-items: stretch !important; /* 宽度撑满 */
+        gap: 15px !important;
+        margin-bottom: 20px !important;
+    }
 
+    /* 2. 让搜索框和按钮所在的组也自动适应 */
+    .log-container .title-container > div {
+        flex-direction: column !important;
+        width: 100% !important;
+        gap: 10px !important;
+    }
+
+    /* 3. 搜索框宽度写死为 100%，防止它乱跑 */
+    #searchInput {
+        width: 100% !important;
+        margin: 0 !important;
+        padding-left: 35px !important; /* 保持放大镜位置 */
+    }
+
+    /* 4. 查询按钮也铺满，这样点起来更舒服 */
+    .log-container .btn-main-3d {
+        width: 100% !important;
+        height: 45px !important; /* 手机端按钮加高一点好按 */
+        margin: 0 !important;
+    }
+
+    /* 5. 稍微缩小一点标题字号，防止标题太长挤换行 */
+    .log-container .title-left-3d {
+        font-size: 18px !important;
+        text-align: center;
+    }
+}
         /* 🌟 2. 基础容器与记录器容器样式 */
         .container {
             position: relative; z-index: 10;
