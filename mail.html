@@ -686,18 +686,7 @@ h2::before, h2::after {
             height: auto !important;
         }
         }
-   /* 仅针对手机端：核弹级强制不换行 */
-        @media screen and (max-width: 768px) {
-            .btn-footer-action {
-                display: block !important;       /* 核心：打破原来的 flex 堆叠排版 */
-                white-space: nowrap !important;  /* 核心：打死不换行 */
-                word-break: keep-all !important; /* 核心：禁止单词断开 */
-                font-size: 11px !important;      /* 缩小字号 */
-                line-height: 45px !important;    /* 让文字完美垂直居中 */
-                padding: 0 1px !important;       /* 极限压缩两边留白 */
-                overflow: hidden !important;     /* 杜绝撑爆屏幕 */
-            }
-        }
+  
   </style>
 </head>
 <body>
@@ -724,10 +713,10 @@ h2::before, h2::after {
         <button onclick="setCustomEmail()" class="btn-clone custom-theme">🛠️ 自定义邮箱</button>
     </div>
    
-    <div style="display: flex !important; flex-direction: row !important; gap: 10px !important; margin-top: 15px !important; width: 100% !important;">
-    <button onclick="copyEmail()" class="btn-footer-action" style="flex: 1; height: 45px; background-color: #e91e63; box-shadow: 0 5px 0 #c2185b;">📋 复制地址</button>
-    <button onclick="clearEmails()" class="btn-footer-action" style="flex: 1; height: 45px; background-color: #d81b60; box-shadow: 0 5px 0 #ad1457;">🗑️ 清空邮件</button>
-    <button onclick="window.location.href='index.html'" class="btn-footer-action" style="flex: 1; height: 45px; background-color: #f06292; box-shadow: 0 5px 0 #c2185b;">🏠 返回主页</button>
+   <div style="display: flex !important; flex-direction: row !important; gap: 6px !important; margin-top: 15px !important; width: 100% !important;">
+    <button onclick="copyEmail()" class="btn-footer-action" style="flex: 1; height: 45px; background-color: #e91e63; box-shadow: 0 5px 0 #c2185b; white-space: nowrap !important; font-size: clamp(11px, 3vw, 14px) !important; padding: 0 2px !important;">📋 复制地址</button>
+    <button onclick="clearEmails()" class="btn-footer-action" style="flex: 1; height: 45px; background-color: #d81b60; box-shadow: 0 5px 0 #ad1457; white-space: nowrap !important; font-size: clamp(11px, 3vw, 14px) !important; padding: 0 2px !important;">🗑️ 清空邮件</button>
+    <button onclick="window.location.href='index.html'" class="btn-footer-action" style="flex: 1; height: 45px; background-color: #f06292; box-shadow: 0 5px 0 #c2185b; white-space: nowrap !important; font-size: clamp(11px, 3vw, 14px) !important; padding: 0 2px !important;">🏠 返回主页</button>
 </div>
    
     <div class="inbox-card">
