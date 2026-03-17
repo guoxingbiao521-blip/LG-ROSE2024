@@ -231,33 +231,31 @@
         /* 🌟 删除按钮加深为大红色，字体粗细与其他按钮保持一致 */
         .btn-delete { background: rgba(255, 0, 0, 0.2); color: #ff0000; border: 1px solid #ff0000; }
         .btn-delete:hover { background: rgba(255, 0, 0, 0.4); box-shadow: 0 0 8px rgba(255,0,0,0.8); transform: scale(1.05); }
-       /* ========================================= */
+      /* ========================================= */
         /* 🚀 激活码表格提示语响应式对齐终极优化 */
         /* ========================================= */
 
-        /* 💻 默认情况（电脑端）：确保绝对居中，保持原汁原味 */
-        #logTableBody td[colspan] {
-            text-align: center !important; /* 👑 电脑端核心：强制居中 */
-            white-space: normal !important; /* 允许换行，以防文字极长 */
-            padding: 40px !important; /* 电脑端保持较宽的间距，大气 */
-            vertical-align: middle !important;
+        /* 💻 电脑端（大屏幕）：强行覆盖 HTML 里的靠左代码，绝对居中 */
+        @media screen and (min-width: 769px) {
+            #logTableBody td[colspan] div {
+                text-align: center !important; /* 核心：电脑端居中 */
+                position: static !important;   /* 核心：电脑端解除吸盘 */
+                width: 100% !important;
+                padding: 40px 20px !important;
+                box-sizing: border-box !important;
+            }
         }
 
-        /* 📱 针对手机端（屏幕宽度 < 768px）进行适配 */
+        /* 📱 手机端（小屏幕）：保留靠左和吸盘魔法 */
         @media screen and (max-width: 768px) {
-            #logTableBody td[colspan] {
-                text-align: left !important; /* 👑 手机端核心：强制靠左，防止被表格拉走 */
-                padding: 20px 10px !important; /* 手机端紧凑间距 */
-                font-size: 13px !important;
-
-                /* 魔法防飘：保留之前的吸盘魔法，把提示语锁在手机屏幕中间 */
-                display: block !important;
-                position: sticky !important;
+            #logTableBody td[colspan] div {
+                text-align: left !important;   /* 核心：手机端靠左 */
+                position: sticky !important;   /* 核心：手机端开启吸盘 */
                 left: 0 !important;
-                width: 100% !important;
-                max-width: calc(100vw - 20px) !important; /* 限制最大宽度，绝不超宽 */
+                width: 100vw !important;
+                max-width: calc(100vw - 20px) !important;
+                padding: 20px 10px !important;
                 box-sizing: border-box !important;
-                word-break: break-all !important;
             }
         }
     </style>
