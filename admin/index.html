@@ -325,13 +325,15 @@
                         <th>操作</th> 
                     </tr>
                 </thead>
-                <tbody id="logTableBody">
-                    <tr>
-                        <td colspan="7" style="padding: 40px; color: #fff; font-size: 14px; font-weight: bold; letter-spacing: 1px; text-shadow: 0 2px 5px rgba(0,0,0,0.9), 0 0 10px rgba(0, 242, 255, 0.3);">
-                            ✨ 请输入站长/代理商管理密码后点击右上角“查询激活码状态”查询激活码状态！
-                        </td>
-                    </tr>
-                </tbody>
+               <tbody id="logTableBody">
+    <tr>
+        <td colspan="8" style="padding: 20px 10px;">
+            <div style="white-space: normal !important; word-break: break-word !important; width: 100%; max-width: 85vw; text-align: left; line-height: 1.6; color: #fff; font-weight: bold; margin: 0 auto; text-shadow: 0 2px 5px rgba(0,0,0,0.9);">
+                ✨ 请输入站长/代理商管理密码后，点击“查询激活码状态”开始查询！
+            </div>
+        </td>
+    </tr>
+</tbody>
             </table>
         </div>
     </div>
@@ -425,28 +427,41 @@
             if(globalCodes.length === 0) { showToast('❌ 还没有激活码可以复制哦'); return; }
             copyTextToClipboard(globalCodes.join('\n'), '📋 激活码已全部存入剪贴板！');
         }
-
-      function fetchLogs() {
+function fetchLogs() {
             const secret = document.getElementById('secret').value;
             if(!secret) { 
                 showToast('⚠️ 查询激活码状态前，请先输入管理密码！'); 
                 return; 
             }
 
-            // 🎯 【新增】第 1 步：拿到按钮，立刻置灰并修改文字
-            const queryBtn = document.querySelector('button[onclick="fetchLogs()"]');
-            let originalBtnText = "🔄 查询激活码状态"; // 备用默认值
+            // 🎯 暴力寻找按钮并强行锁定（无视任何 CSS 的阻挡）
+            const btns = document.getElementsByTagName('button');
+            let queryBtn = null;
+            let originalBtnText = "🔄 查询激活码状态";
+            for(let b of btns) {
+                if(b.innerText.includes('查询激活码状态')) {
+                    queryBtn = b;
+                    break;
+                }
+            }
+
             if (queryBtn) {
                 originalBtnText = queryBtn.innerHTML;
-                queryBtn.disabled = true; // 锁定按钮
-                queryBtn.style.opacity = "0.5"; // 变灰
-                queryBtn.style.cursor = "not-allowed"; // 鼠标变禁止
-                queryBtn.innerHTML = "⏳ 正在查询激活码状态..."; // 安抚用户
+                queryBtn.disabled = true; 
+                queryBtn.style.pointerEvents = "none"; // 🛑 物理隔绝点击（绝对点不下去）
+                queryBtn.style.filter = "grayscale(100%) opacity(60%)"; // 🌑 视觉强制变灰
+                queryBtn.innerHTML = "⏳ 正在跨洋查询中..."; 
             }
 
             const tbody = document.getElementById('logTableBody');
             const oldHTML = tbody.innerHTML; 
-            tbody.innerHTML = '<tr><td colspan="8">⏳ 正在查询激活码状态...</td></tr>';
+            
+            // 🎯 用 div 强制限制宽度并左对齐，绝对不会被腰斩！
+            tbody.innerHTML = `<tr><td colspan="8" style="padding: 20px 10px;">
+                <div style="white-space: normal; word-break: break-word; width: 100%; max-width: 85vw; text-align: left; line-height: 1.6; margin: 0 auto; color: #fff;">
+                    ✨ 正在查询激活码状态，请稍候...
+                </div>
+            </td></tr>`;
             
             fetch(`https://guo.roselg.xyz/api/admin/get_codes?secret=${secret}`)
                 .then(response => {
@@ -455,25 +470,29 @@
                 })
                 .then(data => {
                     if(data.length === 0) {
-                        tbody.innerHTML = '<tr><td colspan="8" style="padding: 30px; color: #999; text-align: center;">暂无激活码数据</td></tr>';
+                        tbody.innerHTML = `<tr><td colspan="8" style="padding: 30px 10px;">
+                            <div style="white-space: normal; word-break: break-word; width: 100%; max-width: 85vw; text-align: left; color: #999; margin: 0 auto;">
+                                暂无激活码数据
+                            </div>
+                        </td></tr>`;
                         return;
                     }
 
                     let html = '';
                     data.forEach(item => {
-                        // 🌟 核心 1：风险等级颜色逻辑 (4个等级)
-                        let deviceColor = "#00ff00"; // 默认：3台以内 绿色
+                        // 🌟 核心 1：风险等级颜色逻辑
+                        let deviceColor = "#00ff00"; 
                         let fontWeight = "bold";
                         let textShadow = "0 1px 3px rgba(0,0,0,0.8)";
 
                         if (item.deviceCount >= 10) {
-                            deviceColor = "#ff0000"; // 🔴 等级 4：10台或以上 大红色
+                            deviceColor = "#ff0000"; 
                             fontWeight = "900";
                             textShadow = "0 0 10px rgba(255,0,0,0.8), 0 1px 5px #000"; 
                         } else if (item.deviceCount >= 5) {
-                            deviceColor = "#cd7f32"; // 🟠 等级 3：5-10台 黄褐色
+                            deviceColor = "#cd7f32"; 
                         } else if (item.deviceCount > 3) {
-                            deviceColor = "#ffff00"; // 🟡 等级 2：3-5台 黄色
+                            deviceColor = "#ffff00"; 
                         }
 
                         let statusHtml = '';
@@ -481,7 +500,6 @@
                         else if (item.status === 'suspended') statusHtml = '<span class="status-badge" style="background: rgba(255, 165, 0, 0.2); color: #ffa500; border: 1px solid #ffa500;">🟡 已停用</span>';
                         else statusHtml = '<span class="status-badge status-expired">🔴 已失效</span>';
                         
-                        // 🌟 核心 2：渲染表格行，加入“设备数”列
                         html += `
                         <tr>
                             <td style="font-weight: bold; color: #ff69b4; font-size: 14px; text-shadow: 0 2px 5px rgba(0,0,0,1);">${item.code}</td>
@@ -512,15 +530,16 @@
                     tbody.innerHTML = oldHTML; 
                 })
                 .finally(() => {
-                    // 🎯 【新增】第 3 步：不管成功失败，数据处理完后，按钮解除锁定恢复原状
+                    // 🎯 强行解锁按钮恢复原样
                     if (queryBtn) {
                         queryBtn.disabled = false;
-                        queryBtn.style.opacity = "1";
-                        queryBtn.style.cursor = "pointer";
+                        queryBtn.style.pointerEvents = "auto"; // 解除点击封印
+                        queryBtn.style.filter = "none"; // 恢复色彩
                         queryBtn.innerHTML = originalBtnText;
                     }
                 });
         }
+  
     </script>
 
     <div id="renewModal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.7); backdrop-filter: blur(5px); z-index: 99999; justify-content: center; align-items: center;">
