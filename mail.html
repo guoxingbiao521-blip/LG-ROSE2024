@@ -686,7 +686,16 @@ h2::before, h2::after {
             height: auto !important;
         }
         }
-    
+    /* 仅针对手机端：强制底部三个功能按钮不换行 */
+        @media screen and (max-width: 768px) {
+            .btn-footer-action {
+                white-space: nowrap !important; /* 绝对核心：打死不换行 */
+                font-size: 12px !important;     /* 稍微缩小字号，完美排成一排 */
+                padding: 0 4px !important;      /* 压缩内部留白 */
+                overflow: hidden !important;    /* 杜绝撑爆屏幕 */
+                text-overflow: ellipsis !important; /* 如果屏幕实在太小，会自动变成省略号而不是换行 */
+            }
+        }
   </style>
 </head>
 <body>
