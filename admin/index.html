@@ -231,17 +231,33 @@
         /* 🌟 删除按钮加深为大红色，字体粗细与其他按钮保持一致 */
         .btn-delete { background: rgba(255, 0, 0, 0.2); color: #ff0000; border: 1px solid #ff0000; }
         .btn-delete:hover { background: rgba(255, 0, 0, 0.4); box-shadow: 0 0 8px rgba(255,0,0,0.8); transform: scale(1.05); }
-        /* 🚀 仅针对手机端：强制状态提示文字自动换行，拒绝被腰斩 */
+       /* ========================================= */
+        /* 🚀 激活码表格提示语响应式对齐终极优化 */
+        /* ========================================= */
+
+        /* 💻 默认情况（电脑端）：确保绝对居中，保持原汁原味 */
+        #logTableBody td[colspan] {
+            text-align: center !important; /* 👑 电脑端核心：强制居中 */
+            white-space: normal !important; /* 允许换行，以防文字极长 */
+            padding: 40px !important; /* 电脑端保持较宽的间距，大气 */
+            vertical-align: middle !important;
+        }
+
+        /* 📱 针对手机端（屏幕宽度 < 768px）进行适配 */
         @media screen and (max-width: 768px) {
-            /* 通常提示文字都放在合并的单元格里，或者特定的 div 里 */
-            table td[colspan], 
-            .empty-text, 
-            .status-message {
-                white-space: normal !important;   /* 核心：允许换行 */
-                word-break: break-word !important; /* 核心：长句自动打断 */
-                line-height: 1.6 !important;      /* 增加行高，看着不挤 */
-                padding: 15px 10px !important;    /* 增加内边距 */
-                font-size: 13px !important;       /* 手机端稍微缩小一点字号 */
+            #logTableBody td[colspan] {
+                text-align: left !important; /* 👑 手机端核心：强制靠左，防止被表格拉走 */
+                padding: 20px 10px !important; /* 手机端紧凑间距 */
+                font-size: 13px !important;
+
+                /* 魔法防飘：保留之前的吸盘魔法，把提示语锁在手机屏幕中间 */
+                display: block !important;
+                position: sticky !important;
+                left: 0 !important;
+                width: 100% !important;
+                max-width: calc(100vw - 20px) !important; /* 限制最大宽度，绝不超宽 */
+                box-sizing: border-box !important;
+                word-break: break-all !important;
             }
         }
     </style>
