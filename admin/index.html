@@ -307,7 +307,7 @@
                     <span style="position: absolute; left: 10px; top: 50%; transform: translateY(-50%); font-size: 14px; opacity: 0.8;">🔍</span>
                     <input type="text" id="searchInput" placeholder="搜索激活码..." onkeyup="searchCodes()" style="width: 140px; height: 36px; padding: 0 10px 0 32px; border-radius: 10px; background: rgba(0,0,0,0.4); color: #00f2ff; border: 1px solid rgba(0, 242, 255, 0.4); font-size: 13px; font-weight: bold; outline: none; transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); box-sizing: border-box;" onfocus="this.style.borderColor='#ff00ff'; this.style.boxShadow='0 0 10px rgba(255,0,255,0.4)'; this.style.width='180px'; this.style.background='rgba(0,0,0,0.6)';" onblur="this.style.borderColor='rgba(0, 242, 255, 0.4)'; this.style.boxShadow='none'; this.style.width='140px'; this.style.background='rgba(0,0,0,0.4)';">
                 </div>
-                <button class="btn-main-3d" onclick="fetchLogs()" style="padding: 0 16px; font-size: 13px; height: 36px; box-shadow: 0 3px 0 #b300b3; width: auto; flex: none; display: flex; align-items: center; justify-content: center;">🔄 查询激活码状态</button>
+                <button class="btn-main-3d" id="queryBtnAdmin" onclick="this.innerHTML='⏳ 系统载入中...'; this.style.filter='grayscale(100%) opacity(70%)'; this.style.pointerEvents='none'; let t = setInterval(()=>{if(typeof fetchLogs === 'function'){clearInterval(t); fetchLogs();}}, 200);" style="padding: 0 16px; font-size: 13px; height: 36px; box-shadow: 0 3px 0 #b300b3; width: auto; flex: none; display: flex; align-items: center; justify-content: center;">🔄 查询激活码状态</button>
             </div>
         </div>
         
@@ -325,10 +325,10 @@
                         <th>操作</th> 
                     </tr>
                 </thead>
-               <tbody id="logTableBody">
+           <tbody id="logTableBody">
     <tr>
-        <td colspan="8" style="padding: 20px 10px;">
-            <div style="white-space: normal !important; word-break: break-word !important; width: 100%; max-width: 85vw; text-align: left; line-height: 1.6; color: #fff; font-weight: bold; margin: 0 auto; text-shadow: 0 2px 5px rgba(0,0,0,0.9);">
+        <td colspan="8" style="padding: 0; border: none; background: transparent;">
+            <div style="position: sticky; left: 0; width: 100vw; max-width: 100%; padding: 25px 15px; box-sizing: border-box; white-space: normal; word-break: break-all; text-align: left; line-height: 1.6; color: #fff; font-weight: bold; text-shadow: 0 2px 5px rgba(0,0,0,0.9);">
                 ✨ 请输入站长/代理商管理密码后，点击“查询激活码状态”开始查询！
             </div>
         </td>
@@ -431,35 +431,30 @@ function fetchLogs() {
             const secret = document.getElementById('secret').value;
             if(!secret) { 
                 showToast('⚠️ 查询激活码状态前，请先输入管理密码！'); 
+                // 恢复按钮状态
+                const btn = document.getElementById('queryBtnAdmin');
+                if(btn) { btn.disabled = false; btn.style.pointerEvents = "auto"; btn.style.filter = "none"; btn.innerHTML = "🔄 查询激活码状态"; }
                 return; 
             }
 
-            // 🎯 暴力寻找按钮并强行锁定（无视任何 CSS 的阻挡）
-            const btns = document.getElementsByTagName('button');
-            let queryBtn = null;
-            let originalBtnText = "🔄 查询激活码状态";
-            for(let b of btns) {
-                if(b.innerText.includes('查询激活码状态')) {
-                    queryBtn = b;
-                    break;
-                }
-            }
-
+            // 🎯 拿到我们刚才换上的新按钮
+            const queryBtn = document.getElementById('queryBtnAdmin');
+            let originalBtnText = "🔄 查询激活码状态"; 
             if (queryBtn) {
                 originalBtnText = queryBtn.innerHTML;
                 queryBtn.disabled = true; 
-                queryBtn.style.pointerEvents = "none"; // 🛑 物理隔绝点击（绝对点不下去）
-                queryBtn.style.filter = "grayscale(100%) opacity(60%)"; // 🌑 视觉强制变灰
-                queryBtn.innerHTML = "⏳ 正在跨洋查询中..."; 
+                queryBtn.style.pointerEvents = "none"; 
+                queryBtn.style.filter = "grayscale(100%) opacity(70%)"; 
+                queryBtn.innerHTML = "⏳ 正在查询激活码状态..."; 
             }
 
             const tbody = document.getElementById('logTableBody');
             const oldHTML = tbody.innerHTML; 
             
-            // 🎯 用 div 强制限制宽度并左对齐，绝对不会被腰斩！
-            tbody.innerHTML = `<tr><td colspan="8" style="padding: 20px 10px;">
-                <div style="white-space: normal; word-break: break-word; width: 100%; max-width: 85vw; text-align: left; line-height: 1.6; margin: 0 auto; color: #fff;">
-                    ✨ 正在查询激活码状态，请稍候...
+            // 🎯 同样使用吸盘魔法，保证查询中的文字绝对不被腰斩
+            tbody.innerHTML = `<tr><td colspan="8" style="padding: 0; border: none; background: transparent;">
+                <div style="position: sticky; left: 0; width: 100vw; max-width: 100%; padding: 25px 15px; box-sizing: border-box; white-space: normal; word-break: break-all; text-align: left; line-height: 1.6; color: #fff; font-weight: bold;">
+                    ⏳ 正在查询激活码状态，请稍候...
                 </div>
             </td></tr>`;
             
@@ -470,8 +465,9 @@ function fetchLogs() {
                 })
                 .then(data => {
                     if(data.length === 0) {
-                        tbody.innerHTML = `<tr><td colspan="8" style="padding: 30px 10px;">
-                            <div style="white-space: normal; word-break: break-word; width: 100%; max-width: 85vw; text-align: left; color: #999; margin: 0 auto;">
+                        // 🎯 空数据时也用吸盘魔法
+                        tbody.innerHTML = `<tr><td colspan="8" style="padding: 0; border: none; background: transparent;">
+                            <div style="position: sticky; left: 0; width: 100vw; max-width: 100%; padding: 30px 15px; box-sizing: border-box; white-space: normal; word-break: break-all; text-align: left; color: #999; margin: 0 auto;">
                                 暂无激活码数据
                             </div>
                         </td></tr>`;
@@ -480,7 +476,6 @@ function fetchLogs() {
 
                     let html = '';
                     data.forEach(item => {
-                        // 🌟 核心 1：风险等级颜色逻辑
                         let deviceColor = "#00ff00"; 
                         let fontWeight = "bold";
                         let textShadow = "0 1px 3px rgba(0,0,0,0.8)";
@@ -508,11 +503,9 @@ function fetchLogs() {
                             <td style="color: #ffffff; font-weight: bold; font-size: 14px; text-shadow: 0 2px 5px rgba(0,0,0,1);">${item.used}</td>
                             <td style="color: #ffffff; font-weight: bold; font-size: 14px; text-shadow: 0 2px 5px rgba(0,0,0,1);">${item.left}</td>
                             <td>${statusHtml}</td>
-                            
                             <td style="font-weight: ${fontWeight}; color: ${deviceColor}; text-shadow: ${textShadow}; font-size: 15px;">
                                 ${item.deviceCount || 0} 台
                             </td>
-
                             <td>
                                 <button class="action-btn-sm btn-renew" onclick="openRenewModal('${item.code}')">续费</button>
                                 ${item.status === 'suspended' 
@@ -533,9 +526,9 @@ function fetchLogs() {
                     // 🎯 强行解锁按钮恢复原样
                     if (queryBtn) {
                         queryBtn.disabled = false;
-                        queryBtn.style.pointerEvents = "auto"; // 解除点击封印
-                        queryBtn.style.filter = "none"; // 恢复色彩
-                        queryBtn.innerHTML = originalBtnText;
+                        queryBtn.style.pointerEvents = "auto"; 
+                        queryBtn.style.filter = "none"; 
+                        queryBtn.innerHTML = "🔄 查询激活码状态";
                     }
                 });
         }
