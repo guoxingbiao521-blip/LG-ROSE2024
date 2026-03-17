@@ -699,6 +699,14 @@ h2::before, h2::after {
     <div class="hint-box">
         <p style="margin: 0; letter-spacing: 1px;">
             🌹 筑梦独家：在下方输入前缀并点击 “自定义邮箱” 即可重启曾使用过的邮箱进行邮件的接收！
+            <br>
+<span style="display: inline-block; margin-top: 8px;">
+    🎁 新人福利：免费10次接收邮件体验！支持即梦国际版、Lovart等AI平台的注册及获取赠送积分等用途！
+    <strong onclick="copyTrialCode('LG-VIP-52109526')" style="color: #00f2ff; cursor: pointer; border-bottom: 1px dashed #00f2ff; padding: 0 4px; text-shadow: 0 0 8px rgba(0, 242, 255, 0.6); transition: all 0.3s ease;" onmouseover="this.style.color='#ff69b4'; this.style.borderColor='#ff69b4'" onmouseout="this.style.color='#00f2ff'; this.style.borderColor='#00f2ff'" title="点击一键复制激活码">
+        LG-VIP-52109526
+    </strong> 
+    ，如需继续使用请到主页底部联系站长微信获取长期激活码！
+</span>
         </p>
     </div>
 
@@ -1145,6 +1153,39 @@ content = content.replace(safeRegex, safeInlineHighlight);
         });
         document.body.classList.add('no-scroll', 'hide-ui-for-modal'); 
     };
+    // 🚀 一键复制体验激活码功能
+        function copyTrialCode(code) {
+            // 使用现代浏览器的剪贴板 API
+            if (navigator.clipboard) {
+                navigator.clipboard.writeText(code).then(() => {
+                    // 如果你的页面有 showToast 提示框，就用弹窗提示；如果没有，就用浏览器原生的 alert
+                    if (typeof showToast === 'function') {
+                        showToast('✅ 体验激活码复制成功：' + code);
+                    } else {
+                        alert('✅ 体验激活码复制成功：\n' + code + '\n快去使用吧！');
+                    }
+                }).catch(err => {
+                    console.error('复制失败', err);
+                });
+            } else {
+                // 兼容老版本浏览器
+                const textArea = document.createElement("textarea");
+                textArea.value = code;
+                document.body.appendChild(textArea);
+                textArea.select();
+                try {
+                    document.execCommand('copy');
+                    if (typeof showToast === 'function') {
+                        showToast('✅ 体验激活码复制成功：' + code);
+                    } else {
+                        alert('✅ 体验激活码复制成功：\n' + code);
+                    }
+                } catch (err) {
+                    console.error('复制失败', err);
+                }
+                document.body.removeChild(textArea);
+            }
+        }
 </script>
 
 <div id="emailDetailModal" class="email-modal-overlay">
