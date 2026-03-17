@@ -231,6 +231,19 @@
         /* 🌟 删除按钮加深为大红色，字体粗细与其他按钮保持一致 */
         .btn-delete { background: rgba(255, 0, 0, 0.2); color: #ff0000; border: 1px solid #ff0000; }
         .btn-delete:hover { background: rgba(255, 0, 0, 0.4); box-shadow: 0 0 8px rgba(255,0,0,0.8); transform: scale(1.05); }
+        /* 🚀 仅针对手机端：强制状态提示文字自动换行，拒绝被腰斩 */
+        @media screen and (max-width: 768px) {
+            /* 通常提示文字都放在合并的单元格里，或者特定的 div 里 */
+            table td[colspan], 
+            .empty-text, 
+            .status-message {
+                white-space: normal !important;   /* 核心：允许换行 */
+                word-break: break-word !important; /* 核心：长句自动打断 */
+                line-height: 1.6 !important;      /* 增加行高，看着不挤 */
+                padding: 15px 10px !important;    /* 增加内边距 */
+                font-size: 13px !important;       /* 手机端稍微缩小一点字号 */
+            }
+        }
     </style>
 </head>
 <body>
@@ -413,15 +426,27 @@
             copyTextToClipboard(globalCodes.join('\n'), '📋 激活码已全部存入剪贴板！');
         }
 
-       function fetchLogs() {
+      function fetchLogs() {
             const secret = document.getElementById('secret').value;
             if(!secret) { 
                 showToast('⚠️ 查询激活码状态前，请先输入管理密码！'); 
                 return; 
             }
+
+            // 🎯 【新增】第 1 步：拿到按钮，立刻置灰并修改文字
+            const queryBtn = document.querySelector('button[onclick="fetchLogs()"]');
+            let originalBtnText = "🔄 查询激活码状态"; // 备用默认值
+            if (queryBtn) {
+                originalBtnText = queryBtn.innerHTML;
+                queryBtn.disabled = true; // 锁定按钮
+                queryBtn.style.opacity = "0.5"; // 变灰
+                queryBtn.style.cursor = "not-allowed"; // 鼠标变禁止
+                queryBtn.innerHTML = "⏳ 正在查询激活码状态..."; // 安抚用户
+            }
+
             const tbody = document.getElementById('logTableBody');
             const oldHTML = tbody.innerHTML; 
-            tbody.innerHTML = '<tr><td colspan="8">✨ 正在查询激活码状态...</td></tr>';
+            tbody.innerHTML = '<tr><td colspan="8">⏳ 正在查询激活码状态...</td></tr>';
             
             fetch(`https://guo.roselg.xyz/api/admin/get_codes?secret=${secret}`)
                 .then(response => {
@@ -444,7 +469,7 @@
                         if (item.deviceCount >= 10) {
                             deviceColor = "#ff0000"; // 🔴 等级 4：10台或以上 大红色
                             fontWeight = "900";
-                            textShadow = "0 0 10px rgba(255,0,0,0.8), 0 1px 5px #000"; // 增加红光特效
+                            textShadow = "0 0 10px rgba(255,0,0,0.8), 0 1px 5px #000"; 
                         } else if (item.deviceCount >= 5) {
                             deviceColor = "#cd7f32"; // 🟠 等级 3：5-10台 黄褐色
                         } else if (item.deviceCount > 3) {
@@ -485,6 +510,15 @@
                 .catch(err => {
                     showToast(`❌ ${err.message}`);
                     tbody.innerHTML = oldHTML; 
+                })
+                .finally(() => {
+                    // 🎯 【新增】第 3 步：不管成功失败，数据处理完后，按钮解除锁定恢复原状
+                    if (queryBtn) {
+                        queryBtn.disabled = false;
+                        queryBtn.style.opacity = "1";
+                        queryBtn.style.cursor = "pointer";
+                        queryBtn.innerHTML = originalBtnText;
+                    }
                 });
         }
     </script>
