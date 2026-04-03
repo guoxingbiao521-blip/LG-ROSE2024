@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>教程文档</title>
+<style>
+    /* 全局背景与字体设置 */
+    body { 
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Microsoft YaHei", sans-serif; 
+        line-height: 1.8; 
+        background-color: #f4f7f9; 
+        color: #2c3e50; 
+        margin: 0; 
+        padding: 40px 20px; 
+    }
+    
+    /* 主体内容卡片设计 */
+    .container { 
+        max-width: 900px; 
+        margin: auto; 
+        background: #ffffff; 
+        border-radius: 16px; 
+        box-shadow: 0 10px 30px rgba(0,0,0,0.08); 
+        padding: 50px; 
+        box-sizing: border-box;
+    }
+
+    /* 顶部大标题样式 */
+    .main-title {
+        font-size: 26px;
+        font-weight: bold;
+        color: #1a73e8;
+        text-align: center;
+        margin-bottom: 40px;
+        padding-bottom: 20px;
+        border-bottom: 2px solid #e8eaed;
+    }
+
+    /* 副标题样式 (更大、更深、更粗) */
+    .sub-title {
+        font-size: 20px;
+        font-weight: 800;
+        color: #111827;
+        margin-top: 40px;
+        margin-bottom: 15px;
+        padding-left: 12px;
+        border-left: 5px solid #1a73e8;
+        background-color: #f8f9fa;
+        padding-top: 6px;
+        padding-bottom: 6px;
+        border-radius: 0 4px 4px 0;
+        white-space: pre-wrap;
+    }
+
+    /* 注意事项装饰框 */
+    .warning-box {
+        background-color: #fff9e6;
+        border: 2px dashed #ffb300;
+        padding: 25px 20px 20px 20px;
+        border-radius: 8px;
+        margin-top: 40px;
+        color: #4e342e;
+        box-shadow: 0 4px 12px rgba(255, 179, 0, 0.15);
+        position: relative;
+        white-space: pre-wrap;
+    }
+    
+    /* 装饰框顶部的小提示角标 */
+    .warning-box::before {
+        content: "⚠️ 重要提示与注意事项";
+        display: block;
+        font-size: 18px;
+        font-weight: bold;
+        color: #e65100;
+        margin-bottom: 15px;
+        border-bottom: 1px dashed #ffcc80;
+        padding-bottom: 10px;
+    }
+
+    /* 段落及文字排版 */
+    .text-block {
+        font-size: 16px;
+        margin-bottom: 20px;
+        white-space: pre-wrap;
+    }
+
+    /* 链接美化 */
+    a { 
+        color: #1a73e8; 
+        text-decoration: none; 
+        font-weight: 500;
+        background: #e8f0fe;
+        padding: 2px 6px;
+        border-radius: 4px;
+        transition: background 0.3s;
+    }
+    a:hover { 
+        background: #d2e3fc; 
+        text-decoration: underline; 
+    }
+
+    /* 图片容器美化 */
+    .image-container { 
+        text-align: center; 
+        margin: 25px 0; 
+    }
+    img { 
+        max-width: 100%; 
+        height: auto; 
+        cursor: zoom-in; 
+        border: 1px solid #e0e0e0; 
+        border-radius: 8px; 
+        box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    img:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 8px 24px rgba(0,0,0,0.12);
+    }
+
+    /* 放大后的弹窗样式 */
+    #lightbox { 
+        display: none; 
+        position: fixed; 
+        z-index: 999; 
+        width: 100%; 
+        height: 100%; 
+        top: 0; 
+        left: 0; 
+        background: rgba(0,0,0,0.85); 
+        align-items: center; 
+        justify-content: center; 
+        cursor: zoom-out; 
+        backdrop-filter: blur(5px);
+    }
+    #lightbox img { 
+        max-width: 90%; 
+        max-height: 90vh; 
+        border: none; 
+        padding: 0; 
+        background: transparent; 
+        box-shadow: 0 10px 40px rgba(0,0,0,0.3);
+    }
+</style>
+</head>
+<body>
+
+<div class="container">
+    <div class="main-title">LG-筑梦电子独家即梦会员无限积分教程支持Seedance2.0</div>
+    
+    <div class="sub-title">前期需要准备的工具：</div>
+    
+    <div class="text-block" style="margin-bottom: 5px;">1.梯子（魔法网络） 有日本及以下任意国家就可以。</div>
+    <div class="image-container"><img src="1.jpg" onclick="openLightbox(this.src)"></div>
+    
+    <div class="text-block" style="margin-bottom: 5px;">梯子自备，若没有可通过自己渠道购买，也可联系教程作者购买：9.9/月 49.9/半年99/年付 （无限流量、不限设备、内置极度纯净美国双ISP住宅家庭宽带）</div>
+    <div class="image-container"><img src="34.jpg" onclick="openLightbox(this.src)"></div>
+    
+    <div class="text-block">2.在不用梯子的网络环境下，浏览器搜索“PayPal”注册一个“个人账户”，并绑定一张不常用没钱的银行卡或者信用卡，如果没有绑定常用的也可以。
+3.网址：<a href="http://www.roselg.xyz" target="_blank">www.roselg.xyz</a>
+4.激活码   联系作者索要激活码    激活码免费赠送</div>
+
+    <div class="sub-title">             准备工作结束以后开始操作</div>
+    
+    <div class="text-block">打开梯子（魔法网络）
+2.进入网址：<a href="http://www.roselg.xyz" target="_blank">www.roselg.xyz</a>  点击“临时邮箱”按钮</div>
+    <div class="image-container"><img src="2.jpg" onclick="openLightbox(this.src)"></div>
+    <div class="text-block">进入以后粘贴索要到的激活码进行系统的激活！</div>
+    <div class="image-container"><img src="3.jpg" onclick="openLightbox(this.src)"></div>
+    <div class="text-block">直接点击“复制地址”按钮或者点一下“随机生成”按钮以后再点“复制地址”按钮不要关闭这个界面</div>
+    <div class="image-container"><img src="4.jpg" onclick="openLightbox(this.src)"></div>
+    <div class="text-block">3.打开浏览器，地址栏输入即梦国际版网址：<a href="https://dreamina.capcut.com/" target="_blank">https://dreamina.capcut.com/</a>  点击右上角小地球图标那个</div>
+    <div class="image-container"><img src="5.jpg" onclick="openLightbox(this.src)"></div>
+    <div class="text-block">选择“繁体中文”设置好语言，</div>
+    <div class="image-container"><img src="6.jpg" onclick="openLightbox(this.src)"></div>
+    <div class="text-block">然后点击旁边的“立即创作”按钮，进入到创作界面，</div>
+    <div class="image-container"><img src="7.jpg" onclick="openLightbox(this.src)"></div>
+    <div class="text-block">点击左下角“登入”按钮</div>
+    <div class="image-container"><img src="8.jpg" onclick="openLightbox(this.src)"></div>
+    <div class="text-block">选择第四项“使用电子邮件继续”</div>
+    <div class="image-container"><img src="9.jpg" onclick="openLightbox(this.src)"></div>
+    <div class="text-block">默认是登录界面，一定要点击一下蓝色的“注册”按钮</div>
+    <div class="image-container"><img src="10.jpg" onclick="openLightbox(this.src)"></div>
+    <div class="text-block">然后进入到注册界面，将你刚才复制的邮箱账号粘贴在第一行，第二行密码随便输入，不需要特别记忆，也不用记住，随便打字母或者数字都可以，前提长度要够！</div>
+    <div class="image-container"><img src="11.jpg" onclick="openLightbox(this.src)"></div>
+    <div class="text-block">输入账号跟密码以后，会让你输入验证码，在你那个邮箱系统里面会有一个带有验证码的邮件，也会有语音提示“您有新的邮件，请注意查收！”直接点击“一键复制验证码”按钮</div>
+    <div class="image-container"><img src="12.jpg" onclick="openLightbox(this.src)"></div>
+    <div class="text-block">将复制到的验证码粘贴到里面</div>
+    <div class="image-container"><img src="13.jpg" onclick="openLightbox(this.src)"></div>
+    <div class="text-block">输入验证码以后会自己跳转到一个设置生日的界面，随便设置就可以，然后点击“Next”按钮</div>
+    <div class="image-container"><img src="14.jpg" onclick="openLightbox(this.src)"></div>
+    <div class="text-block">点击右上角“x”关闭这个窗口。</div>
+    <div class="image-container"><img src="15.jpg" onclick="openLightbox(this.src)"></div>
+    <div class="text-block">关闭这个窗口以后，点击左下角积分按钮</div>
+    <div class="image-container"><img src="16.jpg" onclick="openLightbox(this.src)"></div>
+    <div class="text-block">来到他的套餐界面，选择基本套餐，点击黑色的“0元试用7天”按钮</div>
+    <div class="image-container"><img src="17.jpg" onclick="openLightbox(this.src)"></div>
+    <div class="text-block">进入到支付界面以后点击选择最下面那个我们刚刚注册的PayPal，这个取决于你的梯子（魔法网络）有的可能会有更多选项，反正选择刚刚注册的PayPal就对了。</div>
+    <div class="image-container"><img src="18.jpg" onclick="openLightbox(this.src)"></div>
+    <div class="text-block">点击“开始免费试用”按钮</div>
+    <div class="image-container"><img src="19.jpg" onclick="openLightbox(this.src)"></div>
+    <div class="text-block">会来到我们的PayPal登录界面，如果全是外国文字，点击国旗图标</div>
+    <div class="image-container"><img src="20.jpg" onclick="openLightbox(this.src)"></div>
+    <div class="text-block">拉到最下面，找到中国</div>
+    <div class="image-container"><img src="21.jpg" onclick="openLightbox(this.src)"></div>
+    <div class="text-block">就会全部变成中文，之后在输入框输入我们刚才注册时候填写的账号</div>
+    <div class="image-container"><img src="22.jpg" onclick="openLightbox(this.src)"></div>
+    <div class="text-block">输入完成确认无误以后点击“下一步”按钮，在当前输入框输入我们刚才申请PayPal时设置的密码。然后点击“登录”按钮</div>
+    <div class="image-container"><img src="23.jpg" onclick="openLightbox(this.src)"></div>
+    <div class="text-block">这个时候会进入到安全检查界面</div>
+    <div class="image-container"><img src="24.jpg" onclick="openLightbox(this.src)"></div>
+    <div class="text-block">如果你梯子质量不是特别好就会出现人机验证界面，在“我是真实访客”前面的正方形方框内鼠标点一下打钩</div>
+    <div class="image-container"><img src="25.jpg" onclick="openLightbox(this.src)"></div>
+    <div class="text-block">根据上面的提示完成这个人机验证以后点击“检查”按钮</div>
+    <div class="image-container"><img src="26.jpg" onclick="openLightbox(this.src)"></div>
+    <div class="text-block">会跳转PayPal的确认界面，点击“同意并继续”按钮</div>
+    <div class="image-container"><img src="27.jpg" onclick="openLightbox(this.src)"></div>
+    <div class="text-block">然后就会有一个成功的界面，点击下面黑色的按钮</div>
+    <div class="image-container"><img src="28.jpg" onclick="openLightbox(this.src)"></div>
+    <div class="text-block">回到我们的创作界面就会看到我们左下角已经有了1K的积分，成为了拥有1K积分的会员账号，在视频功能里面我们可以看到模型有Seedance2.0以及Fasf 下面还有更多老版本的模型，以及sora2模型，都是可以用的，之前还veo3.1的模型，现在取消掉了。以及界面最左边的无限画布功能以及我们视频的全方位参考功能也都是可以用的。</div>
+    <div class="image-container"><img src="29.jpg" onclick="openLightbox(this.src)"></div>
+    <div class="text-block">图片模型有最新的5.0以及之前的老版本，还有国内版本没有的Nano Banana模型，之前还有Nano Banana Pro模型的，年前被取消掉了。</div>
+    <div class="image-container"><img src="30.jpg" onclick="openLightbox(this.src)"></div>
+    <div class="text-block">AI虚拟替身就是我们国内的对口型功能，以及音讯生成都是可以正常使用的！生成视频或者图片以后点击打开，我们成品的右边有很多功能，点击下载是没有即梦水印的。点击会员功能“内插”可以从视频默认的24帧率提升为60帧率，点击会员的“增强解析度”就是我们常说的增强分辨率，及时你用高额积分生成的视频选择的是4K也可以在提升一个档次。如果你生成是图片也会有对应的提升质量的会员功能的按钮，都是会员免费不扣除积分的，可以尽情使用</div>
+    <div class="image-container"><img src="31.jpg" onclick="openLightbox(this.src)"></div>
+    <div class="text-block">安全起见，我们以后订阅完养成一个良好的习惯，第一时间点击左下角的积分图标进入套餐界面点击右上角的“管理订阅项目”按钮。</div>
+    <div class="image-container"><img src="32.jpg" onclick="openLightbox(this.src)"></div>
+    <div class="text-block">点击“取消自动续订”按钮。防止被反薅羊毛。</div>
+    <div class="image-container"><img src="33.jpg" onclick="openLightbox(this.src)"></div>
+    <div class="text-block">当然如果你的PayPal绑定的是一张没有钱不用的银行卡，那么他扣不到钱就会自动取消，对银行账户没有任何影响。
+    七天有效期，如果七天内没用完积分会过期那就直接丢掉，或者你一会就把积分用完了也直接丢掉，再继续去邮箱系统拿一个新的邮箱账户来即梦国际版这边注册一个新的账号，继续订阅，订阅完了取消。这样就达到了一分钱不花，使用即梦国际版的永久免费会员跟用不完的积分。</div>
+
+    <div class="warning-box">     需要注意的是，这个操作在使用过程中，尽量多下载几个浏览器，在不同的浏览器还有开头所说的那些国家的网络之间切换使用，模拟自己是不同的人在不同的国家跟地区注册使用他们的网站，也可以用专用的指纹浏览器，新建窗口进行使用，指纹浏览器的功能是环境隔离，你每次新建一个窗口然后打开就相当于换了一个电脑打开了一个新的浏览器，再结合偶尔换一下梯子的国家地区就会更像是一个新用户来使用他们的网站，大大降低你频繁反复在同一个浏览器、同一个网络IP下操作被暂时冷却这个浏览器指纹或者网络IP的订阅权限。
+    当然这个方法适用于所有国外的网站或者APP，前提是要有0元体验的网站或者APP，完全都可以复用这个方法。比如AI这方面，同样还有小云雀国际版，0元七天赠送的积分更多，单次操作可以进行更多的产出，没有亲测过，但是用这个方法是可以达到同样的效果的，这个是亲测的。另外因为目前小云雀海外版没有开放网页端，只有APP端，所以现在网页端都需要购买软件才能使用，就是做一个手机或者平板的容器将海外版的小云雀APP安装在里面运行来实现电脑端使用，就像我们电脑用的模拟器一样的道理，有技术的做一个这样的电脑软件非常简单的，作者没有时间去做，想研究的也可以研究，没有技术的也可以通过小黄鱼等渠道购买别人做好的这种软件，大概几十块钱，用同样的方式进行会员跟积分的获取。
+    最后，国外的网站跟平台对中国人还是很不友好的，付款都需要设置各种门槛，哪怕你真想交钱也不一定随变都可以交的，我们注册的这个PayPal毕竟是中国大陆的PayPal账户，用多了以后肯定会限制你去订阅他们的会员以及购买他们的积分，等到不管你换什么样的网络IP跟浏览器环境都无法订阅到这个0元七天的时候，可以联系作者提供其他技术支持，让你可以继续订阅到这个0元七天的服务，在首次看教程或者使用本方法的过程中遇到任何问题都可以联系作者，或者其他软件以及AI相关的问题也可以跟作者进行沟通交流。66就是结交一些AI方面的朋友做一些AI技巧的探讨、知识的获取以及掌握更多变现路径。AI时代模型跟技术更新迭代进化太快，一个人获取到的信息有限，每天不接收一些相关信息都感觉自己与世隔绝一样，生怕自己被时代淘汰，希望这个教程能真的帮你省到钱，与其真金白银开会员充积分都被抽卡浪费掉，不如多一分钟的操作让自己随心所欲告别积分压力，钻研不易，教程不易，感谢支持！</div>
+</div>
+
+<div id="lightbox" onclick="closeLightbox()">
+    <img id="lightbox-img" src="" alt="放大图片">
+</div>
+
+<script>
+    function openLightbox(src) {
+        document.getElementById('lightbox-img').src = src;
+        document.getElementById('lightbox').style.display = 'flex';
+        document.body.style.overflow = 'hidden'; 
+    }
+    function closeLightbox() {
+        document.getElementById('lightbox').style.display = 'none';
+        document.body.style.overflow = 'auto'; 
+    }
+</script>
+</body>
+</html>
