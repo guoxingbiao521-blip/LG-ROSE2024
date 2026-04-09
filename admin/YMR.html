@@ -1,1 +1,747 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🌹 LG筑梦电子 - 临时邮箱激活码系统 🌹</title>
+    <style>
+        :root {
+            --primary: #00f2ff;
+            --accent: #ff00ff;
+            --card-bg: rgba(0, 0, 0, 0.15); 
+        }
 
+        /* 🌟 1. 修复了 body，改为上下垂直排列，防止两个框重叠或被切断 */
+        body {
+            margin: 0; padding: 0;
+            font-family: 'Segoe UI', system-ui, sans-serif;
+            color: #fff;
+            display: flex; 
+            flex-direction: column; 
+            justify-content: flex-start; 
+            align-items: center;
+            min-height: 100vh;
+            padding: 40px 0; 
+            box-sizing: border-box;
+            gap: 30px; 
+            overflow-y: auto;
+        }
+
+        body::before {
+            content: ""; position: fixed; inset: 0; z-index: -1; pointer-events: none;
+            background-color: #0a0a0c !important;
+            background-size: cover !important;
+            background-position: center center !important;
+            background-repeat: no-repeat !important;
+            background-image: url('./bg2.JPG') !important; 
+        }
+
+        @media (max-width: 1050px) { body::before { background-image: url('./ipadadmin.jpg') !important; } }
+        @media (max-width: 600px) { body::before { background-image: url('./iphoneadmin.jpg') !important; } }
+/* 🌟 针对手机竖屏的精准调优 */
+@media (max-width: 600px) {
+    /* 1. 让数据板的标题栏从“横排”变“竖排” */
+    .log-container .title-container {
+        flex-direction: column !important; 
+        align-items: stretch !important; /* 宽度撑满 */
+        gap: 15px !important;
+        margin-bottom: 20px !important;
+    }
+
+    /* 2. 让搜索框和按钮所在的组也自动适应 */
+    .log-container .title-container > div {
+        flex-direction: column !important;
+        width: 100% !important;
+        gap: 10px !important;
+    }
+
+    /* 3. 搜索框宽度写死为 100%，防止它乱跑 */
+    #searchInput {
+        width: 100% !important;
+        margin: 0 !important;
+        padding-left: 35px !important; /* 保持放大镜位置 */
+    }
+
+    /* 4. 查询按钮也铺满，这样点起来更舒服 */
+    .log-container .btn-main-3d {
+        width: 100% !important;
+        height: 45px !important; /* 手机端按钮加高一点好按 */
+        margin: 0 !important;
+    }
+
+    /* 5. 稍微缩小一点标题字号，防止标题太长挤换行 */
+    .log-container .title-left-3d {
+        font-size: 18px !important;
+        text-align: center;
+    }
+}
+        /* 🌟 2. 基础容器与记录器容器样式 */
+        .container {
+            position: relative; z-index: 10;
+            width: 90%; max-width: 450px; padding: 40px;
+            background: var(--card-bg) !important;
+            backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); 
+            border-radius: 24px; border: 1px solid rgba(255, 255, 255, 0.15);
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.5);
+            text-align: center; margin: 0 auto; 
+        }
+
+        /* 给下面那个记录器单独加宽，因为表格需要更宽的空间 */
+        .log-container {
+            max-width: 750px; 
+            padding: 30px;
+        }
+
+        .title-container {
+            display: flex !important; flex-direction: row !important;
+            justify-content: space-between; align-items: center;
+            margin-bottom: 35px; width: 100%;
+        }
+        
+        .title-left-3d, .title-right-3d { font-size: 28px; font-weight: 900; }
+        
+        .title-left-3d {
+            color: var(--primary); 
+            text-shadow: 0 1px 0 #008a91, 0 2px 0 #00767c, 0 3px 0 #006267, 0 4px 5px rgba(0,0,0,0.5);
+        }
+        
+        .title-right-3d {
+            background: linear-gradient(to right, var(--primary), var(--accent)); 
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+            filter: drop-shadow(0 1px 0 #b300b3) drop-shadow(0 2px 0 #8a008a) drop-shadow(0 3px 0 #660066) drop-shadow(0 4px 5px rgba(0,0,0,0.5));
+        }
+
+        .input-group { margin-bottom: 20px; text-align: left; }
+        
+        label { 
+            display: block; font-size: 13px; color: #fff; margin-bottom: 8px; font-weight: bold; 
+            text-shadow: 0 1px 3px rgba(0,0,0,0.9), 0 0 8px rgba(0,0,0,0.8); 
+        }
+        
+        input {
+            width: 100%; padding: 15px; box-sizing: border-box;
+            background: rgba(0, 0, 0, 0.35) !important;
+            border: 1px solid rgba(255, 255, 255, 0.15) !important;
+            border-radius: 12px; color: #fff; font-size: 16px; outline: none;
+            text-shadow: 0 1px 2px rgba(0,0,0,0.8); font-weight: bold;
+        }
+        
+        input::placeholder { color: rgba(255,255,255,0.6) !important; opacity: 1; text-shadow: none; font-weight: normal; }
+
+        input[type="number"]::-webkit-inner-spin-button, input[type="number"]::-webkit-outer-spin-button {
+            opacity: 1; cursor: pointer; background-color: rgba(255, 255, 255, 0.25);
+            border-radius: 6px; width: 14px; border-left: 1px solid rgba(0,0,0,0.2);
+        }
+
+        ::-webkit-scrollbar { width: 6px; height: 6px; }
+        ::-webkit-scrollbar-track { background: transparent; }
+        ::-webkit-scrollbar-thumb { background: rgba(255, 255, 255, 0.25); border-radius: 6px; }
+        ::-webkit-scrollbar-thumb:hover { background: rgba(255, 255, 255, 0.4); }
+
+        .action-btn-group, .nav-group { display: flex; gap: 12px; margin-top: 25px; }
+        
+        .btn-main-3d {
+            padding: 16px; border: none; border-radius: 12px; font-weight: bold; font-size: 15px;
+            cursor: pointer; transition: all 0.2s ease; display: flex; justify-content: center; align-items: center;
+            background: linear-gradient(45deg, var(--primary), var(--accent)) !important;
+            color: #000 !important; box-shadow: 0 4px 0 #b300b3, 0 6px 15px rgba(0, 0, 0, 0.4);
+        }
+
+        .btn-main-3d:hover { filter: brightness(1.1); transform: translateY(-2px); box-shadow: 0 6px 0 #b300b3, 0 8px 20px rgba(0, 242, 255, 0.3); }
+        .btn-main-3d:active { transform: translateY(3px); box-shadow: 0 1px 0 #b300b3, 0 3px 8px rgba(0, 0, 0, 0.3); }
+        .btn-gen { flex: 1; } .btn-copy { width: 100px; } 
+
+        .result-wrapper { margin-top: 25px; position: relative; }
+        .single-copy-hint, .status { font-size: 12px; line-height: 1.5; color: white; font-weight: bold; text-shadow: 0 1px 3px rgba(0,0,0,0.9); }
+        .single-copy-hint { display: none; margin-bottom: 8px; }
+        .status { margin-top: 25px; }
+        
+        .result-box-style {
+            width: 100%; height: 140px; box-sizing: border-box;
+            background: rgba(0, 0, 0, 0.35) !important; border: 1px solid rgba(255, 255, 255, 0.15) !important;
+            border-radius: 12px; padding: 15px; overflow-y: auto; display: flex; flex-wrap: wrap; justify-content: center; align-content: center; gap: 15px;
+        }
+
+        .result-box-style span, .code-tag { color: #0f0 !important; font-family: 'Segoe UI', system-ui, sans-serif !important; font-size: 15px !important; font-weight: bold !important; letter-spacing: 0.5px; text-shadow: 0 1px 2px rgba(0,0,0,0.8); }
+        .code-tag { cursor: pointer; transition: 0.2s; background: transparent; border: none; padding: 2px 5px; }
+        .code-tag:hover { transform: scale(1.08); text-shadow: 0 0 10px #0f0; }
+        .code-tag:active { transform: scale(0.95); }
+
+        .btn-nav-3d {
+            flex: 1; padding: 12px; border: none; border-radius: 10px; color: white !important; font-weight: bold; font-size: 14px;
+            cursor: pointer; transition: all 0.2s ease; background: #ff69b4 !important; box-shadow: 0 4px 0 #d1448b, 0 6px 10px rgba(0, 0, 0, 0.3);
+        }
+        .btn-nav-3d:hover { filter: brightness(1.1); transform: translateY(-2px); box-shadow: 0 6px 0 #d1448b, 0 8px 15px rgba(209, 68, 139, 0.4); }
+        .btn-nav-3d:active { transform: translateY(2px); box-shadow: 0 2px 0 #d1448b, 0 3px 5px rgba(0, 0, 0, 0.2); }
+
+        /* 🌟 3. 新增：表格容器相关的绝美透明样式 */
+        .table-responsive {
+            width: 100%; overflow-x: auto; margin-top: 15px;
+            border-radius: 12px; background: rgba(0,0,0,0.2); border: 1px solid rgba(255,255,255,0.1);
+        }
+        .log-table { width: 100%; border-collapse: collapse; text-align: center; }
+        .log-table th { padding: 14px; border-bottom: 2px solid rgba(0, 242, 255, 0.4); color: var(--primary); font-size: 13px; white-space: nowrap; background: rgba(0,0,0,0.3); }
+     /* 🌟 提亮全局文字，加上黑色背景阴影防隐形 */
+        .log-table td { padding: 14px; border-bottom: 1px dashed rgba(255, 255, 255, 0.1); color: #fff; font-size: 13px; white-space: nowrap; text-shadow: 0 1px 3px rgba(0,0,0,0.9); }
+        .log-table tbody tr:hover { background: rgba(255, 105, 180, 0.15); }
+        
+        /* 🌟 提亮状态徽章的对比度 */
+        .status-badge { padding: 4px 8px; border-radius: 6px; font-size: 11px; font-weight: bold; text-shadow: 0 1px 2px rgba(0,0,0,0.8); }
+        .status-active { background: rgba(0, 255, 0, 0.2); color: #00ff00; border: 1px solid rgba(0, 255, 0, 0.5); }
+        .status-expired { background: rgba(255, 0, 0, 0.15); color: #ff0000; border: 1px solid #ff0000; text-shadow: 0 0 5px rgba(255,0,0,0.8); }
+
+        #toast {
+            display: none; position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); 
+            background: rgba(15, 15, 20, 0.95); color: #fff; padding: 16px 32px; border-radius: 12px;
+            border: 1px solid rgba(0, 242, 255, 0.4); box-shadow: 0 10px 40px rgba(0,0,0,0.8);
+            z-index: 9999; font-size: 15px; font-weight: bold; text-align: center; white-space: nowrap; 
+        }
+
+        @media (max-width: 600px) {
+            * { box-sizing: border-box !important; }
+            body { padding: 10px !important; }
+            .container { width: 100% !important; padding: 25px 15px !important; border-radius: 18px !important; }
+            .title-left-3d, .title-right-3d { font-size: 16px !important; letter-spacing: 0.5px !important; white-space: nowrap !important; }
+            .title-container svg { width: 24px !important; height: 24px !important; }
+            .action-btn-group, .nav-group { flex-wrap: wrap !important; gap: 8px !important; }
+            .btn-main-3d, .btn-nav-3d { flex: 1 1 45% !important; padding: 12px 5px !important; font-size: 12px !important; white-space: nowrap !important; }
+            .btn-gen { flex: 1 1 100% !important; order: 1 !important; font-size: 14px !important; }
+            .btn-copy { order: 2 !important; }
+            .result-box-style span, .code-tag { font-size: 13px !important; }
+            .single-copy-hint, .status { font-size: 10px !important; letter-spacing: -0.5px !important; line-height: 1.3 !important; }
+        }
+
+        @keyframes glow {
+            from { filter: brightness(1) drop-shadow(0 0 2px var(--primary)); }
+            to { filter: brightness(1.5) drop-shadow(0 0 8px var(--primary)); }
+        }
+        /* 🌟 新增：表格行内操作按钮样式 */
+        .action-btn-sm {
+            padding: 5px 8px; border: none; border-radius: 6px; font-size: 11px; font-weight: bold; 
+            cursor: pointer; transition: all 0.2s; margin: 0 2px; white-space: nowrap;
+        }
+        .btn-renew { background: rgba(0, 242, 255, 0.15); color: #00f2ff; border: 1px solid rgba(0, 242, 255, 0.5); }
+        .btn-renew:hover { background: rgba(0, 242, 255, 0.4); box-shadow: 0 0 8px rgba(0,242,255,0.6); transform: scale(1.05); }
+        /* 🌟 停用(橙色) 与 启用(绿色) 动态切换 */
+        .btn-suspend { background: rgba(255, 165, 0, 0.15); color: #ffa500; border: 1px solid rgba(255, 165, 0, 0.5); }
+        .btn-suspend:hover { background: rgba(255, 165, 0, 0.4); box-shadow: 0 0 8px rgba(255,165,0,0.6); transform: scale(1.05); }
+        .btn-enable { background: rgba(0, 255, 0, 0.15); color: #00ff00; border: 1px solid rgba(0, 255, 0, 0.5); }
+        .btn-enable:hover { background: rgba(0, 255, 0, 0.4); box-shadow: 0 0 8px rgba(0,255,0,0.6); transform: scale(1.05); }
+
+        /* 🌟 删除按钮加深为大红色，字体粗细与其他按钮保持一致 */
+        .btn-delete { background: rgba(255, 0, 0, 0.2); color: #ff0000; border: 1px solid #ff0000; }
+        .btn-delete:hover { background: rgba(255, 0, 0, 0.4); box-shadow: 0 0 8px rgba(255,0,0,0.8); transform: scale(1.05); }
+      /* ========================================= */
+        /* 🚀 激活码表格提示语响应式对齐终极优化 */
+        /* ========================================= */
+
+        /* 💻 电脑端（大屏幕）：强行覆盖 HTML 里的靠左代码，绝对居中 */
+        @media screen and (min-width: 769px) {
+            #logTableBody td[colspan] div {
+                text-align: center !important; /* 核心：电脑端居中 */
+                position: static !important;   /* 核心：电脑端解除吸盘 */
+                width: 100% !important;
+                padding: 40px 20px !important;
+                box-sizing: border-box !important;
+            }
+        }
+
+        /* 📱 手机端（小屏幕）：保留靠左和吸盘魔法 */
+        @media screen and (max-width: 768px) {
+            #logTableBody td[colspan] div {
+                text-align: left !important;   /* 核心：手机端靠左 */
+                position: sticky !important;   /* 核心：手机端开启吸盘 */
+                left: 0 !important;
+                width: 100vw !important;
+                max-width: calc(100vw - 20px) !important;
+                padding: 20px 10px !important;
+                box-sizing: border-box !important;
+            }
+        }
+    </style>
+    <link rel="preconnect" href="https://guo.roselg.xyz" crossorigin>
+    <link rel="dns-prefetch" href="https://guo.roselg.xyz">
+</head>
+<body>
+
+    <div class="container">
+        <div class="title-container">
+            <span class="title-left-3d">LG筑梦电子</span>
+            <svg viewBox="0 0 24 24" style="width: 32px; height: 32px; fill: none; stroke: var(--primary); stroke-width: 1.5; animation: glow 2s infinite alternate; flex-shrink: 0;">
+                <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
+                <polyline points="22,6 12,13 2,6"></polyline>
+            </svg>
+            <span class="title-right-3d">临时邮箱激活码系统</span>
+        </div>
+        
+        <div class="input-group">
+            <label>站长/代理商管理密码</label>
+            <input type="password" id="secret" placeholder="请输入管理员密码">
+        </div>
+
+        <div class="input-group" style="display: flex; gap: 10px; width: 100%;">
+            <div style="flex: 1;">
+                <label style="display: block; margin-bottom: 8px;">生成数量</label>
+                <input type="number" id="count" value="1" min="1" style="width: 100%; padding: 12px 8px; border-radius: 8px; background: rgba(0,0,0,0.5); color: #fff; border: 1px solid rgba(255, 105, 180, 0.5); outline: none; box-sizing: border-box; text-align: center; font-weight: bold;">
+            </div>
+            <div style="flex: 1;">
+                <label style="display: block; margin-bottom: 8px;">有效期(天)</label>
+                <input type="number" id="expireDays" placeholder="无限" style="width: 100%; padding: 12px 8px; border-radius: 8px; background: rgba(0,0,0,0.5); color: #fff; border: 1px solid rgba(0, 242, 255, 0.5); outline: none; box-sizing: border-box; text-align: center;">
+            </div>
+            <div style="flex: 1;">
+                <label style="display: block; margin-bottom: 8px;">使用次数</label>
+                <input type="number" id="maxUsage" placeholder="无限" style="width: 100%; padding: 12px 8px; border-radius: 8px; background: rgba(0,0,0,0.5); color: #fff; border: 1px solid rgba(0, 242, 255, 0.5); outline: none; box-sizing: border-box; text-align: center;">
+            </div>
+        </div>
+
+        <div class="action-btn-group">
+            <button class="btn-main-3d btn-gen" onclick="generate()">⚡ 激活码生成</button>
+            <button class="btn-main-3d btn-copy" onclick="copyAll()">一键复制</button>
+        </div>
+
+        <div class="result-wrapper">
+            <div id="singleCopyHint" class="single-copy-hint">💡 如需单独复制某个激活码，请直接点击该激活码！</div>
+            <div id="resultBox" class="result-box-style">
+                <span>激活码将在此处显示...</span>
+            </div>
+        </div>
+
+        <div class="nav-group">
+            <button onclick="window.location.href='../mail.html'" class="btn-nav-3d">📧 返回邮箱</button>
+            <button onclick="window.location.href='../index.html'" class="btn-nav-3d">🏠 返回主页</button>
+        </div>
+
+        <div class="status">💡 如需开通生成权限，请返回主页底部联系站长微信获取代理</div>
+    </div>
+
+    <div class="container log-container">
+       <div class="title-container" style="margin-bottom: 15px;">
+            <span class="title-left-3d" style="font-size: 20px; color: #fff; text-shadow: 0 1px 0 #999, 0 2px 5px rgba(0,0,0,0.5);">📊 激活码状态数据板</span>
+            
+            <div style="display: flex; gap: 10px; align-items: center;">
+                <div style="position: relative;">
+                    <span style="position: absolute; left: 10px; top: 50%; transform: translateY(-50%); font-size: 14px; opacity: 0.8;">🔍</span>
+                    <input type="text" id="searchInput" placeholder="搜索激活码..." onkeyup="searchCodes()" style="width: 140px; height: 36px; padding: 0 10px 0 32px; border-radius: 10px; background: rgba(0,0,0,0.4); color: #00f2ff; border: 1px solid rgba(0, 242, 255, 0.4); font-size: 13px; font-weight: bold; outline: none; transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); box-sizing: border-box;" onfocus="this.style.borderColor='#ff00ff'; this.style.boxShadow='0 0 10px rgba(255,0,255,0.4)'; this.style.width='180px'; this.style.background='rgba(0,0,0,0.6)';" onblur="this.style.borderColor='rgba(0, 242, 255, 0.4)'; this.style.boxShadow='none'; this.style.width='140px'; this.style.background='rgba(0,0,0,0.4)';">
+                </div>
+                <button class="btn-main-3d" id="queryBtnAdmin" onclick="this.innerHTML='⏳ 系统载入中...'; this.style.filter='grayscale(100%) opacity(70%)'; this.style.pointerEvents='none'; let t = setInterval(()=>{if(typeof fetchLogs === 'function'){clearInterval(t); fetchLogs();}}, 200);" style="padding: 0 16px; font-size: 13px; height: 36px; box-shadow: 0 3px 0 #b300b3; width: auto; flex: none; display: flex; align-items: center; justify-content: center;">🔄 查询激活码状态</button>
+            </div>
+        </div>
+        
+        <div class="table-responsive">
+            <table class="log-table">
+                <thead>
+                    <tr>
+                        <th>激活码</th>
+                        <th>首次激活时间</th>
+                        <th>剩余有效期</th>
+                        <th>已用次数</th>
+                        <th>剩余次数</th>
+                        <th>当前状态</th>
+                        <th>设备数</th>
+                        <th>操作</th> 
+                    </tr>
+                </thead>
+           <tbody id="logTableBody">
+    <tr>
+        <td colspan="8" style="padding: 0; border: none; background: transparent;">
+            <div style="position: sticky; left: 0; width: 100vw; max-width: 100%; padding: 25px 15px; box-sizing: border-box; white-space: normal; word-break: break-all; text-align: left; line-height: 1.6; color: #fff; font-weight: bold; text-shadow: 0 2px 5px rgba(0,0,0,0.9);">
+                ✨ 请输入站长/代理商管理密码后，点击“查询激活码状态”开始查询！
+            </div>
+        </td>
+    </tr>
+</tbody>
+            </table>
+        </div>
+    </div>
+
+    <div id="toast"></div>
+
+    <script>
+        let toastTimeout;
+        let globalCodes = []; 
+
+        function showToast(msg) {
+            const toast = document.getElementById('toast');
+            toast.innerText = msg;
+            toast.style.display = 'block';
+            if(toastTimeout) clearTimeout(toastTimeout);
+            toastTimeout = setTimeout(() => { toast.style.display = 'none'; }, 3000);
+        }
+
+        function fallbackCopy(text) {
+            const textArea = document.createElement("textarea");
+            textArea.value = text;
+            textArea.style.position = "fixed"; textArea.style.top = "0"; textArea.style.left = "0";
+            document.body.appendChild(textArea);
+            textArea.focus(); textArea.select();
+            try { document.execCommand('copy'); } catch (err) {}
+            document.body.removeChild(textArea);
+        }
+
+        function copyTextToClipboard(text, successMsg) {
+            if (navigator.clipboard) {
+                navigator.clipboard.writeText(text).then(() => showToast(successMsg)).catch(() => {
+                    fallbackCopy(text); showToast(successMsg);
+                });
+            } else { fallbackCopy(text); showToast(successMsg); }
+        }
+
+        function copySingleCode(code) {
+            copyTextToClipboard(code, '✅ 已单独复制：' + code);
+        }
+
+        async function generate() {
+            const secret = document.getElementById('secret').value;
+            const count = document.getElementById('count').value;
+            const expireDays = document.getElementById('expireDays').value;
+            const maxUsage = document.getElementById('maxUsage').value;
+            
+            const resultBox = document.getElementById('resultBox');
+            const hint = document.getElementById('singleCopyHint');
+
+            if(!secret) { showToast('⚠️ 请输入站长/代理商管理密码！'); return; }
+
+            hint.style.display = 'none';
+            resultBox.innerHTML = '<span>正在生成激活码...</span>';
+            
+            const requestPayload = {
+                secret: secret,
+                count: count,
+                expireDays: expireDays ? parseInt(expireDays) : null,
+                maxUsage: maxUsage ? parseInt(maxUsage) : null
+            };
+
+            try {
+                const response = await fetch('https://guo.roselg.xyz/api/admin/generate_codes', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(requestPayload)
+                });
+                
+                const data = await response.json();
+                
+                if(data.codes && data.codes.length > 0) {
+                    globalCodes = data.codes;
+                    let htmlContent = '';
+                    data.codes.forEach(code => {
+                        htmlContent += `<div class="code-tag" onclick="copySingleCode('${code}')">${code}</div>`;
+                    });
+                    resultBox.innerHTML = htmlContent;
+                    if(data.codes.length > 1) hint.style.display = 'block';
+                    showToast('🎉 您的激活码已生成');
+                } else {
+                    resultBox.innerHTML = '<span>激活码将在此处显示...</span>';
+                    showToast('❌ 失败：' + (data.error || '密码不对或系统故障'));
+                }
+            } catch (err) {
+                resultBox.innerHTML = '<span>激活码将在此处显示...</span>';
+                showToast('🚫 无法连接服务器，请检查后端状态');
+            }
+        }
+
+        function copyAll() {
+            if(globalCodes.length === 0) { showToast('❌ 还没有激活码可以复制哦'); return; }
+            copyTextToClipboard(globalCodes.join('\n'), '📋 激活码已全部存入剪贴板！');
+        }
+function fetchLogs() {
+            const secret = document.getElementById('secret').value;
+            if(!secret) { 
+                showToast('⚠️ 查询激活码状态前，请先输入管理密码！'); 
+                // 恢复按钮状态
+                const btn = document.getElementById('queryBtnAdmin');
+                if(btn) { btn.disabled = false; btn.style.pointerEvents = "auto"; btn.style.filter = "none"; btn.innerHTML = "🔄 查询激活码状态"; }
+                return; 
+            }
+
+            // 🎯 拿到我们刚才换上的新按钮
+            const queryBtn = document.getElementById('queryBtnAdmin');
+            let originalBtnText = "🔄 查询激活码状态"; 
+            if (queryBtn) {
+                originalBtnText = queryBtn.innerHTML;
+                queryBtn.disabled = true; 
+                queryBtn.style.pointerEvents = "none"; 
+                queryBtn.style.filter = "grayscale(100%) opacity(70%)"; 
+                queryBtn.innerHTML = "⏳ 正在查询激活码状态..."; 
+            }
+
+            const tbody = document.getElementById('logTableBody');
+            const oldHTML = tbody.innerHTML; 
+            
+            // 🎯 同样使用吸盘魔法，保证查询中的文字绝对不被腰斩
+            tbody.innerHTML = `<tr><td colspan="8" style="padding: 0; border: none; background: transparent;">
+                <div style="position: sticky; left: 0; width: 100vw; max-width: 100%; padding: 25px 15px; box-sizing: border-box; white-space: normal; word-break: break-all; text-align: left; line-height: 1.6; color: #fff; font-weight: bold;">
+                    ⏳ 正在查询激活码状态，请稍候...
+                </div>
+            </td></tr>`;
+            
+            fetch(`https://guo.roselg.xyz/api/admin/get_codes?secret=${secret}`)
+                .then(response => {
+                    if (!response.ok) throw new Error('密码错误，无法查询！');
+                    return response.json();
+                })
+                .then(data => {
+                    if(data.length === 0) {
+                        // 🎯 空数据时也用吸盘魔法
+                        tbody.innerHTML = `<tr><td colspan="8" style="padding: 0; border: none; background: transparent;">
+                            <div style="position: sticky; left: 0; width: 100vw; max-width: 100%; padding: 30px 15px; box-sizing: border-box; white-space: normal; word-break: break-all; text-align: left; color: #999; margin: 0 auto;">
+                                暂无激活码数据
+                            </div>
+                        </td></tr>`;
+                        return;
+                    }
+
+                    let html = '';
+                    data.forEach(item => {
+                        let deviceColor = "#00ff00"; 
+                        let fontWeight = "bold";
+                        let textShadow = "0 1px 3px rgba(0,0,0,0.8)";
+
+                        if (item.deviceCount >= 10) {
+                            deviceColor = "#ff0000"; 
+                            fontWeight = "900";
+                            textShadow = "0 0 10px rgba(255,0,0,0.8), 0 1px 5px #000"; 
+                        } else if (item.deviceCount >= 5) {
+                            deviceColor = "#cd7f32"; 
+                        } else if (item.deviceCount > 3) {
+                            deviceColor = "#ffff00"; 
+                        }
+
+                        let statusHtml = '';
+                        if (item.status === 'active') statusHtml = '<span class="status-badge status-active">🟢 生效中</span>';
+                        else if (item.status === 'suspended') statusHtml = '<span class="status-badge" style="background: rgba(255, 165, 0, 0.2); color: #ffa500; border: 1px solid #ffa500;">🟡 已停用</span>';
+                        else statusHtml = '<span class="status-badge status-expired">🔴 已失效</span>';
+                        
+                        html += `
+                        <tr>
+                            <td style="font-weight: bold; color: #ff69b4; font-size: 14px; text-shadow: 0 2px 5px rgba(0,0,0,1);">${item.code}</td>
+                            <td style="color: ${item.firstUse === '尚未激活' ? '#ffd700' : '#ffffff'}; font-weight: ${item.firstUse === '尚未激活' ? 'bold' : 'normal'}; text-shadow: 0 2px 5px rgba(0,0,0,1);">${item.firstUse}</td>
+                            <td style="color: ${item.expire === '已过期' ? '#ff0000' : '#00f2ff'}; font-weight: bold; text-shadow: 0 2px 5px rgba(0,0,0,1);">${item.expire}</td>
+                            <td style="color: #ffffff; font-weight: bold; font-size: 14px; text-shadow: 0 2px 5px rgba(0,0,0,1);">${item.used}</td>
+                            <td style="color: #ffffff; font-weight: bold; font-size: 14px; text-shadow: 0 2px 5px rgba(0,0,0,1);">${item.left}</td>
+                            <td>${statusHtml}</td>
+                            <td style="font-weight: ${fontWeight}; color: ${deviceColor}; text-shadow: ${textShadow}; font-size: 15px;">
+                                ${item.deviceCount || 0} 台
+                            </td>
+                            <td>
+                                <button class="action-btn-sm btn-renew" onclick="openRenewModal('${item.code}')">续费</button>
+                                ${item.status === 'suspended' 
+                                    ? `<button class="action-btn-sm btn-enable" onclick="toggleSuspend('${item.code}', 'active')">启用</button>` 
+                                    : `<button class="action-btn-sm btn-suspend" onclick="toggleSuspend('${item.code}', 'suspended')">停用</button>`}
+                                <button class="action-btn-sm btn-delete" onclick="deleteCode('${item.code}')">删除</button>
+                            </td>
+                        </tr>`;
+                    });
+                    
+                    tbody.innerHTML = html;
+                })
+                .catch(err => {
+                    showToast(`❌ ${err.message}`);
+                    tbody.innerHTML = oldHTML; 
+                })
+                .finally(() => {
+                    // 🎯 强行解锁按钮恢复原样
+                    if (queryBtn) {
+                        queryBtn.disabled = false;
+                        queryBtn.style.pointerEvents = "auto"; 
+                        queryBtn.style.filter = "none"; 
+                        queryBtn.innerHTML = "🔄 查询激活码状态";
+                    }
+                });
+        }
+  
+    </script>
+
+    <div id="renewModal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.7); backdrop-filter: blur(5px); z-index: 99999; justify-content: center; align-items: center;">
+        <div style="background: rgba(20, 20, 25, 0.95); border: 1px solid rgba(0, 242, 255, 0.4); border-radius: 16px; padding: 25px; width: 90%; max-width: 350px; text-align: left; box-shadow: 0 10px 40px rgba(0,0,0,0.8);">
+            <h3 style="color: #00f2ff; margin-top: 0; margin-bottom: 20px; text-align: center; text-shadow: 0 2px 5px rgba(0,0,0,0.8);">⚙️ 激活码属性设置</h3>
+            <div style="margin-bottom: 15px;">
+                <label style="font-size: 12px; color: #aaa; margin-bottom: 5px; display: block;">当前调整激活码：</label>
+                <input type="text" id="renewCodeText" disabled style="width: 100%; padding: 10px; border-radius: 8px; border: 1px solid rgba(255,105,180,0.5); background: rgba(255,255,255,0.05) !important; color: #ff69b4; text-align: center; font-weight: bold; box-sizing: border-box;">
+            </div>
+            <div style="display: flex; gap: 10px; margin-bottom: 25px;">
+                <div style="flex: 1;">
+                    <label style="font-size: 12px; color: #fff; margin-bottom: 5px; display: block;">增加天数</label>
+                    <input type="number" id="renewDays" placeholder="留空不改" style="width: 100%; padding: 10px; border-radius: 8px; background: rgba(0,0,0,0.5); color: #fff; border: 1px solid rgba(0, 242, 255, 0.5); outline: none; text-align: center; box-sizing: border-box;">
+                </div>
+                <div style="flex: 1;">
+                    <label style="font-size: 12px; color: #fff; margin-bottom: 5px; display: block;">增加次数</label>
+                    <input type="number" id="renewUsage" placeholder="留空不改" style="width: 100%; padding: 10px; border-radius: 8px; background: rgba(0,0,0,0.5); color: #fff; border: 1px solid rgba(0, 242, 255, 0.5); outline: none; text-align: center; box-sizing: border-box;">
+                </div>
+            </div>
+            <div style="display: flex; gap: 10px;">
+                <button onclick="closeRenewModal()" style="flex: 1; padding: 12px; border: none; border-radius: 10px; color: white; font-weight: bold; cursor: pointer; background: rgba(255,255,255,0.15); transition: 0.2s;">取消</button>
+                <button onclick="submitRenew()" style="flex: 1; padding: 12px; border: none; border-radius: 10px; color: #000; font-weight: bold; cursor: pointer; background: linear-gradient(45deg, #00f2ff, #ff00ff); box-shadow: 0 4px 0 #b300b3; transition: 0.2s;">✅ 确认保存</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="deleteModal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.7); backdrop-filter: blur(5px); z-index: 99999; justify-content: center; align-items: center;">
+        <div style="background: rgba(20, 20, 25, 0.95); border: 1px solid rgba(255, 0, 0, 0.5); border-radius: 16px; padding: 25px; width: 90%; max-width: 320px; text-align: center; box-shadow: 0 10px 40px rgba(255,0,0,0.3);">
+            <h3 style="color: #ff4d4f; margin-top: 0; margin-bottom: 15px; text-shadow: 0 2px 5px rgba(0,0,0,0.8);">⚠️ 危险操作确认</h3>
+            <p style="color: #fff; font-size: 14px; margin-bottom: 20px; line-height: 1.6;">您确定要彻底删除该激活码<br><span id="deleteCodeText" style="color: #ff69b4; font-weight: bold; font-size: 18px; display: inline-block; margin: 10px 0; text-shadow: 0 2px 5px rgba(0,0,0,1);"></span><br>吗？删除后将无法恢复！</p>
+            <div style="display: flex; gap: 10px;">
+                <button onclick="closeDeleteModal()" style="flex: 1; padding: 12px; border: none; border-radius: 10px; color: white; font-weight: bold; cursor: pointer; background: rgba(255,255,255,0.15); transition: 0.2s;">取消</button>
+                <button onclick="submitDelete()" style="flex: 1; padding: 12px; border: none; border-radius: 10px; color: #fff; font-weight: bold; cursor: pointer; background: linear-gradient(45deg, #ff0000, #b30000); box-shadow: 0 4px 0 #660000; transition: 0.2s;">🗑️ 确认删除</button>
+            </div>
+        </div>
+    </div>
+<div id="suspendModal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.7); backdrop-filter: blur(5px); z-index: 99999; justify-content: center; align-items: center;">
+        <div style="background: rgba(20, 20, 25, 0.95); border: 1px solid rgba(255, 165, 0, 0.5); border-radius: 16px; padding: 25px; width: 90%; max-width: 320px; text-align: center; box-shadow: 0 10px 40px rgba(255,165,0,0.3);">
+            <h3 id="suspendTitle" style="color: #ffa500; margin-top: 0; margin-bottom: 15px; text-shadow: 0 2px 5px rgba(0,0,0,0.8);">⚠️ 状态切换确认</h3>
+            <p style="color: #fff; font-size: 14px; margin-bottom: 20px; line-height: 1.6;">确定要 <span id="suspendActionText" style="font-weight:bold; color:#ffa500; font-size:16px;"></span> 激活码<br><span id="suspendCodeText" style="color: #ff69b4; font-weight: bold; font-size: 18px; display: inline-block; margin: 10px 0;"></span><br>吗？</p>
+            <div style="display: flex; gap: 10px;">
+                <button onclick="closeSuspendModal()" style="flex: 1; padding: 12px; border: none; border-radius: 10px; color: white; font-weight: bold; cursor: pointer; background: rgba(255,255,255,0.15); transition: 0.2s;">取消</button>
+                <button id="suspendConfirmBtn" onclick="submitSuspend()" style="flex: 1; padding: 12px; border: none; border-radius: 10px; color: #000; font-weight: bold; cursor: pointer; background: linear-gradient(45deg, #ffa500, #ff8c00); box-shadow: 0 4px 0 #cc7000; transition: 0.2s;">✅ 确认</button>
+            </div>
+        </div>
+    </div>
+<script>
+        // --- 站长核心操作函数 ---
+
+        // 1. 续费相关
+        function openRenewModal(code) {
+            document.getElementById('renewCodeText').value = code;
+            document.getElementById('renewDays').value = '';
+            document.getElementById('renewUsage').value = '';
+            document.getElementById('renewModal').style.display = 'flex';
+        }
+
+        function closeRenewModal() {
+            document.getElementById('renewModal').style.display = 'none';
+        }
+
+        function submitRenew() {
+            const secret = document.getElementById('secret').value;
+            if (!secret) return alert('请先输入管理密码！');
+            const code = document.getElementById('renewCodeText').value;
+            const addDays = document.getElementById('renewDays').value || 0; 
+            const addUsage = document.getElementById('renewUsage').value || 0; 
+
+            // 🌟 核心：完整域名直达后端
+            fetch(`https://guo.roselg.xyz/api/admin/renew_code`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ secret, code, addDays, addUsage })
+            })
+            .then(res => res.json())
+            .then(data => {
+                if (data.success) {
+                    showToast(`✅ 激活码 ${code} 权限修改成功！`);
+                    closeRenewModal();
+                    fetchLogs(); 
+                } else {
+                    alert('操作失败: ' + data.error);
+                }
+            })
+            .catch(err => alert('请求出错: ' + err.message));
+        }
+
+    // 🌟 升级版：停用/启用相关逻辑 (带动态变色弹窗)
+        let currentSuspendCode = '';
+        let currentSuspendAction = ''; // 用来记下到底是要停用还是启用
+
+        // 动作1：点击表格里的按钮时，呼出弹窗并变色
+        function toggleSuspend(code, action) {
+            currentSuspendCode = code;
+            currentSuspendAction = action;
+            
+            // 魔法变色逻辑：如果是停用就变橙色，启用就变绿色
+            const isSuspend = action === 'suspended';
+            const color = isSuspend ? '#ffa500' : '#00ff00';
+            const text = isSuspend ? '停用' : '启用';
+
+            // 把字和颜色塞进弹窗里
+            document.getElementById('suspendCodeText').innerText = code;
+            document.getElementById('suspendActionText').innerText = text;
+            document.getElementById('suspendActionText').style.color = color;
+            document.getElementById('suspendTitle').style.color = color;
+            document.getElementById('suspendTitle').innerText = isSuspend ? '⚠️ 停用确认' : '✅ 启用确认';
+            
+            // 连底下的确认按钮也跟着变色
+            const btn = document.getElementById('suspendConfirmBtn');
+            btn.style.background = isSuspend ? 'linear-gradient(45deg, #ffa500, #ff8c00)' : 'linear-gradient(45deg, #00ff00, #00cc00)';
+            btn.style.boxShadow = isSuspend ? '0 4px 0 #cc7000' : '0 4px 0 #009900';
+
+            // 显示弹窗
+            document.getElementById('suspendModal').style.display = 'flex';
+        }
+
+        // 动作2：点“取消”关掉弹窗
+        function closeSuspendModal() {
+            document.getElementById('suspendModal').style.display = 'none';
+        }
+
+        // 动作3：点“确认”，正式向服务器发射指令
+        function submitSuspend() {
+            const secret = document.getElementById('secret').value;
+            if (!secret) return alert('请先输入管理密码！');
+            
+            fetch(`https://guo.roselg.xyz/api/admin/toggle_status`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ secret, code: currentSuspendCode })
+            })
+            .then(res => res.json())
+            .then(data => {
+                if (data.success) {
+                    showToast(data.newStatus === 'suspended' ? `🛑 激活码 ${currentSuspendCode} 已强制停用！` : `✅ 激活码 ${currentSuspendCode} 已恢复生效！`);
+                    closeSuspendModal(); // 关掉弹窗
+                    fetchLogs();         // 刷新表格
+                } else {
+                    alert('操作失败: ' + data.error);
+                }
+            })
+            .catch(err => alert('请求出错: ' + err.message));
+        }
+
+        // 3. 删除相关
+        let currentDeleteCode = '';
+        function deleteCode(code) {
+            currentDeleteCode = code;
+            document.getElementById('deleteCodeText').innerText = code;
+            document.getElementById('deleteModal').style.display = 'flex';
+        }
+
+        function closeDeleteModal() {
+            document.getElementById('deleteModal').style.display = 'none';
+        }
+
+        function submitDelete() {
+            const secret = document.getElementById('secret').value;
+            if (!secret) return alert('请先输入管理密码！');
+
+            fetch(`https://guo.roselg.xyz/api/admin/delete_code`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ secret, code: currentDeleteCode })
+            })
+            .then(res => res.json())
+            .then(data => {
+                if (data.success) {
+                    showToast(`🗑️ 激活码 ${currentDeleteCode} 已被永久删除！`);
+                    closeDeleteModal();
+                    fetchLogs();
+                } else {
+                    alert('操作失败: ' + data.error);
+                }
+            })
+            .catch(err => alert('请求出错: ' + err.message));
+        }
+
+        // 4. 搜索功能
+        function searchCodes() {
+            const input = document.getElementById('searchInput').value.toUpperCase();
+            const tbody = document.getElementById('logTableBody');
+            const rows = tbody.getElementsByTagName('tr');
+            for (let i = 0; i < rows.length; i++) {
+                if (rows[i].getElementsByTagName('td').length <= 1) continue; 
+                const codeCell = rows[i].getElementsByTagName('td')[0];
+                if (codeCell) {
+                    const codeText = codeCell.textContent || codeCell.innerText;
+                    rows[i].style.display = codeText.toUpperCase().indexOf(input) > -1 ? "" : "none";
+                }
+            }
+        }
+    </script>
+</body>
+</html>
