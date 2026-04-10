@@ -716,10 +716,16 @@ h2::before, h2::after {
 
     <h2>LG筑梦电子 📧 无限临时邮箱系统</h2>
 
-    <div class="layout-row" style="display: flex; align-items: stretch; gap: 15px; margin-bottom: 15px;">
-        <div class="email-card" id="emailText" style="flex: 1; margin: 0; display: flex; align-items: center; justify-content: center; padding: 10px;">正在呼唤筑梦电子</div>
-        <button class="btn-gen" onclick="generateRandom()" style="margin: 0; width: 115px !important; flex: none !important; white-space: nowrap !important; padding: 0 5px !important; display: flex; align-items: center; justify-content: center;">🔄 随机生成</button>
-    </div>
+  <div class="layout-row" style="display: flex; align-items: stretch; gap: 10px; margin-bottom: 15px;">
+    <div class="email-card" id="emailText" style="flex: 1; margin: 0; display: flex; align-items: center; justify-content: center; padding: 10px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">正在呼唤筑梦电子</div>
+    
+    <select id="domain-selector" style="flex: none; width: 130px; margin: 0; padding: 0 5px; border-radius: 8px; border: 1px solid rgba(255,255,255,0.3); background-color: rgba(0,0,0,0.4); color: #fff; font-size: 14px; cursor: pointer; outline: none; text-align: center;">
+        <option value="@lgmail.work" style="color: #000;">@lgmail.work</option>
+        <option value="@roselg.xyz" style="color: #000;">@roselg.xyz</option>
+    </select>
+
+    <button class="btn-gen" onclick="generateRandom()" style="margin: 0; width: 115px !important; flex: none !important; white-space: nowrap !important; padding: 0 5px !important; display: flex; align-items: center; justify-content: center;">🎲 随机生成</button>
+</div>
 
     <div class="action-row-main" style="display: flex; align-items: center; gap: 15px; margin-bottom: 15px;">
         <a href="admin/index.html" class="btn-clone admin-theme">⚙️ 站长/代理商管理系统</a>
