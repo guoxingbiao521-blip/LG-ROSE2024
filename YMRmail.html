@@ -767,7 +767,21 @@ h2::before, h2::after {
 </div>
 <script>
     const API_BASE = "https://guo.roselg.xyz/api/emails";
-    const DOMAIN = "@roselg.xyz";
+   // 1. 初始化：网页刚打开时，直接读取下拉菜单里默认选中的那个后缀
+    let DOMAIN = document.getElementById("domain-selector").value;
+
+    // 2. 监听器：一旦你在网页上点击下拉菜单切换了后缀，立马更新系统
+    document.getElementById("domain-selector").addEventListener("change", function() {
+        DOMAIN = this.value;
+        
+        // 贴心小优化：切换域名后，把屏幕上原来显示的旧邮箱清空，提示需要重新生成
+        const emailDisplay = document.getElementById("emailText");
+        if (emailDisplay) {
+            emailDisplay.innerText = "请点击右侧生成新域名邮箱";
+            emailDisplay.style.color = "#999"; 
+        }
+        currentEmail = ""; 
+    });
     let currentEmail = "";
     let timeLeft = 5; 
     let lastEmailCount = -1;
