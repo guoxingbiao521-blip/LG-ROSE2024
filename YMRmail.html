@@ -877,13 +877,7 @@ h2::before, h2::after {
         fetchEmails();
     }
 
-    function finalizeUpdate(email) {
-        currentEmail = email;
-        document.getElementById('emailText').innerText = currentEmail;
-        lastEmailCount = -1; 
-        timeLeft = 5; 
-        fetchEmails();
-    }
+   
 
     function copyEmail() {
         if(!currentEmail) return;
