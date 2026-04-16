@@ -828,58 +828,7 @@ function fetchLogs() {
             return Array.from(checkedBoxes).map(cb => cb.value);
         }
 
-        function batchToggleSuspend(targetStatus) {
-            const codes = getSelectedCodes();
-            if (codes.length === 0) return;
-            const actionName = targetStatus === 'suspended' ? '停用' : '启用';
-            if (!confirm(`确定要批量【${actionName}】选中的 ${codes.length} 个激活码吗？`)) return;
-
-            const secret = document.getElementById('secret').value;
-            if (!secret) return alert('请先输入管理密码！');
-
-            // 注意这里的 API 接口变了，等会儿咱们要在后端加这个接口
-            fetch('https://guo.roselg.xyz/api/admin/batch_toggle_status', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ secret, codes, targetStatus })
-            })
-            .then(res => res.json())
-            .then(data => {
-                if (data.success) {
-                    showToast(`✅ 成功批量${actionName} ${data.affected} 个激活码！`);
-                    document.getElementById('selectAll').checked = false;
-                    updateBatchToolbar();
-                    fetchLogs();
-                } else { alert('操作失败: ' + data.error); }
-            })
-            .catch(err => alert('请求出错: ' + err.message));
-        }
-
-        function batchDelete() {
-            const codes = getSelectedCodes();
-            if (codes.length === 0) return;
-            if (!confirm(`⚠️ 危险操作：确定要彻底删除选中的 ${codes.length} 个激活码吗？不可恢复！`)) return;
-
-            const secret = document.getElementById('secret').value;
-            if (!secret) return alert('请先输入管理密码！');
-
-            // 注意这里的 API 接口变了，等会儿咱们要在后端加这个接口
-            fetch('https://guo.roselg.xyz/api/admin/batch_delete', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ secret, codes })
-            })
-            .then(res => res.json())
-            .then(data => {
-                if (data.success) {
-                    showToast(`🗑️ 成功批量删除 ${data.affected} 个激活码！`);
-                    document.getElementById('selectAll').checked = false;
-                    updateBatchToolbar();
-                    fetchLogs();
-                } else { alert('操作失败: ' + data.error); }
-            })
-            .catch(err => alert('请求出错: ' + err.message));
-        }
+        
     </script>
 </body>
 </html>
