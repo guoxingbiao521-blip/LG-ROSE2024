@@ -334,11 +334,20 @@
                 <button class="btn-main-3d" id="queryBtnAdmin" onclick="this.innerHTML='⏳ 系统载入中...'; this.style.filter='grayscale(100%) opacity(70%)'; this.style.pointerEvents='none'; let t = setInterval(()=>{if(typeof fetchLogs === 'function'){clearInterval(t); fetchLogs();}}, 200);" style="padding: 0 16px; font-size: 13px; height: 36px; box-shadow: 0 3px 0 #b300b3; width: auto; flex: none; display: flex; align-items: center; justify-content: center;">🔄 查询激活码状态</button>
             </div>
         </div>
+        <div id="batchActionToolbar" style="display: none; background: rgba(255, 105, 180, 0.15); border: 1px solid rgba(255, 105, 180, 0.4); padding: 10px 15px; border-radius: 10px; margin-bottom: 15px; justify-content: space-between; align-items: center;">
+            <span style="font-size: 14px; font-weight: bold; color: #ff69b4; text-shadow: 0 1px 2px #000;">已选中 <span id="selectedCount" style="color: #00f2ff; font-size: 18px;">0</span> 项</span>
+            <div style="display: flex; gap: 8px;">
+                <button class="action-btn-sm btn-suspend" onclick="batchToggleSuspend('suspended')">批量停用</button>
+                <button class="action-btn-sm btn-enable" onclick="batchToggleSuspend('active')">批量启用</button>
+                <button class="action-btn-sm btn-delete" onclick="batchDelete()">彻底删除</button>
+            </div>
+        </div>
         
         <div class="table-responsive">
             <table class="log-table">
                 <thead>
                     <tr>
+                        <th style="width: 40px;"><input type="checkbox" id="selectAll" onclick="toggleAll()" style="width: 16px; height: 16px; cursor: pointer; accent-color: #ff69b4;"></th>
                         <th>激活码</th>
                         <th>首次激活时间</th>
                         <th>剩余有效期</th>
@@ -351,7 +360,7 @@
                 </thead>
            <tbody id="logTableBody">
     <tr>
-        <td colspan="8" style="padding: 0; border: none; background: transparent;">
+        <td colspan="9" style="padding: 0; border: none; background: transparent;">
             <div style="position: sticky; left: 0; width: 100vw; max-width: 100%; padding: 25px 15px; box-sizing: border-box; white-space: normal; word-break: break-all; text-align: left; line-height: 1.6; color: #fff; font-weight: bold; text-shadow: 0 2px 5px rgba(0,0,0,0.9);">
                 ✨ 请输入站长/代理商管理密码后，点击“查询激活码状态”开始查询！
             </div>
@@ -476,7 +485,7 @@ function fetchLogs() {
             const oldHTML = tbody.innerHTML; 
             
             // 🎯 同样使用吸盘魔法，保证查询中的文字绝对不被腰斩
-            tbody.innerHTML = `<tr><td colspan="8" style="padding: 0; border: none; background: transparent;">
+            tbody.innerHTML = `<tr><td colspan="9" style="padding: 0; border: none; background: transparent;">
                 <div style="position: sticky; left: 0; width: 100vw; max-width: 100%; padding: 25px 15px; box-sizing: border-box; white-space: normal; word-break: break-all; text-align: left; line-height: 1.6; color: #fff; font-weight: bold;">
                     ⏳ 正在查询激活码状态，请稍候...
                 </div>
@@ -490,7 +499,7 @@ function fetchLogs() {
                 .then(data => {
                     if(data.length === 0) {
                         // 🎯 空数据时也用吸盘魔法
-                        tbody.innerHTML = `<tr><td colspan="8" style="padding: 0; border: none; background: transparent;">
+                        tbody.innerHTML = `<tr><td colspan="9" style="padding: 0; border: none; background: transparent;">
                             <div style="position: sticky; left: 0; width: 100vw; max-width: 100%; padding: 30px 15px; box-sizing: border-box; white-space: normal; word-break: break-all; text-align: left; color: #999; margin: 0 auto;">
                                 暂无激活码数据
                             </div>
@@ -521,6 +530,7 @@ function fetchLogs() {
                         
                         html += `
                         <tr>
+                        <td><input type="checkbox" class="card-checkbox" value="${item.code}" onclick="updateBatchToolbar()" style="width: 16px; height: 16px; cursor: pointer; accent-color: #ff69b4;"></td>
                             <td style="font-weight: bold; color: #ff69b4; font-size: 14px; text-shadow: 0 2px 5px rgba(0,0,0,1);">${item.code}</td>
                             <td style="color: ${item.firstUse === '尚未激活' ? '#ffd700' : '#ffffff'}; font-weight: ${item.firstUse === '尚未激活' ? 'bold' : 'normal'}; text-shadow: 0 2px 5px rgba(0,0,0,1);">${item.firstUse}</td>
                             <td style="color: ${item.expire === '已过期' ? '#ff0000' : '#00f2ff'}; font-weight: bold; text-shadow: 0 2px 5px rgba(0,0,0,1);">${item.expire}</td>
@@ -749,6 +759,92 @@ function fetchLogs() {
                     rows[i].style.display = codeText.toUpperCase().indexOf(input) > -1 ? "" : "none";
                 }
             }
+        }
+    // ==========================================
+        // 🌟 新增：批量操作核心逻辑 🌟
+        // ==========================================
+        function toggleAll() {
+            const isChecked = document.getElementById('selectAll').checked;
+            const checkboxes = document.querySelectorAll('.card-checkbox');
+            // 高级体验：只勾选当前搜索可见的行
+            checkboxes.forEach(cb => {
+                if (cb.closest('tr').style.display !== 'none') {
+                    cb.checked = isChecked;
+                }
+            });
+            updateBatchToolbar();
+        }
+
+        function updateBatchToolbar() {
+            const checkedBoxes = document.querySelectorAll('.card-checkbox:checked');
+            const toolbar = document.getElementById('batchActionToolbar');
+            const countSpan = document.getElementById('selectedCount');
+            
+            countSpan.innerText = checkedBoxes.length;
+            if (checkedBoxes.length > 0) {
+                toolbar.style.display = 'flex';
+            } else {
+                toolbar.style.display = 'none';
+                document.getElementById('selectAll').checked = false;
+            }
+        }
+
+        function getSelectedCodes() {
+            const checkedBoxes = document.querySelectorAll('.card-checkbox:checked');
+            return Array.from(checkedBoxes).map(cb => cb.value);
+        }
+
+        function batchToggleSuspend(targetStatus) {
+            const codes = getSelectedCodes();
+            if (codes.length === 0) return;
+            const actionName = targetStatus === 'suspended' ? '停用' : '启用';
+            if (!confirm(`确定要批量【${actionName}】选中的 ${codes.length} 个激活码吗？`)) return;
+
+            const secret = document.getElementById('secret').value;
+            if (!secret) return alert('请先输入管理密码！');
+
+            // 注意这里的 API 接口变了，等会儿咱们要在后端加这个接口
+            fetch('https://guo.roselg.xyz/api/admin/batch_toggle_status', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ secret, codes, targetStatus })
+            })
+            .then(res => res.json())
+            .then(data => {
+                if (data.success) {
+                    showToast(`✅ 成功批量${actionName} ${data.affected} 个激活码！`);
+                    document.getElementById('selectAll').checked = false;
+                    updateBatchToolbar();
+                    fetchLogs();
+                } else { alert('操作失败: ' + data.error); }
+            })
+            .catch(err => alert('请求出错: ' + err.message));
+        }
+
+        function batchDelete() {
+            const codes = getSelectedCodes();
+            if (codes.length === 0) return;
+            if (!confirm(`⚠️ 危险操作：确定要彻底删除选中的 ${codes.length} 个激活码吗？不可恢复！`)) return;
+
+            const secret = document.getElementById('secret').value;
+            if (!secret) return alert('请先输入管理密码！');
+
+            // 注意这里的 API 接口变了，等会儿咱们要在后端加这个接口
+            fetch('https://guo.roselg.xyz/api/admin/batch_delete', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ secret, codes })
+            })
+            .then(res => res.json())
+            .then(data => {
+                if (data.success) {
+                    showToast(`🗑️ 成功批量删除 ${data.affected} 个激活码！`);
+                    document.getElementById('selectAll').checked = false;
+                    updateBatchToolbar();
+                    fetchLogs();
+                } else { alert('操作失败: ' + data.error); }
+            })
+            .catch(err => alert('请求出错: ' + err.message));
         }
     </script>
 </body>
