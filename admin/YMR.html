@@ -375,6 +375,8 @@
 
     <script>
         let toastTimeout;
+        let isBatchDelete = false;
+        let isBatchSuspend = false;
         let globalCodes = []; 
 
         function showToast(msg) {
@@ -654,98 +656,137 @@ function fetchLogs() {
             .catch(err => alert('请求出错: ' + err.message));
         }
 
-    // 🌟 升级版：停用/启用相关逻辑 (带动态变色弹窗)
+    // ==========================================
+        // ⚠️ 停用/启用模块 (动态变色 UI 统一部署)
+        // ==========================================
         let currentSuspendCode = '';
-        let currentSuspendAction = ''; // 用来记下到底是要停用还是启用
+        let currentSuspendAction = '';
 
-        // 动作1：点击表格里的按钮时，呼出弹窗并变色
+        // 触发单条停用/启用
         function toggleSuspend(code, action) {
+            isBatchSuspend = false;
             currentSuspendCode = code;
             currentSuspendAction = action;
-            
-            // 魔法变色逻辑：如果是停用就变橙色，启用就变绿色
             const isSuspend = action === 'suspended';
             const color = isSuspend ? '#ffa500' : '#00ff00';
             const text = isSuspend ? '停用' : '启用';
 
-            // 把字和颜色塞进弹窗里
-            document.getElementById('suspendCodeText').innerText = code;
-            document.getElementById('suspendActionText').innerText = text;
-            document.getElementById('suspendActionText').style.color = color;
             document.getElementById('suspendTitle').style.color = color;
             document.getElementById('suspendTitle').innerText = isSuspend ? '⚠️ 停用确认' : '✅ 启用确认';
+            document.querySelector('#suspendModal p').innerHTML = `确定要 <span style="font-weight:bold; color:${color}; font-size:16px;">${text}</span> 激活码<br><span style="color: #ff69b4; font-weight: bold; font-size: 18px; display: inline-block; margin: 10px 0;">${code}</span><br>吗？`;
             
-            // 连底下的确认按钮也跟着变色
             const btn = document.getElementById('suspendConfirmBtn');
             btn.style.background = isSuspend ? 'linear-gradient(45deg, #ffa500, #ff8c00)' : 'linear-gradient(45deg, #00ff00, #00cc00)';
             btn.style.boxShadow = isSuspend ? '0 4px 0 #cc7000' : '0 4px 0 #009900';
-
-            // 显示弹窗
             document.getElementById('suspendModal').style.display = 'flex';
         }
 
-        // 动作2：点“取消”关掉弹窗
-        function closeSuspendModal() {
-            document.getElementById('suspendModal').style.display = 'none';
+        // 触发批量停用/启用
+        function batchToggleSuspend(targetStatus) {
+            const codes = getSelectedCodes();
+            if (codes.length === 0) return;
+            isBatchSuspend = true;
+            currentSuspendAction = targetStatus;
+            const isSuspend = targetStatus === 'suspended';
+            const color = isSuspend ? '#ffa500' : '#00ff00';
+            const text = isSuspend ? '批量停用' : '批量启用';
+
+            document.getElementById('suspendTitle').style.color = color;
+            document.getElementById('suspendTitle').innerText = isSuspend ? '⚠️ 批量停用确认' : '✅ 批量启用确认';
+            document.querySelector('#suspendModal p').innerHTML = `确定要 <span style="font-weight:bold; color:${color}; font-size:16px;">${text}</span> 选中的<br><span style="color: #ff69b4; font-weight: bold; font-size: 22px; display: inline-block; margin: 10px 0;">${codes.length} 个激活码</span><br>吗？`;
+            
+            const btn = document.getElementById('suspendConfirmBtn');
+            btn.style.background = isSuspend ? 'linear-gradient(45deg, #ffa500, #ff8c00)' : 'linear-gradient(45deg, #00ff00, #00cc00)';
+            btn.style.boxShadow = isSuspend ? '0 4px 0 #cc7000' : '0 4px 0 #009900';
+            document.getElementById('suspendModal').style.display = 'flex';
         }
 
-        // 动作3：点“确认”，正式向服务器发射指令
+        function closeSuspendModal() { document.getElementById('suspendModal').style.display = 'none'; }
+
+        // 确认停用发射！
         function submitSuspend() {
             const secret = document.getElementById('secret').value;
             if (!secret) return alert('请先输入管理密码！');
-            
-            fetch(`https://guo.roselg.xyz/api/admin/toggle_status`, {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ secret, code: currentSuspendCode })
-            })
-            .then(res => res.json())
-            .then(data => {
-                if (data.success) {
-                    showToast(data.newStatus === 'suspended' ? `🛑 激活码 ${currentSuspendCode} 已强制停用！` : `✅ 激活码 ${currentSuspendCode} 已恢复生效！`);
-                    closeSuspendModal(); // 关掉弹窗
-                    fetchLogs();         // 刷新表格
-                } else {
-                    alert('操作失败: ' + data.error);
-                }
-            })
-            .catch(err => alert('请求出错: ' + err.message));
+
+            if (isBatchSuspend) {
+                const codes = getSelectedCodes();
+                const actionName = currentSuspendAction === 'suspended' ? '停用' : '启用';
+                fetch('https://guo.roselg.xyz/api/admin/batch_toggle_status', {
+                    method: 'POST', headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ secret, codes, targetStatus: currentSuspendAction })
+                }).then(res => res.json()).then(data => {
+                    if (data.success) {
+                        showToast(`✅ 成功批量${actionName} ${data.affected} 个激活码！`);
+                        document.getElementById('selectAll').checked = false;
+                        updateBatchToolbar(); closeSuspendModal(); fetchLogs();
+                    } else { alert('操作失败: ' + data.error); }
+                }).catch(err => alert('请求出错: ' + err.message));
+            } else {
+                fetch('https://guo.roselg.xyz/api/admin/toggle_status', {
+                    method: 'POST', headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ secret, code: currentSuspendCode })
+                }).then(res => res.json()).then(data => {
+                    if (data.success) {
+                        showToast(data.newStatus === 'suspended' ? `🛑 激活码 ${currentSuspendCode} 已强制停用！` : `✅ 激活码 ${currentSuspendCode} 已恢复生效！`);
+                        closeSuspendModal(); fetchLogs();
+                    } else { alert('操作失败: ' + data.error); }
+                }).catch(err => alert('请求出错: ' + err.message));
+            }
         }
 
-        // 3. 删除相关
+      // ==========================================
+        // 🗑️ 删除模块 (完美统一直观 UI 版)
+        // ==========================================
         let currentDeleteCode = '';
+
+        // 触发单条删除
         function deleteCode(code) {
+            isBatchDelete = false;
             currentDeleteCode = code;
-            document.getElementById('deleteCodeText').innerText = code;
+            document.querySelector('#deleteModal p').innerHTML = `您确定要彻底删除该激活码<br><span style="color: #ff69b4; font-weight: bold; font-size: 18px; display: inline-block; margin: 10px 0; text-shadow: 0 2px 5px rgba(0,0,0,1);">${code}</span><br>吗？删除后将无法恢复！`;
             document.getElementById('deleteModal').style.display = 'flex';
         }
 
-        function closeDeleteModal() {
-            document.getElementById('deleteModal').style.display = 'none';
+        // 触发批量删除
+        function batchDelete() {
+            const codes = getSelectedCodes();
+            if (codes.length === 0) return;
+            isBatchDelete = true;
+            document.querySelector('#deleteModal p').innerHTML = `您确定要彻底删除选中的<br><span style="color: #ff69b4; font-weight: bold; font-size: 22px; display: inline-block; margin: 10px 0; text-shadow: 0 2px 5px rgba(0,0,0,1);">${codes.length} 个激活码</span><br>吗？删除后将无法恢复！`;
+            document.getElementById('deleteModal').style.display = 'flex';
         }
 
+        function closeDeleteModal() { document.getElementById('deleteModal').style.display = 'none'; }
+
+        // 确认删除发射！
         function submitDelete() {
             const secret = document.getElementById('secret').value;
             if (!secret) return alert('请先输入管理密码！');
 
-            fetch(`https://guo.roselg.xyz/api/admin/delete_code`, {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ secret, code: currentDeleteCode })
-            })
-            .then(res => res.json())
-            .then(data => {
-                if (data.success) {
-                    showToast(`🗑️ 激活码 ${currentDeleteCode} 已被永久删除！`);
-                    closeDeleteModal();
-                    fetchLogs();
-                } else {
-                    alert('操作失败: ' + data.error);
-                }
-            })
-            .catch(err => alert('请求出错: ' + err.message));
+            if (isBatchDelete) {
+                const codes = getSelectedCodes();
+                fetch('https://guo.roselg.xyz/api/admin/batch_delete', {
+                    method: 'POST', headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ secret, codes })
+                }).then(res => res.json()).then(data => {
+                    if (data.success) {
+                        showToast(`🗑️ 成功彻底删除 ${data.affected} 个激活码！`);
+                        document.getElementById('selectAll').checked = false;
+                        updateBatchToolbar(); closeDeleteModal(); fetchLogs();
+                    } else { alert('操作失败: ' + data.error); }
+                }).catch(err => alert('请求出错: ' + err.message));
+            } else {
+                fetch('https://guo.roselg.xyz/api/admin/delete_code', {
+                    method: 'POST', headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ secret, code: currentDeleteCode })
+                }).then(res => res.json()).then(data => {
+                    if (data.success) {
+                        showToast(`🗑️ 激活码 ${currentDeleteCode} 已被永久删除！`);
+                        closeDeleteModal(); fetchLogs();
+                    } else { alert('操作失败: ' + data.error); }
+                }).catch(err => alert('请求出错: ' + err.message));
+            }
         }
-
         // 4. 搜索功能
         function searchCodes() {
             const input = document.getElementById('searchInput').value.toUpperCase();
