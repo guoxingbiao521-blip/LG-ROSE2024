@@ -796,7 +796,7 @@ h2::before, h2::after {
     </div>
 
     <div id="custom-confirm-modal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); z-index: 99999; align-items: center; justify-content: center; backdrop-filter: blur(5px);">
-        <div style="background: #1a1a1a; border: 1px solid #ffb6c1; padding: 25px; border-radius: 15px; width: 320px; text-align: center; box-shadow: 0 0 20px rgba(255,182,193,0.2);">
+       <div style="background: rgba(15, 15, 20, 0.98); border: 1px solid #ffb6c1; padding: 25px; border-radius: 15px; width: 320px; text-align: center; box-shadow: 0 0 20px rgba(255,182,193,0.2);">
             <p id="confirm-text" style="color: #fff; font-size: 16px; margin-bottom: 25px; line-height: 1.5;"></p>
             <div style="display: flex; gap: 15px; justify-content: center;">
                 <button id="confirm-yes" style="background: linear-gradient(135deg, #ff416c, #ff4b2b); color: white; border: none; padding: 8px 25px; border-radius: 8px; cursor: pointer; font-weight: bold;">确定</button>
@@ -1276,7 +1276,7 @@ function renderHistory(history) {
                 <input type="checkbox" class="history-check" value="${email}" 
                     style="display: ${isMultiSelect ? 'block' : 'none'}; width: 18px; height: 18px; cursor: pointer; flex-shrink: 0;" 
                     onclick="event.stopPropagation();">
-                <span style="font-family: system-ui, sans-serif; font-size: 16px; font-weight: 800; color: #ffffff; text-shadow: 0 0 10px rgba(255,182,193,0.8); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; pointer-events: none;">
+               <span style="font-family: system-ui, -apple-system, sans-serif; font-size: 20px; font-weight: 800; color: #ffffff; text-shadow: 0 0 10px rgba(255,182,193,0.8), 0 0 5px rgba(255,255,255,0.5); letter-spacing: 0.5px; pointer-events: none;">
                     ${email}
                 </span>
             </div>
@@ -1315,14 +1315,15 @@ async function handleHistoryClick(email) {
         if (domainSelector) domainSelector.value = '@' + domain;
         DOMAIN = '@' + domain;
         const customInput = document.getElementById('customInput');
-        if (customInput) {
-            customInput.value = prefix;
-            setCustomEmail();
-            showToast('🔄 已切换收件箱');
-            window.scrollTo({ top: 0, behavior: 'smooth' });
-        }
+        if (customInput) customInput.value = prefix;
+        
+        // 🚀 核心修复：直接刷新，不再调用 setCustomEmail 产生多余弹窗
+        finalizeUpdate(prefix); 
+        showToast('🔄 已切换收件箱');
+        window.scrollTo({ top: 0, behavior: 'smooth' });
     }
 }
+
 
 function toggleMultiSelectMode() {
     isMultiSelect = !isMultiSelect;
@@ -1375,32 +1376,7 @@ async function executeDeleteAction(endpoint, extraBody) {
         </div>
         <div id="modalEmailContent"></div>
     </div>
-</div>
-    <div id="history-section" style="margin-top: 25px; display: none; background: rgba(0, 0, 0, 0.5) !important; padding: 25px; border-radius: 24px; border: 1px solid rgba(255, 182, 193, 0.3) !important; backdrop-filter: blur(15px); -webkit-backdrop-filter: blur(15px); box-shadow: 0 10px 40px rgba(0,0,0,0.6); text-align: left;">
-    <div class="inbox-header" style="border-bottom: 1px solid rgba(255, 182, 193, 0.3); padding-bottom: 10px; margin-bottom: 15px; display: flex; justify-content: space-between; align-items: center;">
-        <div style="display: flex; align-items: center; gap: 10px;">
-            <h3 class="inbox-title" style="font-size: 18px; margin:0;">📜 最近使用记录 (Top 20)</h3>
-        </div>
-        <div style="display: flex; gap: 8px;">
-            <button class="btn-refresh-inbox" onclick="toggleMultiSelectMode()" id="multi-select-btn" style="padding: 4px 10px; font-size: 12px; background: rgba(0, 242, 255, 0.2); border: 1px solid #00f2ff; color: #00f2ff; box-shadow: none;">多选模式</button>
-            <button class="btn-refresh-inbox" onclick="clearHistory()" style="padding: 4px 10px; font-size: 12px; background: rgba(216, 27, 96, 0.2); border: 1px solid #d81b60; box-shadow: none;">一键清空</button>
-        </div>
-    </div>
-    <div id="history-list" style="color: #eee; font-size: 14px;"></div>
-    <div id="batch-delete-control" style="display: none; margin-top: 15px; padding-top: 10px; border-top: 1px dashed rgba(255,255,255,0.2); text-align: center;">
-        <button onclick="deleteSelected()" style="background: #ff4d4d; color: white; border: none; padding: 8px 20px; border-radius: 8px; cursor: pointer; font-weight: bold; box-shadow: 0 4px 0 #b33636;">🗑️ 删除选中项</button>
-    </div>
-</div>
 
-<div id="custom-confirm-modal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); z-index: 99999; align-items: center; justify-content: center; backdrop-filter: blur(5px);">
-    <div style="background: #1a1a1a; border: 1px solid #ffb6c1; padding: 25px; border-radius: 15px; width: 320px; text-align: center; box-shadow: 0 0 20px rgba(255,182,193,0.2);">
-        <p id="confirm-text" style="color: #fff; font-size: 16px; margin-bottom: 25px; line-height: 1.5;"></p>
-        <div style="display: flex; gap: 15px; justify-content: center;">
-            <button id="confirm-yes" style="background: linear-gradient(135deg, #ff416c, #ff4b2b); color: white; border: none; padding: 8px 25px; border-radius: 8px; cursor: pointer; font-weight: bold;">确定</button>
-            <button id="confirm-no" style="background: #333; color: white; border: none; padding: 8px 25px; border-radius: 8px; cursor: pointer; font-weight: bold;">取消</button>
-        </div>
-    </div>
-</div>
 </body>
 </html>
 
