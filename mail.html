@@ -1258,11 +1258,12 @@ function renderHistory(history) {
     if (isMultiSelect) return;
     const container = document.getElementById('history-list');
     const section = document.getElementById('history-section');
+    section.style.display = 'block'; // 有数据就显形
     if (!history || history.length === 0) {
         container.innerHTML = '<p style="text-align:center; color:#999; padding: 20px;">暂无历史记录</p>';
         return;
     }
-    section.style.display = 'block'; // 有数据就显形
+    
     container.innerHTML = history.map(email => `
         <div class="history-item" onclick="handleHistoryClick('${email}')" style="display: flex; align-items: center; justify-content: space-between; background: rgba(255,255,255,0.05); margin-bottom: 8px; padding: 10px 15px; border-radius: 10px; border: 1px solid rgba(255,255,255,0.1); cursor: pointer;">
             <div style="display: flex; align-items: center; gap: 10px;">
