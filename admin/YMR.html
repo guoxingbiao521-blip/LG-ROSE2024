@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>🌹 YMR姚某人 - 临时邮箱激活码系统 🌹</title>
+    <title>🌹 瞎搞AIGC - 临时邮箱激活码系统 🌹</title>
     <style>
         :root {
             --primary: #00f2ff;
@@ -266,7 +266,7 @@
 
     <div class="container">
         <div class="title-container">
-            <span class="title-left-3d">YMR姚某人</span>
+            <span class="title-left-3d">瞎搞AIGC</span>
             <svg viewBox="0 0 24 24" style="width: 32px; height: 32px; fill: none; stroke: var(--primary); stroke-width: 1.5; animation: glow 2s infinite alternate; flex-shrink: 0;">
                 <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
                 <polyline points="22,6 12,13 2,6"></polyline>
@@ -329,7 +329,7 @@
             <div style="display: flex; gap: 10px; align-items: center;">
                 <div style="position: relative;">
                     <span style="position: absolute; left: 10px; top: 50%; transform: translateY(-50%); font-size: 14px; opacity: 0.8;">🔍</span>
-                    <input type="text" id="searchInput" placeholder="搜索激活码..." onkeyup="searchCodes()" style="width: 140px; height: 36px; padding: 0 10px 0 32px; border-radius: 10px; background: rgba(0,0,0,0.4); color: #00f2ff; border: 1px solid rgba(0, 242, 255, 0.4); font-size: 13px; font-weight: bold; outline: none; transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); box-sizing: border-box;" onfocus="this.style.borderColor='#ff00ff'; this.style.boxShadow='0 0 10px rgba(255,0,255,0.4)'; this.style.width='180px'; this.style.background='rgba(0,0,0,0.6)';" onblur="this.style.borderColor='rgba(0, 242, 255, 0.4)'; this.style.boxShadow='none'; this.style.width='140px'; this.style.background='rgba(0,0,0,0.4)';">
+                    <input type="text" id="searchInput" placeholder="输入激活码后回车..." onkeydown="if(event.keyCode==13) fetchLogs()" style="width: 140px; height: 36px; padding: 0 10px 0 32px; border-radius: 10px; background: rgba(0,0,0,0.4); color: #00f2ff; border: 1px solid rgba(0, 242, 255, 0.4); font-size: 13px; font-weight: bold; outline: none; transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); box-sizing: border-box;" onfocus="this.style.borderColor='#ff00ff'; this.style.boxShadow='0 0 10px rgba(255,0,255,0.4)'; this.style.width='180px'; this.style.background='rgba(0,0,0,0.6)';" onblur="this.style.borderColor='rgba(0, 242, 255, 0.4)'; this.style.boxShadow='none'; this.style.width='140px'; this.style.background='rgba(0,0,0,0.4)';">
                 </div>
                 <button class="btn-main-3d" id="queryBtnAdmin" onclick="this.innerHTML='⏳ 系统载入中...'; this.style.filter='grayscale(100%) opacity(70%)'; this.style.pointerEvents='none'; let t = setInterval(()=>{if(typeof fetchLogs === 'function'){clearInterval(t); fetchLogs();}}, 200);" style="padding: 0 16px; font-size: 13px; height: 36px; box-shadow: 0 3px 0 #b300b3; width: auto; flex: none; display: flex; align-items: center; justify-content: center;">🔄 查询激活码状态</button>
             </div>
@@ -463,8 +463,9 @@
             copyTextToClipboard(globalCodes.join('\n'), '📋 激活码已全部存入剪贴板！');
         }
 function fetchLogs() {
-            const secret = document.getElementById('secret').value;
-            if(!secret) { 
+    const secret = document.getElementById('secret').value;
+    const keyword = document.getElementById('searchInput').value; // 获取搜索词
+    if(!secret) {
                 showToast('⚠️ 查询激活码状态前，请先输入管理密码！'); 
                 // 恢复按钮状态
                 const btn = document.getElementById('queryBtnAdmin');
@@ -493,7 +494,7 @@ function fetchLogs() {
                 </div>
             </td></tr>`;
             
-            fetch(`https://guo.roselg.xyz/api/admin/get_codes?secret=${secret}`)
+           fetch(`https://guo.roselg.xyz/api/admin/get_codes?secret=${secret}&keyword=${encodeURIComponent(keyword)}`)
                 .then(response => {
                     if (!response.ok) throw new Error('密码错误，无法查询！');
                     return response.json();
