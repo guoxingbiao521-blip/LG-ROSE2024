@@ -931,11 +931,17 @@ h2::before, h2::after {
                 renderLockedInbox("❌ 激活码无效，请重新输入！");
                 return;
             }
-            const data = await response.json();
-            fullServerEmails = data;
+           // 🚀 这里是修复核心：把“大包裹”拆开
+            const result = await response.json(); 
+            const emailsData = result.emails || [];    // 抽屉1：邮件
+            const historyData = result.history || []; // 抽屉2：历史记录
+
+            fullServerEmails = emailsData; // 给全局变量赋值
+            renderHistory(historyData);    // 👈 顺手把历史记录显示出来
 
             let cutoffTime = parseInt(localStorage.getItem('clearTime_' + currentEmail) || '0');
-            const visibleEmails = data.filter(mail => {
+            // 注意：下面这里改成了 emailsData.filter，而不是 data.filter
+            const visibleEmails = emailsData.filter(mail => {
                 if (mail.timestamp) return mail.timestamp > cutoffTime;
                 return true; 
             });
@@ -1227,6 +1233,112 @@ content = content.replace(safeRegex, safeInlineHighlight);
                 document.body.removeChild(textArea);
             }
         }
+    let isMultiSelect = false;
+
+function renderHistory(history) {
+    const container = document.getElementById('history-list');
+    const section = document.getElementById('history-section');
+    if (section) section.style.display = 'block';
+    if (!container) return;
+    if (!history || history.length === 0) {
+        container.innerHTML = '<p style="text-align:center; color:#999; padding: 20px;">暂无历史记录</p>';
+        return;
+    }
+    container.innerHTML = history.map(email => `
+        <div class="history-item" style="display: flex; align-items: center; justify-content: space-between; background: rgba(255,255,255,0.05); margin-bottom: 12px; padding: 15px 20px; border-radius: 15px; border: 1px solid rgba(255,255,255,0.1); position: relative;">
+            <div style="display: flex; align-items: center; gap: 15px; flex: 1;">
+                <input type="checkbox" class="history-check" value="${email}" 
+                    style="display: ${isMultiSelect ? 'block' : 'none'}; width: 20px; height: 20px; cursor: pointer;" 
+                    onclick="event.stopPropagation();">
+                <span style="font-family: system-ui, sans-serif; font-size: 20px; font-weight: 800; color: #ffffff; text-shadow: 0 0 10px rgba(255,182,193,0.8), 0 0 5px rgba(255,255,255,0.5); letter-spacing: 0.5px; pointer-events: none;">
+                    ${email}
+                </span>
+            </div>
+            <div style="display: flex; align-items: center; gap: 10px;">
+                ${!isMultiSelect ? `
+                    <button onclick="handleHistoryClick('${email}')" style="background: linear-gradient(135deg, #6e8efb, #a777e3); color: white; border: none; padding: 8px 16px; border-radius: 8px; font-size: 13px; cursor: pointer; font-weight: bold; box-shadow: 0 4px 10px rgba(110,142,251,0.3);">查看邮件</button>
+                    <button onclick="deleteSingleHistory('${email}')" style="background: linear-gradient(135deg, #ff416c, #ff4b2b); color: white; border: none; padding: 8px 16px; border-radius: 8px; font-size: 13px; cursor: pointer; font-weight: bold; box-shadow: 0 4px 10px rgba(255,65,108,0.3);">删除</button>
+                ` : ''}
+            </div>
+        </div>
+    `).join('');
+}
+
+function showCustomConfirm(message) {
+    return new Promise((resolve) => {
+        const modal = document.getElementById('custom-confirm-modal');
+        const text = document.getElementById('confirm-text');
+        const yesBtn = document.getElementById('confirm-yes');
+        const noBtn = document.getElementById('confirm-no');
+        text.innerText = message;
+        modal.style.display = 'flex';
+        const handleResult = (result) => {
+            modal.style.display = 'none';
+            yesBtn.onclick = null; noBtn.onclick = null;
+            resolve(result);
+        };
+        yesBtn.onclick = () => handleResult(true);
+        noBtn.onclick = () => handleResult(false);
+    });
+}
+
+async function handleHistoryClick(email) {
+    if (await showCustomConfirm('确定要切换并查看该邮箱的邮件吗？')) {
+        const [prefix, domain] = email.split('@');
+        const domainSelector = document.getElementById('domain-selector');
+        if (domainSelector) domainSelector.value = '@' + domain;
+        DOMAIN = '@' + domain;
+        const customInput = document.getElementById('customInput');
+        if (customInput) {
+            customInput.value = prefix;
+            setCustomEmail();
+            showToast('🔄 已切换收件箱');
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+    }
+}
+
+function toggleMultiSelectMode() {
+    isMultiSelect = !isMultiSelect;
+    const btn = document.getElementById('multi-select-btn');
+    const bar = document.getElementById('batch-delete-control');
+    if (btn) btn.innerText = isMultiSelect ? '取消多选' : '多选模式';
+    if (bar) bar.style.display = isMultiSelect ? 'block' : 'none';
+    fetchEmails(); 
+}
+
+async function clearHistory() {
+    if (await showCustomConfirm('🚨 确定要清空所有历史记录吗？')) {
+        await executeDeleteAction('clear-history', {});
+    }
+}
+
+async function deleteSelected() {
+    const selected = Array.from(document.querySelectorAll('.history-check:checked')).map(el => el.value);
+    if (selected.length === 0) return showToast('⚠️ 请先勾选邮箱');
+    if (await showCustomConfirm(`确定删除选中的 ${selected.length} 条记录吗？`)) {
+        await executeDeleteAction('delete-history', { emailsToDelete: selected });
+    }
+}
+
+async function deleteSingleHistory(email) {
+    if (await showCustomConfirm('确定要删除这条历史记录吗？')) {
+        await executeDeleteAction('delete-history', { emailsToDelete: [email] });
+    }
+}
+
+async function executeDeleteAction(endpoint, extraBody) {
+    const code = localStorage.getItem('authCode');
+    const devId = localStorage.getItem('deviceId');
+    try {
+        const res = await fetch(`https://guo.roselg.xyz/api/${endpoint}`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ code, deviceId: devId, ...extraBody })
+        });
+        if (res.ok) { showToast('✅ 操作成功'); fetchEmails(); }
+    } catch (e) { showToast('❌ 请求失败'); }
+}
 </script>
 
 <div id="emailDetailModal" class="email-modal-overlay">
@@ -1236,6 +1348,31 @@ content = content.replace(safeRegex, safeInlineHighlight);
             <button class="modal-close-btn" onclick="closeEmailModal()">✖ 关闭</button>
         </div>
         <div id="modalEmailContent"></div>
+    </div>
+</div>
+    <div class="inbox-card" id="history-section" style="margin-top: 25px; display: none;">
+    <div class="inbox-header" style="border-bottom: 1px solid rgba(255, 182, 193, 0.3); padding-bottom: 10px; margin-bottom: 15px; display: flex; justify-content: space-between; align-items: center;">
+        <div style="display: flex; align-items: center; gap: 10px;">
+            <h3 class="inbox-title" style="font-size: 18px; margin:0;">📜 最近使用记录 (Top 20)</h3>
+        </div>
+        <div style="display: flex; gap: 8px;">
+            <button class="btn-refresh-inbox" onclick="toggleMultiSelectMode()" id="multi-select-btn" style="padding: 4px 10px; font-size: 12px; background: rgba(0, 242, 255, 0.2); border: 1px solid #00f2ff; color: #00f2ff; box-shadow: none;">多选模式</button>
+            <button class="btn-refresh-inbox" onclick="clearHistory()" style="padding: 4px 10px; font-size: 12px; background: rgba(216, 27, 96, 0.2); border: 1px solid #d81b60; box-shadow: none;">一键清空</button>
+        </div>
+    </div>
+    <div id="history-list" style="color: #eee; font-size: 14px;"></div>
+    <div id="batch-delete-control" style="display: none; margin-top: 15px; padding-top: 10px; border-top: 1px dashed rgba(255,255,255,0.2); text-align: center;">
+        <button onclick="deleteSelected()" style="background: #ff4d4d; color: white; border: none; padding: 8px 20px; border-radius: 8px; cursor: pointer; font-weight: bold; box-shadow: 0 4px 0 #b33636;">🗑️ 删除选中项</button>
+    </div>
+</div>
+
+<div id="custom-confirm-modal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); z-index: 99999; align-items: center; justify-content: center; backdrop-filter: blur(5px);">
+    <div style="background: #1a1a1a; border: 1px solid #ffb6c1; padding: 25px; border-radius: 15px; width: 320px; text-align: center; box-shadow: 0 0 20px rgba(255,182,193,0.2);">
+        <p id="confirm-text" style="color: #fff; font-size: 16px; margin-bottom: 25px; line-height: 1.5;"></p>
+        <div style="display: flex; gap: 15px; justify-content: center;">
+            <button id="confirm-yes" style="background: linear-gradient(135deg, #ff416c, #ff4b2b); color: white; border: none; padding: 8px 25px; border-radius: 8px; cursor: pointer; font-weight: bold;">确定</button>
+            <button id="confirm-no" style="background: #333; color: white; border: none; padding: 8px 25px; border-radius: 8px; cursor: pointer; font-weight: bold;">取消</button>
+        </div>
     </div>
 </div>
 </body>
