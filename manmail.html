@@ -1,0 +1,2751 @@
+<!DOCTYPE html>
+
+<html lang="zh-CN">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>🌹 虾搞动画无限临时邮箱 system 🌹</title>
+
+    <style>
+
+        /* =======================================
+
+           🚀 终极沉浸式邮件弹窗样式 
+
+           ======================================= */
+
+        /* 弹窗遮罩：极暗底色，解决安卓滑动 Bug 的第一道防线 */
+
+        .email-modal-overlay {
+
+            position: fixed;
+
+            top: 0; left: 0; width: 100%; height: 100%;
+
+            background: rgba(0, 0, 0, 0.88); /* 极暗遮罩，只透出微弱背景 */
+
+            backdrop-filter: blur(15px);
+
+            -webkit-backdrop-filter: blur(15px);
+
+            z-index: 99999;
+
+            display: none; /* 默认隐藏 */
+
+            justify-content: center;
+
+            align-items: center;
+
+            overscroll-behavior: none; /* 阻止滑动穿透 */
+
+        }
+
+
+
+        /* 弹窗核心框 */
+
+        .email-modal-box {
+
+            background: rgba(15, 15, 20, 0.95);
+
+            border: 2px solid rgba(255, 105, 180, 0.6);
+
+            border-radius: 20px;
+
+            width: 92%;
+
+            max-width: 650px;
+
+            max-height: 85vh; /* 保证框不会超出屏幕 */
+
+            display: flex;
+
+            flex-direction: column;
+
+            box-shadow: 0 0 50px rgba(255, 105, 180, 0.3);
+
+            animation: modalPop 0.3s cubic-bezier(0.18, 0.89, 0.32, 1.28); /* Q弹动画 */
+
+        }
+
+
+
+        @keyframes modalPop {
+
+            0% { transform: scale(0.8); opacity: 0; }
+
+            100% { transform: scale(1); opacity: 1; }
+
+        }
+
+
+
+        .modal-header-row {
+
+            display: flex; justify-content: space-between; align-items: center;
+
+            padding: 15px 20px;
+
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+
+            background: rgba(255, 255, 255, 0.03);
+
+            border-radius: 20px 20px 0 0;
+
+        }
+
+
+
+    /* 🎯 修复1：3D 立体 Q弹关闭按钮，匹配主页风格 */
+
+        .modal-close-btn {
+
+            background-color: #d81b60; /* 玫瑰红主题色 */
+
+            border: none;
+
+            color: white; 
+
+            padding: 8px 16px; 
+
+            border-radius: 12px;
+
+            cursor: pointer; 
+
+            font-weight: bold; 
+
+            margin: 0; 
+
+            box-shadow: 0 5px 0 #ad1457; /* 3D 立体底部阴影 */
+
+            transition: all 0.1s ease;
+
+            font-size: 14px;
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 5px;
+
+        }
+
+        .modal-close-btn:hover { 
+
+            filter: brightness(1.1);
+
+            transform: translateY(-2px);
+
+            box-shadow: 0 7px 15px rgba(216, 27, 96, 0.4), 0 5px 0 #ad1457; 
+
+        }
+
+        .modal-close-btn:active {
+
+            transform: translateY(4px) !important;
+
+            box-shadow: 0 1px 0 #ad1457 !important; /* 点击时的真实下压回弹 */
+
+        }
+
+
+
+        /* 内部滚动区域（只有这里能滑） */
+
+        #modalEmailContent {
+
+            padding: 20px;
+
+            overflow-y: auto;
+
+            -webkit-overflow-scrolling: touch;
+
+        }
+
+
+
+        /* 🚀 邮件正文里可点击的验证码（取代了原本的独立按钮） */
+
+        .magic-vcode-click {
+
+            background: #00f2ff !important;
+
+            color: #000 !important;
+
+            padding: 4px 10px !important;
+
+            border-radius: 8px !important;
+
+            cursor: pointer;
+
+            font-weight: 1000 !important;
+
+            display: inline-block;
+
+            box-shadow: 0 0 15px rgba(0, 242, 255, 0.6) !important;
+
+            text-decoration: none !important;
+
+            margin: 0 4px;
+
+            transition: transform 0.1s;
+
+        }
+
+        .magic-vcode-click:active { transform: scale(0.9); }
+
+
+
+        /* 彻底解决安卓底层滑动的核心大招 */
+
+        .no-scroll {
+
+            overflow: hidden !important;
+
+            height: 100vh !important;
+
+            touch-action: none;
+
+        }
+
+.btn-clone {
+
+    height: 45px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    padding: 0 15px;
+
+    border-radius: 12px; 
+
+    font-size: 13px;
+
+    font-weight: bold;
+
+    text-decoration: none;
+
+    border: none;
+
+    cursor: pointer;
+
+    white-space: nowrap;
+
+    transition: all 0.3s ease;
+
+    flex: none !important;
+
+}
+
+
+
+.admin-theme {
+
+    background: rgba(10, 10, 15, 0.95);
+
+    color: #00f2ff;
+
+    border: 1px solid rgba(0, 242, 255, 0.5);
+
+    box-shadow: 0 5px 0 #008899 !important;
+
+    width: 150px !important; 
+
+    flex: none !important; 
+
+    white-space: nowrap !important;
+
+}
+
+
+
+.admin-theme:hover {
+
+    background: #00f2ff;
+
+    color: #000;
+
+    box-shadow: 0 0 20px rgba(0, 242, 255, 0.6);
+
+    transform: translateY(-2px);
+
+}
+
+
+
+.custom-theme {
+
+    background: #e91e63;
+
+    color: white;
+
+    box-shadow: 0 5px 0 var(--rose-dark) !important;
+
+    width: 115px !important; 
+
+    flex: none !important; 
+
+}
+
+
+
+.custom-theme:hover {
+
+    filter: brightness(1.1);
+
+    transform: translateY(-2px);
+
+    box-shadow: 0 6px 15px rgba(233, 30, 99, 0.4);
+
+}
+
+
+
+#customInput {
+
+    flex: 1 !important; 
+
+    width: auto !important;
+
+    background: rgba(0,0,0,0.3) !important;
+
+}
+
+
+
+@media (max-width: 480px) {
+
+    .portal-text { display: none; }
+
+    .admin-portal-btn { padding: 12px; border-radius: 50%; }
+
+}
+
+        :root { 
+
+            --rose-main: #ff69b4; --rose-dark: #d81b60; --rose-bg: transparent; --rose-border: #ffb6c1; 
+
+            --blue-main: #0078D7; --blue-dark: #005a9e; --green-main: #4caf50; --green-dark: #388e3c;
+
+            --purple-main: #da70d6; --purple-dark: #b359b0;
+
+        }
+
+        /* =======================================
+
+   🚀 终极暗黑玻璃态下拉框 & 分离显示专属样式
+
+   ======================================= */
+
+#domain-selector {
+
+    appearance: none;
+
+    -webkit-appearance: none;
+
+    -moz-appearance: none;
+
+    background-image: url("data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22292.4%22%20height%3D%22292.4%22%3E%3Cpath%20fill%3D%22%23ffffff%22%20d%3D%22M287%2069.4a17.6%2017.6%200%200%200-13-5.4H18.4c-5%200-9.3%201.8-12.9%205.4A17.6%2017.6%200%200%200%200%2082.2c0%205%201.8%209.3%205.4%2012.9l128%20127.9c3.6%203.6%207.8%205.4%2012.8%205.4s9.2-1.8%2012.8-5.4L287%2095c3.5-3.5%205.4-7.8%205.4-12.8%200-5-1.9-9.2-5.5-12.8z%22%2F%3E%3C%2Fsvg%3E");
+
+    background-repeat: no-repeat;
+
+    background-position: right 10px top 50%;
+
+    background-size: 12px auto;
+
+}
+
+#domain-selector option { background-color: #111111; color: #ffffff; font-weight: bold; }
+
+#domain-selector option.recommend-option { background-color: #000000; color: #ff69b4; }
+
+/* ==========================================
+
+   1. 基础网页容器设置 (移除背景控制)
+
+   ========================================== */
+
+body {
+
+    margin: 0; 
+
+    padding: 50px 0; /* 保持你的上下留白 */
+
+    font-family: 'Segoe UI', system-ui, sans-serif;
+
+    display: block; 
+
+    text-align: center;
+
+    min-height: 100vh;
+
+}
+
+
+
+/* ==========================================
+
+   2. 终极背景黑科技：独立底幕 
+
+   (完美绕过苹果iOS的滚动放大Bug)
+
+   ========================================== */
+
+body::before {
+
+    content: "";
+
+    position: fixed; 
+
+    inset: 0;        
+
+    z-index: -1;     
+
+    pointer-events: none; 
+
+    
+
+    background-size: cover !important;
+
+    background-position: center center !important;
+
+    background-repeat: no-repeat !important;
+
+
+
+    /* 💻 默认加载：电脑大屏壁纸 */
+
+    background-image: url('./bg.JPG') !important; 
+
+}
+
+
+
+/* ==========================================
+
+   3. 📱 平板与折叠屏专属壁纸 (宽度 <= 1050px 触发)
+
+   ========================================== */
+
+@media (max-width: 1050px) {
+
+    body::before {
+
+        background-image: url('./ipademail.jpg') !important;
+
+    }
+
+}
+
+
+
+/* ==========================================
+
+   4. 📱 手机竖屏专属壁纸 (宽度 <= 650px 触发)
+
+   ========================================== */
+
+@media (max-width: 650px) {
+
+    body::before {
+
+        background-image: url('./iphoneemail.jpg') !important;
+
+    }
+
+}
+
+        
+
+        
+
+        .main-container, .wrapper, #app { background-color: transparent !important; }
+
+        
+
+       .main-card { 
+
+            background: rgba(0, 0, 0, 0.45) !important; 
+
+            padding: 40px; border-radius: 24px; 
+
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5) !important; 
+
+            display: inline-block; width: 820px; max-width: 95%; 
+
+            backdrop-filter: blur(10px) !important; 
+
+            -webkit-backdrop-filter: blur(10px) !important;
+
+            border: 1px solid rgba(255, 182, 193, 0.3) !important; 
+
+            position: relative; 
+
+            text-align: center; 
+
+        }
+
+        
+
+        .hint-box { 
+
+            background-color: rgba(0, 0, 0, 0.3) !important; 
+
+            color: #ffffff; text-shadow: 1px 1px 2px rgba(0,0,0,0.8); 
+
+            padding: 15px 20px; border-left: 5px solid #ff69b4 !important; 
+
+            border-radius: 8px; margin-bottom: 30px; font-size: 14px; text-align: center; line-height: 1.8; 
+
+            border: 1px solid rgba(255, 182, 193, 0.2) !important; 
+
+        }
+
+
+
+h2 {
+
+    display: flex !important;
+
+    justify-content: center !important; 
+
+    align-items: center !important;    
+
+    gap: 20px !important;              
+
+    width: 100% !important;
+
+    margin: 0 auto 30px auto !important;
+
+    padding: 0 !important;
+
+    
+
+    font-size: 44px !important; 
+
+    font-weight: 900; 
+
+    white-space: nowrap !important;
+
+    color: #ffffff; 
+
+    letter-spacing: 1px !important; 
+
+    text-shadow: 
+
+        0 0 3px #ffffff,
+
+        4px 4px 0px #c2185b,
+
+        0 0 15px #ff69b4,
+
+        0 0 35px #ff69b4,
+
+        5px 5px 15px rgba(0,0,0,0.9);
+
+}
+
+
+
+h2::before, h2::after {
+
+    content: "🌹" !important;
+
+    font-size: 38px !important;
+
+    margin: 0 !important; 
+
+    flex-shrink: 0 !important; 
+
+}
+
+
+
+        .email-card { 
+
+            font-size: 34px; font-weight: bold; color: #ffffff; 
+
+            text-shadow: 0 0 5px #ffffff, 0 0 10px #ff69b4, 0 0 20px #ff69b4, 0 0 40px #d81b60;
+
+            margin: 20px 0; padding: 25px; 
+
+            background: rgba(0, 0, 0, 0.3) !important; 
+
+            border-radius: 16px; 
+
+            border: 2px dashed rgba(255, 105, 180, 0.6) !important; 
+
+            word-break: break-all; text-align: center; 
+
+            box-shadow: 0 0 20px rgba(255, 105, 180, 0.2) !important; 
+
+        }
+
+        
+
+        button { font-size: 15px; padding: 12px 24px; cursor: pointer; border: none; border-radius: 12px; color: white; font-weight: bold; display: flex; align-items: center; justify-content: center; gap: 6px; position: relative; transition: all 0.1s; user-select: none; }
+
+        .btn-custom { background: var(--purple-main); box-shadow: 0 5px 0 var(--purple-dark); }
+
+        .btn-gen { background: var(--rose-main); box-shadow: 0 5px 0 var(--rose-dark); }
+
+        .btn-refresh-inbox { background: var(--green-main); box-shadow: 0 4px 0 var(--green-dark); padding: 8px 18px; font-size: 14px; }
+
+        button:active { transform: translateY(4px) !important; box-shadow: 0 1px 0 rgba(0,0,0,0.2) !important; }
+
+        .btn-group { display: flex; gap: 15px; justify-content: center; margin-bottom: 25px; flex-wrap: wrap; }
+
+        
+
+        input[type="text"] { padding: 12px 15px; font-size: 16px; border: 2px solid rgba(255, 182, 193, 0.5); border-radius: 12px; outline: none; width: 200px; text-align: center; background: rgba(0, 0, 0, 0.5); color: white; }
+
+        
+
+        .inbox-card { margin-top: 40px; text-align: left; background: rgba(0, 0, 0, 0.3) !important; padding: 25px; border-radius: 18px; border: 1px solid rgba(255, 182, 193, 0.2) !important; min-height: 300px; }
+
+        .inbox-header { display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid rgba(255, 182, 193, 0.3); padding-bottom: 15px; margin-bottom: 20px; }
+
+        .inbox-title { margin: 0; color: #ff69b4; font-size: 22px; text-shadow: 1px 1px 3px rgba(0,0,0,0.8); }
+
+        .refresh-timer { font-size: 13px; color: #fff; font-weight: normal; margin-left: 5px; background: rgba(0, 0, 0, 0.6); padding: 2px 8px; border-radius: 20px; border: 1px solid rgba(255, 182, 193, 0.5); }
+
+
+
+        #customToast { visibility: hidden; min-width: 200px; background-color: rgba(0, 0, 0, 0.85); color: #fff; text-align: center; border-radius: 12px; padding: 18px 30px; position: fixed; z-index: 999999 !important; left: 50%; top: 50%; transform: translate(-50%, -50%); font-size: 16px; font-weight: bold; backdrop-filter: blur(8px); }
+
+        #customToast.show { visibility: visible; animation: fadeInOut 2.5s; }
+
+        @keyframes fadeInOut { 0% {opacity: 0;} 15% {opacity: 1;} 85% {opacity: 1;} 100% {opacity: 0;} }
+
+
+
+        .layout-row {
+
+            display: flex;
+
+            flex-direction: row;
+
+            gap: 15px;
+
+            margin-bottom: 15px;
+
+            width: 100%;
+
+            align-items: stretch;
+
+        }
+
+
+
+   @media (max-width: 600px) {
+
+        * { box-sizing: border-box !important; }
+
+        body { padding: 10px !important; }
+
+        .main-card { width: 100% !important; padding: 20px 10px !important; margin: 0 auto !important; }
+
+        
+
+        h2 { 
+
+            font-size: 15px !important; 
+
+            gap: 5px !important; 
+
+            white-space: nowrap !important; 
+
+        }
+
+        h2::before, h2::after { font-size: 15px !important; }
+
+
+
+        .layout-row, .action-row-main { 
+
+            flex-wrap: wrap !important; gap: 8px !important; height: auto !important;
+
+        }
+
+
+
+        .email-card { 
+
+            width: 100% !important; 
+
+            margin: 0 !important; 
+
+            font-size: clamp(14px, 4.5vw, 18px) !important; 
+
+            white-space: nowrap !important; 
+
+            padding: 10px 5px !important; 
+
+            overflow: hidden !important; 
+
+        }
+
+        .btn-gen { width: 100% !important; background: #ff69b4 !important; color: white !important; margin: 0 !important; height: 45px !important;}
+
+
+
+        #customInput { 
+
+            width: 100% !important; 
+
+            flex: 1 1 100% !important; 
+
+            order: 1 !important; 
+
+            margin-bottom: 5px !important; 
+
+        }
+
+        .admin-theme { 
+
+            width: 48% !important; 
+
+            flex: 1 1 45% !important; 
+
+            padding: 0 !important; font-size: 12px !important; 
+
+            order: 2 !important; 
+
+        }
+
+        .custom-theme { 
+
+            width: 48% !important; 
+
+            flex: 1 1 45% !important; 
+
+            padding: 0 !important; font-size: 12px !important; margin: 0 !important; 
+
+            order: 3 !important; 
+
+        }
+
+
+
+        .inbox-header-container { 
+
+            display: grid !important; 
+
+            grid-template-columns: 1fr auto !important; 
+
+            row-gap: 12px !important; 
+
+            column-gap: 5px !important; 
+
+            align-items: center !important;
+
+            padding-bottom: 10px !important;
+
+        }
+
+        .inbox-header-container > div:nth-child(1) { 
+
+            grid-column: 1 / 2 !important; 
+
+            grid-row: 1 !important; 
+
+            display: flex !important; 
+
+            flex-wrap: nowrap !important; 
+
+            align-items: center !important;
+
+            gap: 5px !important; 
+
+        } 
+
+        .inbox-header-container > div:nth-child(3) { 
+
+            grid-column: 2 / 3 !important; 
+
+            grid-row: 1 !important; 
+
+            margin-top: 0 !important; 
+
+        } 
+
+        .mobile-hint-text { 
+
+            grid-column: 1 / 3 !important; 
+
+            grid-row: 2 !important; 
+
+            width: 100% !important; 
+
+            text-align: center !important;
+
+            margin-top: 0 !important; 
+
+            white-space: nowrap !important; 
+
+            font-size: 10px !important; 
+
+            letter-spacing: -0.5px !important; 
+
+        }
+
+        
+
+        .inbox-title { font-size: 14px !important; white-space: nowrap !important; margin: 0 !important; }
+
+        .refresh-timer { font-size: 11px !important; white-space: nowrap !important; padding: 2px 5px !important; margin: 0 !important; }
+
+        .btn-refresh-inbox { padding: 6px 10px !important; font-size: 12px !important; margin: 0 !important; white-space: nowrap !important; }
+
+
+
+        #authInput { width: 100% !important; margin-bottom: 10px !important; }
+
+        button[onclick="copyEmail()"], 
+
+        button[onclick="clearEmails()"], 
+
+        button[onclick*="index.html"] {
+
+            font-size: 11px !important; 
+
+            padding: 0 2px !important; 
+
+            white-space: nowrap !important; 
+
+            letter-spacing: -0.5px !important; 
+
+            overflow: hidden !important; 
+
+        }
+
+       }
+
+     /* 🔥 修复3：收件箱 V2.0 深度优化 (适配手机、平板、折叠屏) */
+
+        @media (max-width: 650px) {
+
+           /* 🔥 彻底修复手机端邮件卡片：使用 Flex 垂直排列，绝不遮挡 */
+
+        .mail-item-box { 
+
+            display: flex !important;
+
+            flex-direction: column !important; /* 让内容从上到下排队 */
+
+            padding: 15px !important; 
+
+        }
+
+        
+
+        /* 验证码按钮：取消悬浮，变成第一块砖 */
+
+        .vcode-btn-admin-clone {
+
+            position: static !important; /* 废除绝对定位 */
+
+            order: -1 !important; /* 强制它排在第一位（最上面） */
+
+            width: 100% !important;
+
+            margin: 0 0 12px 0 !important; /* 屁股下面留出12px空隙 */
+
+            box-sizing: border-box !important;
+
+            height: 42px !important;
+
+        }
+
+
+
+        /* 邮件信息组：排在按钮下面 */
+
+        .mail-meta-group {
+
+            order: 2 !important; 
+
+        }
+
+
+
+       /* 1. 核心修复：限制正文高度，防止无限拉长 */
+
+        .mail-content-hd {
+
+            order: 3 !important; /* 👉 仅仅加上这一行让正文排在最后不被遮挡 */
+
+            max-height: 380px !important; /* 👉 恢复你的高度限制 */
+
+            overflow-y: auto !important;  /* 👉 恢复你的内部滑动条 */
+
+            padding: 12px !important;
+
+            margin-top: 10px !important;
+
+            border-radius: 12px !important;
+
+            border: 1px solid rgba(255, 255, 255, 0.1) !important;
+
+            background: #f8f9fa !important; 
+
+            font-size: 14px !important;
+
+            line-height: 1.6 !important;
+
+            max-width: 100% !important;
+
+        }
+
+        
+
+        /* 稍微压小一点主题文字，防止在手机上换行太难看 */
+
+        .subject-item { font-size: 15px !important; }
+
+            
+
+            /* 内部滚动条美化：让它看起来更高大上 */
+
+            .mail-content-hd::-webkit-scrollbar { width: 4px; }
+
+            .mail-content-hd::-webkit-scrollbar-thumb { background: #ff69b4; border-radius: 10px; }
+
+        }
+
+/* 邮件卡片基础 */
+
+.mail-item-box {
+
+    background: rgba(20, 20, 25, 0.95);
+
+    border-radius: 18px;
+
+    padding: 25px;
+
+    margin-bottom: 25px;
+
+    border-left: 5px solid #ff6b81;
+
+    text-align: left;
+
+    color: #fff;
+
+    box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+
+    position: relative;
+
+    overflow: hidden;
+
+}
+
+
+
+/* 彻底消除间隙 */
+
+.mail-meta-group {
+
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 0px !important;
+
+}
+
+.meta-item {
+
+    font-size: 13px;
+
+    color: #ffb8c6;
+
+    line-height: 1.2;
+
+    margin: 0 !important;
+
+}
+
+.subject-item {
+
+    font-size: 18px;
+
+    font-weight: 900;
+
+    color: #ffffff;
+
+    line-height: 1.4;
+
+    margin: 2px 0 0 0 !important; /* 极窄间隙 */
+
+}
+
+
+
+/* 100% 匹配管理系统按钮的“双态”逻辑 */
+
+.vcode-btn-admin-clone {
+
+    position: absolute;
+
+    top: 15px; /* 向上移动，防止遮挡 */
+
+    right: 20px;
+
+    height: 45px !important;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    padding: 0 15px !important;
+
+    border-radius: 12px !important;
+
+    font-size: 13px !important;
+
+    font-weight: bold !important;
+
+    cursor: pointer;
+
+    white-space: nowrap;
+
+    
+
+    /* --- 初始状态：深黑背景 + 青色边框 --- */
+
+    background: rgba(10, 10, 15, 0.95) !important;
+
+    color: #00f2ff !important;
+
+    border: 1px solid rgba(0, 242, 255, 0.5) !important;
+
+    box-shadow: 0 5px 0 #008899 !important;
+
+    transition: all 0.2s ease;
+
+    z-index: 10;
+
+}
+
+
+
+/* --- 悬停状态：实心高亮 --- */
+
+.vcode-btn-admin-clone:hover {
+
+    background: #00f2ff !important; /* 背景变实心青 */
+
+    color: #000000 !important;       /* 文字变黑 */
+
+    box-shadow: 0 5px 0 #008899, 0 0 20px rgba(0, 242, 255, 0.4) !important;
+
+    transform: translateY(-2px);
+
+}
+
+
+
+.vcode-btn-admin-clone:active {
+
+    transform: translateY(3px);
+
+    box-shadow: 0 1px 0 #008899 !important;
+
+}
+
+
+
+/* 1. 彻底消除缝隙：将 margin-top 设为 0，去掉下划线 */
+
+.subject-item {
+
+    font-size: 18px;
+
+    font-weight: 900;
+
+    color: #ffffff;
+
+    line-height: 1.2;           /* 压缩行高，让文字更紧凑 */
+
+    margin-top: 0px !important;  /* 物理消除与时间的缝隙 */
+
+    border-bottom: none !important; 
+
+    padding-bottom: 0px !important;
+
+}
+
+/* 🎯 核心2：紧接着加上这段，这是为了防止巨无霸图片撑爆你的弹窗 */
+
+        .mail-content-hd img, 
+
+        .mail-content-hd table,
+
+        .mail-content-hd iframe {
+
+            max-width: 100% !important; /* 强制所有图片、表格最大宽度只能是手机屏幕宽度 */
+
+            height: auto !important;    /* 高度按比例自动缩放，绝对不变形 */
+
+            box-sizing: border-box !important;
+
+        }
+
+
+
+/* --- 统一添加的悬停动态效果 --- */
+
+
+
+/* 1. 随机生成按钮 */
+
+.btn-gen:hover {
+
+    filter: brightness(1.1);
+
+    transform: translateY(-2px);
+
+    box-shadow: 0 6px 15px rgba(233, 30, 99, 0.4);
+
+}
+
+
+
+/* 2. 手动刷新按钮 */
+
+.btn-refresh-inbox:hover {
+
+    filter: brightness(1.1);
+
+    transform: translateY(-2px);
+
+    box-shadow: 0 6px 15px rgba(76, 175, 80, 0.4); /* 绿色阴影匹配原色 */
+
+}
+
+
+
+/* 3. 为三个原本是行内样式的按钮定义类名 */
+
+.btn-footer-action {
+
+    transition: all 0.1s; /* 保持点击反馈速度 */
+
+}
+
+
+
+.btn-footer-action:hover {
+
+    filter: brightness(1.1);
+
+    transform: translateY(-2px);
+
+    box-shadow: 0 6px 15px rgba(233, 30, 99, 0.4);
+
+}
+
+
+
+/* 4. 激活码按钮效果 */
+
+.btn-unlock-logic:hover {
+
+    filter: brightness(1.1);
+
+    transform: translateY(-2px);
+
+    box-shadow: 0 6px 15px rgba(233, 30, 99, 0.4);
+
+}
+
+        /* ==========================================
+
+   📱 手机端专属：邮件接收居中正方形弹窗
+
+   ========================================== */
+
+.mail-modal-overlay {
+
+    display: none; /* 默认隐藏，收到邮件才弹 */
+
+    position: fixed; inset: 0;
+
+    background: rgba(0, 0, 0, 0.75);
+
+    backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);
+
+    z-index: 99999; /* 确保在最最顶层，不会被任何东西挡住 */
+
+    justify-content: center; align-items: center;
+
+    padding: 20px;
+
+}
+
+.mail-modal-box {
+
+    background: rgba(20, 20, 25, 0.98);
+
+    border: 2px solid #ff69b4;
+
+    border-radius: 20px;
+
+    width: 90vw; 
+
+    height: 90vw; /* 👉 强制 1:1 正方形 */
+
+    max-width: 400px; max-height: 400px;
+
+    padding: 20px;
+
+    box-shadow: 0 10px 50px rgba(0,0,0,0.8);
+
+    position: relative;
+
+    display: flex; flex-direction: column;
+
+}
+
+.mail-modal-close {
+
+    position: absolute; top: 8px; right: 15px;
+
+    background: transparent; border: none;
+
+    color: #999; font-size: 32px; font-weight: normal;
+
+    cursor: pointer;
+
+}
+
+.mail-modal-hint {
+
+    text-align: center; color: #ffb8c6;
+
+    font-size: 13px; font-weight: bold; margin-bottom: 12px;
+
+    margin-top: 5px;
+
+}
+
+.mail-modal-vcode {
+
+    text-align: center; font-size: 32px; font-weight: 900;
+
+    color: #0f0; text-shadow: 0 0 10px rgba(0,255,0,0.5); /* 绿色荧光感 */
+
+    letter-spacing: 2px; margin-bottom: 15px;
+
+    cursor: pointer; background: rgba(0, 255, 0, 0.1);
+
+    border: 1px dashed #0f0; padding: 10px; border-radius: 12px;
+
+}
+
+.mail-modal-vcode:active { transform: scale(0.95); } /* 点击回弹效果 */
+
+.mail-modal-content {
+
+    flex: 1; overflow-y: auto;
+
+    background: #fff; color: #222;
+
+    padding: 12px; border-radius: 12px; font-size: 14px;
+
+    border: 4px solid rgba(0,0,0,0.2);
+
+}
+
+   
+
+    
+
+   /* 🎯 修复2：详情弹窗里的邮件正文，恢复标准原貌 */
+
+        #modalEmailContent .mail-content-hd {
+
+            background: #ffffff !important;
+
+            color: #222222 !important; /* 强制深色文字，防止看不清 */
+
+            font-size: 16px !important; /* 🔑 核心：强制标准 16px 大小，彻底打破 14px 封印 */
+
+            line-height: 1.6 !important; 
+
+            font-family: 'Segoe UI', system-ui, sans-serif !important; /* 强制恢复标准阅读字体 */
+
+            padding: 15px !important;
+
+            margin: 0 !important;
+
+            border-radius: 12px !important;
+
+            overflow-y: auto !important;
+
+            display: flow-root !important;
+
+        }
+
+
+
+        /* 🎯 强行保底：限制图片不撑爆屏幕 */
+
+        .mail-content-hd img {
+
+            max-width: 100% !important;
+
+            height: auto !important;
+
+            box-sizing: border-box !important;
+
+        } 
+
+          /* 🎯 优化1：解决未打开弹窗前，列表里的邮件预览看不清（强制黑字） */
+
+        .mail-item-box .mail-content-hd,
+
+        .mail-item-box .mail-content-hd * {
+
+            color: #222222 !important; /* 强制预览框里的所有文字变深色，防止白底白字 */
+
+        } 
+
+    /* 🎯 优化3：终极预览框调整（电脑+手机 双端通杀居中） */
+
+        
+
+        /* 1. 仅限手机/平板缩窄黑边，不影响电脑端原本的宽大比例 */
+
+        @media (max-width: 1050px) {
+
+            .inbox-card { padding: 15px 8px !important; } 
+
+            .mail-item-box { padding: 15px 10px !important; border-left: 4px solid #ff6b81 !important; } 
+
+            #emailList .mail-item-box .mail-content-hd { padding: 15px 10px !important; }
+
+        }
+
+
+
+        /* 2. 核心：释放出来的居中魔法（电脑和手机都会强制居中！） */
+
+        #emailList .mail-item-box .mail-content-hd {
+
+            display: flex !important;
+
+            flex-direction: column !important;
+
+            justify-content: center !important; /* 上下垂直居中 */
+
+            align-items: center !important;     /* 左右水平居中 */
+
+            min-height: 180px !important;       /* 保证短邮件也能悬空在中间 */
+
+            text-align: center !important;
+
+            overflow-x: hidden !important; 
+
+        }
+
+
+
+        #emailList .mail-item-box .mail-content-hd * {
+
+            text-align: center !important; 
+
+            float: none !important;        
+
+        }
+
+
+
+        #emailList .mail-item-box .mail-content-hd table,
+
+        #emailList .mail-item-box .mail-content-hd div {
+
+            margin-left: auto !important;
+
+            margin-right: auto !important; 
+
+            max-width: 100% !important;
+
+            width: 100% !important; /* 强制撑满防挤压 */
+
+            box-sizing: border-box !important;
+
+        }
+
+
+
+        #emailList .mail-item-box .mail-content-hd img {
+
+            display: block !important;
+
+            margin: 15px auto !important;  
+
+            max-width: 100% !important;
+
+            height: auto !important;
+
+        }
+
+        }
+
+  
+
+  </style>
+
+    <link rel="preconnect" href="https://guo.roselg.xyz" crossorigin>
+
+    <link rel="dns-prefetch" href="https://guo.roselg.xyz">
+
+</head>
+
+<body>
+
+
+
+<div id="customToast">✅ 已开启全能提醒</div>
+
+
+
+<div class="main-card">
+
+    <div class="hint-box">
+
+        <p style="margin: 0; letter-spacing: 1px;">
+
+           🌹 虾搞动画独家：在下方输入前缀并点击“自定义邮箱”即可重启曾使用过的邮箱进行邮件的接收！
+
+<br>
+
+<span style="display: inline-block; margin-top: 8px;">
+
+    🎁 新人福利：免费10次接收邮件体验！支持国际版即梦、小云雀、Lovart等AI平台的注册及获取赠送积分等用途！
+
+</span>
+
+<br>
+
+<span style="display: inline-block; margin-top: 8px;">
+
+    体验激活码
+
+    <strong onclick="copyTrialCode('LG-VIP-37451046')" style="color: #00f2ff; cursor: pointer; border-bottom: 1px dashed #00f2ff; padding: 0 4px; text-shadow: 0 0 8px rgba(0, 242, 255, 0.6); transition: all 0.3s ease; white-space: nowrap;" onmouseover="this.style.color='#ff69b4'; this.style.borderColor='#ff69b4'" onmouseout="this.style.color='#00f2ff'; this.style.borderColor='#00f2ff'" title="点击一键复制激活码">
+
+        LG-VIP-37451046
+
+    </strong>
+
+    <span style="color: #a0a0a0; font-size: 0.9em;">（点击可一键复制）</span>如需要长期或大量使用请点击联系作者按钮添加微信获取权限！
+
+</span>
+
+        </p>
+
+    </div>
+
+
+
+    <h2>虾搞动画📧 无限临时邮箱系统</h2>
+
+
+
+  <div class="layout-row" style="display: flex; align-items: stretch; gap: 10px; margin-bottom: 15px;">
+
+    <div class="email-card" id="emailPrefixDisplay" style="flex: 1; margin: 0; display: flex; align-items: center; justify-content: center; padding: 10px 20px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">正在呼唤</div>
+
+    
+
+    <select id="domain-selector" onchange="handleDomainChange()" class="email-card" style="flex: none; width: 180px !important; margin: 0; padding: 0 25px 0 5px !important; font-size: 20px !important; text-shadow: 0 0 6px rgba(255,255,255,0.6) !important; cursor: pointer; text-align: center; outline: none;">
+
+       <option value="@roselg.xyz">@roselg.xyz</option>
+
+       <option value="@zmdz.cloud">@zmdz.cloud</option>
+
+       <option value="@zmdz.store">@zmdz.store</option>
+
+       <option value="@tokidog.com">@tokidog.com</option>
+
+       <option value="@lgmail.work">@lgmail.work</option>
+
+    </select>
+
+    
+
+    <button class="btn-gen" onclick="generateRandom()" style="margin: 0; width: 115px !important; flex: none !important; white-space: nowrap !important; padding: 0 5px !important; display: flex; align-items: center; justify-content: center;">🎲 随机生成</button>
+
+</div>
+
+
+
+    <div class="action-row-main" style="display: flex; align-items: center; gap: 15px; margin-bottom: 15px;">
+
+        <a href="admin/man.html" class="btn-clone admin-theme">⚙️ 站长/代理商管理系统</a>
+
+        <input type="text" id="customInput" placeholder="请输入邮箱前缀">
+
+        <button onclick="setCustomEmail()" class="btn-clone custom-theme">🛠️ 自定义邮箱</button>
+
+    </div>
+
+   
+
+   <div style="display: flex !important; flex-direction: row !important; gap: 6px !important; margin-top: 15px !important; width: 100% !important;">
+
+    <button onclick="copyEmail()" class="btn-footer-action" style="flex: 1; height: 45px; background-color: #e91e63; box-shadow: 0 5px 0 #c2185b; white-space: nowrap !important; font-size: clamp(11px, 3vw, 14px) !important; padding: 0 2px !important;">📋 复制地址</button>
+
+    <button onclick="clearEmails()" class="btn-footer-action" style="flex: 1; height: 45px; background-color: #d81b60; box-shadow: 0 5px 0 #ad1457; white-space: nowrap !important; font-size: clamp(11px, 3vw, 14px) !important; padding: 0 2px !important;">🗑️ 清空邮件</button>
+
+   <button onclick="document.getElementById('agent-wechat-modal').style.display='block'" class="btn-footer-action" style="flex: 1; height: 45px; background-color: #f06292; box-shadow: 0 5px 0 #c2185b; white-space: nowrap !important; font-size: clamp(11px, 3vw, 14px) !important; padding: 0 2px !important;">💬 联系作者</button>
+
+</div>
+
+   <div id="agent-wechat-modal" style="display:none; position:fixed; top:50%; left:50%; transform:translate(-50%, -50%); background: rgba(0, 0, 0, 0.7); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 15px; box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4); padding: 30px; z-index:9999; text-align:center; color: #f1f1f1; min-width: 300px; max-width: 90vw;">
+
+    <p style="margin-top: 0; margin-bottom: 20px; font-weight: bold; font-size: 1.1em;">请添加微信联系作者获取激活码</p>
+
+    <img src="man.jpg" alt="微信二维码" style="width:100%; max-width:260px; height:auto; margin-bottom: 20px; border-radius: 8px;">
+
+    <br>
+
+    <button onclick="document.getElementById('agent-wechat-modal').style.display='none'" style="display: block; margin: 0 auto; padding: 8px 25px; cursor: pointer; background: rgba(255, 255, 255, 0.1); color: #fff; border: 1px solid rgba(255, 255, 255, 0.2); border-radius: 5px; font-size: 1em;">关闭</button>
+
+</div>
+
+    <div class="inbox-card">
+
+        <div class="inbox-header inbox-header-container" style="display: flex; align-items: center; justify-content: space-between; gap: 15px; width: 100%; padding: 0 5px; box-sizing: border-box; border-bottom: 1px solid rgba(255, 182, 193, 0.3); padding-bottom: 15px; margin-bottom: 20px;">
+
+            <div style="display: flex; align-items: center; gap: 10px; flex-shrink: 0;">
+
+                <h3 class="inbox-title" style="margin: 0;">📥 虾搞收件箱</h3>
+
+                <span class="refresh-timer" id="timerDisplay">5s 刷新</span>
+
+            </div>
+
+            <div class="mobile-hint-text" style="color: #ffffff !important; text-shadow: 1px 1px 3px rgba(0,0,0,0.8);">
+
+                💡 如您没有激活码请点击联系作者按钮添加微信获取
+
+            </div>
+
+            
+
+            <div style="flex-shrink: 0;">
+
+                <button class="btn-refresh-inbox" onclick="manualRefresh()" style="margin: 0; padding: 8px 16px;">🔄 手动刷新</button>
+
+            </div>
+
+        </div>
+
+
+
+        <div id="emailList">
+
+            <p style="text-align:center; color:#999; padding-top:80px;">正在连接虾搞动画...</p>
+
+        </div>
+
+    </div> 
+
+    <div class="inbox-card" id="history-section" style="margin-top: 25px; display: none;">
+
+        <div class="inbox-header" style="border-bottom: 1px solid rgba(255, 182, 193, 0.3); padding-bottom: 10px; margin-bottom: 15px; display: flex; justify-content: space-between; align-items: center;">
+
+            <div style="display: flex; align-items: center; gap: 10px;">
+
+                <h3 class="inbox-title" style="font-size: 18px; margin:0; color: #ff69b4; text-shadow: 1px 1px 3px rgba(0,0,0,0.8);">📜 最近使用记录 (Top 20)</h3>
+
+            </div>
+
+            <div style="display: flex; gap: 8px;">
+
+                <button class="btn-refresh-inbox" onclick="toggleMultiSelectMode()" id="multi-select-btn" style="padding: 4px 10px; font-size: 12px; background: rgba(0, 242, 255, 0.2); border: 1px solid #00f2ff; color: #00f2ff; box-shadow: none;">多选模式</button>
+
+                <button class="btn-refresh-inbox" onclick="clearHistory()" style="padding: 4px 10px; font-size: 12px; background: rgba(216, 27, 96, 0.2); border: 1px solid #d81b60; box-shadow: none;">一键清空</button>
+
+            </div>
+
+        </div>
+
+        <div id="history-list" style="color: #eee; font-size: 14px;"></div>
+
+        <div id="batch-delete-control" style="display: none; margin-top: 15px; padding-top: 10px; border-top: 1px dashed rgba(255,255,255,0.2); text-align: center;">
+
+            <button onclick="deleteSelected()" style="background: #ff4d4d; color: white; border: none; padding: 8px 20px; border-radius: 8px; cursor: pointer; font-weight: bold; box-shadow: 0 4px 0 #b33636;">🗑️ 删除选中项</button>
+
+        </div>
+
+    </div>
+
+
+
+    <div id="custom-confirm-modal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); z-index: 99999; align-items: center; justify-content: center; backdrop-filter: blur(5px);">
+
+       <div style="background: rgba(15, 15, 20, 0.98); border: 1px solid #ffb6c1; padding: 25px; border-radius: 15px; width: 320px; text-align: center; box-shadow: 0 0 20px rgba(255,182,193,0.2); backdrop-filter: blur(10px);">
+
+            <p id="confirm-text" style="color: #fff; font-size: 16px; margin-bottom: 25px; line-height: 1.5;"></p>
+
+            <div style="display: flex; gap: 15px; justify-content: center;">
+
+                <button id="confirm-yes" style="background: linear-gradient(135deg, #ff416c, #ff4b2b); color: white; border: none; padding: 8px 25px; border-radius: 8px; cursor: pointer; font-weight: bold;">确定</button>
+
+                <button id="confirm-no" style="background: #333; color: white; border: none; padding: 8px 25px; border-radius: 8px; cursor: pointer; font-weight: bold;">取消</button>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+<script>
+
+    const API_BASE = "https://guo.roselg.xyz/api/emails";
+
+   // 1. 初始化：网页刚打开时，直接读取下拉菜单里默认选中的那个后缀
+
+    let DOMAIN = document.getElementById("domain-selector").value;
+
+
+
+    // 2. 监听器：一旦你在网页上点击下拉菜单切换了后缀，立马更新系统
+
+    document.getElementById("domain-selector").addEventListener("change", function() {
+
+        DOMAIN = this.value;
+
+        
+
+        // 贴心小优化：切换域名后，把屏幕上原来显示的旧邮箱清空，提示需要重新生成
+
+        const emailDisplay = document.getElementById("emailText");
+
+        if (emailDisplay) {
+
+            emailDisplay.innerText = "请点击右侧生成新域名邮箱";
+
+            emailDisplay.style.color = "#999"; 
+
+        }
+
+        currentEmail = ""; 
+
+    });
+
+    let currentEmail = "";
+
+    let timeLeft = 5; 
+
+    let lastEmailCount = -1;
+
+    let rollInterval;
+
+    let fullServerEmails = []; 
+
+
+
+    function showToast(msg) {
+
+        const toast = document.getElementById("customToast");
+
+        toast.innerText = msg;
+
+        toast.className = "show";
+
+        setTimeout(() => { toast.className = ""; }, 2500);
+
+    }
+
+
+
+   function generateRandom() {
+
+        const randPrefix = Math.random().toString(36).substring(2, 10);
+
+        updateDisplay(randPrefix, true);
+
+    }
+
+
+
+    function setCustomEmail() {
+
+        const inputEl = document.getElementById('customInput');
+
+        let valPrefix = inputEl.value.trim(); 
+
+        
+
+        if(!valPrefix) { return showToast("⚠️ 请先输入邮箱前缀"); }
+
+        const validRegex = /^[a-zA-Z0-9!#$%&'*+\-\/=?^_`{|}~.]+$/;
+
+        if (!validRegex.test(valPrefix)) { return showToast("❌ 包含非法字符，请检查输入！"); }
+
+        if (!/[a-zA-Z0-9]/.test(valPrefix)) { return showToast("❌ 邮箱名不能全是符号"); }
+
+        if (/^[^a-zA-Z0-9]|[^a-zA-Z0-9]$/.test(valPrefix)) { return showToast("❌ 邮箱名必须以字母或数字开头/结尾"); }
+
+        if (/\.\./.test(valPrefix)) { return showToast("❌ 邮箱名不能包含连续的点号"); }
+
+
+
+        updateDisplay(valPrefix, false);
+
+        showToast("✅ 自定义邮箱已激活");
+
+    }
+
+
+
+    function handleDomainChange() {
+
+        DOMAIN = document.getElementById("domain-selector").value;
+
+        const currentPrefixText = document.getElementById('emailPrefixDisplay').innerText;
+
+        
+
+        if (!currentPrefixText || currentPrefixText === "正在呼唤" || currentPrefixText === "请重新生成") {
+
+            const emailDisplay = document.getElementById("emailPrefixDisplay");
+
+            emailDisplay.innerText = "请重新生成";
+
+            emailDisplay.style.color = "#999"; 
+
+            currentEmail = ""; 
+
+        } else {
+
+            finalizeUpdate(currentPrefixText);
+
+            showToast("🔄 域名已切换");
+
+        }
+
+    }
+
+
+
+    function updateDisplay(prefix, isRandom = false) {
+
+        const textElement = document.getElementById('emailPrefixDisplay');
+
+        textElement.style.color = "#ffffff"; 
+
+        clearInterval(rollInterval); 
+
+        
+
+        if (isRandom) {
+
+            const chars = 'abcdefghijklmnopqrstuvwxyz0123456789';
+
+            let iterations = 0;
+
+            const targetLength = prefix.length;
+
+            rollInterval = setInterval(() => {
+
+                let randomStr = '';
+
+                for (let i = 0; i < targetLength; i++) randomStr += chars[Math.floor(Math.random() * chars.length)];
+
+                textElement.innerText = randomStr; 
+
+                if (++iterations >= 15) {
+
+                    clearInterval(rollInterval);
+
+                    finalizeUpdate(prefix);
+
+                    showToast("✅ 随机邮箱已激活");
+
+                }
+
+            }, 40);
+
+        } else {
+
+            finalizeUpdate(prefix);
+
+        }
+
+    }
+
+
+
+    function finalizeUpdate(prefix) {
+
+        document.getElementById('emailPrefixDisplay').innerText = prefix;
+
+        currentEmail = prefix + DOMAIN;
+
+        lastEmailCount = -1; 
+
+        timeLeft = 5; 
+
+        fetchEmails();
+
+    }
+
+
+
+   
+
+
+
+    function copyEmail() {
+
+        if(!currentEmail) return;
+
+        window.copyToClipboard(currentEmail, "📋 邮箱地址已复制");
+
+    }
+
+
+
+    function clearEmails() {
+
+        if (!fullServerEmails || fullServerEmails.length === 0) return showToast("📭 当前没有邮件可清理");
+
+        const maxTimestamp = Math.max(...fullServerEmails.map(m => m.timestamp || 0));
+
+        const cutoffTime = maxTimestamp > 0 ? maxTimestamp : Date.now();
+
+        localStorage.setItem('clearTime_' + currentEmail, cutoffTime);
+
+        renderEmails([]); 
+
+        showToast("🗑️ 邮箱已清理，等待新邮件...");
+
+    }
+
+
+
+    function startCountdown() {
+
+        setInterval(() => {
+
+            if (--timeLeft < 0) {
+
+                fetchEmails();
+
+                timeLeft = 5;
+
+            }
+
+            document.getElementById('timerDisplay').innerText = `${timeLeft}s 刷新`;
+
+        }, 1000);
+
+    }
+
+
+
+    function manualRefresh() {
+
+        fetchEmails();
+
+        timeLeft = 5; 
+
+        showToast("🔄 正在刷新邮件");
+
+    }
+
+
+
+    async function fetchEmails() {
+
+        if (!currentEmail) return;
+
+        const code = localStorage.getItem('authCode');
+
+        let devId = localStorage.getItem('deviceId');
+
+        if (!devId || devId === "null" || devId === "undefined") {
+
+            devId = 'dev_' + Math.random().toString(36).substring(2, 10);
+
+            localStorage.setItem('deviceId', devId);
+
+        }
+
+        if (!code) {
+
+            if (!document.getElementById('authInput')) renderLockedInbox();
+
+            return;
+
+        }
+
+
+
+        try {
+
+            const response = await fetch(`${API_BASE}?address=${currentEmail}&code=${code}&deviceId=${devId}`);
+
+            if (response.status === 401 || response.status === 403) {
+
+                localStorage.removeItem('authCode');
+
+                renderLockedInbox("❌ 激活码无效，请重新输入！");
+
+                return;
+
+            }
+
+           // 🚀 这里是修复核心：把“大包裹”拆开
+
+            const result = await response.json(); 
+
+            const emailsData = result.emails || [];    // 抽屉1：邮件
+
+            const historyData = result.history || []; // 抽屉2：历史记录
+
+
+
+            fullServerEmails = emailsData; // 给全局变量赋值
+
+            renderHistory(historyData);    // 👈 顺手把历史记录显示出来
+
+
+
+            let cutoffTime = parseInt(localStorage.getItem('clearTime_' + currentEmail) || '0');
+
+            // 注意：下面这里改成了 emailsData.filter，而不是 data.filter
+
+            const visibleEmails = emailsData.filter(mail => {
+
+                if (mail.timestamp) return mail.timestamp > cutoffTime;
+
+                return true; 
+
+            });
+
+
+
+            // 🎯 修复：先渲染数据，确保 window.currentVisibleEmails 被赋值
+
+            if (typeof renderEmails === 'function') {
+
+                renderEmails(visibleEmails);
+
+            }
+
+
+
+            // 🎯 然后再执行语音播报和自动弹窗逻辑
+
+            if (visibleEmails.length > lastEmailCount && lastEmailCount !== -1) {
+
+                try {
+
+                    if (typeof window.SpeechSynthesisUtterance !== 'undefined' && window.speechSynthesis) {
+
+                        const msg = new SpeechSynthesisUtterance("您有新的邮件,请注意查收！");
+
+                        msg.lang = "zh-CN";
+
+                        window.speechSynthesis.speak(msg);
+
+                    }
+
+                } catch (speechError) { console.log("语音播报不可用"); }
+
+
+
+                if (window.Notification && Notification.permission === "granted") {
+
+                    const newMail = visibleEmails[0];
+
+                    if(newMail) {
+
+                        new Notification("📬 虾搞动画收件箱新邮件！", {
+
+                            body: `发件人: ${newMail.from}\n主题: ${newMail.subject}`,
+
+                            icon: "https://roselg.xyz/favicon.ico"
+
+                        });
+
+                    }
+
+                }
+
+
+
+                // 如果是手机端，收到新邮件直接弹窗显示
+
+                if (window.innerWidth <= 650) {
+
+                    openEmailModal(0, "刚刚"); 
+
+                }
+
+            }
+
+            lastEmailCount = visibleEmails.length;
+
+          
+
+        } catch (e) {
+
+            document.getElementById('emailList').innerHTML = '<p style="color:red; text-align:center; padding-top:50px;">系统繁忙: ' + String(e) + '</p>';
+
+        }
+
+    }
+
+
+
+    function getSmartVCode(html, text) {
+
+        const cleanText = (html || text || "").replace(/<[^>]*>/g, ' ');
+
+        const commonGarbage = ['2024','2025','2026','DESIGN','LIMITLESS','CREATIVITY','SUPPORT'];
+
+        const candidates = cleanText.match(/\b[A-Z0-9]{4,8}\b/g) || [];
+
+        const filtered = candidates.filter(c => !commonGarbage.includes(c.toUpperCase()));
+
+        if (filtered.length === 0) return null;
+
+        return filtered.sort((a, b) => {
+
+            const aHasAlpha = /[A-Z]/.test(a), aHasNum = /\d/.test(a);
+
+            const bHasAlpha = /[A-Z]/.test(b), bHasNum = /\d/.test(b);
+
+            if ((aHasAlpha && aHasNum) && !(bHasAlpha && bHasNum)) return -1;
+
+            if (!(aHasAlpha && aHasNum) && (bHasAlpha && bHasNum)) return 1;
+
+            if (a.length === 6 && b.length !== 6) return -1;
+
+            if (a.length !== 6 && b.length === 6) return 1;
+
+            return 0;
+
+        })[0];
+
+    }
+
+
+
+function renderEmails(emails) {
+
+        // 🚀 性能优化 V2.0：生成数据指纹，拦截无效渲染 (消除 DOM 抖动)
+
+        // 把所有邮件的时间戳拼成一串字符串作为指纹，如果没有邮件就是 'empty'
+
+        const currentFingerprint = emails.length === 0 ? 'empty' : emails.map(m => m.timestamp).join('|');
+
+        
+
+        // 如果当前指纹和上一次渲染的指纹完全一样，说明没有新邮件也没有被清空
+
+        if (window.lastRenderedFingerprint === currentFingerprint) {
+
+            return; // 🛑 数据没变，直接罢工，绝对不碰底层 DOM！
+
+        }
+
+        // 记录新的指纹
+
+        window.lastRenderedFingerprint = currentFingerprint;
+
+
+
+        // 🎯 修复：使用解构翻转，确保索引绝对匹配最新邮件
+
+        window.currentVisibleEmails = [...emails].reverse(); 
+
+        const container = document.getElementById('emailList');
+
+        
+
+        if (!emails || emails.length === 0) {
+
+            container.innerHTML = '<p style="text-align:center; color:#999; padding-top:80px;">暂无新邮件，虾搞动画系统将实时获取最新邮件！</p>';
+
+            return;
+
+        }
+
+
+
+        container.innerHTML = window.currentVisibleEmails.map((mail, index) => {
+
+            let timeString = "时间未知";
+
+            if(mail.timestamp) {
+
+                const d = new Date(mail.timestamp);
+
+                timeString = `${d.getFullYear()}-${(d.getMonth()+1).toString().padStart(2,'0')}-${d.getDate().toString().padStart(2,'0')} ${d.getHours().toString().padStart(2,'0')}:${d.getMinutes().toString().padStart(2,'0')}:${d.getSeconds().toString().padStart(2,'0')}`;
+
+            }
+
+            const vCode = getSmartVCode(mail.html, mail.text);
+
+            
+
+            return `
+
+            <div class="mail-item-box" onclick="openEmailModal(${index}, '${timeString}')" style="cursor: pointer;">
+
+                ${vCode ? `
+
+                <button onclick="copyToClipboard('${vCode}', '✅ 验证码 ${vCode} 已复制'); event.stopPropagation();" class="vcode-btn-admin-clone">
+
+                    ⚡ 一键复制验证码
+
+                </button>
+
+                ` : ''}
+
+                <div class="mail-meta-group">
+
+                    <div class="meta-item">👤 发件：${mail.from}</div>
+
+                    <div class="meta-item">📅 时间：${timeString}</div>
+
+                    <div class="subject-item">📑 主题：${mail.subject}</div>
+
+                </div>                
+
+                <div class="mail-content-hd">
+
+                    ${mail.html || mail.text}
+
+                </div>
+
+            </div>`;
+
+        }).join('');
+
+    }
+
+
+
+    window.copyToClipboard = function(text, msg) {
+
+        if (navigator.clipboard && window.isSecureContext) {
+
+            navigator.clipboard.writeText(text).then(() => { showToast(msg); }).catch(() => { fallbackCopy(text, msg); });
+
+        } else { fallbackCopy(text, msg); }
+
+    };
+
+
+
+    function fallbackCopy(text, msg) {
+
+        const textArea = document.createElement("textarea");
+
+        textArea.value = text;
+
+        textArea.style.position = "fixed"; textArea.style.top = "-9999px";
+
+        document.body.appendChild(textArea);
+
+        if (navigator.userAgent.match(/ipad|iphone|mac/i)) {
+
+            const range = document.createRange();
+
+            range.selectNodeContents(textArea);
+
+            const selection = window.getSelection();
+
+            selection.removeAllRanges(); selection.addRange(range);
+
+            textArea.setSelectionRange(0, 999999);
+
+        } else { textArea.select(); }
+
+        try { if(document.execCommand('copy')) showToast(msg); } catch (err) {}
+
+        document.body.removeChild(textArea);
+
+    }
+
+    
+
+    function renderLockedInbox(msg = "激活后即可查看实时邮件") {
+
+        const container = document.getElementById('emailList');
+
+        if (!container) return;
+
+        container.innerHTML = `
+
+            <div style="padding: 40px 20px; text-align: center; border: 2px dashed #ff69b4; border-radius: 15px; margin: 20px; background: transparent;">
+
+                <div style="font-size: 40px; margin-bottom: 15px;">🔒</div>
+
+                <h3 style="color: #fff; margin-bottom: 20px;">${msg}</h3>
+
+                <div style="display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; align-items: center;">
+
+                    <input type="password" id="authInput" placeholder="输入激活码..." style="padding: 12px; border-radius: 8px; border: 1px solid #ff69b4; background: rgba(255,255,255,0.1); color: #fff; width: 200px; outline: none;">
+
+                    <button onclick="unlock()" class="btn-unlock-logic" style="padding: 12px 25px; border-radius: 8px; background: #ff69b4; color: #fff; border: none; cursor: pointer; font-weight: bold; box-shadow: 0 5px 0 #c2185b; white-space: nowrap;">立即激活</button>
+
+                </div>
+
+            </div>`;
+
+    }
+
+
+
+async function unlock() {
+
+    const codeInput = document.getElementById('authInput');
+
+    // 🌟 修复 1：这里加上了读取输入框逻辑
+
+    const code = codeInput.value.trim(); 
+
+    
+
+    if (!code) return showToast("⚠️ 请输入激活码");
+
+    
+
+    const devId = localStorage.getItem('deviceId');
+
+    
+
+    try {
+
+        const response = await fetch(`${API_BASE.replace('emails', 'verify')}`, {
+
+            method: 'POST',
+
+            headers: { 'Content-Type': 'application/json' },
+
+            // 🌟 修复 2：这里必须带上 address 参数！
+
+            body: JSON.stringify({ 
+
+                code: code, 
+
+                deviceId: devId,
+
+                address: currentEmail 
+
+            })
+
+        });
+
+        
+
+        const data = await response.json();
+
+        
+
+        if (response.ok) {
+
+            localStorage.setItem('authCode', code);
+
+            if (data.isAdmin) {
+
+                showToast(`👑 欢迎归来，站长！\n----------------\n🔥 核心特权已全部解锁\n🚀 正在载入最高管理系统...`);
+
+            } else {
+
+                showToast(`✅ 激活成功！\n----------------\n🔋 剩余次数：${data.leftUsage}\n⏳ 剩余时间：${data.expireMsg}`);
+
+            }
+
+            setTimeout(() => location.reload(), 2500);
+
+        } else {
+
+            showToast("❌ " + (data.error || "激活码无效！"));
+
+        }
+
+    } catch (error) {
+
+        showToast("🌐 网络错误");
+
+    }
+
+}
+
+    if (!localStorage.getItem('deviceId')) localStorage.setItem('deviceId', 'dev_' + Math.random().toString(36).substring(2, 10));
+
+    if (window.Notification) Notification.requestPermission();
+
+    
+
+    document.getElementById('customInput').addEventListener('input', function(e) {
+
+        const originalVal = this.value;
+
+        const newVal = originalVal.replace(/[^a-zA-Z0-9!#$%&'*+\-\/=?^_`{|}~.]/g, '');
+
+        if (originalVal !== newVal) { this.value = newVal; showToast("⚠️ 只能输入合法的邮箱前缀哦！"); }
+
+    });
+
+
+
+    generateRandom();
+
+    startCountdown();
+
+// 🚀 Step 3：打开沉浸式详情弹窗
+
+    // 🚀 修复1：添加丢失的关闭弹窗指令
+
+window.closeEmailModal = function() {
+
+    document.querySelectorAll('.email-modal-overlay').forEach(m => {
+
+        m.style.display = 'none';
+
+    });
+
+    // 解除页面底层的滑动锁定
+
+    document.body.classList.remove('no-scroll', 'hide-ui-for-modal');
+
+};
+
+  window.openEmailModal = function(index, timeString) {
+
+        if (window.innerWidth > 1050) return; 
+
+
+
+        const mail = window.currentVisibleEmails[index];
+
+        if(!mail) return;
+
+        const vCode = getSmartVCode(mail.html, mail.text);
+
+        let content = mail.html || mail.text;
+
+        
+
+        let hintHtml = ''; 
+
+        let giantVCodeBox = ''; // 🌟 新增：提炼出来的无敌居中框
+
+
+
+        if (vCode) {
+
+            // 1. 顶部提示语
+
+            hintHtml = `
+
+                <div style="text-align: center; margin: 10px 0 5px 0;">
+
+                    <span style="display: inline-block; background: rgba(255,105,180,0.1); color: #ff69b4; padding: 8px 18px; border-radius: 20px; font-size: 13px; font-weight: bold; border: 1px dashed #ff69b4; letter-spacing: 1px;">
+
+                        💡 点击下方验证码即可直接复制
+
+                    </span>
+
+                </div>
+
+            `;
+
+
+
+            // 2. 🌟 提取到最顶部的独立居中验证码（绝对免疫原邮件排版干扰）
+
+            giantVCodeBox = `
+
+                <div style="display: flex; justify-content: center; align-items: center; width: 100%; margin: 15px 0 25px 0; padding-bottom: 25px; border-bottom: 1px dashed rgba(0,0,0,0.1);">
+
+                    <div style="display: inline-block; cursor: pointer; color: #ff69b4; font-size: 38px; font-weight: 900; border: 2px dashed #ff69b4; border-radius: 12px; padding: 15px 45px; background: #fff; box-shadow: 0 5px 20px rgba(255,105,180,0.25); letter-spacing: 4px; text-align: center; transition: transform 0.1s;"
+
+                         onclick="window.copyToClipboard('${vCode}', '✅ 验证码 ${vCode} 已复制'); event.stopPropagation();"
+
+                         onmousedown="this.style.transform='scale(0.95)'" 
+
+                         onmouseup="this.style.transform='scale(1)'">
+
+                        ${vCode}
+
+                    </div>
+
+                </div>
+
+            `;
+
+
+
+           // 3. 🌟 原邮件正文里的验证码只做温柔的高亮 (全面兼容所有老旧手机版)
+
+const safeInlineHighlight = `<span style="background: rgba(255,105,180,0.1) !important; color: #ff69b4 !important; font-weight: bold !important; padding: 2px 6px !important; border-radius: 4px !important; border-bottom: 2px solid #ff69b4 !important;">${vCode}</span>`;
+
+const safeRegex = new RegExp('\\b' + vCode + '\\b', 'g'); // 🔑 核心修复：换成最稳定的 \b 语法
+
+content = content.replace(safeRegex, safeInlineHighlight);
+
+        }
+
+
+
+        // 4. 组装弹窗：把巨型验证码框放在白底正文的最前面！
+
+        document.getElementById('modalEmailContent').innerHTML = `
+
+            ${hintHtml}
+
+            <div class="mail-meta-group" style="padding: 15px; border-bottom: 1px solid rgba(255,255,255,0.1);">
+
+                <div class="meta-item" style="color:rgba(255,255,255,0.8); margin-bottom: 4px;">👤 发件：${mail.from}</div>
+
+                <div class="meta-item" style="color:rgba(255,255,255,0.8); margin-bottom: 4px;">📅 时间：${timeString}</div>
+
+                <div class="subject-item" style="font-size: 16px; color: #fff; margin-top: 8px !important; font-weight: bold;">📑 主题：${mail.subject}</div>
+
+            </div>
+
+            <div class="mail-content-hd">
+
+                ${giantVCodeBox} ${content}
+
+            </div>
+
+        `;
+
+
+
+        document.querySelectorAll('.email-modal-overlay').forEach(m => {
+
+            if (m.parentNode !== document.body) document.body.appendChild(m);
+
+            m.style.display = 'flex';
+
+        });
+
+        document.body.classList.add('no-scroll', 'hide-ui-for-modal'); 
+
+    };
+
+    // 🚀 一键复制体验激活码功能
+
+        function copyTrialCode(code) {
+
+            // 使用现代浏览器的剪贴板 API
+
+            if (navigator.clipboard) {
+
+                navigator.clipboard.writeText(code).then(() => {
+
+                    // 如果你的页面有 showToast 提示框，就用弹窗提示；如果没有，就用浏览器原生的 alert
+
+                    if (typeof showToast === 'function') {
+
+                        showToast('✅ 体验激活码复制成功：' + code);
+
+                    } else {
+
+                        alert('✅ 体验激活码复制成功：\n' + code + '\n快去使用吧！');
+
+                    }
+
+                }).catch(err => {
+
+                    console.error('复制失败', err);
+
+                });
+
+            } else {
+
+                // 兼容老版本浏览器
+
+                const textArea = document.createElement("textarea");
+
+                textArea.value = code;
+
+                document.body.appendChild(textArea);
+
+                textArea.select();
+
+                try {
+
+                    document.execCommand('copy');
+
+                    if (typeof showToast === 'function') {
+
+                        showToast('✅ 体验激活码复制成功：' + code);
+
+                    } else {
+
+                        alert('✅ 体验激活码复制成功：\n' + code);
+
+                    }
+
+                } catch (err) {
+
+                    console.error('复制失败', err);
+
+                }
+
+                document.body.removeChild(textArea);
+
+            }
+
+        }
+
+    let isMultiSelect = false;
+
+
+
+function renderHistory(history) {
+
+    const container = document.getElementById('history-list');
+
+    const section = document.getElementById('history-section');
+
+    if (section) section.style.display = (history && history.length > 0) ? 'block' : 'none';
+
+    if (!container) return;
+
+
+
+    container.innerHTML = history.map(email => `
+
+        <div class="history-item" style="display: flex; align-items: center; justify-content: space-between; background: rgba(255,255,255,0.05); margin-bottom: 12px; padding: 15px 20px; border-radius: 15px; border: 1px solid rgba(255,255,255,0.1); gap: 10px;">
+
+            <div style="display: flex; align-items: center; gap: 15px; flex: 1; min-width: 0;">
+
+                <input type="checkbox" class="history-check" value="${email}" 
+
+                    style="display: ${isMultiSelect ? 'block' : 'none'}; width: 20px; height: 20px; cursor: pointer; flex-shrink: 0;" 
+
+                    onclick="event.stopPropagation();">
+
+                <span style="font-family: system-ui, -apple-system, sans-serif; font-size: 20px; font-weight: 800; color: #ffffff; text-shadow: 0 0 10px rgba(255,182,193,0.8), 0 0 5px rgba(255,255,255,0.5); letter-spacing: 0.5px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; pointer-events: none;">
+
+                    ${email}
+
+                </span>
+
+            </div>
+
+            <div style="display: flex; align-items: center; gap: 10px; flex-shrink: 0;">
+
+                ${!isMultiSelect ? `
+
+                    <button onclick="handleHistoryClick('${email}')" style="background: linear-gradient(135deg, #6e8efb, #a777e3); color: white; border: none; padding: 8px 16px; border-radius: 8px; font-size: 13px; cursor: pointer; font-weight: bold; box-shadow: 0 4px 10px rgba(110,142,251,0.3); white-space: nowrap;">查看邮件</button>
+
+                    <button onclick="deleteSingleHistory('${email}')" style="background: linear-gradient(135deg, #ff416c, #ff4b2b); color: white; border: none; padding: 8px 16px; border-radius: 8px; font-size: 13px; cursor: pointer; font-weight: bold; box-shadow: 0 4px 10px rgba(255,65,108,0.3); white-space: nowrap;">删除</button>
+
+                ` : ''}
+
+            </div>
+
+        </div>
+
+    `).join('');
+
+}
+
+
+
+function showCustomConfirm(message) {
+
+    return new Promise((resolve) => {
+
+        const modal = document.getElementById('custom-confirm-modal');
+
+        const text = document.getElementById('confirm-text');
+
+        const yesBtn = document.getElementById('confirm-yes');
+
+        const noBtn = document.getElementById('confirm-no');
+
+        text.innerText = message;
+
+        modal.style.display = 'flex';
+
+        const handleResult = (result) => {
+
+            modal.style.display = 'none';
+
+            yesBtn.onclick = null; noBtn.onclick = null;
+
+            resolve(result);
+
+        };
+
+        yesBtn.onclick = () => handleResult(true);
+
+        noBtn.onclick = () => handleResult(false);
+
+    });
+
+}
+
+
+
+async function handleHistoryClick(email) {
+
+    if (await showCustomConfirm('确定要切换并查看该邮箱的邮件吗？')) {
+
+        const [prefix, domain] = email.split('@');
+
+        const domainSelector = document.getElementById('domain-selector');
+
+        if (domainSelector) domainSelector.value = '@' + domain;
+
+        DOMAIN = '@' + domain;
+
+        const customInput = document.getElementById('customInput');
+
+        if (customInput) customInput.value = prefix;
+
+        
+
+        // 🚀 核心修复：直接刷新，不再调用 setCustomEmail 产生多余弹窗
+
+        finalizeUpdate(prefix); 
+
+        showToast('🔄 已切换收件箱');
+
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+
+    }
+
+}
+
+
+
+
+
+function toggleMultiSelectMode() {
+
+    isMultiSelect = !isMultiSelect;
+
+    const btn = document.getElementById('multi-select-btn');
+
+    const bar = document.getElementById('batch-delete-control');
+
+    if (btn) btn.innerText = isMultiSelect ? '取消多选' : '多选模式';
+
+    if (bar) bar.style.display = isMultiSelect ? 'block' : 'none';
+
+    fetchEmails(); 
+
+}
+
+
+
+async function clearHistory() {
+
+    if (await showCustomConfirm('🚨 确定要清空所有历史记录吗？')) {
+
+        await executeDeleteAction('clear-history', {});
+
+    }
+
+}
+
+
+
+async function deleteSelected() {
+
+    const selected = Array.from(document.querySelectorAll('.history-check:checked')).map(el => el.value);
+
+    if (selected.length === 0) return showToast('⚠️ 请先勾选邮箱');
+
+    if (await showCustomConfirm(`确定删除选中的 ${selected.length} 条记录吗？`)) {
+
+        await executeDeleteAction('delete-history', { emailsToDelete: selected });
+
+    }
+
+}
+
+
+
+async function deleteSingleHistory(email) {
+
+    if (await showCustomConfirm('确定要删除这条历史记录吗？')) {
+
+        await executeDeleteAction('delete-history', { emailsToDelete: [email] });
+
+    }
+
+}
+
+
+
+async function executeDeleteAction(endpoint, extraBody) {
+
+    const code = localStorage.getItem('authCode');
+
+    const devId = localStorage.getItem('deviceId');
+
+    try {
+
+        const res = await fetch(`https://guo.roselg.xyz/api/${endpoint}`, {
+
+            method: 'POST',
+
+            headers: { 'Content-Type': 'application/json' },
+
+            body: JSON.stringify({ code, deviceId: devId, ...extraBody })
+
+        });
+
+        if (res.ok) { showToast('✅ 操作成功'); fetchEmails(); }
+
+    } catch (e) { showToast('❌ 请求失败'); }
+
+}
+
+</script>
+
+
+
+<div id="emailDetailModal" class="email-modal-overlay">
+
+    <div class="email-modal-box">
+
+        <div class="modal-header-row">
+
+            <span style="color: #ff69b4; font-weight: bold;">📬 邮件详情</span>
+
+            <button class="modal-close-btn" onclick="closeEmailModal()">✖ 关闭</button>
+
+        </div>
+
+        <div id="modalEmailContent"></div>
+
+    </div>
+
+
+
+</body>
+
+</html>
