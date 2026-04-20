@@ -765,7 +765,7 @@ h2::before, h2::after {
     <div class="inbox-card">
         <div class="inbox-header inbox-header-container" style="display: flex; align-items: center; justify-content: space-between; gap: 15px; width: 100%; padding: 0 5px; box-sizing: border-box; border-bottom: 1px solid rgba(255, 182, 193, 0.3); padding-bottom: 15px; margin-bottom: 20px;">
             <div style="display: flex; align-items: center; gap: 10px; flex-shrink: 0;">
-                <h3 class="inbox-title" style="margin: 0;">📥 YMR收件箱</h3>
+                <h3 class="inbox-title" style="margin: 0;">📥 瞎搞AIGC收件箱</h3>
                 <span class="refresh-timer" id="timerDisplay">5s 刷新</span>
             </div>
             <div class="mobile-hint-text" style="color: #ffffff !important; text-shadow: 1px 1px 3px rgba(0,0,0,0.8);">
@@ -964,7 +964,7 @@ h2::before, h2::after {
                 if (window.Notification && Notification.permission === "granted") {
                     const newMail = visibleEmails[0];
                     if(newMail) {
-                        new Notification("📬 YMR收件箱新邮件！", {
+                        new Notification("📬 瞎搞AIGC收件箱新邮件！", {
                             body: `发件人: ${newMail.from}\n主题: ${newMail.subject}`,
                             icon: "https://roselg.xyz/favicon.ico"
                         });
@@ -1350,10 +1350,10 @@ async function executeDeleteAction(endpoint, extraBody) {
         <div id="modalEmailContent"></div>
     </div>
 </div>
-    <div class="inbox-card" id="history-section" style="margin-top: 25px; display: none;">
+    <div id="history-section" style="margin-top: 25px; display: none; background: rgba(0, 0, 0, 0.5) !important; padding: 25px; border-radius: 24px; border: 1px solid rgba(255, 182, 193, 0.3) !important; backdrop-filter: blur(15px); -webkit-backdrop-filter: blur(15px); box-shadow: 0 10px 40px rgba(0,0,0,0.6); text-align: left;">
     <div class="inbox-header" style="border-bottom: 1px solid rgba(255, 182, 193, 0.3); padding-bottom: 10px; margin-bottom: 15px; display: flex; justify-content: space-between; align-items: center;">
         <div style="display: flex; align-items: center; gap: 10px;">
-            <h3 class="inbox-title" style="font-size: 18px; margin:0;">📜 最近使用记录 (Top 20)</h3>
+            <h3 class="inbox-title" style="font-size: 18px; margin:0; color: #ffffff; text-shadow: 0 0 10px #ff69b4, 1px 1px 3px rgba(0,0,0,0.8);">📜 最近使用记录 (Top 20)</h3>
         </div>
         <div style="display: flex; gap: 8px;">
             <button class="btn-refresh-inbox" onclick="toggleMultiSelectMode()" id="multi-select-btn" style="padding: 4px 10px; font-size: 12px; background: rgba(0, 242, 255, 0.2); border: 1px solid #00f2ff; color: #00f2ff; box-shadow: none;">多选模式</button>
