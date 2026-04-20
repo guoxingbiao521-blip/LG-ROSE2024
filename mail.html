@@ -1253,7 +1253,7 @@ content = content.replace(safeRegex, safeInlineHighlight);
 // ==========================================
 let isMultiSelect = false;
 
-// --- 1. 渲染列表 (样式对齐、按钮化、逻辑分离) ---
+// --- 1. 渲染列表 (样式、颜色、按钮完全对齐) ---
 function renderHistory(history) {
     const container = document.getElementById('history-list');
     const section = document.getElementById('history-section');
@@ -1272,7 +1272,7 @@ function renderHistory(history) {
                     style="display: ${isMultiSelect ? 'block' : 'none'}; width: 18px; height: 18px; cursor: pointer; z-index: 10;" 
                     onclick="event.stopPropagation();">
                 
-                <span style="font-family: 'Courier New', Courier, monospace; font-size: 16px; font-weight: bold; color: #ffb6c1; letter-spacing: 0.5px;">
+                <span style="font-family: 'Courier New', Courier, monospace; font-size: 18px; font-weight: bold; color: #ffb6c1; text-shadow: 0 0 8px rgba(255,182,193,0.3); letter-spacing: 0.5px;">
                     ${email}
                 </span>
             </div>
@@ -1280,11 +1280,11 @@ function renderHistory(history) {
             <div style="display: flex; align-items: center; gap: 8px;">
                 ${!isMultiSelect ? `
                     <button onclick="handleHistoryClick('${email}')" 
-                        style="background: linear-gradient(135deg, #6e8efb, #a777e3); color: white; border: none; padding: 6px 12px; border-radius: 6px; font-size: 12px; cursor: pointer; font-weight: bold; box-shadow: 0 2px 6px rgba(110,142,251,0.4);">
+                        style="background: linear-gradient(135deg, #6e8efb, #a777e3); color: white; border: none; padding: 6px 14px; border-radius: 6px; font-size: 12px; cursor: pointer; font-weight: bold; box-shadow: 0 2px 6px rgba(110,142,251,0.4);">
                         查看邮件
                     </button>
                     <button onclick="deleteSingleHistory('${email}')" 
-                        style="background: linear-gradient(135deg, #ff416c, #ff4b2b); color: white; border: none; padding: 6px 12px; border-radius: 6px; font-size: 12px; cursor: pointer; font-weight: bold; box-shadow: 0 2px 6px rgba(255,65,108,0.4);">
+                        style="background: linear-gradient(135deg, #ff416c, #ff4b2b); color: white; border: none; padding: 6px 14px; border-radius: 6px; font-size: 12px; cursor: pointer; font-weight: bold; box-shadow: 0 2px 6px rgba(255,65,108,0.4);">
                         删除
                     </button>
                 ` : ''}
@@ -1293,56 +1293,75 @@ function renderHistory(history) {
     `).join('');
 }
 
-// --- 2. 点击历史切换 (带确认弹窗 & 按钮触发) ---
-function handleHistoryClick(email) {
-    if (!confirm('站长，确定要切换并查看该邮箱的邮件吗？')) return;
+// --- 2. 🚀 新增：自定义暗黑弹窗调用工具 ---
+function showCustomConfirm(message) {
+    return new Promise((resolve) => {
+        const modal = document.getElementById('custom-confirm-modal');
+        const text = document.getElementById('confirm-text');
+        const yesBtn = document.getElementById('confirm-yes');
+        const noBtn = document.getElementById('confirm-no');
 
-    const [prefix, domain] = email.split('@');
-    const domainSelector = document.getElementById('domain-selector');
-    if (domainSelector) domainSelector.value = '@' + domain;
-    DOMAIN = '@' + domain;
+        text.innerText = message;
+        modal.style.display = 'flex';
 
-    const customInput = document.getElementById('customInput');
-    if (customInput) {
-        customInput.value = prefix;
-        // 触发获取邮件
-        if (typeof setCustomEmail === 'function') setCustomEmail();
-        showToast('🔄 已自动切换到历史收件箱');
-        window.scrollTo({ top: 0, behavior: 'smooth' });
+        const handleResult = (result) => {
+            modal.style.display = 'none';
+            yesBtn.onclick = null;
+            noBtn.onclick = null;
+            resolve(result);
+        };
+
+        yesBtn.onclick = () => handleResult(true);
+        noBtn.onclick = () => handleResult(false);
+    });
+}
+
+// --- 3. 动作函数 (全面接入自定义弹窗) ---
+async function handleHistoryClick(email) {
+    if (await showCustomConfirm('确定要切换并查看该邮箱的邮件吗？')) {
+        const [prefix, domain] = email.split('@');
+        const domainSelector = document.getElementById('domain-selector');
+        if (domainSelector) domainSelector.value = '@' + domain;
+        DOMAIN = '@' + domain;
+        const customInput = document.getElementById('customInput');
+        if (customInput) {
+            customInput.value = prefix;
+            if (typeof setCustomEmail === 'function') setCustomEmail();
+            showToast('🔄 已切换收件箱');
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
     }
 }
 
-// --- 3. 多选模式开关 ---
 function toggleMultiSelectMode() {
     isMultiSelect = !isMultiSelect;
     const btn = document.getElementById('multi-select-btn');
     const bar = document.getElementById('batch-delete-control');
     if (btn) btn.innerText = isMultiSelect ? '取消多选' : '多选模式';
     if (bar) bar.style.display = isMultiSelect ? 'block' : 'none';
-    
-    // 重新渲染以更新 UI (不再直接 return 而是渲染)
     fetchEmails(); 
 }
 
-// --- 4. 删除逻辑 (全部带确认弹窗) ---
 async function clearHistory() {
-    if (!confirm('🚨 确定要清空所有记录吗？此操作不可恢复！')) return;
-    await executeDeleteAction('clear-history', {});
+    if (await showCustomConfirm('🚨 警报：确定要清空所有历史记录吗？')) {
+        await executeDeleteAction('clear-history', {});
+    }
 }
 
 async function deleteSelected() {
     const selected = Array.from(document.querySelectorAll('.history-check:checked')).map(el => el.value);
     if (selected.length === 0) return showToast('⚠️ 请先勾选邮箱');
-    if (!confirm(`确定要删除选中的 ${selected.length} 条记录吗？`)) return;
-    await executeDeleteAction('delete-history', { emailsToDelete: selected });
+    if (await showCustomConfirm(`确定要删除选中的 ${selected.length} 条记录吗？`)) {
+        await executeDeleteAction('delete-history', { emailsToDelete: selected });
+    }
 }
 
 async function deleteSingleHistory(email) {
-    if (!confirm('确定要删除该条记录吗？')) return;
-    await executeDeleteAction('delete-history', { emailsToDelete: [email] });
+    if (await showCustomConfirm('确定要删除这条历史记录吗？')) {
+        await executeDeleteAction('delete-history', { emailsToDelete: [email] });
+    }
 }
 
-// --- 5. 通用删除请求工具 ---
 async function executeDeleteAction(endpoint, extraBody) {
     const code = localStorage.getItem('authCode');
     const devId = localStorage.getItem('deviceId');
@@ -1353,11 +1372,11 @@ async function executeDeleteAction(endpoint, extraBody) {
             body: JSON.stringify({ code, deviceId: devId, ...extraBody })
         });
         if (res.ok) {
-            showToast('✅ 操作成功！');
-            fetchEmails(); // 刷新数据
+            showToast('✅ 操作成功');
+            fetchEmails();
         }
     } catch (e) {
-        showToast('❌ 网络请求失败');
+        showToast('❌ 请求失败');
     }
 }
 </script>
@@ -1369,6 +1388,15 @@ async function executeDeleteAction(endpoint, extraBody) {
             <button class="modal-close-btn" onclick="closeEmailModal()">✖ 关闭</button>
         </div>
         <div id="modalEmailContent"></div>
+    </div>
+</div>
+    <div id="custom-confirm-modal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); z-index: 9999; align-items: center; justify-content: center; backdrop-filter: blur(5px);">
+    <div style="background: #1a1a1a; border: 1px solid #ffb6c1; padding: 25px; border-radius: 15px; width: 320px; text-align: center; box-shadow: 0 0 20px rgba(255,182,193,0.2);">
+        <p id="confirm-text" style="color: #fff; font-size: 16px; margin-bottom: 25px; line-height: 1.5;"></p>
+        <div style="display: flex; gap: 15px; justify-content: center;">
+            <button id="confirm-yes" style="background: linear-gradient(135deg, #ff416c, #ff4b2b); color: white; border: none; padding: 8px 25px; border-radius: 8px; cursor: pointer; font-weight: bold;">确定</button>
+            <button id="confirm-no" style="background: #333; color: white; border: none; padding: 8px 25px; border-radius: 8px; cursor: pointer; font-weight: bold;">取消</button>
+        </div>
     </div>
 </div>
 </body>
