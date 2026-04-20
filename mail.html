@@ -1253,39 +1253,71 @@ content = content.replace(safeRegex, safeInlineHighlight);
 // ==========================================
 let isMultiSelect = false;
 
-// 1. 渲染列表
+// 1. 渲染列表 (修复了多选拦截、字体、以及勾选失效问题)
 function renderHistory(history) {
-    if (isMultiSelect) return;
     const container = document.getElementById('history-list');
     const section = document.getElementById('history-section');
-    section.style.display = 'block'; // 有数据就显形
+    
+    if (section) section.style.display = 'block';
+    if (!container) return;
+
+    // 🚀 重点：删除了原本 1258 行的 if (isMultiSelect) return; 
+    // 只有删了它，开启多选模式时列表才不会消失或卡死
     if (!history || history.length === 0) {
         container.innerHTML = '<p style="text-align:center; color:#999; padding: 20px;">暂无历史记录</p>';
         return;
     }
-    
+
     container.innerHTML = history.map(email => `
-        <div class="history-item" onclick="handleHistoryClick('${email}')" style="display: flex; align-items: center; justify-content: space-between; background: rgba(255,255,255,0.05); margin-bottom: 8px; padding: 10px 15px; border-radius: 10px; border: 1px solid rgba(255,255,255,0.1); cursor: pointer;">
-            <div style="display: flex; align-items: center; gap: 10px;">
-                <input type="checkbox" class="history-check" value="${email}" style="display: ${isMultiSelect ? 'block' : 'none'}; width: 16px; height: 16px;" onclick="event.stopPropagation()">
-                <span style="font-family: monospace; color: #ffb6c1;">${email}</span>
+        <div class="history-item" 
+             onclick="if(!isMultiSelect) handleHistoryClick('${email}')" 
+             style="display: flex; align-items: center; justify-content: space-between; background: rgba(255,255,255,0.05); margin-bottom: 8px; padding: 12px 15px; border-radius: 10px; border: 1px solid rgba(255,255,255,0.1); cursor: pointer; position: relative;">
+            
+            <div style="display: flex; align-items: center; gap: 10px; flex: 1;">
+                <input type="checkbox" class="history-check" value="${email}" 
+                    style="display: ${isMultiSelect ? 'block' : 'none'}; width: 18px; height: 18px; cursor: pointer; z-index: 10; position: relative;" 
+                    onclick="event.stopPropagation();">
+                
+                <span style="font-family: 'Courier New', Courier, monospace; font-weight: bold; color: #ffb6c1; font-size: 16px; letter-spacing: 0.5px; pointer-events: none;">
+                    ${email}
+                </span>
             </div>
-            <button onclick="deleteSingleHistory('${email}'); event.stopPropagation();" style="background: none; border: none; color: #ff4d4d; cursor: pointer; font-size: 12px;">删除</button>
+
+            <div style="display: flex; align-items: center; gap: 10px;">
+                ${!isMultiSelect ? `
+                    <span style="font-size: 11px; color: #888; background: rgba(255,255,255,0.1); padding: 2px 6px; border-radius: 4px;">点击查看</span>
+                    <button onclick="deleteSingleHistory('${email}'); event.stopPropagation();" style="background: none; border: none; color: #ff4d4d; cursor: pointer; font-size: 12px; z-index: 10;">删除</button>
+                ` : ''}
+            </div>
         </div>
     `).join('');
 }
 
-// 2. 点击历史切换邮箱
+// 2. 点击历史切换邮箱 (修复：确保自动填入并触发邮件拉取)
 function handleHistoryClick(email) {
-    if (isMultiSelect) return;
-    const [prefix, domain] = email.split('@');
-    document.getElementById('domain-selector').value = '@' + domain;
-    DOMAIN = '@' + domain;
-    document.getElementById('customInput').value = prefix;
-    setCustomEmail();
-    showToast("🔄 已自动切回历史邮箱");
-}
+    if (isMultiSelect) return; 
 
+    const [prefix, domain] = email.split('@');
+    
+    // 切换域名
+    const domainSelector = document.getElementById('domain-selector');
+    if (domainSelector) domainSelector.value = '@' + domain;
+    DOMAIN = '@' + domain;
+
+    // 填入前缀 (对应你截图里的 customInput)
+    const customInput = document.getElementById('customInput');
+    if (customInput) {
+        customInput.value = prefix;
+        
+        // 🚀 核心：调用你截图 1286 行的 setCustomEmail 来触发获取邮件
+        if (typeof setCustomEmail === 'function') {
+            setCustomEmail();
+        }
+        
+        showToast('🔄 已自动切换到历史收件箱');
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+}
 // 3. 多选模式开关
 function toggleMultiSelectMode() {
     isMultiSelect = !isMultiSelect;
