@@ -1253,26 +1253,24 @@ content = content.replace(safeRegex, safeInlineHighlight);
 // ==========================================
 let isMultiSelect = false;
 
-// 1. 渲染列表 (完全重构：按钮化、颜色对齐、逻辑分离)
+// --- 1. 渲染列表 (样式对齐、按钮化、逻辑分离) ---
 function renderHistory(history) {
     const container = document.getElementById('history-list');
     const section = document.getElementById('history-section');
-    
     if (section) section.style.display = 'block';
     if (!container) return;
 
     if (!history || history.length === 0) {
-        container.innerHTML = '<p style="text-align:center; color:#999; padding: 20px; font-size: 14px;">📜 暂无记录（仅记录已收件的邮箱）</p>';
+        container.innerHTML = '<p style="text-align:center; color:#999; padding: 20px;">暂无历史记录</p>';
         return;
     }
 
     container.innerHTML = history.map(email => `
-        <div class="history-item" 
-             style="display: flex; align-items: center; justify-content: space-between; background: rgba(255,255,255,0.05); margin-bottom: 12px; padding: 12px 15px; border-radius: 12px; border: 1px solid rgba(255,255,255,0.1); position: relative;">
-            
-            <div style="display: flex; align-items: center; gap: 15px; flex: 1;">
+        <div class="history-item" style="display: flex; align-items: center; justify-content: space-between; background: rgba(255,255,255,0.05); margin-bottom: 12px; padding: 12px 15px; border-radius: 12px; border: 1px solid rgba(255,255,255,0.1); position: relative;">
+            <div style="display: flex; align-items: center; gap: 12px; flex: 1;">
                 <input type="checkbox" class="history-check" value="${email}" 
-                    style="display: ${isMultiSelect ? 'block' : 'none'}; width: 18px; height: 18px; cursor: pointer; z-index: 10;">
+                    style="display: ${isMultiSelect ? 'block' : 'none'}; width: 18px; height: 18px; cursor: pointer; z-index: 10;" 
+                    onclick="event.stopPropagation();">
                 
                 <span style="font-family: 'Courier New', Courier, monospace; font-size: 16px; font-weight: bold; color: #ffb6c1; letter-spacing: 0.5px;">
                     ${email}
@@ -1282,12 +1280,11 @@ function renderHistory(history) {
             <div style="display: flex; align-items: center; gap: 8px;">
                 ${!isMultiSelect ? `
                     <button onclick="handleHistoryClick('${email}')" 
-                        style="background: linear-gradient(135deg, #6e8efb, #a777e3); color: white; border: none; padding: 5px 12px; border-radius: 6px; font-size: 12px; cursor: pointer; font-weight: bold; box-shadow: 0 2px 8px rgba(110, 142, 251, 0.3);">
+                        style="background: linear-gradient(135deg, #6e8efb, #a777e3); color: white; border: none; padding: 6px 12px; border-radius: 6px; font-size: 12px; cursor: pointer; font-weight: bold; box-shadow: 0 2px 6px rgba(110,142,251,0.4);">
                         查看邮件
                     </button>
-                    
                     <button onclick="deleteSingleHistory('${email}')" 
-                        style="background: linear-gradient(135deg, #ff416c, #ff4b2b); color: white; border: none; padding: 5px 12px; border-radius: 6px; font-size: 12px; cursor: pointer; font-weight: bold; box-shadow: 0 2px 8px rgba(255, 65, 108, 0.3);">
+                        style="background: linear-gradient(135deg, #ff416c, #ff4b2b); color: white; border: none; padding: 6px 12px; border-radius: 6px; font-size: 12px; cursor: pointer; font-weight: bold; box-shadow: 0 2px 6px rgba(255,65,108,0.4);">
                         删除
                     </button>
                 ` : ''}
@@ -1296,10 +1293,9 @@ function renderHistory(history) {
     `).join('');
 }
 
-// 2. 点击切换逻辑 (移除自动跳转，仅通过按钮触发)
+// --- 2. 点击历史切换 (带确认弹窗 & 按钮触发) ---
 function handleHistoryClick(email) {
-    // 弹窗确认
-    if (!confirm('确定要切换并查看该邮箱的邮件吗？')) return;
+    if (!confirm('站长，确定要切换并查看该邮箱的邮件吗？')) return;
 
     const [prefix, domain] = email.split('@');
     const domainSelector = document.getElementById('domain-selector');
@@ -1309,32 +1305,60 @@ function handleHistoryClick(email) {
     const customInput = document.getElementById('customInput');
     if (customInput) {
         customInput.value = prefix;
-        if (typeof setCustomEmail === 'function') {
-            setCustomEmail();
-        }
+        // 触发获取邮件
+        if (typeof setCustomEmail === 'function') setCustomEmail();
+        showToast('🔄 已自动切换到历史收件箱');
         window.scrollTo({ top: 0, behavior: 'smooth' });
     }
 }
 
-// 3. 删除单条 (强制弹窗确认)
-async function deleteSingleHistory(email) {
-    if (!confirm('站长，确定要永久删除这条历史记录吗？')) return;
-    await executeDeleteAction('delete-history', { emailsToDelete: [email] });
+// --- 3. 多选模式开关 ---
+function toggleMultiSelectMode() {
+    isMultiSelect = !isMultiSelect;
+    const btn = document.getElementById('multi-select-btn');
+    const bar = document.getElementById('batch-delete-control');
+    if (btn) btn.innerText = isMultiSelect ? '取消多选' : '多选模式';
+    if (bar) bar.style.display = isMultiSelect ? 'block' : 'none';
+    
+    // 重新渲染以更新 UI (不再直接 return 而是渲染)
+    fetchEmails(); 
 }
 
-// 4. 批量删除 (强制弹窗确认)
+// --- 4. 删除逻辑 (全部带确认弹窗) ---
+async function clearHistory() {
+    if (!confirm('🚨 确定要清空所有记录吗？此操作不可恢复！')) return;
+    await executeDeleteAction('clear-history', {});
+}
+
 async function deleteSelected() {
     const selected = Array.from(document.querySelectorAll('.history-check:checked')).map(el => el.value);
-    if (selected.length === 0) return showToast('⚠️ 请先勾选需要删除的邮箱');
-    
+    if (selected.length === 0) return showToast('⚠️ 请先勾选邮箱');
     if (!confirm(`确定要删除选中的 ${selected.length} 条记录吗？`)) return;
     await executeDeleteAction('delete-history', { emailsToDelete: selected });
 }
 
-// 5. 一键清空 (强制弹窗确认)
-async function clearHistory() {
-    if (!confirm('🚨 警报：确定要清空所有历史记录吗？此操作不可撤销！')) return;
-    await executeDeleteAction('clear-history', {});
+async function deleteSingleHistory(email) {
+    if (!confirm('确定要删除该条记录吗？')) return;
+    await executeDeleteAction('delete-history', { emailsToDelete: [email] });
+}
+
+// --- 5. 通用删除请求工具 ---
+async function executeDeleteAction(endpoint, extraBody) {
+    const code = localStorage.getItem('authCode');
+    const devId = localStorage.getItem('deviceId');
+    try {
+        const res = await fetch(`https://guo.roselg.xyz/api/${endpoint}`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ code, deviceId: devId, ...extraBody })
+        });
+        if (res.ok) {
+            showToast('✅ 操作成功！');
+            fetchEmails(); // 刷新数据
+        }
+    } catch (e) {
+        showToast('❌ 网络请求失败');
+    }
 }
 </script>
 
