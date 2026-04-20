@@ -1023,6 +1023,7 @@ function renderEmails(emails) {
         if (window.lastRenderedFingerprint === currentFingerprint) {
             return; // 🛑 数据没变，直接罢工，绝对不碰底层 DOM！
         }
+    
         // 记录新的指纹
         window.lastRenderedFingerprint = currentFingerprint;
 
@@ -1254,6 +1255,7 @@ let isMultiSelect = false;
 
 // 1. 渲染列表
 function renderHistory(history) {
+    if (isMultiSelect) return;
     const container = document.getElementById('history-list');
     const section = document.getElementById('history-section');
     if (!history || history.length === 0) {
