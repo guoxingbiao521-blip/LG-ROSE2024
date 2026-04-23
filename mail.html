@@ -910,14 +910,22 @@ h2::before, h2::after {
     }
 
     function startCountdown() {
-        setInterval(() => {
-            if (--timeLeft < 0) {
-                fetchEmails();
-                timeLeft = 5;
-            }
-            document.getElementById('timerDisplay').innerText = `${timeLeft}s 刷新`;
-        }, 1000);
-    }
+    setInterval(() => {
+        // 🚩 核心修复：如果开启了多选模式，就跳过倒计时和刷新
+        // 注意：请确认你前端定义的变量名是 isMultiSelectMode 还是 multiSelectMode
+        if (window.isMultiSelectMode === true) {
+            timeLeft = 5; // 重置倒计时，防止退出多选后瞬间刷新
+            document.getElementById('timerDisplay').innerText = `已暂停刷新`;
+            return; 
+        }
+
+        if (--timeLeft < 0) {
+            fetchEmails();
+            timeLeft = 5;
+        }
+        document.getElementById('timerDisplay').innerText = `${timeLeft}s 刷新`;
+    }, 1000);
+}
 
     function manualRefresh() {
         fetchEmails();
