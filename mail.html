@@ -911,12 +911,11 @@ h2::before, h2::after {
 
     function startCountdown() {
     setInterval(() => {
-        // 🚩 核心修复：如果开启了多选模式，就跳过倒计时和刷新
-        // 注意：请确认你前端定义的变量名是 isMultiSelectMode 还是 multiSelectMode
-        if (window.isMultiSelectMode === true) {
-            timeLeft = 5; // 重置倒计时，防止退出多选后瞬间刷新
-            document.getElementById('timerDisplay').innerText = `已暂停刷新`;
-            return; 
+        // 🚩 核心修复：直接使用你图里的 isMultiSelect 变量
+        if (typeof isMultiSelect !== 'undefined' && isMultiSelect === true) {
+            timeLeft = 5; // 重置倒计时，防止退出后秒刷
+            document.getElementById('timerDisplay').innerText = `多选模式已暂停刷新`;
+            return; // 💥 只要是多选状态，就直接跳过后面的刷新逻辑
         }
 
         if (--timeLeft < 0) {
@@ -927,6 +926,7 @@ h2::before, h2::after {
     }, 1000);
 }
 
+    
     function manualRefresh() {
         fetchEmails();
         timeLeft = 5; 
