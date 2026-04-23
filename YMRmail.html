@@ -920,15 +920,22 @@ h2::before, h2::after {
         showToast("🗑️ 邮箱已清理，等待新邮件...");
     }
 
-    function startCountdown() {
-        setInterval(() => {
-            if (--timeLeft < 0) {
-                fetchEmails();
-                timeLeft = 5;
-            }
-            document.getElementById('timerDisplay').innerText = `${timeLeft}s 刷新`;
-        }, 1000);
-    }
+   function startCountdown() {
+    setInterval(() => {
+        // 🚩 核心修复：直接使用你图里的 isMultiSelect 变量
+        if (typeof isMultiSelect !== 'undefined' && isMultiSelect === true) {
+            timeLeft = 5; // 重置倒计时，防止退出后秒刷
+            document.getElementById('timerDisplay').innerText = `多选模式已暂停刷新`;
+            return; // 💥 只要是多选状态，就直接跳过后面的刷新逻辑
+        }
+
+        if (--timeLeft < 0) {
+            fetchEmails();
+            timeLeft = 5;
+        }
+        document.getElementById('timerDisplay').innerText = `${timeLeft}s 刷新`;
+    }, 1000);
+}
 
     function manualRefresh() {
         fetchEmails();
