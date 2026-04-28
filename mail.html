@@ -747,15 +747,15 @@ h2::before, h2::after {
     <button class="btn-gen" onclick="generateRandom()" style="margin: 0; width: 115px !important; flex: none !important; white-space: nowrap !important; padding: 0 5px !important; display: flex; align-items: center; justify-content: center;">🎲 随机生成</button>
 </div>
 
-   <div class="action-row-main" style="display: flex; align-items: center; gap: 15px; margin-bottom: 15px;">
+  <div class="action-row-main" style="display: flex; align-items: center; gap: 15px; margin-bottom: 15px;">
     <div style="display: flex; gap: 8px; flex-shrink: 0; width: 220px;">
         <a href="admin/index.html" class="btn-clone admin-theme" style="flex: 1; white-space: nowrap; padding: 0; font-size: 13px; display: flex; align-items: center; justify-content: center;">⚙️ 管理系统</a>
         <a href="https://shop.zmdz.store" class="btn-clone admin-theme" style="flex: 1; white-space: nowrap; padding: 0; font-size: 13px; display: flex; align-items: center; justify-content: center;">🛒 卡密商城</a>
     </div>
 
-    <input type="text" id="customInput" placeholder="请输入邮箱前缀" style="width: 120px; flex: none;">
+    <input type="text" id="customInput" placeholder="请输入邮箱前缀" style="width: 130px !important; max-width: 130px !important; flex: 0 0 130px !important; min-width: 130px !important;">
 
-    <button onclick="setCustomEmail()" class="btn-clone custom-theme">🛠️ 自定义邮箱</button>
+    <button onclick="setCustomEmail()" class="btn-clone custom-theme" style="flex-shrink: 0;">🛠️ 自定义邮箱</button>
 </div>
    
    <div style="display: flex !important; flex-direction: row !important; gap: 6px !important; margin-top: 15px !important; width: 100% !important;">
