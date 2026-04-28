@@ -5,35 +5,27 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>🌹 LG筑梦电子无限临时邮箱 system 🌹</title>
     <style>
-        /* --- 下拉菜单美化开始 --- */
-/* 1. 针对下拉列表容器：半透明 + 毛玻璃 + 弧边 */
-#domainList, .dropdown-menu, .select-items, .custom-select-list {
-    background: rgba(0, 0, 0, 0.7) !important; /* 半透明黑 */
-    backdrop-filter: blur(12px) !important;    /* 磨砂玻璃质感 */
-    border-radius: 12px !important;            /* 这里的 12px 就是你要的弧边 */
-    border: 1px solid rgba(255, 255, 255, 0.15) !important; /* 极细边框线 */
-    padding: 5px 0 !important;
-    margin-top: 5px !important;
-    overflow: hidden !important;
-    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5) !important;
-}
-
-/* 2. 针对列表里的选项：文字间距与对齐 */
-#domainList li, .dropdown-item, .select-items div {
-    color: #ffffff !important;
-    padding: 12px 20px !important;
-    font-size: 14px !important;
-    list-style: none !important; /* 去掉小圆点 */
+  /* 1. 美化下拉框的外壳（平时看到的样子） */
+#domain-selector {
+    background: rgba(0, 0, 0, 0.5) !important; /* 半透明背景 */
+    backdrop-filter: blur(10px) !important;    /* 毛玻璃 */
+    border-radius: 10px !important;            /* 弧边 */
+    color: white !important;                   /* 文字颜色 */
+    border: 1px solid rgba(255, 255, 255, 0.2) !important; /* 淡淡的边框 */
+    padding: 0 15px !important;
     cursor: pointer !important;
-    transition: all 0.2s ease !important;
+    outline: none !important;
+    /* 去掉原生的小箭头，换成更好看的风格（可选） */
+    appearance: none;
+    -webkit-appearance: none;
 }
 
-/* 3. 悬停效果：鼠标划过时变成你按钮那样的玫红色 */
-#domainList li:hover, .dropdown-item:hover, .select-items div:hover {
-    background: rgba(233, 30, 99, 0.6) !important; /* 玫红色半透明 */
-    color: #fff !important;
+/* 2. 针对列表里的选项（注意：原生 select 对这里的支持非常有限） */
+#domain-selector option {
+    background-color: #222 !important; /* 只能改背景色，改不了透明 */
+    color: white !important;
+    padding: 10px !important;
 }
-/* --- 下拉菜单美化结束 --- */
         /* =======================================
            🚀 终极沉浸式邮件弹窗样式 
            ======================================= */
