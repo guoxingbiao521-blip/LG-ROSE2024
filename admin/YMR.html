@@ -294,10 +294,13 @@
             </div>
         </div>
 
-        <div class="action-btn-group">
-            <button class="btn-main-3d btn-gen" onclick="generate()">⚡ 激活码生成</button>
-            <button class="btn-main-3d btn-copy" onclick="copyAll()">一键复制</button>
-        </div>
+         <div class="action-btn-group" style="display: flex; gap: 10px; width: 100%; align-items: center;">
+    <a href="https://shop.zmdz.store" class="btn-main-3d btn-gen" style="flex: 1; height: 46px !important; line-height: 46px !important; text-decoration: none; display: flex; align-items: center; justify-content: center; margin: 0; padding: 0 !important; font-size: 14px; white-space: nowrap;">🛒 卡密商城</a>
+    
+    <button class="btn-main-3d btn-gen" onclick="generate()" style="flex: 1; height: 46px !important; line-height: 46px !important; margin: 0; padding: 0 !important; font-size: 14px; white-space: nowrap;">⚡ 生成激活码</button>
+    
+    <button class="btn-main-3d btn-copy" onclick="copyAll()" style="flex: 1; height: 46px !important; line-height: 46px !important; margin: 0; padding: 0 !important; font-size: 14px; white-space: nowrap;">一键复制</button>
+</div>
 
         <div class="result-wrapper">
             <div id="singleCopyHint" class="single-copy-hint">💡 如需单独复制某个激活码，请直接点击该激活码！</div>
