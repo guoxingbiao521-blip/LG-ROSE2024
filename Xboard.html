@@ -1,0 +1,666 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>筑梦电子网络部署中心</title>
+    <style>
+        :root {
+            --bg-color: #0d0208;
+            --surface-color: rgba(25, 4, 18, 0.7);
+            --code-bg: #12030c;
+            --text-main: #fff0f5;
+            --text-muted: #ff99bb;
+            --primary-pink: #ff2a85;
+            --neon-red: #ff3333;
+            --gradient-pink-red: linear-gradient(135deg, #ff2a85 0%, #ff3333 100%);
+            --glow-pink: rgba(255, 42, 133, 0.4);
+            --glow-red: rgba(255, 51, 51, 0.3);
+            --radius-lg: 24px;
+            --radius-md: 16px;
+            --radius-sm: 12px;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'PingFang SC', 'Microsoft YaHei', -apple-system, sans-serif;
+            background: radial-gradient(circle at 50% 20%, #2a081c 0%, #0d0208 70%);
+            color: var(--text-main);
+            line-height: 1.6;
+            min-height: 100vh;
+            padding: 3rem 1rem;
+            overflow-x: hidden;
+        }
+
+        body::before {
+            content: '';
+            position: absolute;
+            top: 10%; left: 20%;
+            width: 300px;
+            height: 300px;
+            background: var(--primary-pink);
+            filter: blur(150px);
+            opacity: 0.15;
+            z-index: -1;
+            pointer-events: none;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 3.5rem;
+            position: relative;
+        }
+
+        h1 {
+            font-size: 3.8rem;
+            font-weight: 900;
+            letter-spacing: 3px;
+            background: linear-gradient(90deg, #ff2a85, #ff3333, #ff77aa, #ff2a85);
+            background-size: 300% auto;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: shine 6s linear infinite;
+            filter: drop-shadow(0 0 20px rgba(255, 42, 133, 0.5));
+            margin-bottom: 0.8rem;
+        }
+
+        .subtitle {
+            color: var(--text-muted);
+            font-size: 1.1rem;
+            letter-spacing: 2px;
+            font-weight: 600;
+            text-transform: uppercase;
+            display: inline-block;
+            padding: 6px 20px;
+            border: 1px solid rgba(255, 42, 133, 0.3);
+            border-radius: 30px;
+            background: rgba(255, 42, 133, 0.05);
+            backdrop-filter: blur(5px);
+        }
+
+        .tabs-nav {
+            display: flex;
+            justify-content: center;
+            gap: 1.5rem;
+            margin-bottom: 3rem;
+            background: rgba(255, 255, 255, 0.03);
+            padding: 8px;
+            border-radius: 40px;
+            border: 1px solid rgba(255, 42, 133, 0.1);
+            max-width: 500px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .tab-btn {
+            background: transparent;
+            color: var(--text-muted);
+            border: none;
+            padding: 0.8rem 2rem;
+            font-size: 1.05rem;
+            font-weight: 600;
+            border-radius: 30px;
+            cursor: pointer;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        .tab-btn:hover {
+            color: #fff;
+            background: rgba(255, 42, 133, 0.1);
+        }
+
+        .tab-btn.active {
+            color: #fff;
+            background: var(--gradient-pink-red);
+            box-shadow: 0 8px 20px var(--glow-pink);
+            transform: scale(1.05);
+        }
+
+        .tab-panel { display: none; }
+        .tab-panel.active {
+            display: block;
+            animation: fadeInUp 0.5s ease forwards;
+        }
+
+        .config-box {
+            background: var(--surface-color);
+            border: 1px solid rgba(255, 42, 133, 0.2);
+            border-radius: var(--radius-lg);
+            padding: 2rem;
+            margin-bottom: 2.5rem;
+            backdrop-filter: blur(15px);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5), inset 0 0 20px rgba(255, 51, 51, 0.05);
+        }
+
+        .config-box h3 {
+            color: #fff;
+            font-size: 1.3rem;
+            margin-bottom: 1.2rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .input-grid {
+            display: grid;
+            /* 修改这里：强制两列布局，最小宽度设为0允许缩小，中间间隔1.5rem */
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 1.5rem;
+        }
+
+        .input-group {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        .input-group label {
+            font-size: 0.95rem;
+            color: var(--text-muted);
+            font-weight: 600;
+        }
+
+        .input-group input {
+            background: rgba(0, 0, 0, 0.4);
+            border: 1px solid rgba(255, 42, 133, 0.3);
+            padding: 0.8rem 1.2rem;
+            border-radius: var(--radius-md);
+            color: #fff;
+            font-family: monospace;
+            font-size: 1.05rem;
+            transition: all 0.3s ease;
+            width: 100%; /* 确保输入框填满父容器 */
+        }
+
+        .input-group input:focus {
+            outline: none;
+            border-color: #ff3333;
+            box-shadow: 0 0 12px rgba(255, 51, 51, 0.3);
+            background: rgba(0, 0, 0, 0.6);
+        }
+
+        .step-card {
+            background: var(--surface-color);
+            border: 1px solid rgba(255, 42, 133, 0.15);
+            border-radius: var(--radius-lg);
+            padding: 2rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.4);
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .step-card:hover {
+            border-color: rgba(255, 42, 133, 0.4);
+            box-shadow: 0 20px 45px rgba(255, 42, 133, 0.15);
+        }
+
+        .step-card h2 {
+            font-size: 1.35rem;
+            color: #fff;
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            border-bottom: 1px solid rgba(255, 42, 133, 0.2);
+            padding-bottom: 0.8rem;
+        }
+
+        .sub-step { margin-bottom: 1.8rem; }
+        .sub-step:last-child { margin-bottom: 0; }
+        
+        .sub-step p {
+            color: var(--text-muted);
+            font-size: 0.98rem;
+            margin-bottom: 0.8rem;
+            font-weight: 500;
+        }
+
+        .code-wrapper {
+            position: relative;
+            background-color: var(--code-bg);
+            border-radius: var(--radius-md);
+            border: 1px solid rgba(255, 42, 133, 0.2);
+            overflow: hidden;
+        }
+
+        .code-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0.5rem 1rem;
+            background-color: rgba(255, 42, 133, 0.05);
+            border-bottom: 1px solid rgba(255, 42, 133, 0.15);
+        }
+
+        .lang-badge {
+            font-family: monospace;
+            font-size: 0.75rem;
+            color: #ff77aa;
+            font-weight: bold;
+            text-transform: uppercase;
+        }
+
+        .copy-btn {
+            background: var(--gradient-pink-red);
+            color: white;
+            border: none;
+            border-radius: 20px;
+            padding: 0.35rem 1rem;
+            font-size: 0.8rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 12px var(--glow-red);
+        }
+
+        .copy-btn:hover {
+            transform: translateY(-1px) scale(1.03);
+            box-shadow: 0 6px 16px var(--glow-pink);
+        }
+
+        .copy-btn.success {
+            background: #00e676;
+            box-shadow: 0 4px 12px rgba(0, 230, 118, 0.4);
+        }
+
+        pre {
+            padding: 1.2rem;
+            overflow-x: auto;
+            margin: 0;
+        }
+
+        code {
+            font-family: 'Fira Code', Consolas, Monaco, monospace;
+            font-size: 0.92rem;
+            color: #ffccd9;
+            line-height: 1.6;
+            white-space: pre;
+            display: block;
+        }
+
+        @keyframes shine { to { background-position: 300% center; } }
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        @media (max-width: 768px) {
+            h1 { font-size: 2.2rem; }
+            body { padding: 1.5rem 0.5rem; }
+            .step-card { padding: 1.5rem; }
+            /* 在小屏幕（如手机）上，如果空间太小，恢复为单列排列 */
+            .input-grid { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <header>
+        <h1>筑梦电子网络部署中心</h1>
+        <div class="subtitle">极客网络混合部署终端</div>
+    </header>
+
+    <div class="tabs-nav">
+        <button class="tab-btn active" onclick="switchTab('oracle-panel', this)">🛠️ 甲骨文保活</button>
+        <button class="tab-btn" onclick="switchTab('xboard-panel', this)">🚀 Xboard 接入</button>
+    </div>
+
+    <!-- 面板 1: 甲骨文动态保活 -->
+    <main id="oracle-panel" class="tab-panel active">
+        
+        <div class="step-card">
+            <div class="sub-step">
+                <p>🛠️ 第一步：安装核心压测工具<br>先装上用来模拟真实负载的 stress-ng：</p>
+                <div class="code-wrapper">
+                    <div class="code-header"><span class="lang-badge">Bash</span><button class="copy-btn" onclick="copyCode(this)">复制</button></div>
+                    <pre><code>apt-get update && apt-get install -y stress-ng</code></pre>
+                </div>
+            </div>
+        </div>
+
+        <div class="step-card">
+            <div class="sub-step">
+                <p>📝 第二步：写入波浪形防回收脚本<br>直接复制下面这整段代码粘贴回车。逻辑跟之前一模一样，完美带入随机休息与动态波动：</p>
+                <div class="code-wrapper">
+                    <div class="code-header"><span class="lang-badge">Bash</span><button class="copy-btn" onclick="copyCode(this)">复制</button></div>
+                    <pre><code>cat &lt; 'EOF' &gt; /root/oracle_alive.sh
+#!/bin/bash
+
+# 无限循环模拟真实业务请求
+while true; do
+    # 随机生成 25 到 45 之间的 CPU 负载百分比
+    CPU_LOAD=$((25 + RANDOM % 21))
+    
+    # 随机生成 25 到 40 之间的内存占用百分比
+    MEM_LOAD=$((25 + RANDOM % 16))
+    
+    # 随机生成这次负载的持续时间：600秒 到 1800秒（10 到 30分钟）
+    RUN_TIME=$((600 + RANDOM % 1201))
+    
+    # 随机生成一小段闲置休息时间：60秒 到 300秒（1 到 5分钟），让波形有下降的间隙
+    SLEEP_TIME=$((60 + RANDOM % 241))
+
+    # 执行模拟负载
+    stress-ng --cpu 1 --cpu-load $CPU_LOAD --vm 1 --vm-bytes ${MEM_LOAD}% --timeout ${RUN_TIME}s --quiet
+
+    # 负载结束后休眠一会儿
+    sleep $SLEEP_TIME
+done
+EOF
+
+# 给脚本执行权限
+chmod +x /root/oracle_alive.sh</code></pre>
+                </div>
+            </div>
+        </div>
+
+        <div class="step-card">
+            <div class="sub-step">
+                <p>🛡️ 第三步：配置后台守护运行（开机自启）<br>继续把下面这整段复制回车，把它注册成系统底层服务，保证它以后就算遇到服务器重启也能自己爬起来接着干活：</p>
+                <div class="code-wrapper">
+                    <div class="code-header"><span class="lang-badge">Bash</span><button class="copy-btn" onclick="copyCode(this)">复制</button></div>
+                    <pre><code>cat &lt; 'EOF' &gt; /etc/systemd/system/oracle_alive.service
+[Unit]
+Description=Oracle Keep Alive Dynamic Load
+After=network.target
+
+[Service]
+Type=simple
+User=root
+ExecStart=/root/oracle_alive.sh
+Restart=always
+RestartSec=10
+
+[Install]
+WantedBy=multi-user.target
+EOF</code></pre>
+                </div>
+            </div>
+        </div>
+
+        <div class="step-card">
+            <div class="sub-step">
+                <p>🚀 第四步：一键启动并生效！<br>最后，敲下面这三行命令，让这台巴西服务器的防回收服务立马开工：</p>
+                <div class="code-wrapper">
+                    <div class="code-header"><span class="lang-badge">Bash</span><button class="copy-btn" onclick="copyCode(this)">复制</button></div>
+                    <pre><code># 1. 重新加载服务列表
+systemctl daemon-reload
+
+# 2. 设置开机自启动
+systemctl enable oracle_alive
+
+# 3. 立即启动服务
+systemctl start oracle_alive</code></pre>
+                </div>
+            </div>
+        </div>
+
+        <div class="step-card">
+            <div class="sub-step">
+                <p>🔍 搞定！查岗确认：<br>四步跑完之后，老规矩敲一行状态查询命令：</p>
+                <div class="code-wrapper">
+                    <div class="code-header"><span class="lang-badge">Bash</span><button class="copy-btn" onclick="copyCode(this)">复制</button></div>
+                    <pre><code>systemctl status oracle_alive</code></pre>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- 面板 2: Xboard 节点接入 -->
+    <main id="xboard-panel" class="tab-panel">
+        
+        <div class="config-box">
+            <h3>⚙️ 动态变量注入器 (输入后下方证书及节点代码会自动更新)</h3>
+            <div class="input-grid">
+                <div class="input-group">
+                    <label>证书域名 (例如: .zmdz.cloud)</label>
+                    <input type="text" id="input-domain" value=".zmdz.cloud" oninput="updateDynamicScripts()">
+                </div>
+                <div class="input-group">
+                    <label>节点 ID (例如: {135..138} 或 40 41 45 46)</label>
+                    <input type="text" id="input-node" value="{135..138}" oninput="updateDynamicScripts()">
+                </div>
+                <div class="input-group">
+                    <label>面板地址 (例如: https://lg.zmdz.cloud)</label>
+                    <input type="text" id="input-panel-url" value="https://lg.zmdz.cloud" oninput="updateDynamicScripts()">
+                </div>
+                <div class="input-group">
+                    <label>通讯秘钥 (例如: Gxb19950110roselg)</label>
+                    <input type="text" id="input-panel-token" value="Gxb19950110roselg" oninput="updateDynamicScripts()">
+                </div>
+            </div>
+        </div>
+
+        <!-- 阶段 1 -->
+        <div class="step-card">
+            <h2>🛠️ 第一阶段：系统环境与防火墙</h2>
+            
+            <div class="sub-step">
+                <p>1. 更新系统并安装所有必备工具 (跑完会回到输入提示符)</p>
+                <div class="code-wrapper">
+                    <div class="code-header"><span class="lang-badge">Bash</span><button class="copy-btn" onclick="copyCode(this)">复制</button></div>
+                    <pre><code>apt update && apt install -y curl socat wget net-tools iptables-persistent</code></pre>
+                </div>
+            </div>
+
+            <div class="sub-step">
+                <p>2. 永久放行专属 TCP 端口</p>
+                <div class="code-wrapper">
+                    <div class="code-header"><span class="lang-badge">Bash</span><button class="copy-btn" onclick="copyCode(this)">复制</button></div>
+                    <pre><code>iptables -I INPUT -p tcp -m multiport --dports 80,443,8443,42719,23361,52438 -j ACCEPT</code></pre>
+                </div>
+            </div>
+
+            <div class="sub-step">
+                <p>3. 永久放行专属 UDP 端口</p>
+                <div class="code-wrapper">
+                    <div class="code-header"><span class="lang-badge">Bash</span><button class="copy-btn" onclick="copyCode(this)">复制</button></div>
+                    <pre><code>iptables -I INPUT -p udp -m multiport --dports 80,443,8443,42719,23361,52438 -j ACCEPT</code></pre>
+                </div>
+            </div>
+
+            <div class="sub-step">
+                <p>4. 保存防火墙规则，确保重启不丢失</p>
+                <div class="code-wrapper">
+                    <div class="code-header"><span class="lang-badge">Bash</span><button class="copy-btn" onclick="copyCode(this)">复制</button></div>
+                    <pre><code>netfilter-persistent save && netfilter-persistent reload</code></pre>
+                </div>
+            </div>
+
+            <div class="sub-step">
+                <p>5. 下载并安装 Docker 核心引擎</p>
+                <div class="code-wrapper">
+                    <div class="code-header"><span class="lang-badge">Bash</span><button class="copy-btn" onclick="copyCode(this)">复制</button></div>
+                    <pre><code>curl -fsSL https://get.docker.com | bash</code></pre>
+                </div>
+            </div>
+
+            <div class="sub-step">
+                <p>6. 设置 Docker 开机自启</p>
+                <div class="code-wrapper">
+                    <div class="code-header"><span class="lang-badge">Bash</span><button class="copy-btn" onclick="copyCode(this)">复制</button></div>
+                    <pre><code>systemctl enable --now docker</code></pre>
+                </div>
+            </div>
+        </div>
+
+        <!-- 阶段 2 -->
+        <div class="step-card">
+            <h2>🔐 第二阶段：申请与提取 SSL 证书</h2>
+
+            <div class="sub-step">
+                <p>7. 安装 acme.sh 证书工具</p>
+                <div class="code-wrapper">
+                    <div class="code-header"><span class="lang-badge">Bash</span><button class="copy-btn" onclick="copyCode(this)">复制</button></div>
+                    <pre><code>curl https://get.acme.sh | sh</code></pre>
+                </div>
+            </div>
+
+            <div class="sub-step">
+                <p>8. 刷新环境变量，让工具生效</p>
+                <div class="code-wrapper">
+                    <div class="code-header"><span class="lang-badge">Bash</span><button class="copy-btn" onclick="copyCode(this)">复制</button></div>
+                    <pre><code>source ~/.bashrc</code></pre>
+                </div>
+            </div>
+
+            <div class="sub-step">
+                <p>9. 强制将发证机构切换为 Let's Encrypt</p>
+                <div class="code-wrapper">
+                    <div class="code-header"><span class="lang-badge">Bash</span><button class="copy-btn" onclick="copyCode(this)">复制</button></div>
+                    <pre><code>~/.acme.sh/acme.sh --set-default-ca --server letsencrypt</code></pre>
+                </div>
+            </div>
+
+            <div class="sub-step">
+                <p>10. 强制申请证书</p>
+                <div class="code-wrapper">
+                    <div class="code-header"><span class="lang-badge">Bash</span><button class="copy-btn" onclick="copyCode(this)">复制</button></div>
+                    <pre><code id="code-acme-issue">~/.acme.sh/acme.sh --issue -d .zmdz.cloud --standalone --force</code></pre>
+                </div>
+            </div>
+
+            <div class="sub-step">
+                <p>11. 创建证书存放目录</p>
+                <div class="code-wrapper">
+                    <div class="code-header"><span class="lang-badge">Bash</span><button class="copy-btn" onclick="copyCode(this)">复制</button></div>
+                    <pre><code>mkdir -p /root/cert</code></pre>
+                </div>
+            </div>
+
+            <div class="sub-step">
+                <p>12. 提取并安装证书</p>
+                <div class="code-wrapper">
+                    <div class="code-header"><span class="lang-badge">Bash</span><button class="copy-btn" onclick="copyCode(this)">复制</button></div>
+                    <pre><code id="code-acme-install">~/.acme.sh/acme.sh --installcert -d .zmdz.cloud --ecc --key-file /root/cert/.zmdz.cloud.key --fullchain-file /root/cert/.zmdz.cloud.crt</code></pre>
+                </div>
+            </div>
+
+            <div class="sub-step">
+                <p>13. 打印公钥证书</p>
+                <div class="code-wrapper">
+                    <div class="code-header"><span class="lang-badge">Bash</span><button class="copy-btn" onclick="copyCode(this)">复制</button></div>
+                    <pre><code id="code-acme-crt">cat /root/cert/.zmdz.cloud.crt</code></pre>
+                </div>
+            </div>
+
+            <div class="sub-step">
+                <p>14. 打印私钥文件</p>
+                <div class="code-wrapper">
+                    <div class="code-header"><span class="lang-badge">Bash</span><button class="copy-btn" onclick="copyCode(this)">复制</button></div>
+                    <pre><code id="code-acme-key">cat /root/cert/.zmdz.cloud.key</code></pre>
+                </div>
+            </div>
+        </div>
+
+        <!-- 阶段 3 -->
+        <div class="step-card">
+            <h2>🚀 第三阶段：一键拉起节点</h2>
+
+            <div class="sub-step">
+                <p>15.拉起连续节点</p>
+                <div class="code-wrapper">
+                    <div class="code-header"><span class="lang-badge">Bash</span><button class="copy-btn" onclick="copyCode(this)">复制</button></div>
+                    <pre><code id="code-continuous">PANEL_URL="https://lg.zmdz.cloud"
+PANEL_TOKEN="Gxb19950110roselg"
+
+for i in {135..138}
+do
+    echo "正在启动节点: $i ..."
+    docker run -d --network=host --name node-$i --restart=always \
+    -v /root/cert:/etc/cert \
+    -e NODE_ID=$i \
+    -e API_HOST=$PANEL_URL \
+    -e API_KEY=$PANEL_TOKEN \
+    -e PANEL_URL=$PANEL_URL \
+    -e PANEL_TOKEN=$PANEL_TOKEN \
+    ghcr.io/cedar2025/xboard-node:latest
+done
+
+echo "✅ 135, 136, 137, 138 节点已全部下达启动指令！"</code></pre>
+                </div>
+            </div>
+        </div>
+
+        <!-- BBR -->
+        <div class="step-card">
+            <h2>🚀 原生一键开启 BBR 提速</h2>
+
+            <div class="sub-step">
+                <p>写入配置并应用：</p>
+                <div class="code-wrapper">
+                    <div class="code-header"><span class="lang-badge">Bash</span><button class="copy-btn" onclick="copyCode(this)">复制</button></div>
+                    <pre><code>sed -i '/net.core.default_qdisc/d' /etc/sysctl.conf
+sed -i '/net.ipv4.tcp_congestion_control/d' /etc/sysctl.conf
+echo "net.core.default_qdisc=fq" >> /etc/sysctl.conf
+echo "net.ipv4.tcp_congestion_control=bbr" >> /etc/sysctl.conf
+sysctl -p</code></pre>
+                </div>
+            </div>
+
+            <div class="sub-step">
+                <p>🔍 查询BBR开启状态：</p>
+                <div class="code-wrapper">
+                    <div class="code-header"><span class="lang-badge">Bash</span><button class="copy-btn" onclick="copyCode(this)">复制</button></div>
+                    <pre><code>lsmod | grep bbr</code></pre>
+                </div>
+            </div>
+        </div>
+    </main>
+</div>
+
+<script>
+    function switchTab(panelId, btnElement) {
+        document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+        document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+        document.getElementById(panelId).classList.add('active');
+        btnElement.classList.add('active');
+    }
+
+   function updateDynamicScripts() {
+        const domain = document.getElementById('input-domain').value || '.zmdz.cloud';
+        const nodeId = document.getElementById('input-node').value || '{135..138}';
+        const panelUrl = document.getElementById('input-panel-url').value || 'https://lg.zmdz.cloud';
+        const panelToken = document.getElementById('input-panel-token').value || 'Gxb19950110roselg';
+
+        // 自动替换第 10 到 14 步的域名变量（仅影响证书申请部分）
+        document.getElementById('code-acme-issue').textContent = `~/.acme.sh/acme.sh --issue -d ${domain} --standalone --force`;
+        document.getElementById('code-acme-install').textContent = `~/.acme.sh/acme.sh --installcert -d ${domain} --ecc --key-file /root/cert/${domain}.key --fullchain-file /root/cert/${domain}.crt`;
+        document.getElementById('code-acme-crt').textContent = `cat /root/cert/${domain}.crt`;
+        document.getElementById('code-acme-key').textContent = `cat /root/cert/${domain}.key`;
+
+        // 自动替换拉起节点的变量
+        const continuousCode = `PANEL_URL="${panelUrl}"\nPANEL_TOKEN="${panelToken}"\n\nfor i in ${nodeId}\ndo\n    echo "正在启动节点: $i ..."\n    docker run -d --network=host --name node-$i --restart=always \\\n    -v /root/cert:/etc/cert \\\n    -e NODE_ID=$i \\\n    -e API_HOST=$PANEL_URL \\\n    -e API_KEY=$PANEL_TOKEN \\\n    -e PANEL_URL=$PANEL_URL \\\n    -e PANEL_TOKEN=$PANEL_TOKEN \\\n    ghcr.io/cedar2025/xboard-node:latest\ndone\n\necho "✅ ${nodeId} 节点已全部下达启动指令！"`;
+        
+        document.getElementById('code-continuous').textContent = continuousCode;
+    }
+
+    function copyCode(btn) {
+        const pre = btn.parentElement.nextElementSibling;
+        const text = pre.innerText || pre.textContent;
+        navigator.clipboard.writeText(text).then(() => {
+            const orig = btn.innerText;
+            btn.innerHTML = '✅ 已复制';
+            btn.classList.add('success');
+            setTimeout(() => { btn.innerHTML = orig; btn.classList.remove('success'); }, 1500);
+        }).catch(() => {
+            btn.innerHTML = '❌ 失败';
+            setTimeout(() => { btn.innerHTML = '复制'; }, 1500);
+        });
+    }
+</script>
+
+</body>
+</html>
