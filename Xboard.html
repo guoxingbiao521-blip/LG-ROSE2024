@@ -335,7 +335,7 @@
                 <p>📝 第二步：写入波浪形防回收脚本<br>直接复制下面这整段代码粘贴回车。逻辑跟之前一模一样，完美带入随机休息与动态波动：</p>
                 <div class="code-wrapper">
                     <div class="code-header"><span class="lang-badge">Bash</span><button class="copy-btn" onclick="copyCode(this)">复制</button></div>
-                    <pre><code>cat &lt; 'EOF' &gt; /root/oracle_alive.sh
+                    <pre><code>cat &lt;&lt; 'EOF' &gt; /root/oracle_alive.sh
 #!/bin/bash
 
 # 无限循环模拟真实业务请求
@@ -371,7 +371,7 @@ chmod +x /root/oracle_alive.sh</code></pre>
                 <p>🛡️ 第三步：配置后台守护运行（开机自启）<br>继续把下面这整段复制回车，把它注册成系统底层服务，保证它以后就算遇到服务器重启也能自己爬起来接着干活：</p>
                 <div class="code-wrapper">
                     <div class="code-header"><span class="lang-badge">Bash</span><button class="copy-btn" onclick="copyCode(this)">复制</button></div>
-                    <pre><code>cat &lt; 'EOF' &gt; /etc/systemd/system/oracle_alive.service
+                    <pre><code>cat &lt;&lt; 'EOF' &gt; /etc/systemd/system/oracle_alive.service
 [Unit]
 Description=Oracle Keep Alive Dynamic Load
 After=network.target
