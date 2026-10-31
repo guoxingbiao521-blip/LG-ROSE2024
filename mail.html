@@ -763,6 +763,30 @@ h2::before, h2::after {
     <button onclick="clearEmails()" class="btn-footer-action" style="flex: 1; height: 45px; background-color: #d81b60; box-shadow: 0 5px 0 #ad1457; white-space: nowrap !important; font-size: clamp(11px, 3vw, 14px) !important; padding: 0 2px !important;">🗑️ 清空邮件</button>
     <button onclick="window.location.href='index.html'" class="btn-footer-action" style="flex: 1; height: 45px; background-color: #f06292; box-shadow: 0 5px 0 #c2185b; white-space: nowrap !important; font-size: clamp(11px, 3vw, 14px) !important; padding: 0 2px !important;">🏠 返回主页</button>
 </div>
+
+<div style="display: flex !important; margin-top: 15px !important; width: 100% !important;">
+    <button onclick="showClientDownload()" class="btn-footer-action" style="flex: 1; height: 45px; background-color: #ff4081; box-shadow: 0 5px 0 #c2185b; white-space: nowrap !important; font-size: clamp(11px, 3vw, 14px) !important; padding: 0 2px !important;">&#11015;&#65039; 下载客户端</button>
+</div>
+<div id="client-download-modal" onclick="if(event.target===this) hideClientDownload()" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.85); z-index: 100000; justify-content: center; align-items: center; padding: 20px; box-sizing: border-box;">
+    <div style="background: rgba(20,20,28,0.98); border: 2px solid rgba(255,105,180,0.6); border-radius: 20px; width: 100%; max-width: 520px; padding: 24px; box-sizing: border-box; color: #fff;">
+        <h3 style="margin: 0 0 16px; text-align: center;">&#11015;&#65039; 下载客户端</h3>
+        <div style="background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.12); border-radius: 14px; padding: 16px; margin-bottom: 12px;">
+            <div style="font-weight: bold; font-size: 16px;">&#128187; Windows 桌面版 v1.3.1 · 130 MB</div>
+            <p style="color: #ccc; font-size: 13px; line-height: 1.6; margin: 8px 0 12px;">zip 压缩包，解压后运行。首次使用请先完全退出旧版（托盘右键退出），解压到新文件夹再运行。</p>
+            <a href="https://guo.roselg.xyz/downloads/LG-temp-mail-win-v131.zip" style="display: block; text-align: center; background: linear-gradient(135deg,#e91e63,#ff4081); color: #fff; text-decoration: none; padding: 12px; border-radius: 10px; font-weight: bold;">&#11015;&#65039; 下载 Windows 版</a>
+        </div>
+        <div style="background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.12); border-radius: 14px; padding: 16px; margin-bottom: 12px;">
+            <div style="font-weight: bold; font-size: 16px;">&#128241; 安卓手机版 v1.2 · 28 MB</div>
+            <p style="color: #ccc; font-size: 13px; line-height: 1.6; margin: 8px 0 12px;">APK 安装包，安装时请允许“安装未知应用”。</p>
+            <a href="https://guo.roselg.xyz/downloads/LG-temp-mail-android-v12.apk" style="display: block; text-align: center; background: linear-gradient(135deg,#6e8efb,#a777e3); color: #fff; text-decoration: none; padding: 12px; border-radius: 10px; font-weight: bold;">&#11015;&#65039; 下载安卓版</a>
+        </div>
+        <button onclick="hideClientDownload()" style="width: 100%; margin-top: 4px; padding: 10px; border-radius: 10px; border: 1px solid rgba(255,255,255,0.2); background: transparent; color: #fff; cursor: pointer;">关闭</button>
+    </div>
+</div>
+<script>
+function showClientDownload(){var m=document.getElementById('client-download-modal'); if(m) m.style.display='flex';}
+function hideClientDownload(){var m=document.getElementById('client-download-modal'); if(m) m.style.display='none';}
+</script>
    
     <div class="inbox-card">
         <div class="inbox-header inbox-header-container" style="display: flex; align-items: center; justify-content: space-between; gap: 15px; width: 100%; padding: 0 5px; box-sizing: border-box; border-bottom: 1px solid rgba(255, 182, 193, 0.3); padding-bottom: 15px; margin-bottom: 20px;">
