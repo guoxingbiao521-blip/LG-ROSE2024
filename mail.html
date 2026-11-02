@@ -938,6 +938,7 @@ h2::before, h2::after {
             return; // 💥 只要是多选状态，就直接跳过后面的刷新逻辑
         }
 
+        try { if (typeof ensureSSE === 'function') ensureSSE(); } catch (e) {}
         if (--timeLeft < 0) {
             fetchEmails();
             timeLeft = 5;
@@ -1173,6 +1174,52 @@ async function unlock() {
         const newVal = originalVal.replace(/[^a-zA-Z0-9!#$%&'*+\-\/=?^_`{|}~.]/g, '');
         if (originalVal !== newVal) { this.value = newVal; showToast("⚠️ 只能输入合法的邮箱前缀哦！"); }
     });
+
+
+    // --- SSE 新邮件叫醒 + 回到前台立刻拉取（轮询保留作断线兜底，不改计费/互踢逻辑） ---
+    let sseSource = null;
+    let sseAddress = '';
+    let sseLastErrorAt = 0;
+    function ensureSSE() {
+        if (!currentEmail) return;
+        if (sseSource && sseAddress === currentEmail) return;
+        try { if (sseSource) sseSource.close(); } catch (e) {}
+        sseSource = null; sseAddress = '';
+        const code = localStorage.getItem('authCode');
+        let devId = localStorage.getItem('deviceId');
+        if (!code || !devId) return;
+        if (Date.now() - sseLastErrorAt < 30000) return;
+        try {
+            const url = API_BASE.replace('emails', 'stream') + '?address=' + encodeURIComponent(currentEmail) + '&code=' + encodeURIComponent(code) + '&deviceId=' + encodeURIComponent(devId);
+            const es = new EventSource(url);
+            sseSource = es; sseAddress = currentEmail;
+            es.onopen = function() {
+                if (typeof isMultiSelect !== 'undefined' && isMultiSelect === true) return;
+                try { fetchEmails(); } catch (e) {}
+            };
+            es.onmessage = function() {
+                if (typeof isMultiSelect !== 'undefined' && isMultiSelect === true) return;
+                try { fetchEmails(); } catch (e) {}
+            };
+            es.onerror = function() {
+                sseLastErrorAt = Date.now();
+                try { es.close(); } catch (e) {}
+                if (sseSource === es) { sseSource = null; sseAddress = ''; }
+            };
+        } catch (e) {}
+    }
+    function resumeFetchNow() {
+        if (!currentEmail) return;
+        if (typeof isMultiSelect !== 'undefined' && isMultiSelect === true) return;
+        try { ensureSSE(); } catch (e) {}
+        try { fetchEmails(); } catch (e) {}
+    }
+    document.addEventListener('visibilitychange', function() {
+        if (document.visibilityState === 'visible') resumeFetchNow();
+    });
+    window.addEventListener('focus', function() { resumeFetchNow(); });
+    window.__lgEnsureSSE = ensureSSE;
+    window.__lgResumeFetchNow = resumeFetchNow;
 
     generateRandom();
     startCountdown();
