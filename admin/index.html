@@ -259,11 +259,31 @@
                 box-sizing: border-box !important;
             }
         }
+        /* 🌟 Dreamina 标签页切换 */
+        .tab-bar { display: flex; gap: 12px; width: 90%; max-width: 750px; position: relative; z-index: 10; }
+        .tab-btn { flex: 1; padding: 14px 8px; border: none; border-radius: 12px; font-weight: bold; font-size: 15px; cursor: pointer; transition: all 0.2s ease; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+        .tab-btn.active { background: linear-gradient(45deg, var(--primary), var(--accent)) !important; color: #000 !important; box-shadow: 0 4px 0 #b300b3, 0 6px 15px rgba(0, 0, 0, 0.4); }
+        .tab-btn.inactive { background: rgba(255, 255, 255, 0.08) !important; color: #fff !important; border: 1px solid rgba(255, 255, 255, 0.2); box-shadow: 0 4px 0 rgba(0,0,0,0.3); }
+        .tab-btn:hover { filter: brightness(1.15); }
+        @media (max-width: 600px) {
+            .tab-bar { width: 100% !important; gap: 8px !important; }
+            .tab-btn { font-size: 12px !important; padding: 12px 4px !important; }
+            .dm-title-left-3d, .dm-title-right-3d { font-size: 16px !important; }
+        }
+        .status-unused { background: rgba(0, 242, 255, 0.15); color: #00f2ff; border: 1px solid rgba(0, 242, 255, 0.5); }
+        .status-revoked { background: rgba(255, 165, 0, 0.2); color: #ffa500; border: 1px solid #ffa500; }
     </style>
     <link rel="preconnect" href="https://guo.roselg.xyz" crossorigin>
     <link rel="dns-prefetch" href="https://guo.roselg.xyz">
 </head>
 <body>
+    <!-- 🌟 标签页切换：邮箱激活码 / LG筑梦AI自动注册客户端激活码 -->
+    <div class="tab-bar">
+        <button class="tab-btn active" id="tabBtnMail" onclick="switchTab('mail')">📧 邮箱激活码</button>
+        <button class="tab-btn inactive" id="tabBtnDm" onclick="switchTab('dm')">🤖 LG筑梦AI激活码</button>
+    </div>
+
+    <div id="tab-mail" style="display: contents;">
 
     <div class="container">
         <div class="title-container">
@@ -367,6 +387,127 @@
             </table>
         </div>
     </div>
+
+    </div><!-- /tab-mail -->
+
+    <!-- 🌟 Dreamina 分区：LG筑梦AI自动注册客户端激活码（与邮箱那套同一套管理密码） -->
+    <div id="tab-dm" style="display: none;">
+
+    <div class="container">
+        <div class="title-container">
+            <span class="title-left-3d dm-title-left-3d" style="font-size: 20px;">LG筑梦AI自动注册客户端</span>
+            <svg viewBox="0 0 24 24" style="width: 32px; height: 32px; fill: none; stroke: var(--primary); stroke-width: 1.5; animation: glow 2s infinite alternate; flex-shrink: 0;">
+                <path d="M12 2a7 7 0 0 1 7 7c0 2.4-1.2 4.2-2.6 5.6-.9.9-1.4 2.1-1.4 3.4H9c0-1.3-.5-2.5-1.4-3.4C6.2 13.2 5 11.4 5 9a7 7 0 0 1 7-7z"></path>
+                <path d="M9 21h6"></path>
+            </svg>
+            <span class="title-right-3d dm-title-right-3d" style="font-size: 20px;">激活码管理</span>
+        </div>
+
+        <div class="input-group">
+            <label>站长管理密码（与邮箱激活码同一个密码）</label>
+            <input type="password" id="dm-secret" placeholder="请输入管理员密码" oninput="syncSecret('dm')">
+        </div>
+
+        <div class="input-group" style="display: flex; gap: 10px; width: 100%;">
+            <div style="flex: 1;">
+                <label style="display: block; margin-bottom: 8px;">生成数量</label>
+                <input type="number" id="dm-count" value="1" min="1" style="width: 100%; padding: 12px 8px; border-radius: 8px; background: rgba(0,0,0,0.5); color: #fff; border: 1px solid rgba(255, 105, 180, 0.5); outline: none; box-sizing: border-box; text-align: center; font-weight: bold;">
+            </div>
+            <div style="flex: 2;">
+                <label style="display: block; margin-bottom: 8px;">有效时长</label>
+                <select id="dm-duration" onchange="dmDurationChange()" style="width: 100%; padding: 12px 8px; border-radius: 8px; background: rgba(0,0,0,0.5); color: #fff; border: 1px solid rgba(0, 242, 255, 0.5); outline: none; box-sizing: border-box; text-align: center; font-weight: bold;">
+                    <option value="7">7 天</option>
+                    <option value="30" selected>30 天</option>
+                    <option value="90">90 天</option>
+                    <option value="365">365 天</option>
+                    <option value="permanent">永久有效</option>
+                    <option value="custom">自定义天数</option>
+                    <option value="until">指定到期日期</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="input-group" id="dm-customDaysWrap" style="display: none;">
+            <label>自定义天数（从生成这一刻起算）</label>
+            <input type="number" id="dm-customDays" placeholder="例如 14" min="1">
+        </div>
+
+        <div class="input-group" id="dm-untilWrap" style="display: none;">
+            <label>到期日期（到当天 23:59:59 过期）</label>
+            <input type="date" id="dm-untilDate" style="color-scheme: dark;">
+        </div>
+
+        <div class="action-btn-group" style="display: flex; gap: 10px; width: 100%; align-items: center;">
+            <button class="btn-main-3d btn-gen" onclick="dmGenerate()" style="flex: 1; height: 46px !important; line-height: 46px !important; margin: 0; padding: 0 !important; font-size: 14px; white-space: nowrap;">⚡ 生成激活码</button>
+            <button class="btn-main-3d btn-copy" onclick="dmCopyAll()" style="flex: 1; height: 46px !important; line-height: 46px !important; margin: 0; padding: 0 !important; font-size: 14px; white-space: nowrap;">一键复制</button>
+        </div>
+
+        <div class="result-wrapper">
+            <div id="dm-singleCopyHint" class="single-copy-hint">💡 如需单独复制某个激活码，请直接点击该激活码！⚠️ 卡密只显示这一次，请立即复制保存，刷新后无法再查看明文！</div>
+            <div id="dm-resultBox" class="result-box-style">
+                <span>激活码将在此处显示...</span>
+            </div>
+        </div>
+
+        <div class="status">💡 Dreamina 卡密库里只存哈希，生成后请立即复制保存；已生成的卡密在下方只能查状态，看不到明文。</div>
+    </div>
+
+    <div class="container log-container">
+       <div class="title-container" style="margin-bottom: 15px;">
+            <span class="title-left-3d" style="font-size: 20px; color: #fff; text-shadow: 0 1px 0 #999, 0 2px 5px rgba(0,0,0,0.5);">📊 LG筑梦AI激活码状态数据板</span>
+
+            <div style="display: flex; gap: 10px; align-items: center; flex-wrap: wrap;">
+                <div style="position: relative;">
+                    <span style="position: absolute; left: 10px; top: 50%; transform: translateY(-50%); font-size: 14px; opacity: 0.8;">🔍</span>
+                    <input type="text" id="dm-searchInput" placeholder="输入卡密或哈希前缀后回车..." onkeydown="if(event.keyCode==13) dmFetchLogs()" style="width: 160px; height: 36px; padding: 0 10px 0 32px; border-radius: 10px; background: rgba(0,0,0,0.4); color: #00f2ff; border: 1px solid rgba(0, 242, 255, 0.4); font-size: 13px; font-weight: bold; outline: none; box-sizing: border-box;">
+                </div>
+                <select id="dm-statusFilter" onchange="dmFetchLogs()" style="height: 36px; padding: 0 8px; border-radius: 10px; background: rgba(0,0,0,0.4); color: #fff; border: 1px solid rgba(0, 242, 255, 0.4); font-size: 13px; font-weight: bold; outline: none;">
+                    <option value="">全部状态</option>
+                    <option value="unused">未使用</option>
+                    <option value="activated">已激活</option>
+                    <option value="expired">已过期</option>
+                    <option value="revoked">已吊销</option>
+                </select>
+                <button class="btn-main-3d" id="dm-queryBtn" onclick="dmFetchLogs()" style="padding: 0 16px; font-size: 13px; height: 36px; box-shadow: 0 3px 0 #b300b3; width: auto; flex: none; display: flex; align-items: center; justify-content: center;">🔄 查询激活码状态</button>
+            </div>
+        </div>
+        <div id="dm-batchActionToolbar" style="display: none; background: rgba(255, 105, 180, 0.15); border: 1px solid rgba(255, 105, 180, 0.4); padding: 10px 15px; border-radius: 10px; margin-bottom: 15px; justify-content: space-between; align-items: center;">
+            <span style="font-size: 14px; font-weight: bold; color: #ff69b4; text-shadow: 0 1px 2px #000;">已选中 <span id="dm-selectedCount" style="color: #00f2ff; font-size: 18px;">0</span> 项</span>
+            <div style="display: flex; gap: 8px;">
+                <button class="action-btn-sm btn-suspend" onclick="dmBatchToggleSuspend('revoked')">批量吊销</button>
+                <button class="action-btn-sm btn-enable" onclick="dmBatchToggleSuspend('active')">批量恢复</button>
+                <button class="action-btn-sm btn-delete" onclick="dmBatchDelete()">彻底删除</button>
+            </div>
+        </div>
+
+        <div class="table-responsive">
+            <table class="log-table">
+                <thead>
+                    <tr>
+                        <th style="width: 40px;"><input type="checkbox" id="dm-selectAll" onclick="dmToggleAll()" style="width: 16px; height: 16px; cursor: pointer; accent-color: #ff69b4;"></th>
+                        <th>卡密（哈希）</th>
+                        <th>当前状态</th>
+                        <th>绑定设备</th>
+                        <th>激活时间</th>
+                        <th>到期时间</th>
+                        <th>剩余天数</th>
+                        <th>操作</th>
+                    </tr>
+                </thead>
+           <tbody id="dm-logTableBody">
+    <tr>
+        <td colspan="8" style="padding: 0; border: none; background: transparent;">
+            <div style="position: sticky; left: 0; width: 100vw; max-width: 100%; padding: 25px 15px; box-sizing: border-box; white-space: normal; word-break: break-all; text-align: left; line-height: 1.6; color: #fff; font-weight: bold; text-shadow: 0 2px 5px rgba(0,0,0,0.9);">
+                ✨ 请输入站长管理密码后，点击“查询激活码状态”开始查询！
+            </div>
+        </td>
+    </tr>
+</tbody>
+            </table>
+        </div>
+    </div>
+
+    </div><!-- /tab-dm -->
 
     <div id="toast"></div>
 
@@ -835,5 +976,456 @@ function fetchLogs() {
 
         
     </script>
+    <!-- 🌟 Dreamina 续期弹窗 -->
+    <div id="dm-renewModal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.7); backdrop-filter: blur(5px); z-index: 99999; justify-content: center; align-items: center;">
+        <div style="background: rgba(20, 20, 25, 0.95); border: 1px solid rgba(0, 242, 255, 0.4); border-radius: 16px; padding: 25px; width: 90%; max-width: 350px; text-align: left; box-shadow: 0 10px 40px rgba(0,0,0,0.8);">
+            <h3 style="color: #00f2ff; margin-top: 0; margin-bottom: 20px; text-align: center; text-shadow: 0 2px 5px rgba(0,0,0,0.8);">⚙️ Dreamina 激活码续期</h3>
+            <div style="margin-bottom: 15px;">
+                <label style="font-size: 12px; color: #aaa; margin-bottom: 5px; display: block;">当前调整激活码（哈希）：</label>
+                <input type="text" id="dm-renewHashText" disabled style="width: 100%; padding: 10px; border-radius: 8px; border: 1px solid rgba(255,105,180,0.5); background: rgba(255,255,255,0.05) !important; color: #ff69b4; text-align: center; font-weight: bold; box-sizing: border-box;">
+            </div>
+            <div style="margin-bottom: 15px;">
+                <label style="font-size: 12px; color: #fff; margin-bottom: 5px; display: block;">新的有效时长（从今天起算；续期后自动恢复生效）</label>
+                <select id="dm-renewDuration" onchange="dmRenewDurationChange()" style="width: 100%; padding: 10px; border-radius: 8px; background: rgba(0,0,0,0.5); color: #fff; border: 1px solid rgba(0, 242, 255, 0.5); outline: none; text-align: center; box-sizing: border-box;">
+                    <option value="7">7 天</option>
+                    <option value="30" selected>30 天</option>
+                    <option value="90">90 天</option>
+                    <option value="365">365 天</option>
+                    <option value="permanent">永久有效</option>
+                    <option value="custom">自定义天数</option>
+                    <option value="until">指定到期日期</option>
+                </select>
+            </div>
+            <div id="dm-renewCustomWrap" style="display: none; margin-bottom: 15px;">
+                <label style="font-size: 12px; color: #fff; margin-bottom: 5px; display: block;">自定义天数</label>
+                <input type="number" id="dm-renewCustomDays" placeholder="例如 14" min="1" style="width: 100%; padding: 10px; border-radius: 8px; background: rgba(0,0,0,0.5); color: #fff; border: 1px solid rgba(0, 242, 255, 0.5); outline: none; text-align: center; box-sizing: border-box;">
+            </div>
+            <div id="dm-renewUntilWrap" style="display: none; margin-bottom: 15px;">
+                <label style="font-size: 12px; color: #fff; margin-bottom: 5px; display: block;">到期日期</label>
+                <input type="date" id="dm-renewUntilDate" style="width: 100%; padding: 10px; border-radius: 8px; background: rgba(0,0,0,0.5); color: #fff; border: 1px solid rgba(0, 242, 255, 0.5); outline: none; text-align: center; box-sizing: border-box; color-scheme: dark;">
+            </div>
+            <div style="display: flex; gap: 10px;">
+                <button onclick="dmCloseRenewModal()" style="flex: 1; padding: 12px; border: none; border-radius: 10px; color: white; font-weight: bold; cursor: pointer; background: rgba(255,255,255,0.15); transition: 0.2s;">取消</button>
+                <button onclick="dmSubmitRenew()" style="flex: 1; padding: 12px; border: none; border-radius: 10px; color: #000; font-weight: bold; cursor: pointer; background: linear-gradient(45deg, #00f2ff, #ff00ff); box-shadow: 0 4px 0 #b300b3; transition: 0.2s;">✅ 确认保存</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- 🌟 Dreamina 删除确认弹窗 -->
+    <div id="dm-deleteModal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.7); backdrop-filter: blur(5px); z-index: 99999; justify-content: center; align-items: center;">
+        <div style="background: rgba(20, 20, 25, 0.95); border: 1px solid rgba(255, 0, 0, 0.5); border-radius: 16px; padding: 25px; width: 90%; max-width: 320px; text-align: center; box-shadow: 0 10px 40px rgba(255,0,0,0.3);">
+            <h3 style="color: #ff4d4f; margin-top: 0; margin-bottom: 15px; text-shadow: 0 2px 5px rgba(0,0,0,0.8);">⚠️ 危险操作确认</h3>
+            <p id="dm-deleteText" style="color: #fff; font-size: 14px; margin-bottom: 20px; line-height: 1.6;"></p>
+            <div style="display: flex; gap: 10px;">
+                <button onclick="dmCloseDeleteModal()" style="flex: 1; padding: 12px; border: none; border-radius: 10px; color: white; font-weight: bold; cursor: pointer; background: rgba(255,255,255,0.15); transition: 0.2s;">取消</button>
+                <button onclick="dmSubmitDelete()" style="flex: 1; padding: 12px; border: none; border-radius: 10px; color: #fff; font-weight: bold; cursor: pointer; background: linear-gradient(45deg, #ff0000, #b30000); box-shadow: 0 4px 0 #660000; transition: 0.2s;">🗑️ 确认删除</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- 🌟 Dreamina 吊销/恢复确认弹窗 -->
+    <div id="dm-suspendModal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.7); backdrop-filter: blur(5px); z-index: 99999; justify-content: center; align-items: center;">
+        <div style="background: rgba(20, 20, 25, 0.95); border: 1px solid rgba(255, 165, 0, 0.5); border-radius: 16px; padding: 25px; width: 90%; max-width: 320px; text-align: center; box-shadow: 0 10px 40px rgba(255,165,0,0.3);">
+            <h3 id="dm-suspendTitle" style="color: #ffa500; margin-top: 0; margin-bottom: 15px; text-shadow: 0 2px 5px rgba(0,0,0,0.8);">⚠️ 状态切换确认</h3>
+            <p id="dm-suspendText" style="color: #fff; font-size: 14px; margin-bottom: 20px; line-height: 1.6;"></p>
+            <div style="display: flex; gap: 10px;">
+                <button onclick="dmCloseSuspendModal()" style="flex: 1; padding: 12px; border: none; border-radius: 10px; color: white; font-weight: bold; cursor: pointer; background: rgba(255,255,255,0.15); transition: 0.2s;">取消</button>
+                <button id="dm-suspendConfirmBtn" onclick="dmSubmitSuspend()" style="flex: 1; padding: 12px; border: none; border-radius: 10px; color: #000; font-weight: bold; cursor: pointer; background: linear-gradient(45deg, #ffa500, #ff8c00); box-shadow: 0 4px 0 #cc7000; transition: 0.2s;">✅ 确认</button>
+            </div>
+        </div>
+    </div>
+
+<script>
+    // ==========================================
+    // 🤖 Dreamina 激活码管理（LG筑梦AI自动注册客户端）
+    // 接口走 guo.roselg.xyz/dreamina 反代到 license-server (8731)，
+    // 鉴权和邮箱那套一致：同一个站长管理密码。
+    // ==========================================
+    const DM_API = 'https://guo.roselg.xyz/dreamina';
+    let dmGlobalCodes = [];
+    let dmCurrentHash = '';
+    let dmCurrentAction = '';
+    let dmIsBatchDelete = false;
+    let dmIsBatchSuspend = false;
+
+    // --- 标签页切换 ---
+    function switchTab(name) {
+        const mailTab = document.getElementById('tab-mail');
+        const dmTab = document.getElementById('tab-dm');
+        const btnMail = document.getElementById('tabBtnMail');
+        const btnDm = document.getElementById('tabBtnDm');
+        if (name === 'dm') {
+            mailTab.style.display = 'none';
+            dmTab.style.display = 'contents';
+            btnMail.className = 'tab-btn inactive';
+            btnDm.className = 'tab-btn active';
+            syncSecret('mail');
+        } else {
+            dmTab.style.display = 'none';
+            mailTab.style.display = 'contents';
+            btnDm.className = 'tab-btn inactive';
+            btnMail.className = 'tab-btn active';
+            syncSecret('dm');
+        }
+    }
+
+    // --- 两个密码框互相同步（同一个站长密码） ---
+    function syncSecret(from) {
+        const mailInput = document.getElementById('secret');
+        const dmInput = document.getElementById('dm-secret');
+        if (!mailInput || !dmInput) return;
+        if (from === 'mail') dmInput.value = mailInput.value;
+        else mailInput.value = dmInput.value;
+    }
+
+    function dmGetSecret() {
+        return (document.getElementById('dm-secret').value || '').trim();
+    }
+
+    // --- 有效时长选择 ---
+    function dmDurationChange() {
+        const v = document.getElementById('dm-duration').value;
+        document.getElementById('dm-customDaysWrap').style.display = v === 'custom' ? 'block' : 'none';
+        document.getElementById('dm-untilWrap').style.display = v === 'until' ? 'block' : 'none';
+    }
+
+    function dmRenewDurationChange() {
+        const v = document.getElementById('dm-renewDuration').value;
+        document.getElementById('dm-renewCustomWrap').style.display = v === 'custom' ? 'block' : 'none';
+        document.getElementById('dm-renewUntilWrap').style.display = v === 'until' ? 'block' : 'none';
+    }
+
+    function dmExpiryFromSelect(selId, customId, untilId) {
+        const v = document.getElementById(selId).value;
+        if (v === 'permanent') return { permanent: true };
+        if (v === 'custom') {
+            const days = parseInt(document.getElementById(customId).value, 10);
+            if (!days || days < 1) return { error: '请填写自定义天数（≥1）' };
+            return { days: days };
+        }
+        if (v === 'until') {
+            const until = document.getElementById(untilId).value;
+            if (!until) return { error: '请选择到期日期' };
+            return { until: until };
+        }
+        return { days: parseInt(v, 10) };
+    }
+
+    // --- 生成 ---
+    async function dmGenerate() {
+        const secret = dmGetSecret();
+        const count = document.getElementById('dm-count').value;
+        const resultBox = document.getElementById('dm-resultBox');
+        const hint = document.getElementById('dm-singleCopyHint');
+        if (!secret) { showToast('⚠️ 请输入站长管理密码！'); return; }
+        const expiry = dmExpiryFromSelect('dm-duration', 'dm-customDays', 'dm-untilDate');
+        if (expiry.error) { showToast('⚠️ ' + expiry.error); return; }
+        hint.style.display = 'none';
+        resultBox.innerHTML = '<span>正在生成激活码...</span>';
+        try {
+            const response = await fetch(DM_API + '/api/admin/generate', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(Object.assign({ secret: secret, count: parseInt(count, 10) || 1 }, expiry))
+            });
+            const data = await response.json();
+            if (data.ok && data.keys && data.keys.length > 0) {
+                dmGlobalCodes = data.keys;
+                let html = '';
+                data.keys.forEach(code => {
+                    html += `<div class="code-tag" onclick="dmCopySingleCode('${code}')">${code}</div>`;
+                });
+                resultBox.innerHTML = html;
+                hint.style.display = 'block';
+                showToast('🎉 Dreamina 激活码已生成（只显示这一次，记得复制保存）');
+            } else {
+                resultBox.innerHTML = '<span>激活码将在此处显示...</span>';
+                showToast('❌ 失败：' + (data.error || '密码不对或系统故障'));
+            }
+        } catch (err) {
+            resultBox.innerHTML = '<span>激活码将在此处显示...</span>';
+            showToast('🚫 无法连接服务器，请检查后端状态');
+        }
+    }
+
+    function dmCopySingleCode(code) {
+        copyTextToClipboard(code, '✅ 已单独复制：' + code);
+    }
+
+    function dmCopyAll() {
+        if (dmGlobalCodes.length === 0) { showToast('❌ 还没有激活码可以复制哦'); return; }
+        copyTextToClipboard(dmGlobalCodes.join('\n'), '📋 激活码已全部存入剪贴板！');
+    }
+
+    // --- 查询 ---
+    async function sha256Hex(str) {
+        const buf = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(str));
+        return Array.from(new Uint8Array(buf)).map(b => b.toString(16).padStart(2, '0')).join('');
+    }
+
+    async function dmFetchLogs() {
+        const secret = dmGetSecret();
+        if (!secret) {
+            showToast('⚠️ 查询激活码状态前，请先输入管理密码！');
+            return;
+        }
+        const queryBtn = document.getElementById('dm-queryBtn');
+        if (queryBtn) {
+            queryBtn.disabled = true;
+            queryBtn.style.pointerEvents = 'none';
+            queryBtn.style.filter = 'grayscale(100%) opacity(70%)';
+            queryBtn.innerHTML = '⏳ 正在查询激活码状态...';
+        }
+        const tbody = document.getElementById('dm-logTableBody');
+        const oldHTML = tbody.innerHTML;
+        tbody.innerHTML = `<tr><td colspan="8" style="padding: 0; border: none; background: transparent;">
+            <div style="position: sticky; left: 0; width: 100vw; max-width: 100%; padding: 25px 15px; box-sizing: border-box; white-space: normal; word-break: break-all; text-align: left; line-height: 1.6; color: #fff; font-weight: bold;">
+                ⏳ 正在查询激活码状态，请稍候...
+            </div>
+        </td></tr>`;
+        try {
+            let keyword = document.getElementById('dm-searchInput').value.trim();
+            // 输完整卡密就先算哈希再查（库里只存哈希，查不到明文）
+            if (/^LG-/i.test(keyword) && keyword.length >= 10) {
+                keyword = (await sha256Hex(keyword.toUpperCase())).slice(0, 12);
+            }
+            const status = document.getElementById('dm-statusFilter').value;
+            const url = DM_API + '/api/admin/list?secret=' + encodeURIComponent(secret)
+                + '&keyword=' + encodeURIComponent(keyword)
+                + (status ? '&status=' + encodeURIComponent(status) : '');
+            const response = await fetch(url);
+            const data = await response.json();
+            if (!response.ok || !data.ok) throw new Error(data.error || '密码错误，无法查询！');
+            if (!data.list || data.list.length === 0) {
+                tbody.innerHTML = `<tr><td colspan="8" style="padding: 0; border: none; background: transparent;">
+                    <div style="position: sticky; left: 0; width: 100vw; max-width: 100%; padding: 30px 15px; box-sizing: border-box; white-space: normal; word-break: break-all; text-align: left; color: #999; margin: 0 auto;">
+                        暂无激活码数据
+                    </div>
+                </td></tr>`;
+                return;
+            }
+            let html = '';
+            data.list.forEach(item => {
+                let statusHtml = '';
+                if (item.status === 'activated') statusHtml = '<span class="status-badge status-active">🟢 已激活</span>';
+                else if (item.status === 'unused') statusHtml = '<span class="status-badge status-unused">🔵 未使用</span>';
+                else if (item.status === 'expired') statusHtml = '<span class="status-badge status-expired">🔴 已过期</span>';
+                else statusHtml = '<span class="status-badge status-revoked">🟡 已吊销</span>';
+                const isRevoked = item.status === 'revoked';
+                html += `
+                <tr>
+                    <td><input type="checkbox" class="dm-card-checkbox" value="${item.key_hash}" onclick="dmUpdateBatchToolbar()" style="width: 16px; height: 16px; cursor: pointer; accent-color: #ff69b4;"></td>
+                    <td style="font-weight: bold; color: #ff69b4; font-size: 13px; text-shadow: 0 2px 5px rgba(0,0,0,1);" title="${item.key_hash}">${item.key_prefix}…</td>
+                    <td>${statusHtml}</td>
+                    <td style="color: #fff; font-weight: bold; text-shadow: 0 2px 5px rgba(0,0,0,1);" title="${item.device_full || ''}">${item.device || '—'}</td>
+                    <td style="color: #fff; text-shadow: 0 2px 5px rgba(0,0,0,1);">${item.activated_at}</td>
+                    <td style="color: ${item.expires_at === '永久有效' ? '#00ff00' : '#00f2ff'}; font-weight: bold; text-shadow: 0 2px 5px rgba(0,0,0,1);">${item.expires_at}</td>
+                    <td style="color: ${item.remaining === '已过期' ? '#ff0000' : '#00f2ff'}; font-weight: bold; text-shadow: 0 2px 5px rgba(0,0,0,1);">${item.remaining}</td>
+                    <td>
+                        <button class="action-btn-sm btn-renew" onclick="dmOpenRenewModal('${item.key_hash}', '${item.key_prefix}')">续期</button>
+                        ${isRevoked
+                            ? `<button class="action-btn-sm btn-enable" onclick="dmToggleSuspend('${item.key_hash}', 'active')">恢复</button>`
+                            : `<button class="action-btn-sm btn-suspend" onclick="dmToggleSuspend('${item.key_hash}', 'revoked')">吊销</button>`}
+                        <button class="action-btn-sm btn-delete" onclick="dmDeleteCode('${item.key_hash}', '${item.key_prefix}')">删除</button>
+                    </td>
+                </tr>`;
+            });
+            tbody.innerHTML = html;
+        } catch (err) {
+            showToast('❌ ' + err.message);
+            tbody.innerHTML = oldHTML;
+        } finally {
+            if (queryBtn) {
+                queryBtn.disabled = false;
+                queryBtn.style.pointerEvents = 'auto';
+                queryBtn.style.filter = 'none';
+                queryBtn.innerHTML = '🔄 查询激活码状态';
+            }
+        }
+    }
+
+    // --- 续期 ---
+    function dmOpenRenewModal(hash, prefix) {
+        dmCurrentHash = hash;
+        document.getElementById('dm-renewHashText').value = prefix + '…';
+        document.getElementById('dm-renewDuration').value = '30';
+        dmRenewDurationChange();
+        document.getElementById('dm-renewModal').style.display = 'flex';
+    }
+
+    function dmCloseRenewModal() {
+        document.getElementById('dm-renewModal').style.display = 'none';
+    }
+
+    function dmSubmitRenew() {
+        const secret = dmGetSecret();
+        if (!secret) return alert('请先输入管理密码！');
+        const expiry = dmExpiryFromSelect('dm-renewDuration', 'dm-renewCustomDays', 'dm-renewUntilDate');
+        if (expiry.error) { alert(expiry.error); return; }
+        fetch(DM_API + '/api/admin/renew', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(Object.assign({ secret: secret, key_hash: dmCurrentHash }, expiry))
+        })
+        .then(res => res.json())
+        .then(data => {
+            if (data.ok) {
+                showToast('✅ 激活码续期成功！');
+                dmCloseRenewModal();
+                dmFetchLogs();
+            } else {
+                alert('操作失败: ' + (data.error || '未知错误'));
+            }
+        })
+        .catch(err => alert('请求出错: ' + err.message));
+    }
+
+    // --- 吊销 / 恢复 ---
+    function dmToggleSuspend(hash, action) {
+        dmIsBatchSuspend = false;
+        dmCurrentHash = hash;
+        dmCurrentAction = action;
+        const isRevoke = action === 'revoked';
+        const color = isRevoke ? '#ffa500' : '#00ff00';
+        const text = isRevoke ? '吊销' : '恢复';
+        document.getElementById('dm-suspendTitle').style.color = color;
+        document.getElementById('dm-suspendTitle').innerText = isRevoke ? '⚠️ 吊销确认' : '✅ 恢复确认';
+        document.getElementById('dm-suspendText').innerHTML = `确定要 <span style="font-weight:bold; color:${color}; font-size:16px;">${text}</span> 激活码<br><span style="color: #ff69b4; font-weight: bold; font-size: 18px; display: inline-block; margin: 10px 0;">${hash.slice(0, 12)}…</span><br>吗？${isRevoke ? '吊销后该卡密立即失效，客户端下次验证会被拒绝。' : ''}`;
+        const btn = document.getElementById('dm-suspendConfirmBtn');
+        btn.style.background = isRevoke ? 'linear-gradient(45deg, #ffa500, #ff8c00)' : 'linear-gradient(45deg, #00ff00, #00cc00)';
+        btn.style.boxShadow = isRevoke ? '0 4px 0 #cc7000' : '0 4px 0 #009900';
+        document.getElementById('dm-suspendModal').style.display = 'flex';
+    }
+
+    function dmBatchToggleSuspend(targetStatus) {
+        const hashes = dmGetSelectedHashes();
+        if (hashes.length === 0) return;
+        dmIsBatchSuspend = true;
+        dmCurrentAction = targetStatus;
+        const isRevoke = targetStatus === 'revoked';
+        const color = isRevoke ? '#ffa500' : '#00ff00';
+        const text = isRevoke ? '批量吊销' : '批量恢复';
+        document.getElementById('dm-suspendTitle').style.color = color;
+        document.getElementById('dm-suspendTitle').innerText = isRevoke ? '⚠️ 批量吊销确认' : '✅ 批量恢复确认';
+        document.getElementById('dm-suspendText').innerHTML = `确定要 <span style="font-weight:bold; color:${color}; font-size:16px;">${text}</span> 选中的<br><span style="color: #ff69b4; font-weight: bold; font-size: 22px; display: inline-block; margin: 10px 0;">${hashes.length} 个激活码</span><br>吗？`;
+        const btn = document.getElementById('dm-suspendConfirmBtn');
+        btn.style.background = isRevoke ? 'linear-gradient(45deg, #ffa500, #ff8c00)' : 'linear-gradient(45deg, #00ff00, #00cc00)';
+        btn.style.boxShadow = isRevoke ? '0 4px 0 #cc7000' : '0 4px 0 #009900';
+        document.getElementById('dm-suspendModal').style.display = 'flex';
+    }
+
+    function dmCloseSuspendModal() {
+        document.getElementById('dm-suspendModal').style.display = 'none';
+    }
+
+    function dmSubmitSuspend() {
+        const secret = dmGetSecret();
+        if (!secret) return alert('请先输入管理密码！');
+        if (dmIsBatchSuspend) {
+            const hashes = dmGetSelectedHashes();
+            const actionName = dmCurrentAction === 'revoked' ? '吊销' : '恢复';
+            fetch(DM_API + '/api/admin/batch_toggle', {
+                method: 'POST', headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ secret: secret, key_hashes: hashes, targetStatus: dmCurrentAction })
+            }).then(res => res.json()).then(data => {
+                if (data.ok) {
+                    showToast(`✅ 成功批量${actionName} ${data.affected} 个激活码！`);
+                    document.getElementById('dm-selectAll').checked = false;
+                    dmUpdateBatchToolbar(); dmCloseSuspendModal(); dmFetchLogs();
+                } else { alert('操作失败: ' + (data.error || '未知错误')); }
+            }).catch(err => alert('请求出错: ' + err.message));
+        } else {
+            fetch(DM_API + '/api/admin/toggle', {
+                method: 'POST', headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ secret: secret, key_hash: dmCurrentHash, targetStatus: dmCurrentAction })
+            }).then(res => res.json()).then(data => {
+                if (data.ok) {
+                    showToast(data.newStatus === 'revoked' ? '🛑 激活码已吊销！' : '✅ 激活码已恢复生效！');
+                    dmCloseSuspendModal(); dmFetchLogs();
+                } else { alert('操作失败: ' + (data.error || '未知错误')); }
+            }).catch(err => alert('请求出错: ' + err.message));
+        }
+    }
+
+    // --- 删除 ---
+    function dmDeleteCode(hash, prefix) {
+        dmIsBatchDelete = false;
+        dmCurrentHash = hash;
+        document.getElementById('dm-deleteText').innerHTML = `您确定要彻底删除该激活码<br><span style="color: #ff69b4; font-weight: bold; font-size: 18px; display: inline-block; margin: 10px 0; text-shadow: 0 2px 5px rgba(0,0,0,1);">${prefix}…</span><br>吗？删除后将无法恢复！`;
+        document.getElementById('dm-deleteModal').style.display = 'flex';
+    }
+
+    function dmBatchDelete() {
+        const hashes = dmGetSelectedHashes();
+        if (hashes.length === 0) return;
+        dmIsBatchDelete = true;
+        document.getElementById('dm-deleteText').innerHTML = `您确定要彻底删除选中的<br><span style="color: #ff69b4; font-weight: bold; font-size: 22px; display: inline-block; margin: 10px 0; text-shadow: 0 2px 5px rgba(0,0,0,1);">${hashes.length} 个激活码</span><br>吗？删除后将无法恢复！`;
+        document.getElementById('dm-deleteModal').style.display = 'flex';
+    }
+
+    function dmCloseDeleteModal() {
+        document.getElementById('dm-deleteModal').style.display = 'none';
+    }
+
+    function dmSubmitDelete() {
+        const secret = dmGetSecret();
+        if (!secret) return alert('请先输入管理密码！');
+        if (dmIsBatchDelete) {
+            const hashes = dmGetSelectedHashes();
+            fetch(DM_API + '/api/admin/batch_delete', {
+                method: 'POST', headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ secret: secret, key_hashes: hashes })
+            }).then(res => res.json()).then(data => {
+                if (data.ok) {
+                    showToast(`🗑️ 成功彻底删除 ${data.affected} 个激活码！`);
+                    document.getElementById('dm-selectAll').checked = false;
+                    dmUpdateBatchToolbar(); dmCloseDeleteModal(); dmFetchLogs();
+                } else { alert('操作失败: ' + (data.error || '未知错误')); }
+            }).catch(err => alert('请求出错: ' + err.message));
+        } else {
+            fetch(DM_API + '/api/admin/delete', {
+                method: 'POST', headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ secret: secret, key_hash: dmCurrentHash })
+            }).then(res => res.json()).then(data => {
+                if (data.ok) {
+                    showToast('🗑️ 激活码已被永久删除！');
+                    dmCloseDeleteModal(); dmFetchLogs();
+                } else { alert('操作失败: ' + (data.error || '未知错误')); }
+            }).catch(err => alert('请求出错: ' + err.message));
+        }
+    }
+
+    // --- 批量勾选 ---
+    function dmToggleAll() {
+        const isChecked = document.getElementById('dm-selectAll').checked;
+        document.querySelectorAll('.dm-card-checkbox').forEach(cb => {
+            if (cb.closest('tr').style.display !== 'none') cb.checked = isChecked;
+        });
+        dmUpdateBatchToolbar();
+    }
+
+    function dmUpdateBatchToolbar() {
+        const checked = document.querySelectorAll('.dm-card-checkbox:checked');
+        const toolbar = document.getElementById('dm-batchActionToolbar');
+        document.getElementById('dm-selectedCount').innerText = checked.length;
+        if (checked.length > 0) {
+            toolbar.style.display = 'flex';
+        } else {
+            toolbar.style.display = 'none';
+            document.getElementById('dm-selectAll').checked = false;
+        }
+    }
+
+    function dmGetSelectedHashes() {
+        return Array.from(document.querySelectorAll('.dm-card-checkbox:checked')).map(cb => cb.value);
+    }
+
+    // 邮箱密码框输入时同步到 Dreamina 密码框
+    (function () {
+        const mailInput = document.getElementById('secret');
+        if (mailInput) mailInput.addEventListener('input', function () { syncSecret('mail'); });
+    })();
+</script>
+
 </body>
 </html>
