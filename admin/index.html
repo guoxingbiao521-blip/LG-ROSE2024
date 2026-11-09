@@ -263,7 +263,7 @@
         .tab-bar { display: flex; gap: 12px; width: 90%; max-width: 750px; position: relative; z-index: 10; }
         .tab-btn { flex: 1; padding: 14px 8px; border: none; border-radius: 12px; font-weight: bold; font-size: 15px; cursor: pointer; transition: all 0.2s ease; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
         .tab-btn.active { background: linear-gradient(45deg, var(--primary), var(--accent)) !important; color: #000 !important; box-shadow: 0 4px 0 #b300b3, 0 6px 15px rgba(0, 0, 0, 0.4); }
-        .tab-btn.inactive { background: rgba(255, 255, 255, 0.08) !important; color: #fff !important; border: 1px solid rgba(255, 255, 255, 0.2); box-shadow: 0 4px 0 rgba(0,0,0,0.3); }
+        .tab-btn.inactive { background: rgba(8, 8, 18, 0.72) !important; backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); color: #fff !important; border: 1px solid rgba(255, 105, 180, 0.55); box-shadow: 0 4px 0 rgba(0,0,0,0.45), 0 4px 14px rgba(0,0,0,0.45); text-shadow: 0 1px 3px rgba(0,0,0,0.95); }
         .tab-btn:hover { filter: brightness(1.15); }
         @media (max-width: 600px) {
             .tab-bar { width: 100% !important; gap: 8px !important; }
@@ -272,6 +272,19 @@
         }
         .status-unused { background: rgba(0, 242, 255, 0.15); color: #00f2ff; border: 1px solid rgba(0, 242, 255, 0.5); }
         .status-revoked { background: rgba(255, 165, 0, 0.2); color: #ffa500; border: 1px solid #ffa500; }
+        /* 🌟 玻璃质感自定义下拉框（与页面粉紫玻璃风一致，替代原生 select 的系统灰色列表） */
+        .glass-dd { position: relative; box-sizing: border-box; }
+        .glass-dd-trigger { display: flex; align-items: center; justify-content: space-between; gap: 8px; width: 100%; height: 100%; min-height: 36px; padding: 0 12px; box-sizing: border-box; border-radius: 10px; background: rgba(0, 0, 0, 0.5); border: 1px solid rgba(0, 242, 255, 0.5); color: #fff; font-size: 13px; font-weight: bold; cursor: pointer; text-shadow: 0 1px 3px rgba(0,0,0,0.9); transition: border-color 0.2s, box-shadow 0.2s; user-select: none; outline: none; }
+        .glass-dd-trigger:hover, .glass-dd-trigger:focus { border-color: rgba(255, 105, 180, 0.85); box-shadow: 0 0 10px rgba(255, 105, 180, 0.35); }
+        .glass-dd-trigger .glass-dd-label { flex: 1; text-align: center; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+        .glass-dd-trigger .glass-dd-arrow { color: #ff69b4; font-size: 11px; transition: transform 0.2s; flex: none; text-shadow: 0 0 8px rgba(255, 105, 180, 0.8); }
+        .glass-dd.open .glass-dd-trigger { border-color: #ff69b4; box-shadow: 0 0 12px rgba(255, 105, 180, 0.5); }
+        .glass-dd.open .glass-dd-trigger .glass-dd-arrow { transform: rotate(180deg); }
+        .glass-dd-list { display: none; position: absolute; left: 0; right: 0; top: calc(100% + 6px); z-index: 1000; padding: 6px; border-radius: 12px; background: rgba(18, 18, 28, 0.96); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); border: 1px solid rgba(255, 105, 180, 0.5); box-shadow: 0 12px 32px rgba(0, 0, 0, 0.65), 0 0 18px rgba(255, 0, 255, 0.25); max-height: 260px; overflow-y: auto; }
+        .glass-dd.open .glass-dd-list { display: block; }
+        .glass-dd-opt { padding: 10px 12px; border-radius: 8px; color: #fff; font-size: 13px; font-weight: bold; cursor: pointer; text-align: center; text-shadow: 0 1px 3px rgba(0,0,0,0.9); transition: background 0.15s; white-space: nowrap; }
+        .glass-dd-opt:hover { background: linear-gradient(45deg, rgba(0, 242, 255, 0.35), rgba(255, 0, 255, 0.35)); }
+        .glass-dd-opt.sel { background: linear-gradient(45deg, var(--primary), var(--accent)); color: #000; text-shadow: none; }
     </style>
     <link rel="preconnect" href="https://guo.roselg.xyz" crossorigin>
     <link rel="dns-prefetch" href="https://guo.roselg.xyz">
@@ -347,6 +360,12 @@
                     <span style="position: absolute; left: 10px; top: 50%; transform: translateY(-50%); font-size: 14px; opacity: 0.8;">🔍</span>
                     <input type="text" id="searchInput" placeholder="输入激活码后回车..." onkeydown="if(event.keyCode==13) fetchLogs()" style="width: 140px; height: 36px; padding: 0 10px 0 32px; border-radius: 10px; background: rgba(0,0,0,0.4); color: #00f2ff; border: 1px solid rgba(0, 242, 255, 0.4); font-size: 13px; font-weight: bold; outline: none; transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); box-sizing: border-box;" onfocus="this.style.borderColor='#ff00ff'; this.style.boxShadow='0 0 10px rgba(255,0,255,0.4)'; this.style.width='180px'; this.style.background='rgba(0,0,0,0.6)';" onblur="this.style.borderColor='rgba(0, 242, 255, 0.4)'; this.style.boxShadow='none'; this.style.width='140px'; this.style.background='rgba(0,0,0,0.4)';">
                 </div>
+                <select id="statusFilter" onchange="fetchLogs()" style="height: 36px; padding: 0 8px; border-radius: 10px; background: rgba(0,0,0,0.4); color: #fff; border: 1px solid rgba(0, 242, 255, 0.4); font-size: 13px; font-weight: bold; outline: none;">
+                    <option value="">全部状态</option>
+                    <option value="active">生效中</option>
+                    <option value="suspended">已停用</option>
+                    <option value="expired">已失效</option>
+                </select>
                 <button class="btn-main-3d" id="queryBtnAdmin" onclick="this.innerHTML='⏳ 系统载入中...'; this.style.filter='grayscale(100%) opacity(70%)'; this.style.pointerEvents='none'; let t = setInterval(()=>{if(typeof fetchLogs === 'function'){clearInterval(t); fetchLogs();}}, 200);" style="padding: 0 16px; font-size: 13px; height: 36px; box-shadow: 0 3px 0 #b300b3; width: auto; flex: none; display: flex; align-items: center; justify-content: center;">🔄 查询激活码状态</button>
             </div>
         </div>
@@ -638,7 +657,13 @@ function fetchLogs() {
                     return response.json();
                 })
                 .then(data => {
-                    if(data.length === 0) {
+                    // 🌟 状态筛选（邮箱口径：active=生效中，suspended=已停用，其余=已失效）
+                    let rows = data;
+                    const _sf = document.getElementById('statusFilter');
+                    const _sv = _sf ? _sf.value : '';
+                    if (_sv === 'active' || _sv === 'suspended') rows = rows.filter(function (it) { return it.status === _sv; });
+                    else if (_sv === 'expired') rows = rows.filter(function (it) { return it.status !== 'active' && it.status !== 'suspended'; });
+                    if(rows.length === 0) {
                         // 🎯 空数据时也用吸盘魔法
                         tbody.innerHTML = `<tr><td colspan="9" style="padding: 0; border: none; background: transparent;">
                             <div style="position: sticky; left: 0; width: 100vw; max-width: 100%; padding: 30px 15px; box-sizing: border-box; white-space: normal; word-break: break-all; text-align: left; color: #999; margin: 0 auto;">
@@ -649,7 +674,7 @@ function fetchLogs() {
                     }
 
                     let html = '';
-                    data.forEach(item => {
+                    rows.forEach(item => {
                         let deviceColor = "#00ff00"; 
                         let fontWeight = "bold";
                         let textShadow = "0 1px 3px rgba(0,0,0,0.8)";
@@ -1425,6 +1450,85 @@ function fetchLogs() {
         const mailInput = document.getElementById('secret');
         if (mailInput) mailInput.addEventListener('input', function () { syncSecret('mail'); });
     })();
+
+    // 🌟 玻璃质感自定义下拉框：把原生 select 换成与页面粉紫玻璃风一致的自定义下拉
+    // （原生 select 展开的选项列表是系统灰色、改不了样式，所以用 div 模拟；
+    // 原 select 留在 DOM 里（隐藏），值变化时照样触发它原来的 onchange，功能不变）
+    function glassDropdown(sel) {
+        if (!sel || sel.dataset.glassDone) return;
+        sel.dataset.glassDone = '1';
+        var wrap = document.createElement('div');
+        wrap.className = 'glass-dd';
+        if (sel.style.width) wrap.style.width = sel.style.width;
+        if (sel.style.height) wrap.style.height = sel.style.height;
+        if (!sel.style.width) wrap.style.minWidth = '120px';
+        var trigger = document.createElement('div');
+        trigger.className = 'glass-dd-trigger';
+        trigger.tabIndex = 0;
+        if (sel.style.padding) trigger.style.padding = sel.style.padding;
+        if (sel.style.height) trigger.style.height = sel.style.height;
+        var label = document.createElement('span');
+        label.className = 'glass-dd-label';
+        var arrow = document.createElement('span');
+        arrow.className = 'glass-dd-arrow';
+        arrow.textContent = '▾';
+        trigger.appendChild(label);
+        trigger.appendChild(arrow);
+        var list = document.createElement('div');
+        list.className = 'glass-dd-list';
+        var optEls = Array.prototype.map.call(sel.options, function (o) {
+            var d = document.createElement('div');
+            d.className = 'glass-dd-opt';
+            d.textContent = o.textContent;
+            d.dataset.value = o.value;
+            d.addEventListener('click', function (e) {
+                e.stopPropagation();
+                selectOption(o.value);
+            });
+            list.appendChild(d);
+            return d;
+        });
+        function sync() {
+            var cur = sel.options[sel.selectedIndex];
+            label.textContent = cur ? cur.textContent : '';
+            optEls.forEach(function (d) { d.classList.toggle('sel', d.dataset.value === sel.value); });
+        }
+        function closeAll() {
+            document.querySelectorAll('.glass-dd.open').forEach(function (el) { el.classList.remove('open'); });
+        }
+        function selectOption(v) {
+            if (sel.value !== v) {
+                sel.value = v;
+                sel.dispatchEvent(new Event('change', { bubbles: true }));
+            }
+            sync();
+            closeAll();
+        }
+        trigger.addEventListener('click', function (e) {
+            e.stopPropagation();
+            var wasOpen = wrap.classList.contains('open');
+            closeAll();
+            if (!wasOpen) wrap.classList.add('open');
+        });
+        trigger.addEventListener('keydown', function (e) {
+            if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); trigger.click(); }
+            if (e.key === 'Escape') closeAll();
+        });
+        wrap.appendChild(trigger);
+        wrap.appendChild(list);
+        sel.style.display = 'none';
+        sel.parentNode.insertBefore(wrap, sel.nextSibling);
+        sel.addEventListener('change', sync);
+        sync();
+    }
+    document.addEventListener('click', function () {
+        document.querySelectorAll('.glass-dd.open').forEach(function (el) { el.classList.remove('open'); });
+    });
+    // 四个下拉全部换成玻璃质感：邮箱状态筛选、Dreamina 有效时长/状态筛选/续期时长
+    glassDropdown(document.getElementById('statusFilter'));
+    glassDropdown(document.getElementById('dm-duration'));
+    glassDropdown(document.getElementById('dm-statusFilter'));
+    glassDropdown(document.getElementById('dm-renewDuration'));
 </script>
 
 </body>
