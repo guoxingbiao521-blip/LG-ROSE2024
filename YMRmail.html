@@ -774,7 +774,7 @@ h2::before, h2::after {
     <button onclick="clearEmails()" class="btn-footer-action" style="flex: 1; height: 45px; background-color: #d81b60; box-shadow: 0 5px 0 #ad1457; white-space: nowrap !important; font-size: clamp(11px, 3vw, 14px) !important; padding: 0 2px !important;">🗑️ 清空邮件</button>
    <button onclick="document.getElementById('agent-wechat-modal').style.display='block'" class="btn-footer-action" style="flex: 1; height: 45px; background-color: #f06292; box-shadow: 0 5px 0 #c2185b; white-space: nowrap !important; font-size: clamp(11px, 3vw, 14px) !important; padding: 0 2px !important;">💬 联系作者</button>
 </div>
-  <div style="display: flex !important; margin-top: 15px !important; width: 100% !important;">     <button onclick="showClientDownload()" class="btn-footer-action" style="flex: 1; height: 45px; background-color: #ff4081; box-shadow: 0 5px 0 #c2185b; white-space: nowrap !important; font-size: clamp(11px, 3vw, 14px) !important; padding: 0 2px !important; color: #fff !important; font-weight: bold !important;">&#11015;&#65039; 下载客户端</button> </div>
+  <div style="display: flex !important; gap: 6px !important; margin-top: 15px !important; width: 100% !important;">     <button onclick="showClientDownload()" class="btn-footer-action" style="flex: 1; height: 45px; background-color: #ff4081; box-shadow: 0 5px 0 #c2185b; white-space: nowrap !important; font-size: clamp(11px, 3vw, 14px) !important; padding: 0 2px !important; color: #fff !important; font-weight: bold !important;">&#11015;&#65039; 下载客户端</button> <button onclick="showDreaminaDownload()" class="btn-footer-action" style="flex: 1; height: 45px; background-color: #7c4dff; box-shadow: 0 5px 0 #512da8; white-space: nowrap !important; font-size: clamp(10px, 2.6vw, 13px) !important; padding: 0 2px !important; color: #fff !important; font-weight: bold !important;">&#11015;&#65039; 下载LG筑梦AI注册机</button> </div>
    <div id="agent-wechat-modal" style="display:none; position:fixed; top:50%; left:50%; transform:translate(-50%, -50%); background: rgba(0, 0, 0, 0.7); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 15px; box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4); padding: 30px; z-index:9999; text-align:center; color: #f1f1f1; min-width: 300px; max-width: 90vw;">
     <p style="margin-top: 0; margin-bottom: 20px; font-weight: bold; font-size: 1.1em;">请点击“卡密商城”获取激活码</p>
     <img src="YMR.jpg" alt="微信二维码" style="width:100%; max-width:260px; height:auto; margin-bottom: 20px; border-radius: 8px;">
@@ -1463,6 +1463,20 @@ document.addEventListener('DOMContentLoaded', syncDomains);
 function showClientDownload(){var m=document.getElementById('client-download-modal'); if(m){m.style.display='flex'; document.body.style.overflow='hidden';}}
 function hideClientDownload(){var m=document.getElementById('client-download-modal'); if(m){m.style.display='none'; document.body.style.overflow='';}}
 </script>
+<div id="dreamina-download-modal" onclick="if(event.target===this) hideDreaminaDownload()" style="display: none; position: fixed; inset: 0; width: 100vw; height: 100vh; height: 100dvh; background: rgba(0,0,0,0.85); z-index: 100000; justify-content: center; align-items: center; padding: 20px; box-sizing: border-box; overflow-y: auto;">
+    <div style="background: rgba(20,20,28,0.98); border: 2px solid rgba(124,77,255,0.6); border-radius: 20px; width: 100%; max-width: 520px; max-height: 90vh; overflow-y: auto; margin: auto; padding: 24px; box-sizing: border-box; color: #fff;">
+        <h3 style="margin: 0 0 16px; text-align: center;">&#11015;&#65039; 下载LG筑梦AI注册机</h3>
+        <div style="background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.12); border-radius: 14px; padding: 16px; margin-bottom: 12px;">
+            <div style="font-weight: bold; font-size: 16px;">&#128187; Windows 桌面版 · 约 328 MB</div>
+            <p style="color: #ccc; font-size: 13px; line-height: 1.6; margin: 8px 0 12px;">安装包，双击安装即可。首次使用需要卡密激活，仅支持 Windows。</p>
+            <a href="https://guo.roselg.xyz/downloads/LG%E7%AD%91%E6%A2%A6AI%E6%B3%A8%E5%86%8C%E6%9C%BA-v2.58-setup.exe" style="display: block; text-align: center; background: linear-gradient(135deg,#7c4dff,#512da8); color: #fff; text-decoration: none; padding: 12px; border-radius: 10px; font-weight: bold;">&#11015;&#65039; 下载 Windows 版</a>
+        </div>
+        <button onclick="hideDreaminaDownload()" style="width: 100%; margin-top: 4px; padding: 10px; border-radius: 10px; border: 1px solid rgba(255,255,255,0.2); background: transparent; color: #fff; cursor: pointer;">关闭</button>
+    </div>
+</div>
+<script>
+function showDreaminaDownload(){var m=document.getElementById('dreamina-download-modal'); if(m){m.style.display='flex'; document.body.style.overflow='hidden';}}
+function hideDreaminaDownload(){var m=document.getElementById('dreamina-download-modal'); if(m){m.style.display='none'; document.body.style.overflow='';}}
 
 <section class="main-card" style="display:block !important;margin:40px auto 20px auto;line-height:2.0;font-size:18px;">
 <h2>什么是临时邮箱？</h2>
